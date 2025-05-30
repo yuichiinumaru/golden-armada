@@ -1,0 +1,44 @@
+# Changelog for CodeSwarm Project (ADK/A2A Focus)
+
+This file will be updated to reflect major changes, progress, and decisions throughout the project.
+
+---
+
+[Pivot] Project pivoted from CAMEL AI to Google ADK/A2A framework. Rationale: Improve Gemini integration, error handling, and control.
+[Infra] Created `conversion-notes.md` to document migration plan and analysis.
+[Infra] Updated `.cursorrules` to align with ADK/A2A development focus.
+[Infra] Established new directory structure: `adk_core/`, `adk_agents/`. Ensured `project_logs/` and `generated_code/` exist.
+[Config] Created `adk_config.py` for centralized loading of `.env` variables (API keys, model names) and ADK-specific environment setup (e.g., `GOOGLE_API_KEY` mapping).
+[Tools] Refactored functions from `tools.py` into `adk_core/tool_logic.py`. All tool functions now return dictionaries with `status` and `content`/`result`/`message` keys for ADK compatibility. Docstrings updated.
+[Tools] Created `adk_core/tool_definitions.py` to wrap `tool_logic.py` functions into ADK `FunctionTool` objects. Defined role-specific tool lists (`admin_tools_adk`, `dev_tools_adk`, `revisor_tools_adk`).
+[Agents] Created `adk_agents/prompts_adk.py` to store instruction strings for Admin, Dev, and Revisor agents. (Later transitioned to JSON prompts in `prompts/` dir).
+[Agents] Created `adk_agents/admin_agent.py` defining `create_admin_llm_agent()` using ADK `LlmAgent`, new prompts, and ADK tools. (Structure evolved to factory functions in `adk_agents/__init__.py`).
+[Agents] Created `adk_agents/dev_agent.py` defining `create_dev_llm_agent()` using ADK `LlmAgent`.
+[Agents] Created `adk_agents/revisor_agent.py` defining `create_revisor_llm_agent()` using ADK `LlmAgent`.
+[Infra] Created `adk_core/adk_setup.py` with helper functions for ADK `Runner` and `InMemorySessionService` initialization.
+[Orchestrator] Scaffolded `main_adk_controller.py` with CLI argument parsing, imports for new ADK modules, agent/session initialization placeholders.
+[Refinement] Conceptual improvements identified for `adk_config.py`, `tool_logic.py`, `prompts_adk.py`, and `main_adk_controller.py` scaffold.
+[Orchestrator] Implemented main round-based control flow in `main_adk_controller.py`, including session.state usage, error handling, and logging.
+
+---
+[DEPRECATION/REFACTOR] `google.adk.output_parsers.JsonOutputParser` does not exist. Removed all attempts to import or use it. Agents to use Pydantic `output_model` or `generation_config` for structured output.
+[DEPRECATION/REFACTOR] `google.adk.callbacks.AbstractCallbackHandler` and `google.adk.CallbackManager` are not the correct ADK callback mechanism. Replaced with function-based callbacks assigned directly to `LlmAgent`.
+[BUGFIX] Corrected `ImportError` for `EventType` from `google.adk.events`. `EventType` enum does not exist.
+[BUGFIX] Resolved `ImportError: attempted relative import with no known parent package` by using `python -m codeswarm.module_name`.
+[REFINEMENT] Updated `requirements.txt`: `google-generativeai` -> `google-genai`, added `google-adk[extensions]`.
+[BUGFIX] Corrected `AttributeError: 'coroutine' object has no attribute 'id'` by `await`ing `session_service.create_session()`.
+[BUGFIX] Resolved `ValueError: Session not found` by ensuring consistent `user_id` for `runner.run_async()`.
+[BUGFIX] Corrected `ImportError: cannot import name 'SessionService' from 'google.adk.sessions'`. Used `BaseSessionService` for type hint.
+[SYNTAXFIX] Corrected `SyntaxError: unterminated f-string literal` in `main_adk_controller.py`.
+[REFINEMENT] `main_adk_controller.py` loads defaults from `.env`.
+[REFINEMENT] Agent creation functions in `adk_agents/` updated to remove `JsonOutputParser` and use function-based callbacks.
+[DOCS] Updated `.cursorrules` with ADK lessons learned.
+[PROMPTS] Modularized agent prompts into individual JSON files in `codeswarm/prompts/` directory. Updated prompt loading logic.
+[BUGFIX] Resolved AdminAgent not generating tasks due to prompt expecting initial parameters every round. Adjusted prompt logic.
+[BUGFIX] Removed invalid `debug` parameter from `LlmAgent` initialization attempts.
+[BUGFIX] Resolved `ImportError: cannot import name 'GeminiModel' from 'google.adk.models'`. Clarified `LlmAgent` uses model strings directly.
+[BUGFIX] Resolved `ValueError: LlmAgent.model_kwargs must be a dictionary`. Correctly used `generation_config` parameter for `LlmAgent` to pass model settings like temperature and `response_mime_type`.
+[API_ERROR_HANDLING] Resolved `400 INVALID_ARGUMENT` from Gemini API when tools returned errors. Simplified JSON structure of error messages from `tool_logic.py` functions.
+[AGENT_LOGIC] Addressed DevAgent issues with `write_file` tool (KeyError: 'file_path', content being `None`) by refining `dev_prompt.json` to ensure correct parameter passing based on tool schema.
+[CONFIG] Implemented loading of model temperatures from `.env` file via `adk_config.py` and passing them to `LlmAgent` via `generation_config`.
+---

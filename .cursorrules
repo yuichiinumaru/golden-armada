@@ -1,0 +1,144 @@
+# Rules for CodeSwarm ADK/A2A Multi-Agent Coding Project
+
+## 1. Project Goal & Core Philosophy
+    - **Objective:** Implement the CodeSwarm multi-agent coding system using Google's Agent Development Kit (ADK). Focus on collaborative code generation, review, and project management with an emphasis on leveraging ADK's strengths for Gemini model integration.
+    - **ADK Philosophy:**
+        - Leverage ADK's direct integration with Gemini models for enhanced control and error transparency. ADK relies on the `GOOGLE_API_KEY` environment variable for authentication.
+        - Utilize ADK's `LlmAgent` for role-defined agents.
+        - Employ clear and detailed `instruction` parameters (system prompts), potentially loaded from modular JSON files (e.g., in a `prompts/` directory).
+        - Implement robust tool capabilities using ADK `FunctionTool`.
+        - Utilize ADK's session capabilities (`SessionService`, `session.state`).
+    - **CRITICAL RULE: Absolutely no mock objects, simulated behaviors, or placeholder code. All implemented functionalities must be real and executable.**
+    - **Guidance Documents:** `docs/plan.md`, `docs/tasklist.md`, `docs/project.md`.
+
+## 2. Environment & ADK Setup
+    - **Project Directory:** `codeswarm/`. Subdirectories: `generated_code/`, `project_logs/`, `adk_core/`, `adk_agents/`, `prompts/`.
+    - **ADK Installation:** `pip install google-adk[extensions] google-genai`. Imports: `google.adk.*`.
+    - **`.env` File (in `codeswarm/` root):**
+        - `GEMINI_API_KEY` (mapped to `GOOGLE_API_KEY` by `adk_config.py`).
+        - Agent model configurations (e.g., `ADMIN_MODEL_TYPE`).
+        - Model temperature settings (e.g., `ADMIN_MODEL_TEMPERATURE`).
+        - Default operational parameters (e.g., `DEFAULT_PROJECT_PATH`).
+    - **`requirements.txt`**: `google-genai`, `google-adk[extensions]`, `python-dotenv`, `requests`, `beautifulsoup4`, `pydantic`.
+
+### 2.1. Command Execution Protocol
+    - Activate Conda environment.
+    - Execute as module: `python -m codeswarm.main_adk_controller` from parent directory of `codeswarm/`.
+
+## 3. Agent Definitions (Using ADK `LlmAgent`)
+    - **Instructions (System Prompts):** Loaded from JSON files in `codeswarm/prompts/`.
+    - **Model Configuration:** Via `adk_config.py` (model strings, temperatures). Passed to `LlmAgent` via `model` string and `generation_config` dictionary.
+    - **Output Parsing (Structured Data like JSON):**
+        - **Primary Method:** Use `LlmAgent(generation_config={"response_mime_type": "application/json", "temperature": ...})` and then `json.loads(response.text)`. Ensure prompts guide the LLM to produce the desired JSON structure.
+        - **Alternative:** Define a Pydantic class and assign it to `LlmAgent(output_model=MyPydanticModel)`.
+        - **No `google.adk.output_parsers.JsonOutputParser` exists.**
+    - **Example `LlmAgent` setup:**
+        ```python
+        from google.adk.agents import LlmAgent
+        from ..adk_config import SOME_MODEL_STR, SOME_MODEL_TEMP
+        from ..adk_core.tool_definitions import relevant_tools
+        from ..adk_core import log_llm_start, log_llm_end # etc.
+        # import json; from pathlib import Path # For loading prompt from file
+
+        # def load_prompt_from_json(prompt_filename): ...
+
+        def create_some_agent():
+            gen_conf = {
+                "temperature": SOME_MODEL_TEMP,
+                "response_mime_type": "application/json" # If expecting JSON
+            }
+            return LlmAgent(
+                name="SomeAgentADK",
+                instruction=load_prompt_from_json("some_agent_prompt.json"),
+                model=SOME_MODEL_STR,
+                tools=relevant_tools,
+                generation_config=gen_conf, # Key for temperature, JSON output
+                # output_model=MyPydanticModel, # Optional, if using Pydantic
+                before_model_callback=log_llm_start,
+                # ... other callbacks
+            )
+        ```
+    - **Tool Assignment:** Via `adk_core/tool_definitions.py`.
+
+## 4. Tool Implementation (Using ADK `FunctionTool`)
+    - Core logic in `adk_core/tool_logic.py`.
+    - **Critical for Gemini API stability:** Tool functions, especially on error, must return a **simple JSON dictionary** (e.g., `{"status": "error", "message": "details"}`). Complex error structures can cause `400 INVALID_ARGUMENT` errors when ADK passes tool results to Gemini.
+    - Wrapped into `FunctionTool` objects in `adk_core/tool_definitions.py`.
+
+## 5. Main Orchestration Script (`main_adk_controller.py`)
+    - Central coordinator, uses `argparse`, initializes agents, manages `async` workflow and `InMemorySessionService`.
+
+## 6. Communication Flow Management
+    - `main_adk_controller.py` mediates. Data via agent inputs/outputs and `session.state`.
+
+## 7. Error Handling & Robustness
+    - Tools in `tool_logic.py` use `try-except` and return simple status dictionaries.
+    - Orchestrator checks execution results.
+    - **Callbacks:** Function-based (e.g., `log_llm_start`) using `CallbackContext`, `ToolCallbackContext`. No `AbstractCallbackHandler`.
+
+## 8. Desirable Features (Post-MVP Considerations)
+    - Explore `VertexAiRagMemoryService`.
+
+## 9. Code Quality and ADK Best Practices
+    - Clean, well-commented, robust Python. Follow ADK best practices.
+
+## 10. Final Verification
+    - Test workflow thoroughly. Verify file operations and logging.
+
+## 11. Scratchpad (Current Focus - Phased Plan from `docs/plan.md`)
+    - Focus on completing phases in `docs/plan.md` and `docs/tasklist.md`.
+    - Key challenges addressed: API error handling with tools, prompt engineering for reliable JSON, correct `LlmAgent` parameterization.
+
+## 12. Lessons Learned with ADK (Keep Updated)
+    - **Output Parsing & Model Control:**
+        - Use `LlmAgent`'s `generation_config` parameter (a dictionary) to control temperature, force JSON output (`response_mime_type: "application/json"`), etc. Then parse with `json.loads(response.text)`.
+        - Pydantic `output_model` is an alternative for parsing if the LLM's output strictly matches the model.
+        - There's no `google.adk.output_parsers.JsonOutputParser`.
+        - `LlmAgent` does not take a direct `model_kwargs` parameter; use `generation_config`.
+    - **Tool Error Handling for Gemini:** When a tool used by an `LlmAgent` returns data (especially an error) to be passed to Gemini, the data structure MUST be simple JSON. Complex nested structures or non-standard fields in tool error responses can lead to `400 INVALID_ARGUMENT` from the Gemini API. Simplify tool error returns in `tool_logic.py`.
+    - **Callbacks:** Function-based (e.g., `before_model_callback`). Use `CallbackContext` (from `google.adk.agents.callback_context`) or `ToolContext` (from `google.adk.tools.tool_context`). No `AbstractCallbackHandler`.
+    - **API Key:** `GOOGLE_API_KEY` env var for `LlmAgent`.
+    - **Module Execution:** `python -m package.module` for relative imports.
+    - **Python SDK for Gemini:** Use `google-genai`.
+    - **ADK Installation:** `google-adk[extensions]`.
+    - **Asynchronous Operations:** `async`/`await` for sessions, runner.
+    - **`google.adk.events.Event`:** No `EventType` enum.
+    - **`google.adk.memory.ChatMessageHistory`:** Not in current public API; use `session.state`.
+    - **Session Service Consistency:** Same `InMemorySessionService` instance for creation and `Runner`. Consistent `user_id`.
+    - **Verifying ADK Imports:** Refer to official ADK docs. `google.adk.models.GeminiModel` is not typically needed for user code when `LlmAgent` takes a model string.
+    - **Prompt Modularity:** Storing prompts in external JSON files (e.g., `prompts/admin_prompt.json`) is good practice for organization. Load them in agent creation functions.
+    - **`LlmAgent` and `generation_config` for Model Control (ADK):**
+        - **Correct Way:** Pass a `generation_config` dictionary directly to the `LlmAgent` constructor. This dictionary should contain model parameters like `temperature` and, crucially, `response_mime_type: "application/json"` to enforce JSON output.
+        - **Incorrect/Ineffective:**
+            - Passing `model_kwargs` directly to `LlmAgent` (causes Pydantic errors).
+            - Relying solely on prompt engineering for JSON output (not robust enough; `response_mime_type` is key).
+            - While a `google.generativeai.GenerativeModel` instance *can* be configured with `generation_config` and then passed to `LlmAgent`, it's simpler to give `LlmAgent` a model string and its own `generation_config` parameter.
+    - **Pydantic `output_model` with `LlmAgent`:**
+        - Useful for automatic parsing if the LLM strictly produces JSON matching the Pydantic schema.
+        - If the LLM output is conversational or malformed JSON, parsing will fail. Temporarily disabling `output_model` can help isolate if the issue is with the LLM's output format or the Pydantic model itself.
+    - **Critical Tool Error Handling for Gemini API:**
+        - Tool functions (in `tool_logic.py`) *must* return extremely simple JSON dictionaries on error (e.g., `{"status": "error", "message": "details"}`).
+        - Complex Python objects or nested/non-standard error structures returned by tools will cause `400 INVALID_ARGUMENT` from the Gemini API when ADK forwards the tool result. This was a major roadblock.
+    - **Parameter Mismatches with ADK Classes:**
+        - Pydantic validation errors often occur when passing incorrect parameter names (e.g., `debug_mode` to `LlmAgent` which doesn't support it) or incorrect data structures. Always refer to ADK documentation for correct `LlmAgent` (and other class) parameters.
+    - **Import Verifications:**
+        - Double-check import paths and names (e.g., `google.adk.models.GeminiModel` is not directly used by user code; `LlmAgent` takes a model string). Ensure consistency between config files and where they are imported.
+    - **Path Handling in Prompts and Orchestration:**
+        - Be explicit in prompts about requiring absolute paths.
+        - Ensure the orchestrator (`main_adk_controller.py`) correctly resolves and provides all necessary path components (e.g., `workspace_root`, `target_project_path`) as input to agents, especially when they need to generate file paths in their tasks.
+    - **Temperature Configuration:**
+        - Best practice: Load from `.env` -> `adk_config.py` -> pass to `LlmAgent` via its `generation_config` dictionary. Avoid hardcoding in agent creation functions if configurability is desired. Initially, temperature was hardcoded and attempted via non-existent `model_kwargs`.
+    - **`response_mime_type` is King for JSON:** Forcing JSON output via `generation_config={"response_mime_type": "application/json"}` in `LlmAgent` is more reliable than prompt engineering alone.
+    - **Distinguishing Agent Conversational/Status Turns from Task/Data Outputs:**
+        - **Challenge:** Agents might initially output status messages (e.g., requesting parameters) instead of the expected structured data. Orchestrators attempting to parse this initial output as the primary data model will fail.
+        - **Solution/Prevention:** Design orchestrators to handle potential preliminary conversational turns from agents (e.g., by checking for specific keys in the response) or ensure the initial prompt and input are so comprehensive that the agent directly proceeds to its main task.
+    - **`LlmAgent`'s `model` Parameter and `generation_config` Nuances:**
+        - **Clarification:** `LlmAgent(model=...)` accepts a model string or a `google.generativeai.GenerativeModel` instance. `generation_config` (for temperature, JSON output) should be passed to `LlmAgent`'s constructor if using a model string. If passing a `GenerativeModel` instance, configure *that instance* directly.
+        - **Recommendation:** Using `LlmAgent(model="model-name-string", generation_config={...})` is often the most straightforward approach.
+    - **Effective Debugging Strategies for `LlmAgent` Behavior:**
+        - **Log Extensively:** Log the exact instruction, complete input, and raw LLM text response (`response.text`) before parsing.
+        - **Iterative Prompt Refinement:** Treat prompts as code; small changes can have big impacts. Test iteratively.
+        - **Isolate and Simplify:** When complex errors occur, temporarily remove tools, `output_model`, and simplify prompts to establish a working baseline. Then, reintroduce complexity incrementally. This was key to diagnosing the `400 INVALID_ARGUMENT` error related to tool error returns.
+    - **Consistent Configuration Propagation (e.g., Temperature):**
+        - **Challenge:** Hardcoding configurable parameters (like temperature) in agent creation functions instead of loading them dynamically.
+        - **Solution/Prevention:** Establish a clear flow: `.env` -> `adk_config.py` -> Agent creation functions (passing parameters via `LlmAgent`'s `generation_config`). Regularly audit for hardcoded values.

@@ -1,0 +1,6 @@
+google-genai
+google-adk[extensions]
+a2a-sdk
+python-dotenv
+requests
+beautifulsoup4
