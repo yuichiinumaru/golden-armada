@@ -1,5 +1,6 @@
 from google.adk.tools import FunctionTool
 from . import tool_logic
+from . import kb_tools # Import the new kb_tools module
 
 @FunctionTool
 def read_file(file_path: str) -> dict:
@@ -100,6 +101,25 @@ def summarize_chunks(chunks: list[str], summarizer_fn_placeholder: str) -> dict:
   return {"status": "success", "prepared_chunks": chunks}
 
 
+# --- Knowledge Base Tools ---
+list_docs_tool = FunctionTool(
+    fn=kb_tools.list_docs_in_kb,
+    name="list_project_documents",
+    description="Lists all available documents and subdirectories in the project's /docs knowledge base."
+)
+
+get_doc_content_tool = FunctionTool(
+    fn=kb_tools.get_doc_content_from_kb,
+    name="get_project_document_content",
+    description="Retrieves the full content of a specific document from the /docs folder, given its filepath relative to /docs (e.g., 'project.md' or 'adkdocs/adk-imports.md')."
+)
+
+search_docs_tool = FunctionTool(
+    fn=kb_tools.search_docs_in_kb,
+    name="search_project_documents",
+    description="Searches for a query string within all documents in the /docs folder, or within a specific document if its relative filepath is provided. Returns relevant snippets."
+)
+
 # Tool lists for agent roles - now using the decorated functions directly
 admin_tools_adk = [
     read_file,
@@ -109,6 +129,9 @@ admin_tools_adk = [
     fetch_web_page_text_content,
     chunk_file,
     summarize_chunks, # Agent receives chunks, then uses its LLM to summarize them.
+    list_docs_tool,
+    get_doc_content_tool,
+    search_docs_tool
 ]
 dev_tools_adk = [
     read_file,
@@ -124,3 +147,6 @@ revisor_tools_adk = [
     chunk_file,
     summarize_chunks, # Agent receives chunks, then uses its LLM to summarize them.
 ]
+
+# A separate list for just KB tools if needed elsewhere
+kb_access_tools = [list_docs_tool, get_doc_content_tool, search_docs_tool]
