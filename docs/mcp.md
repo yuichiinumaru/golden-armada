@@ -1,3 +1,9 @@
+# MCP (Model Context Protocol) Integration Strategy for JAN
+
+This document contains valuable research, notes, and discussion on strategies for integrating MCP-compliant tools and services with the JAN (Jenova Agent Nexus) platform. It particularly informs the "Easy MCP Creator" concept outlined in the [JAN Comprehensive Project Plan](./jules-jan-plan.md). The content below was an initial exploration and Q&A regarding MCP integration.
+
+---
+
  gostaria de implementar no futuro estes MCP's (que são otimos para dev)
 
 
