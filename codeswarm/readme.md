@@ -50,8 +50,8 @@ CodeSwarm is a multi-agent system built using the Google ADK (Agent Development 
     ```env
     GEMINI_API_KEY=your_actual_gemini_api_key_here
     ADMIN_MODEL_TYPE=gemini-1.5-pro-latest
-    DEV_MODEL_TYPE=gemini-1.5-flash-latest
-    REVISOR_MODEL_TYPE=gemini-1.5-flash-latest
+    DEV_MODEL_TYPE=gemini-2.5-flash-preview-05-20
+    REVISOR_MODEL_TYPE=gemini-2.5-flash-preview-05-20
     ```
     You can adjust the `MODEL_TYPE` variables as needed if you want to experiment with different Gemini models for each role.
 
