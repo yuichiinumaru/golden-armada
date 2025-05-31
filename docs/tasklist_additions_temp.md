@@ -1,6 +1,19 @@
 ## Phase 7: Future Development - Advanced Agent Capabilities & MCP Integration
 
-- [ ] **Research Advanced Prompting Techniques:** Further research and incorporate advanced prompting techniques (e.g., rich contextualization, Chain-of-Thought, few-shot examples, iterative refinement) from systems like Devika and community-driven AI coding assistant patterns into CodeSwarm agent prompts. Refer to `docs/advanced_development_patterns.md`.
+- [ ] **In-Depth Analysis of External AI Agent Frameworks & Systems:** Conduct a systematic and in-depth analysis of the following external AI agent frameworks and systems. The objectives are to extract relevant code structures, agent designs, tool definitions, MCP usage, prompting strategies, and architectural patterns, and to formulate a 'translation plan' or a set of recommendations for adapting these findings to the CodeSwarm ADK environment. This research will inform other future development tasks.
+    - `stitionai/devika`
+    - `x1xhlol/system-prompts-and-models-of-ai-tools`
+    - `graphlit/graphlit`
+    - `FoundationAgents/MetaGPT`
+    - `FoundationAgents/MetaGPT-Ext`
+    - `FoundationAgents/SPO`
+    - `FoundationAgents/awesome-foundation-agents`
+    - `FoundationAgents/OpenManus`
+    - `crewAIInc/crewAI`
+    - `crewAIInc/crewAI-tools`
+    - `VRSEN/agency-swarm`
+    - `VRSEN/agency-swarm-lab`
+Refer to `docs/advanced_development_patterns.md` for initial ideas and context.
 - [ ] **Evaluate & Prototype MCP Integrations:**
     - [ ] Systematically evaluate selected MCPs (listed in `docs/mcp_integration_ideas.md` and `docs/mcp_candidates_temp.md`) for their utility to CodeSwarm.
     - [ ] Prototype integration of 1-2 high-priority MCPs (e.g., for Code Execution, Git/Repository Analysis, or Terminal Access) as ADK `McpTool`s.

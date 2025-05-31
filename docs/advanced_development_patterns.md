@@ -261,9 +261,22 @@ Design for potential future parallel execution of tasks.
 
 ### Sources for Further Analysis
 
-The ideas presented in these advanced sections are partly inspired by observing patterns and architectures in open-source AI agent projects, particularly those focused on development and task automation. For deeper insights and alternative approaches, the CodeSwarm team may find it beneficial to analyze:
+The ideas presented in these advanced sections are partly inspired by observing patterns and architectures in open-source AI agent projects, particularly those focused on development and task automation. These repositories are valuable resources for ongoing research and inspiration, and should be explored as part of the "In-Depth Analysis of External AI Agent Frameworks & Systems" task outlined in the project's task list (`docs/tasklist_additions_temp.md` or the main `docs/tasklist.md` once updated). For deeper insights and alternative approaches, the CodeSwarm team may find it beneficial to analyze:
 
 -   **Devika:** [https://github.com/stitionai/devika](https://github.com/stitionai/devika) - An agentic AI software engineer that can understand high-level human instructions, break them down into steps, research relevant information, and write code to achieve the given objective.
 -   **System Prompts and Models of AI Tools:** [https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) - A community-curated list of system prompts from various AI tools and models, offering insights into how different systems frame agent roles, context, and output expectations.
+-   **Graphlit:** [https://github.com/graphlit/graphlit](https://github.com/graphlit/graphlit) - Platform for building AI applications with structured and unstructured data, relevant for RAG and knowledge graph integration.
+-   **MetaGPT (and MetaGPT-Ext, SPO, awesome-foundation-agents, OpenManus by FoundationAgents):**
+    -   [https://github.com/FoundationAgents/MetaGPT](https://github.com/FoundationAgents/MetaGPT) - A multi-agent framework for collaborative software development.
+    -   [https://github.com/FoundationAgents/MetaGPT-Ext](https://github.com/FoundationAgents/MetaGPT-Ext) - Extensions for MetaGPT.
+    -   [https://github.com/FoundationAgents/SPO](https://github.com/FoundationAgents/SPO) - Standardized Prompting Orchestration.
+    -   [https://github.com/FoundationAgents/awesome-foundation-agents](https://github.com/FoundationAgents/awesome-foundation-agents) - A curated list of resources related to foundation agents.
+    -   [https://github.com/FoundationAgents/OpenManus](https://github.com/FoundationAgents/OpenManus) - System for creating and managing agent-based workflows.
+-   **CrewAI (and crewAI-tools):**
+    -   [https://github.com/crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) - Framework for orchestrating role-playing, autonomous AI agents.
+    -   [https://github.com/crewAIInc/crewAI-tools](https://github.com/crewAIInc/crewAI-tools) - A collection of tools for crewAI agents.
+-   **Agency Swarm (and agency-swarm-lab):**
+    -   [https://github.com/VRSEN/agency-swarm](https://github.com/VRSEN/agency-swarm) - A platform for creating and managing swarms of AI agents.
+    -   [https://github.com/VRSEN/agency-swarm-lab](https://github.com/VRSEN/agency-swarm-lab) - Laboratory for experimenting with Agency Swarm.
 
 By exploring these advanced patterns and future ideas, CodeSwarm can continue to evolve into a highly capable and intelligent multi-agent development assistant.
