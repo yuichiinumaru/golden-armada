@@ -1,0 +1,8 @@
+Round 1:
+Dev Activities:
+- DevAgentADK_1: Created calculator.py with add(a, b) function.
+- DevAgentADK_1: Created test_calculator.py, which calculates 5 + 3 but doesn't use an execution tool for verification.
+Revisor Activities:
+- RevisorAgentADK_1: Feedback: test_calculator.py needs improvement; it should use an execution tool (like execute_python_code) to verify the output is 8 instead of just printing a success/failure message.
+End of Round 1 Summary.
+---

@@ -1,0 +1,8 @@
+Round 1:
+Dev Activities:
+- DevAgentADK_1: Created greeter.py with say_hello function.
+- DevAgentADK_1: Created run_greeter.py, importing greeter and calling say_hello('World').
+Revisor Activities:
+- RevisorAgentADK_1: Feedback: run_greeter.py needs execute_python_code tool to capture output; greeter.py is correct.
+End of Round 1 Summary.
+---

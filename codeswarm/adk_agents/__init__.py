@@ -37,28 +37,29 @@ def load_instruction_from_file(prompt_filename: str):
         print(f"ERROR: Could not decode JSON from {prompt_filename}")
         return "Error: Could not decode prompt JSON." # Fallback instruction
 
-def create_admin_llm_agent(model_override=None):
+def create_admin_llm_agent(model_override=None, instruction_override: str = None, tools_override: list = None):
     model_name_to_use = model_override if model_override else ADMIN_MODEL_STR
     
     llm_generate_content_config = {
         "temperature": ADMIN_MODEL_TEMPERATURE,
-        # "response_mime_type": "application/json" # Removed due to API conflict with function calling
     }
     
-    # If there are no tools, we might be able to use response_mime_type.
-    # However, AdminAgent is expected to have tools.
-    # If, for some reason, admin_tools_adk could be empty/None,
-    # you might add logic here:
-    # if not admin_tools_adk:
-    #     llm_generate_content_config["response_mime_type"] = "application/json"
+    current_instruction = instruction_override if instruction_override is not None else load_instruction_from_file("admin_prompt.json") # Default to original admin_prompt
+    current_tools = tools_override if tools_override is not None else admin_tools_adk
+
+    # Only set response_mime_type if there are no tools, as it can conflict with function calling
+    if not current_tools:
+        llm_generate_content_config["response_mime_type"] = "application/json"
+        # This assumes that an agent without tools that needs to output JSON should have this.
+        # If the instruction itself (like for the formatter) asks for JSON, this might be redundant or helpful.
 
     agent_parameters = {
-        "name": "AdminAgentADK",
+        "name": "AdminAgentADK", # Consider making name more dynamic if multiple admin types are used frequently
         "model": model_name_to_use,
-        "instruction": load_instruction_from_file("admin_prompt.json"),
-        "tools": admin_tools_adk, # AdminAgent has tools
+        "instruction": current_instruction,
+        "tools": current_tools,
         "generate_content_config": llm_generate_content_config,
-        "output_model": AdminTaskOutput,
+        # "output_model": AdminTaskOutput, # Temporarily removed to resolve Pydantic error
         "before_model_callback": log_llm_start,
         "after_model_callback": log_llm_end,
         "before_tool_callback": log_tool_start,

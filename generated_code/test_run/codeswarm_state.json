@@ -1,0 +1,57 @@
+{
+  "summaries": [
+    {
+      "round": 1,
+      "dev_outputs": [
+        {
+          "dev_id": 1,
+          "result": {
+            "function_call": {
+              "name": "write_file",
+              "args": {
+                "file_path": "test_project.py",
+                "content": "def hello():\n  print('Hello from CodeSwarm!')"
+              }
+            }
+          }
+        }
+      ],
+      "revisor_feedback": [
+        {
+          "revisor_id": 1,
+          "result": {
+            "status": "skipped",
+            "message": "DevAgent failure or non-success status."
+          }
+        }
+      ],
+      "interpreter_output": {
+        "Task": "Create test_project.py",
+        "File": "test_project.py",
+        "Developer Task": "Create a Python script named test_project.py containing a function hello() that prints 'Hello from CodeSwarm!'",
+        "Reviewer Focus": "Check if the file test_project.py exists, contains a function called hello(), and if that function prints 'Hello from CodeSwarm!' when called."
+      },
+      "formatter_output": {
+        "tasks": [
+          {
+            "dev_id": 1,
+            "revisor_id": 1,
+            "file_to_edit_or_create": "test_project.py",
+            "dev_task_description": "Create a Python script named test_project.py containing a function hello() that prints 'Hello from CodeSwarm!'",
+            "revisor_focus_areas": "Check if the file test_project.py exists, contains a function called hello(), and if that function prints 'Hello from CodeSwarm!' when called."
+          }
+        ]
+      },
+      "parsed_tasks_for_dev": [
+        {
+          "dev_id": 1,
+          "revisor_id": 1,
+          "file_to_edit_or_create": "test_project.py",
+          "dev_task_description": "Create a Python script named test_project.py containing a function hello() that prints 'Hello from CodeSwarm!'",
+          "revisor_focus_areas": "Check if the file test_project.py exists, contains a function called hello(), and if that function prints 'Hello from CodeSwarm!' when called."
+        }
+      ],
+      "admin_logging_result": {}
+    }
+  ]
+}
