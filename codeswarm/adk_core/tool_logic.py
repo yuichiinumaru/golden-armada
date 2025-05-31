@@ -13,11 +13,37 @@ def create_file(file_path: str, content: str) -> dict:
         return {'status': 'error', 'message': str(e)}
 
 def read_file(file_path: str) -> dict:
+    resolved_file_path = file_path
+    target_base = os.environ.get("TARGET_PROJECT_PATH_FOR_TOOLS")
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        if os.path.isabs(file_path):
+            if target_base and not file_path.startswith(target_base):
+                file_basename = os.path.basename(file_path)
+                resolved_file_path = os.path.normpath(os.path.join(target_base, file_basename))
+                print(f"DEBUG: read_file: Absolute path '{file_path}' was outside TARGET_PROJECT_PATH_FOR_TOOLS. Resolved to '{resolved_file_path}'.")
+            else:
+                resolved_file_path = os.path.normpath(file_path)
+                print(f"DEBUG: read_file: Absolute path '{file_path}' used as is or already within target_base.")
+        else: # It's a relative path
+            if target_base:
+                target_base_name = os.path.basename(target_base)
+                if file_path.startswith(target_base_name + os.path.sep):
+                    file_path_corrected = file_path[len(target_base_name) + len(os.path.sep):]
+                    print(f"DEBUG: read_file: Corrected relative path from '{file_path}' to '{file_path_corrected}'.")
+                    file_path = file_path_corrected
+                resolved_file_path = os.path.normpath(os.path.join(target_base, file_path))
+                print(f"DEBUG: read_file: Relative path '{file_path}' (post-correction) resolved to '{resolved_file_path}' using TARGET_PROJECT_PATH_FOR_TOOLS.")
+            else:
+                resolved_file_path = os.path.normpath(file_path)
+                print(f"DEBUG: read_file: Relative path '{file_path}' received, but TARGET_PROJECT_PATH_FOR_TOOLS not set. Using as is.")
+
+        print(f"Attempting to read file at final path: {resolved_file_path}")
+        with open(resolved_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
+        print(f"Successfully read file: {resolved_file_path}")
         return {'status': 'success', 'content': content}
     except Exception as e:
+        print(f"Error in read_file for original path '{file_path}' (final resolved path '{resolved_file_path}'): {e}")
         return {'status': 'error', 'message': str(e)}
 
 def update_file(file_path: str, new_content: str) -> dict:
@@ -57,12 +83,49 @@ def write_file(file_path: str, content: str) -> dict:
     Returns:
         dict: {'status': 'success', 'result': str} on success, or {'status': 'error', 'message': str} on failure.
     """
+    resolved_file_path = file_path
+    target_base = os.environ.get("TARGET_PROJECT_PATH_FOR_TOOLS")
+
     try:
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, 'w', encoding='utf-8') as f:
+        if os.path.isabs(file_path):
+            if target_base and not file_path.startswith(target_base):
+                # LLM provided an absolute path that is NOT within the target project base.
+                # Force it into the target_base using only the basename of the LLM's path.
+                file_basename = os.path.basename(file_path)
+                resolved_file_path = os.path.normpath(os.path.join(target_base, file_basename))
+                print(f"DEBUG: write_file: Absolute path '{file_path}' was outside TARGET_PROJECT_PATH_FOR_TOOLS. Resolved to '{resolved_file_path}'.")
+            else:
+                # Absolute path is already within target_base or target_base is not set (less safe, but keep original if it's all we have)
+                resolved_file_path = os.path.normpath(file_path)
+                print(f"DEBUG: write_file: Absolute path '{file_path}' used as is or already within target_base.")
+        else: # It's a relative path
+            if target_base:
+                # Path correction: if file_path (e.g., "project_dir/file.txt") redundantly starts with
+                # the basename of target_base (e.g., "/abs/path/to/project_dir"), strip it.
+                target_base_name = os.path.basename(target_base)
+                if file_path.startswith(target_base_name + os.path.sep):
+                    file_path_corrected = file_path[len(target_base_name) + len(os.path.sep):]
+                    print(f"DEBUG: write_file: Corrected relative path from '{file_path}' to '{file_path_corrected}'.")
+                    file_path = file_path_corrected # Use the corrected path for joining
+
+                resolved_file_path = os.path.normpath(os.path.join(target_base, file_path))
+                print(f"DEBUG: write_file: Relative path '{file_path}' (post-correction) resolved to '{resolved_file_path}' using TARGET_PROJECT_PATH_FOR_TOOLS.")
+            else:
+                # Relative path and no target_base, use as is (relative to CWD)
+                resolved_file_path = os.path.normpath(file_path)
+                print(f"DEBUG: write_file: Relative path '{file_path}' received, but TARGET_PROJECT_PATH_FOR_TOOLS not set. Using as is (relative to CWD).")
+
+        print(f"Attempting to write file at final path: {resolved_file_path}")
+        dir_name = os.path.dirname(resolved_file_path)
+        if dir_name:
+            os.makedirs(dir_name, exist_ok=True)
+
+        with open(resolved_file_path, 'w', encoding='utf-8') as f:
             f.write(content)
-        return {"status": "success", "result": f"Wrote file: {file_path}"}
+        print(f"Successfully wrote file: {resolved_file_path}")
+        return {"status": "success", "result": f"Wrote file: {resolved_file_path}"}
     except Exception as e:
+        print(f"Error in write_file for original path '{file_path}' (final resolved path '{resolved_file_path}'): {e}")
         return {"status": "error", "message": str(e)}
 
 def list_folder_contents(folder_path: str) -> dict:

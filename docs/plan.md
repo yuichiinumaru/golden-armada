@@ -235,3 +235,22 @@ codeswarm/
 *   **Installation:** `google-adk[extensions]`.
 
 This updated plan provides a more robust path forward, leveraging our collective experience with ADK's nuances.
+
+## Implementation Summary and Key Learnings (Post ADK Refactor - May 16, 2024)
+
+The CodeSwarm project has been successfully refactored to utilize the Google ADK (Agent Development Kit), resulting in a functional multi-agent workflow capable of performing coding tasks. Key achievements and learnings include:
+
+*   **Successful ADK Refactoring:** The core agent loop (Admin -> Dev -> Revisor -> AdminLogger) is operational using ADK primitives.
+*   **`session.state` for Input Grounding:** Critical for reliable agent behavior, ensuring agents use the correct contextual data (e.g., `{current_project_goal}` for AdminInterpreter, `{revisor_target_file_abs_path}` for Revisor) by injecting these values into prompts from the session state.
+*   **Two-Step AdminAgent Pipeline:**
+    *   **AdminInterpreter:** A tool-less agent that interprets the overall goal and outputs natural language task descriptions.
+    *   **AdminFormatter:** A tool-less agent that takes the natural language from the Interpreter and structures it into the required JSON format for task assignments. This separation proved more reliable for generating correct JSON.
+*   **Orchestrator-Managed Tool Calls (for DevAgent):** For ADK v1.1.1, it was observed that the DevAgent (when prompted to output a JSON string describing a function call) did not reliably trigger ADK's native tool dispatch. The solution implemented involves the `main_adk_controller.py` orchestrator parsing the DevAgent's textual JSON output for `{"function_call": ...}` and then manually looking up and executing the corresponding tool from `tool_logic.py`.
+*   **ADK-Native Tool Calls (Revisor/AdminLogger):** Interestingly, for Revisor and AdminLogger agents, their prompts (which also instruct them to request tool calls via a similar JSON structure in their text output) *did* result in the ADK's native tool dispatch mechanism successfully executing the tools (`read_file` and `write_file` respectively). This suggests model or prompt nuances can affect ADK's tool recognition from text. The orchestrator's `execute_agent_and_get_result` function was enhanced to prioritize ADK-native function call/response events if present.
+*   **Successful Model Usage:** The system was successfully tested with `gemini-2.5-flash-preview-05-20` for all agent types after ensuring the `.env` file was correctly configured.
+*   **Robust Path Handling in Tools:** The `write_file` tool in `tool_logic.py` was enhanced to use the `TARGET_PROJECT_PATH_FOR_TOOLS` environment variable. It now correctly handles relative paths and, importantly, redirects "rogue" absolute paths (e.g., `/tmp/file.py`, `/Users/name/file.py`) output by LLMs into the correct project subdirectories by using only the basename of such paths.
+*   **Functional Core Workflow:**
+    *   Multi-pair operation (tested with `--pairs 2`) is functional, with AdminFormatter generating distinct tasks.
+    *   Dynamic code generation by DevAgents based on task descriptions is working.
+    *   File review by RevisorAgents is operational.
+    *   Logging of round activities to `changelog.log` by AdminLoggerAgent via a tool call is working.

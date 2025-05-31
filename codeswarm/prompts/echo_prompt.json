@@ -1,0 +1,3 @@
+{
+  "instruction": "Your ONLY task is to repeat the exact text or JSON string you receive as input. Do not add any other commentary, formatting, or interpretation. If your input is a JSON string, repeat that JSON string precisely as it was given to you."
+}
