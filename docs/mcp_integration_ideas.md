@@ -1,35 +1,21 @@
-# MCP (Model Context Protocol) Integration Strategy for JAN
+# MCP (Model Context Protocol) Integration Ideas for CodeSwarm
 
-This document contains valuable research, notes, and discussion on strategies for integrating MCP-compliant tools and services with the JAN (Jenova Agent Nexus) platform. It particularly informs the "Easy MCP Creator" concept outlined in the [JAN Comprehensive Project Plan](./jules-jan-plan.md). The content below was an initial exploration and Q&A regarding MCP integration.
+This document contains valuable research, notes, and discussion on potential strategies for integrating MCP-compliant tools and services with the CodeSwarm project. The content below explores how CodeSwarm could leverage MCP for enhanced capabilities, particularly by interacting with external tools specialized for development tasks.
 
 ---
 
  gostaria de implementar no futuro estes MCP's (que são otimos para dev)
 
-
-
-
-
 https://github.com/brightdata-com/brightdata-mcp
-
 https://github.com/getzep/graphiti/tree/main/mcp_server
-
 https://github.com/puravparab/Gitingest-MCP
-
 https://github.com/wonderwhy-er/DesktopCommanderMCP
-
 https://github.com/bazinga012/mcp_code_executor
-
 https://github.com/mindsdb/mindsdb
-
-
 
 Esses MCPs são poderosos para devs porque permitem automatizar tarefas fundamentais do ciclo de desenvolvimento: explorar repositórios com o GitIngest, controlar o sistema de arquivos e terminal com o Terminal MCP, executar códigos Python em ambientes isolados via Code Executor e integrar múltiplas fontes de dados com o MindsDB MCP — tudo isso acessível por agentes de IA ou automações, otimizando desde a prototipação até o deploy e a análise de dados, sem sair do fluxo de trabalho.
 
-
-
 Porém, minha pergunta é mais geral, seja pra esses MCPS ou qualquer outros: como poderei fazer para que os MCP's rodem de forma integrada ao programa e sempre estejam ativados para os agentes usarem quando quiserem? terei que criar um outro script main.py que invoca o main_adk_controller.py e ativa tbm os dockers dos mcp's?
-
 
 Essa é uma excelente pergunta e demonstra uma visão arquitetônica muito interessante para o seu sistema de agentes! Você está no caminho certo ao pensar em como integrar essas poderosas ferramentas MCP (Model Context Protocol) para turbinar seus agentes ADK.
 
@@ -48,7 +34,7 @@ Você não precisará, tipicamente, que o `main_adk_controller.py` *invoque dire
     * **Contêineres Docker:** A forma mais comum e recomendada de rodar esses MCPs é usando contêineres Docker, como você mencionou. Cada MCP teria seu próprio `Dockerfile` (ou você usaria imagens pré-construídas, se disponíveis) e rodaria como um serviço separado.
     * **Sempre Ativado:** Para que estejam "sempre ativados", você precisará de uma forma de gerenciar o ciclo de vida desses contêineres:
         * **Para Desenvolvimento Local:**
-            * **`docker-compose`:** Esta é a ferramenta ideal. Você criaria um arquivo `docker-compose.yml` que define todos os seus serviços MCP e, potencialmente, até mesmo o seu próprio serviço `codeswarm` (que roda o `main_adk_controller.py`). Com um único comando (`docker-compose up`), você subiria todos os MCPs e sua aplicação ADK. Eles rodariam em paralelo, e o `docker-compose` gerenciaria a rede entre eles.
+            * **`docker-compose`:** Esta é a ferramenta ideal. Você criaria um arquivo `docker-compose.yml` que define todos os seus serviços MCP e, potencialmente, até mesmo o seu próprio serviço CodeSwarm (que roda o `main_adk_controller.py`). Com um único comando (`docker-compose up`), você subiria todos os MCPs e sua aplicação ADK. Eles rodariam em paralelo, e o `docker-compose` gerenciaria a rede entre eles.
             * **Scripts Manuais:** Alternativamente, você poderia ter scripts shell para iniciar cada contêiner MCP individualmente antes de rodar sua aplicação ADK.
         * **Para Produção:**
             * **Orquestradores de Contêineres (Kubernetes, etc.):** Em um ambiente de produção, você usaria ferramentas como Kubernetes para gerenciar o deployment, a escalabilidade e a disponibilidade contínua dos seus serviços MCP e da sua aplicação ADK.
@@ -70,12 +56,12 @@ Você não precisará, tipicamente, que o `main_adk_controller.py` *invoque dire
         ```yaml
         version: '3.8'
         services:
-          codeswarm_app: # Seu aplicativo ADK
-            build: . # Ou a imagem do seu app
+          codeswarm_app: # Your CodeSwarm ADK application
+            build: . # Or the image of your app
             ports:
-              - "8080:8080" # Se seu ADK app expor alguma API
+              - "8080:8080" # If your ADK app exposes an API
             environment:
-              - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+              - GEMINI_API_KEY=${GEMINI_API_KEY} # Ensure this matches your .env for CodeSwarm
               - GITINGEST_MCP_URL=http://gitingest_mcp:8001
               - TERMINAL_MCP_URL=http://terminal_mcp:8002
               - CODE_EXECUTOR_MCP_URL=http://code_executor_mcp:8003
