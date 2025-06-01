@@ -5,9 +5,25 @@ import tempfile
 import shutil
 import os # For GOOGLE_API_KEY check
 from pathlib import Path
+import sys # For mocking
+from unittest.mock import MagicMock # For mocking
+
+# --- Mocking google.adk.sessions before actual import ---
+MOCK_ADK_MODULES = [
+    "google.adk",
+    "google.adk.sessions",
+]
+for mod_name in MOCK_ADK_MODULES:
+    if mod_name not in sys.modules:
+        sys.modules[mod_name] = MagicMock()
+
+# Ensure InMemorySessionService is a mock if google.adk.sessions was mocked
+if isinstance(sys.modules.get("google.adk.sessions"), MagicMock):
+    sys.modules["google.adk.sessions"].InMemorySessionService = MagicMock()
+# --- End Mocking ---
 
 from google.adk.sessions import InMemorySessionService
-from google.genai.types import Content, Part
+from google.generativeai.types import Content, Part # Corrected import path
 
 # Assuming 'codeswarm' is in the Python path or its structure allows these imports
 from codeswarm.adk_agents import create_dev_llm_agent
@@ -43,8 +59,9 @@ class TestDevAgent(unittest.TestCase):
         session_service = InMemorySessionService()
         runner = get_runner(session_service=session_service)
 
-        session_id = await session_service.create_session()
-        session = await session_service.get_session(session_id=session_id)
+        user_id = "test_user_dev" # Consistent user_id
+        session_id = await session_service.create_session(user_id=user_id) # Pass user_id if create_session supports it
+        # session = await session_service.get_session(user_id=user_id, session_id=session_id)
 
         input_json = json.dumps(input_dict)
         message = Content(parts=[Part(text=input_json)])
@@ -55,7 +72,10 @@ class TestDevAgent(unittest.TestCase):
         error_occurred = False
 
         async for event in runner.run_async(
-            agent_id=agent.id, session=session, request_body=message
+            user_id=user_id,
+            session_id=session_id,
+            new_message=message,
+            agent_id=agent.id
         ):
             if event.type == "agent_response" and event.is_last_event:
                 if event.response and event.response.parts:
@@ -100,7 +120,7 @@ class TestDevAgent(unittest.TestCase):
         self.assertEqual(Path(parsed_output.file_path).resolve(), Path(file_to_create_path).resolve(), "Output file_path does not match input.")
 
         # Verify file creation and content
-        read_result = tool_logic.read_file(file_to_create_path, self.target_project_path_str)
+        read_result = tool_logic.read_file(file_to_create_path)
         self.assertEqual(read_result["status"], "success", f"Failed to read the file '{file_to_create_path}' supposedly created by DevAgent.")
         self.assertIn("print('Hello, World!')", read_result["content"], "File content incorrect.")
         # Ensure it *only* contains the print statement as per strict instruction
@@ -116,7 +136,7 @@ class TestDevAgent(unittest.TestCase):
         initial_content = "def existing_function():\n    pass\n"
 
         # Pre-create the file using tool_logic
-        write_setup_result = tool_logic.write_file(file_to_modify_path, initial_content, self.target_project_path_str)
+        write_setup_result = tool_logic.write_file(file_to_modify_path, initial_content)
         self.assertEqual(write_setup_result["status"], "success", "Setup: Failed to write initial file for modification test.")
 
         dev_input_dict = {
@@ -139,7 +159,7 @@ class TestDevAgent(unittest.TestCase):
         self.assertEqual(Path(parsed_output.file_path).resolve(), Path(file_to_modify_path).resolve(), "Output file_path does not match input for modification.")
 
         # Verify file modification
-        read_result = tool_logic.read_file(file_to_modify_path, self.target_project_path_str)
+        read_result = tool_logic.read_file(file_to_modify_path)
         self.assertEqual(read_result["status"], "success", f"Failed to read the file '{file_to_modify_path}' supposedly modified by DevAgent.")
 
         expected_content_lines = initial_content.splitlines()

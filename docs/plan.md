@@ -1,3 +1,5 @@
+**Note:** This document outlines the initial refactoring plan for transitioning CodeSwarm to the Google Agent Development Kit (ADK). Many of the phased tasks described herein have been completed. For the current project architecture, please refer to `docs/project.md`. For ongoing and future tasks, please see `docs/tasklist.md`. The 'Key ADK Concepts' section at the end of this document remains a valuable reference of lessons learned.
+
 Okay, this is a solid plan. Let's outline the steps to refactor your CodeSwarm project to ADK, including a suggested file and folder architecture and incorporating lessons learned.
 
 ## Proposed File/Folder Architecture
@@ -21,18 +23,15 @@ codeswarm/
 │   ├── dev_agent.py          # Defines the Dev LlmAgent template
 │   └── revisor_agent.py      # Defines the Revisor LlmAgent template
 │
-├── project_logs/             # For changelog.log, tasklist.md, doclinks.md (existing)
-│   ├── changelog.log
-│   ├── tasklist.md
-│   └── doclinks.md
+├── docs/                     # Project documentation (existing)
+│   ├── changelog.log         # Main changelog updated by AdminAgent
+│   ├── tasklist.md           # Main tasklist updated by AdminAgent
+│   ├── plan.md               # This file
+│   ├── project.md            # Main project specification
+│   ├── (other existing docs like solidstatemgt.md, adk-imports.md)
+├── project_logs/             # Potentially for other future detailed operational logs
 │
 ├── generated_code/           # Default output for new projects (existing)
-│
-├── docs/                     # Project documentation (existing)
-│   ├── plan.md               # This file
-│   ├── solidstatemgt.md      # Detailed notes on ADK state/session management
-│   ├── adk-imports.md        # Cheatsheet for correct ADK imports
-│   └── (other existing docs)
 │
 ├── requirements.txt          # Project dependencies
 └── README.md                 # Updated project README for ADK version
@@ -59,10 +58,10 @@ codeswarm/
 1.  **Backup Current Project.**
 2.  **Verify/Create Directory Structure** as above.
 3.  **Update `requirements.txt`:**
-    *   `google-genai` (replaces `google-generativeai`)
+    *   `google-genai` (This is the SDK for calling the Gemini API directly. `google-generativeai` is also a related package, often for client libraries. The ADK itself manages direct LLM calls, but `google-genai` might be used for specific model feature interaction or if directly calling Gemini outside ADK managed agents.)
     *   `google-adk[extensions]` (for comprehensive ADK features)
     *   `python-dotenv`, `requests`, `beautifulsoup4`, `pydantic` (if using `output_model`).
-4.  **Install/Update Dependencies:** `pip install -U -r requirements.txt`.
+4.  **Install/Update Dependencies:** `pip install -U -r requirements.txt` (or `codeswarm/requirements.txt` as per README).
 5.  **`adk_config.py`:**
     *   Load `.env`. Define model strings.
     *   Critically, ensure `os.environ["GOOGLE_API_KEY"] = os.getenv("GEMINI_API_KEY")` (or similar) is executed early for ADK `LlmAgent` to pick up the Gemini API key.
@@ -215,23 +214,23 @@ codeswarm/
 
 **Key ADK Concepts (Updated with Lessons Learned):**
 
-*   **`LlmAgent`:** Configuration with model, instruction, tools, **`output_model` (Pydantic)** for structured output, and **function-based callbacks**.
-*   **`FunctionTool`:** Wrapping Python callables.
+*   **`LlmAgent` Configuration:** Agents are configured with `output_model` (Pydantic models like `AdminTaskOutput`, `DevAgentOutput`, `RevisorAgentOutput`) for structured responses. `generation_config` does not use `response_mime_type: "application/json"` when `output_model` is active. Function-based callbacks are used for lifecycle events.
+*   **`FunctionTool`:** Used for wrapping Python callables for ADK-native tool use by agents.
 *   **Session Management:**
-    *   `SessionService` (e.g., `InMemorySessionService` from `google.adk.services.impl.in_memory_session_service`): Single instance shared by runners.
+    *   `SessionService` (e.g., `InMemorySessionService` from `google.adk.services.impl.in_memory_session_service`): A single instance should be shared by all runners involved in a session.
     *   `await session_service.create_session(user_id=...)`: Asynchronous, requires a consistent `user_id`.
     *   `session.id`: Used to refer to the session in runner calls.
-    *   `session.state`: Dictionary for storing and retrieving data within a session, accessible across agent turns if the same session_id is used.
-    *   **No `google.adk.memory.ChatMessageHistory`**: Manage history via `session.state` or custom logic if needed.
-    *   **(Future for CLI Persistence)** `FileStore` from `google.adk.services.impl.file_store` can be used with `SessionService` for saving/loading sessions.
-*   **ADK `Runner`:** Executes agents (`runner.run_async(session_id=..., user_id=..., prompt=...)`). Needs the *same* `session_service` instance that created the session.
-*   **Callbacks (Function-based):** Define functions, assign to `LlmAgent` (e.g., `before_model_callback`). Use `CallbackContext`, `ToolCallbackContext` from `google.adk.agents.callback_context`. No `AbstractCallbackHandler`.
-*   **Imports:** Always use `google.adk.*`. Refer to `docs/adk-imports.md`.
-*   **API Key:** `GOOGLE_API_KEY` environment variable for Gemini models.
-*   **Async:** Most ADK operations are `async`/`await`.
-*   **Output Parsing:** Use `LlmAgent(output_model=MyPydanticModel)` or instruct LLM for JSON string and parse with `json.loads()`. No `JsonOutputParser`.
-*   **`google.adk.events.Event`**: No `EventType` enum; infer type from event content.
-*   **Python SDK:** Use `google-genai`, not `google-generativeai`.
-*   **Installation:** `google-adk[extensions]`.
+    *   `session.state`: Dictionary for storing and retrieving data within a session, accessible across agent turns if the same `session_id` is used. Crucial for input grounding.
+    *   **No `google.adk.memory.ChatMessageHistory`**: History management is custom, often via `session.state` or by passing relevant summaries/outputs.
+    *   **(Future for CLI Persistence)** `FileStore` from `google.adk.services.impl.file_store` could be used with `SessionService` for saving/loading sessions.
+*   **ADK `Runner`:** Executes agents (`runner.run_async(user_id=..., session_id=..., new_message=...)`). Requires the same `session_service` instance that created the session.
+*   **Callbacks (Function-based):** Defined and assigned to `LlmAgent` (e.g., `before_model_callback`). Use `CallbackContext`, `ToolContext` from `google.adk.agents.callback_context`. `AbstractCallbackHandler` is not used.
+*   **Imports:** Generally `google.adk.*`. Refer to `docs/adk-imports.md` if it exists and is maintained.
+*   **API Key:** `GOOGLE_API_KEY` environment variable is used by ADK for Gemini models.
+*   **Async:** Core ADK operations are `async`/`await`.
+*   **Output Parsing:** Primarily handled by `LlmAgent(output_model=MyPydanticModel)`. If not using `output_model`, instruct LLM for JSON string and parse with `json.loads()`. No `JsonOutputParser` in ADK 1.1.1.
+*   **`google.adk.events.Event`**: Event objects are received in `runner.run_async`; no specific `EventType` enum, type is inferred from event attributes.
+*   **Python SDK for Gemini:** ADK manages LLM calls. If direct Gemini calls are needed outside ADK, `google-genai` (or `google.generativeai` for newer client libraries) is the relevant package. The project currently uses `google-generativeai` as a dependency.
+*   **Installation:** Key ADK package is `google-adk[extensions]`.
 
 This updated plan provides a more robust path forward, leveraging our collective experience with ADK's nuances.
