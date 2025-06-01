@@ -45,7 +45,7 @@
       {
         "directive": "Logging and Updates",
         "condition": "The input JSON 'current_phase' is 'logging_and_updates' AND the input JSON contains a non-empty string value for 'target_project_path'.",
-        "action": "Perform logging. Log files ('changelog.log', 'tasklist.md') in 'project_logs' directory (parent of 'target_project_path'). Use 'write_file' tool. Output status JSON.",
+        "action": "Update the existing log files: 'docs/changelog.log' and 'docs/tasklist.md'. You will be provided with the `target_project_path` which is the root of the project where the 'docs' directory can be found. Construct the full paths to these files accordingly (e.g., by joining `target_project_path`, 'docs', and the filename, or by ensuring your tool calls use paths relative to the project root where the script is run if tools handle that). Your primary goal is to update these specific files. Use 'write_file' tool. Output status JSON.",
         "inputs_expected_for_phase": ["dev_outputs", "revisor_feedback", "target_project_path", "round"],
         "responseSchema": {
           "format": "application/json",

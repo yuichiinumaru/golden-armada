@@ -1,6 +1,6 @@
 # CodeSwarm: A Multi-Agent Coding Assistant
 
-CodeSwarm is a multi-agent system built using the Google Agent Development Kit (ADK). It employs a team of AI agents—Admin, Developer, Revisor, and AdminLogger—to collaboratively work on coding projects based on user-defined goals. CodeSwarm leverages Gemini models for all LLM operations and is designed for tasks like code generation, modification, and review.
+CodeSwarm is a multi-agent system built using the Google Agent Development Kit (ADK). It employs a team of AI agents—Admin, Developer, and Revisor—to collaboratively work on coding projects based on user-defined goals. CodeSwarm leverages Gemini models for all LLM operations and is designed for tasks like code generation, modification, and review.
 
 ## Overview
 
@@ -16,7 +16,7 @@ For detailed project specifications, architecture, and agent roles, please see [
 
 ## Features
 
--   **Multi-Agent Collaboration**: Utilizes Admin, Developer, Revisor, and AdminLogger agents for a structured and iterative workflow.
+-   **Multi-Agent Collaboration**: Utilizes Admin, Developer, and Revisor agents for a structured and iterative workflow. The AdminAgent also handles logging tasks.
 -   **Google ADK Powered**: Built upon the Google ADK framework for direct Gemini model integration and agent orchestration (tested with `google-adk==1.1.1`).
 -   **Gemini Models**: Configurable to use different Gemini models (e.g., `gemini-1.5-flash-latest`) for various agent roles via a `.env` file.
 -   **Tool-Equipped Agents**: Agents can request tool execution (e.g., file I/O) managed by the orchestrator or use ADK-native tool calls.
@@ -30,10 +30,10 @@ For detailed project specifications, architecture, and agent roles, please see [
 -   `codeswarm/adk_agents/`: Contains agent prompt definitions (JSON files) and agent creation logic.
 -   `codeswarm/adk_core/`: Contains tool logic (`tool_logic.py`), ADK FunctionTool definitions, and ADK setup helpers.
 -   `codeswarm/adk_config.py`: Loads `.env` variables and provides configuration for agents and tools.
--   `.env`: (Must be created manually in the project root) Stores API keys, model names, and critical paths.
--   `docs/`: Contains detailed documentation including project specifications, task lists, and development evolution.
--   `project_logs/`: Directory for operational logs like `changelog.log`.
--   `generated_code/`: A default directory where projects can be created if no specific path is given (configurable via `.env`).
+-   `.env`: (Must be created manually in the project root) Stores API keys, model names, and the default project path.
+-   `docs/`: Contains detailed documentation including project specifications, task lists (`tasklist.md`), development evolution, and primary logs (`changelog.log`).
+-   `project_logs/`: Potentially for future detailed operational logs. Current primary logs like `changelog.log` and `tasklist.md` are in `docs/`.
+-   `generated_code/`: A default directory that can be used as a parent for projects if `DEFAULT_PROJECT_PATH` or `--path` points into it.
 
 ## Prerequisites
 
@@ -48,7 +48,7 @@ For detailed project specifications, architecture, and agent roles, please see [
 4.  **Required Python Packages**:
     From within your activated conda environment and the project's root directory, run:
     ```bash
-    pip install google-adk[extensions] google-genai python-dotenv requests beautifulsoup4
+    pip install google-adk[extensions] google-genai python-dotenv requests beautifulsoup4 pydantic
     ```
     (Ensure you are using a version of `google-adk` compatible with the project, e.g., `google-adk==1.1.1` as referenced in development docs.)
 
@@ -69,17 +69,14 @@ For detailed project specifications, architecture, and agent roles, please see [
     ADMIN_MODEL=gemini-1.5-flash-latest
     DEV_MODEL=gemini-1.5-flash-latest
     REVISOR_MODEL=gemini-1.5-flash-latest
-    ADMIN_LOGGER_MODEL=gemini-1.5-flash-latest # If using a separate model for AdminLogger
 
-    # Target project path for tools - crucial for security and proper file operations.
-    # This should be an absolute path or a path relative to the project root.
-    # Example: generated_code (will resolve to <project_root>/generated_code)
-    TARGET_PROJECT_PATH_FOR_TOOLS=generated_code
-
-    # Optional: Default project path if not specified via CLI
-    # DEFAULT_PROJECT_PATH=generated_code/my_default_project
+    # Optional: Default project path if not specified via CLI's --path argument.
+    # This should be an absolute path or a path relative to where you run the script.
+    # Example: DEFAULT_PROJECT_PATH=generated_code/my_default_project
+    # Example: DEFAULT_PROJECT_PATH=/path/to/your/projects/my_default_project
+    DEFAULT_PROJECT_PATH=generated_code/my_default_project
     ```
-    **Note on `TARGET_PROJECT_PATH_FOR_TOOLS`**: This variable defines the secure base directory within which all file system tools will operate. It's critical for preventing tools from writing outside the intended project workspace.
+    **Note on `DEFAULT_PROJECT_PATH`**: This variable in the `.env` file provides a default location for projects if the `--path` command-line argument is not used. The path specified by `--path` (or `DEFAULT_PROJECT_PATH` if `--path` is omitted) defines the root directory for the specific project run. All file operations performed by the agents (like reading, writing, or listing files) are confined within this designated project path to ensure security and organization.
 
 ## Running CodeSwarm
 
@@ -90,13 +87,13 @@ Execute the `main_adk_controller.py` script as a module from the **project root 
 # conda activate codeswarm_env # If not already active
 # (Ensure you are in the project root directory where .env is located)
 
-python -m codeswarm.main_adk_controller --goal "Your project goal here" --project_path "my_project"
+python -m codeswarm.main_adk_controller --goal "Your project goal here" --path "my_project"
 ```
 
 **Command-Line Options:**
 
 -   `--goal TEXT`: The overall project goal or initial task description. (Required)
--   `--project_path TEXT`: The name of the directory (relative to `TARGET_PROJECT_PATH_FOR_TOOLS`) where the agents will work. If it doesn't exist, it will be created. Example: "my_new_python_app". (Required)
+-   `-P TEXT, --path TEXT`: Absolute or relative path to the project directory where agents will work. If it doesn't exist, it might be created. This path becomes the root for all file operations for the run. (Required, or defaults to `DEFAULT_PROJECT_PATH` from `.env` if set)
 -   `--pairs INTEGER`: Number of Dev/Revisor pairs. Default is 1.
 -   `--rounds INTEGER`: Number of development/review rounds. Default is 1.
 -   `--help`: Show help message and exit.
@@ -105,13 +102,13 @@ python -m codeswarm.main_adk_controller --goal "Your project goal here" --projec
 
 1.  **Start a new project named "calculator_cli"**:
     ```bash
-    python -m codeswarm.main_adk_controller --goal "Create a Python CLI application for a simple calculator" --project_path "calculator_cli"
+    python -m codeswarm.main_adk_controller --goal "Create a Python CLI application for a simple calculator" --path "calculator_cli"
     ```
-    *(This will create and operate within `<project_root>/generated_code/calculator_cli` if `TARGET_PROJECT_PATH_FOR_TOOLS` is `generated_code`)*
+    *(If `DEFAULT_PROJECT_PATH` is `generated_code/my_default_project` and `calculator_cli` is relative, this might operate in `generated_code/my_default_project/calculator_cli` or directly `calculator_cli` depending on current working directory and how `main_adk_controller.py` resolves it. It's generally safer to use absolute paths or ensure `DEFAULT_PROJECT_PATH` itself is a sensible parent if using relative `--path`.)*
 
-2.  **Work on an existing project (assuming it's within the tool path)**:
+2.  **Work on an existing project (e.g., in `projects/existing_app`)**:
     ```bash
-    python -m codeswarm.main_adk_controller --goal "Refactor the main module and add unit tests" --project_path "existing_app" --pairs 1 --rounds 2
+    python -m codeswarm.main_adk_controller --goal "Refactor the main module and add unit tests" --path "projects/existing_app" --pairs 1 --rounds 2
     ```
 
 ## How it Works
@@ -119,30 +116,30 @@ python -m codeswarm.main_adk_controller --goal "Your project goal here" --projec
 CodeSwarm operates through a structured workflow managed by the `main_adk_controller.py` orchestrator:
 
 1.  **Initialization**:
-    *   The user provides a project goal and parameters (e.g., `project_path`, number of agent pairs, rounds) via CLI.
-    *   The orchestrator initializes the agents (Admin, Dev(s), Revisor(s), AdminLogger) and the ADK session, including `session.state` for sharing context.
-    *   The `target_project_path` for the current run is established by combining `TARGET_PROJECT_PATH_FOR_TOOLS` from `.env` and the `--project_path` CLI argument.
+    *   The user provides a project goal and parameters (e.g., `--path`, number of agent pairs, rounds) via CLI.
+    *   The orchestrator initializes the agents (Admin, Dev(s), Revisor(s)) and the ADK session, including `session.state` for sharing context.
+    *   The `target_project_path` for the current run is established from the `--path` CLI argument (or `DEFAULT_PROJECT_PATH` from `.env` if `--path` is not provided). This path is the root for all project operations.
 
 2.  **Admin Task Definition (AdminAgent)**:
-    *   The AdminAgent (potentially a two-step Interpreter/Formatter process) receives the overall goal and project context via `session.state`.
+    *   The AdminAgent receives the overall goal and project context (including the `target_project_path`) via `session.state`.
     *   It breaks down the goal into a list of specific, actionable tasks (e.g., "create file `foo.py` with specific content", "append a function to `bar.py`").
-    *   Tasks are output as a JSON list. File paths in tasks are specified relative to the `target_project_path`.
+    *   Tasks are output as a JSON list. File paths in tasks are specified as absolute paths, constructed by the AdminAgent using the provided `target_project_path`.
 
 3.  **Task Execution Loop (Orchestrator-led)**:
     *   The orchestrator iterates through the task list generated by the AdminAgent.
     *   For each task:
         *   **DevAgent Phase**:
-            *   The assigned DevAgent receives the task description and relevant context (like absolute file paths for tools) via `session.state`.
+            *   The assigned DevAgent receives the task description and the absolute `file_to_edit_or_create` via `session.state`.
             *   It generates code or text content.
-            *   To perform actions like writing files, the DevAgent outputs a structured JSON `function_call` (e.g., `{"function_call": {"name": "write_file", "args": {"file_path": "path/to/file.py", "content": "...", "mode": "overwrite"}}}`).
-            *   The orchestrator parses this JSON and executes the corresponding tool function from `tool_logic.py`, ensuring operations are within the `target_project_path`.
+            *   To perform actions like writing files, the DevAgent uses tools like `write_file` (which could be an ADK-native tool or a tool executed by the orchestrator based on agent output). The DevAgent is instructed to use the absolute file path provided in its task.
+            *   The orchestrator (or ADK framework for native tools) ensures that all tool operations using these paths are confined within the `target_project_path` established for the run.
         *   **RevisorAgent Phase**:
-            *   If the task involves review, the RevisorAgent receives the relevant file path (via `session.state`).
-            *   It uses its tools (e.g., `read_file`, potentially ADK-native calls) to inspect the content and generates constructive feedback.
+            *   If the task involves review, the RevisorAgent receives the relevant absolute file path (via `session.state`).
+            *   It uses its tools (e.g., `read_file`) to inspect the content and generates constructive feedback.
 
-4.  **Logging (AdminLoggerAgent)**:
-    *   After each round or significant set of tasks, the AdminLoggerAgent is invoked.
-    *   It receives a summary of actions and updates `project_logs/changelog.log` with the status.
+4.  **Logging (AdminAgent)**:
+    *   After each round or significant set of tasks, the AdminAgent enters its 'logging_and_updates' phase.
+    *   It receives a summary of actions and updates `docs/changelog.log` and `docs/tasklist.md` within the `target_project_path`.
 
 5.  **Iteration**:
     *   The process (Admin task definition -> Task Execution -> Logging) repeats for the specified number of rounds, allowing for iterative refinement.
@@ -150,9 +147,9 @@ CodeSwarm operates through a structured workflow managed by the `main_adk_contro
 ## Important Notes
 
 -   **File Path Management**:
-    -   The `--project_path` CLI argument defines the specific sub-directory for the current run, relative to the `TARGET_PROJECT_PATH_FOR_TOOLS` defined in your `.env` file.
-    -   `TARGET_PROJECT_PATH_FOR_TOOLS` in `.env` is the root directory for all tool operations, ensuring safety.
-    -   AdminAgent generates tasks with relative paths; the orchestrator resolves these to absolute paths within the defined project scope before passing them to tools or agents via `session.state`.
+    -   The `--path` CLI argument (or `DEFAULT_PROJECT_PATH` from `.env`) defines the root directory for the current project run.
+    -   All file system operations performed by agents via tools are confined to this path by the orchestrator and path validation logic.
+    -   Agents (like AdminAgent and DevAgent) are expected to work with absolute paths that are constructed based on this root `target_project_path`.
 -   **Tool Usage**: The clarity of prompts and, for ADK-native calls, tool docstrings in `codeswarm/adk_core/tool_logic.py` is crucial for LLMs to correctly request or use tools.
 -   **Error Handling**: The system aims for robust error handling, but unexpected LLM outputs might require prompt refinement.
 -   **Session State (`session.state`)**: This ADK feature is critical for passing information (like goals, file paths, and intermediate data) between the orchestrator and agents, and for grounding agent prompts.
@@ -161,7 +158,7 @@ CodeSwarm operates through a structured workflow managed by the `main_adk_contro
 
 -   **Project Specifications & Architecture**: [docs/project.md](docs/project.md)
 -   **Current Tasks & Progress**: [docs/tasklist.md](docs/tasklist.md)
--   **Development Changelog**: [project_logs/changelog.log](project_logs/changelog.log)
+-   **Development Changelog**: [docs/changelog.log](docs/changelog.log)
 -   **Detailed Technical Evolution & Lessons Learned**: [docs/codeswarm_development_evolution.md](docs/codeswarm_development_evolution.md)
 
 ## Roadmap & Future Ideas

@@ -1,6 +1,6 @@
 {
     "agentProfile": {
-      "name": "DevAgentADK",
+      "name": "RevisorAgentADK",
       "role": "Software developer in a multi-agent coding project. Your specific ID will be provided in the task input."
     },
     "coreDirectives": [
@@ -18,9 +18,9 @@
       }
     ],
     "outputSpecification": {
-      "description": "Your final output MUST be a JSON string representing the result of your 'write_file' tool call (e.g., successful write) or the result of your last relevant tool call if only reading files. This JSON string should be the direct output of the tool.",
-      "example_success": {"status": "success", "result": "Wrote file: /path/to/target_project/file.py", "content_preview": "def hello():\\n  print(\"world\")"},
-      "example_error": {"status": "error", "message": "Failed to write file due to permissions."}
+      "description": "Your output MUST be a JSON string representing a dictionary with your review feedback. Keys: 'status' (str, e.g., 'success', 'requires_changes'), 'file_path' (str, path of reviewed file), 'review_comments' (str, detailed feedback), 'approved' (bool, True if approved).",
+      "example_success": {"status": "success", "file_path": "/path/to/file.py", "review_comments": "Code looks good and meets requirements.", "approved": true},
+      "example_requires_changes": {"status": "requires_changes", "file_path": "/path/to/file.py", "review_comments": "The function X is missing error handling for Y.", "approved": false}
     },
     "tools": ["read_file", "write_file", "list_folder_contents", "search_files_content", "chunk_file"]
-  }
+}

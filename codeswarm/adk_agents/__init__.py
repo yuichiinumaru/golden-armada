@@ -5,10 +5,10 @@ from google.adk.agents import LlmAgent
 # from google.generativeai.types import GenerationConfig 
 
 from ..adk_config import ADMIN_MODEL_STR, ADMIN_MODEL_TEMPERATURE, DEV_MODEL_STR, DEV_MODEL_TEMPERATURE, REVISOR_MODEL_STR, REVISOR_MODEL_TEMPERATURE
-from .prompts_adk import get_admin_instruction_string
+# from .prompts_adk import get_admin_instruction_string # This line is removed as it's unused
 from ..adk_core.tool_definitions import admin_tools_adk, dev_tools_adk, revisor_tools_adk
 from ..adk_core import log_llm_start, log_llm_end, log_tool_start, log_tool_end
-from ..adk_models import AdminTaskOutput # Keep for when output_model might be re-enabled
+from ..adk_models import AdminTaskOutput, DevAgentOutput, RevisorAgentOutput
 
 import json # For loading prompts from JSON
 from pathlib import Path # For path manipulation for prompts
@@ -76,11 +76,17 @@ def create_admin_llm_agent(model_override=None):
 
 def create_dev_llm_agent(dev_id: int, model_override=None):
     model_to_use = model_override if model_override else DEV_MODEL_STR
+    dev_llm_generate_content_config = {
+        "temperature": DEV_MODEL_TEMPERATURE,
+        # "response_mime_type": "application/json" # Not needed with output_model
+    }
     return LlmAgent(
         name=f"DevAgentADK_{dev_id}",
         model=model_to_use,
         instruction=load_instruction_from_file("dev_prompt.json"),
         tools=dev_tools_adk,
+        output_model=DevAgentOutput,
+        generate_content_config=dev_llm_generate_content_config,
         before_model_callback=log_llm_start,
         after_model_callback=log_llm_end,
         before_tool_callback=log_tool_start,
@@ -89,11 +95,17 @@ def create_dev_llm_agent(dev_id: int, model_override=None):
 
 def create_revisor_llm_agent(revisor_id: int, model_override=None):
     model_to_use = model_override if model_override else REVISOR_MODEL_STR
+    revisor_llm_generate_content_config = {
+        "temperature": REVISOR_MODEL_TEMPERATURE,
+        # "response_mime_type": "application/json" # Not needed with output_model
+    }
     return LlmAgent(
         name=f"RevisorAgentADK_{revisor_id}",
         model=model_to_use,
         instruction=load_instruction_from_file("revisor_prompt.json"),
         tools=revisor_tools_adk,
+        output_model=RevisorAgentOutput,
+        generate_content_config=revisor_llm_generate_content_config,
         before_model_callback=log_llm_start,
         after_model_callback=log_llm_end,
         before_tool_callback=log_tool_start,
@@ -103,3 +115,4 @@ def create_revisor_llm_agent(revisor_id: int, model_override=None):
 # You'll need similar updates for create_dev_llm_agent and create_revisor_llm_agent
 # if they also need strict JSON output and controlled temperature.
 # For now, focus is on AdminAgent.
+# The above changes for Dev and Revisor agents now align them with AdminAgent's use of output_model and temperature.
