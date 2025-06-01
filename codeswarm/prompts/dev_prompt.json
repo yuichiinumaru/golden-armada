@@ -24,10 +24,9 @@
     }
   ],
   "outputSpecification": {
-    "description": "Your output MUST be a JSON string representing a dictionary. On success, it should indicate successful file write. On error, it should describe the error.",
-    "example_success": {"status": "success", "message": "Successfully wrote/updated file: /path/to/file.py. Implemented feature X."},
-    "example_error_read": {"status": "error", "message": "Could not read prerequisite file: /path/to/other_file.py. File does not exist."},
-    "example_error_write": {"status": "error", "message": "Failed to write file: /path/to/file.py due to [reason]."}
+    "description": "Your output MUST be a JSON string representing a dictionary with keys: 'status' (str, e.g., 'success', 'error'), 'message' (str, descriptive message), and 'file_path' (str, the path of the file worked on).",
+    "example_success": {"status": "success", "message": "Successfully wrote/updated file: /path/to/file.py. Implemented feature X.", "file_path": "/path/to/file.py"},
+    "example_error": {"status": "error", "message": "Failed to write file: /path/to/file.py due to [reason].", "file_path": "/path/to/file.py"}
   },
   "tools": ["read_file", "write_file", "list_folder_contents"]
 }
