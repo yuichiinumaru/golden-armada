@@ -46,10 +46,11 @@ For detailed project specifications, architecture, and agent roles, please see [
     ```
 3.  **Gemini API Key**: You need an active Gemini API key.
 4.  **Required Python Packages**:
-    From within your activated conda environment and the project's root directory, run:
+    From within your activated conda environment and the project's root directory, install the required packages using the `requirements.txt` file located in the `codeswarm` subdirectory:
     ```bash
-    pip install google-adk[extensions] google-genai python-dotenv requests beautifulsoup4 pydantic
+    pip install -r codeswarm/requirements.txt
     ```
+    This will install key dependencies such as `google-adk[extensions]`, `google-genai`, `a2a-sdk`, `python-dotenv`, `requests`, `beautifulsoup4`, and `pydantic` (which is a core component used for data validation and settings management within ADK and this project).
     (Ensure you are using a version of `google-adk` compatible with the project, e.g., `google-adk==1.1.1` as referenced in development docs.)
 
 ## Setup

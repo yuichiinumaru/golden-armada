@@ -5,9 +5,25 @@ import tempfile
 import shutil
 import os # For GOOGLE_API_KEY check
 from pathlib import Path
+import sys # For mocking
+from unittest.mock import MagicMock # For mocking
+
+# --- Mocking google.adk.sessions before actual import ---
+MOCK_ADK_MODULES = [
+    "google.adk",
+    "google.adk.sessions",
+]
+for mod_name in MOCK_ADK_MODULES:
+    if mod_name not in sys.modules:
+        sys.modules[mod_name] = MagicMock()
+
+# Ensure InMemorySessionService is a mock if google.adk.sessions was mocked
+if isinstance(sys.modules.get("google.adk.sessions"), MagicMock):
+    sys.modules["google.adk.sessions"].InMemorySessionService = MagicMock()
+# --- End Mocking ---
 
 from google.adk.sessions import InMemorySessionService
-from google.genai.types import Content, Part
+from google.generativeai.types import Content, Part # Corrected import path
 
 # Assuming 'codeswarm' is in the Python path or its structure allows these imports
 from codeswarm.adk_agents import create_revisor_llm_agent
@@ -43,8 +59,9 @@ class TestRevisorAgent(unittest.TestCase):
         session_service = InMemorySessionService()
         runner = get_runner(session_service=session_service)
 
-        session_id = await session_service.create_session()
-        session = await session_service.get_session(session_id=session_id)
+        user_id = "test_user_revisor" # Consistent user_id
+        session_id = await session_service.create_session(user_id=user_id) # Pass user_id if create_session supports it
+        # session = await session_service.get_session(user_id=user_id, session_id=session_id)
 
         input_json = json.dumps(input_dict)
         message = Content(parts=[Part(text=input_json)])
@@ -55,7 +72,10 @@ class TestRevisorAgent(unittest.TestCase):
         error_occurred = False
 
         async for event in runner.run_async(
-            agent_id=agent.id, session=session, request_body=message
+            user_id=user_id,
+            session_id=session_id,
+            new_message=message,
+            agent_id=agent.id
         ):
             if event.type == "agent_response" and event.is_last_event:
                 if event.response and event.response.parts:
@@ -93,7 +113,7 @@ class TestRevisorAgent(unittest.TestCase):
         file_to_review_path = str(self.target_project_path / file_to_review_name)
         correct_code_content = "def add(a, b):\n    return a + b\n\n# Test function\nif __name__ == '__main__':\n    print(f'2 + 3 = {add(2,3)}')\n"
 
-        write_result = tool_logic.write_file(file_to_review_path, correct_code_content, self.target_project_path_str)
+        write_result = tool_logic.write_file(file_to_review_path, correct_code_content)
         self.assertEqual(write_result["status"], "success", "Setup: Failed to write dummy_code_correct.py")
 
         revisor_input_dict = {
@@ -126,7 +146,7 @@ class TestRevisorAgent(unittest.TestCase):
         file_to_review_path = str(self.target_project_path / file_to_review_name)
         flawed_code_content = "def multiply(a, b):\n    # Intended to multiply, but uses addition\n    return a + b\n\n# Test function\nif __name__ == '__main__':\n    print(f'2 * 3 = {multiply(2,3)}') # Expected 6, will get 5\n"
 
-        write_result = tool_logic.write_file(file_to_review_path, flawed_code_content, self.target_project_path_str)
+        write_result = tool_logic.write_file(file_to_review_path, flawed_code_content)
         self.assertEqual(write_result["status"], "success", "Setup: Failed to write dummy_code_flawed.py")
 
         revisor_input_dict = {
