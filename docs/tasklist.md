@@ -214,7 +214,11 @@ Refer to `docs/advanced_development_patterns.md` for initial ideas and context.
     - [x] AdminAgent in `adk_agents/__init__.py` uses `generation_config={"response_mime_type": "application/json"}`.
     - [x] Explored Pydantic `output_model` for AdminAgent (e.g., `AdminTaskOutput`).
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     - [x] DevAgent and RevisorAgent Pydantic `output_model` usage: Verified that `DevAgentOutput` and `RevisorAgentOutput` Pydantic models are in use, enhancing robustness for JSON parsing.
+=======
+    - [ ] DevAgent and RevisorAgent currently rely on LLM producing parsable JSON strings. Consider defining Pydantic `output_model` or using `generation_config` for them for robustness (Mitigates known ADK 1.1.1 era challenges with reliable JSON from LLMs when tools are also involved).
+>>>>>>> Stashed changes
 =======
     - [ ] DevAgent and RevisorAgent currently rely on LLM producing parsable JSON strings. Consider defining Pydantic `output_model` or using `generation_config` for them for robustness (Mitigates known ADK 1.1.1 era challenges with reliable JSON from LLMs when tools are also involved).
 >>>>>>> Stashed changes
@@ -257,8 +261,14 @@ Refer to `docs/advanced_development_patterns.md` for initial ideas and context.
     - [x] Model parameters (e.g., temperature) configurable via `.env` and loaded in `adk_config.py`, used in `generation_config` for `LlmAgent`.
     - [x] Resolved `ValueError: LlmAgent.model_kwargs must be a dictionary` by correctly passing `generation_config`.
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 - [x] **AdminAgent Task Management & Progress Logging (CodeSwarm Project Documentation):**
     - [x] **CodeSwarm Project Documentation Logging:** Ensure `main_adk_controller.py` enables AdminAgent to update `docs/changelog.log` and `docs/tasklist.md` via its ADK tools. (Code review confirms implementation; orchestrator calls AdminAgent in 'logging_and_updates' phase, prompt directs log updates using 'write_file' tool, and AdminAgent has this tool. End-to-end verification for dynamic updates is pending full testing in active Phase 4).
+=======
+- [ ] **AdminAgent Task Management & Progress Logging:**
+    - [ ] Enable AdminAgent (or orchestrator acting on its behalf) to update a persistent task list for the *target project* (e.g., via a dedicated file like `target_project_tasklist.md`). (Integration with MCP tools like `mcp-taskwarrior` for task management can be explored as part of Phase 7).
+    - [ ] Ensure AdminAgent can update `project_logs/changelog.log` for CodeSwarm's operational logging. (Verification pending successful end-to-end runs).
+>>>>>>> Stashed changes
 =======
 - [ ] **AdminAgent Task Management & Progress Logging:**
     - [ ] Enable AdminAgent (or orchestrator acting on its behalf) to update a persistent task list for the *target project* (e.g., via a dedicated file like `target_project_tasklist.md`). (Integration with MCP tools like `mcp-taskwarrior` for task management can be explored as part of Phase 7).
@@ -448,5 +458,9 @@ This phase focuses on systematically researching external systems, integrating e
     - [ ] Ensure prompts for agents using Tools, MCPs, or RAG include clear instructions from KBs on *how, when, where, and why* to use these capabilities, potentially drawing from the `/docs/gitingest/` and `/docs/research/RAG/` analyses.
 
 - [ ] **7. Future Consideration: Dynamic KB Loading/RAG for Local KBs:**
+<<<<<<< Updated upstream
+    - [ ] Evaluate the feasibility of equipping agents with a dedicated ADK `FunctionTool` to dynamically load, search, and retrieve content from the `/codeswarm/prompts/kb/` files (and potentially summarized insights from `/docs/gitingest/` and `/docs/research/RAG/`) during runtime. This would create a powerful local RAG system for prompt augmentation, reducing static prompt length and increasing flexibility.
+>>>>>>> Stashed changes
+=======
     - [ ] Evaluate the feasibility of equipping agents with a dedicated ADK `FunctionTool` to dynamically load, search, and retrieve content from the `/codeswarm/prompts/kb/` files (and potentially summarized insights from `/docs/gitingest/` and `/docs/research/RAG/`) during runtime. This would create a powerful local RAG system for prompt augmentation, reducing static prompt length and increasing flexibility.
 >>>>>>> Stashed changes
