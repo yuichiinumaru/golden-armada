@@ -1,4 +1,4 @@
-**Note:** This document outlines the initial refactoring plan for transitioning CodeSwarm to the Google Agent Development Kit (ADK). Many of the phased tasks described herein have been completed. For the current project architecture, please refer to `docs/project.md`. For ongoing and future tasks, please see `docs/tasklist.md`. The 'Key ADK Concepts' section at the end of this document remains a valuable reference of lessons learned.
+**Note:** This document outlines the initial refactoring plan for transitioning CodeSwarm to the Google Agent Development Kit (ADK). Many of the phased tasks described herein have been completed. For the current project architecture and detailed specifications, please refer to `docs/project.md`. For ongoing and future tasks, consult `docs/tasklist.md`. The 'Key ADK Concepts' section at the end of this document remains a valuable reference.
 
 Okay, this is a solid plan. Let's outline the steps to refactor your CodeSwarm project to ADK, including a suggested file and folder architecture and incorporating lessons learned.
 

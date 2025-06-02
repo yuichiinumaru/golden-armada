@@ -1,7 +1,7 @@
 # CodeSwarm: Project Specifications
 
 ## 1. Overall Project Goal
-To implement a multi-agent coding system ("CodeSwarm") focusing on collaborative code generation, review, and project management using the Google Agent Development Kit (ADK). The system features Admin, Developer, and Revisor agents that interact to fulfill user-defined coding and project analysis goals. All operations, especially file I/O and API calls, must be real and executable.
+To implement a multi-agent coding system ("CodeSwarm") focusing on collaborative code generation, review, and project management using the Google Agent Development Kit (ADK). The core ADK transition for CodeSwarm is complete, with recent efforts focused on refining agent prompts, enhancing tool interactions, and ensuring robust structured data exchange via Pydantic models. This document details the project specifications for this ADK-based system, featuring Admin, Developer, and Revisor agents that interact to fulfill user-defined coding goals. All operations, especially file I/O and API calls, must be real and executable.
 
 ## 2. Architectural Choices for CodeSwarm using ADK
 CodeSwarm leverages Google's Agent Development Kit (ADK) to achieve:
@@ -39,12 +39,13 @@ Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-
 
 *   **RevisorAgent (Code/Content Reviewer - Template for X instances):**
     *   **Responsibilities:**
-        *   Receives a file path (via `session.state`) and review instructions.
-        *   Uses tools to read the file. May also consult documentation via web browsing tools if necessary.
-        *   Reviews for correctness, adherence to instructions, standards, etc.
-        *   Generates specific, constructive feedback.
-        *   ADK's native tool calling mechanism is generally effective for this agent.
-    *   **Tools:** File I/O (`read_file`), Web Browsing (`fetch_web_page_text_content`).
+        *   Receives a file path (via `session.state`), review instructions, and focus areas.
+        *   Uses tools like `read_file` to inspect the content of the specified file.
+        *   Analyzes the code/text against the original development task, review focus areas, and general best practices.
+        *   May use tools like `fetch_web_page_text_content` to consult external documentation or standards.
+        *   Formulates detailed, constructive `review_comments` and determines an `approved` status. The RevisorAgent does not write or modify code itself.
+        *   ADK's native tool calling mechanism is used.
+    *   **Tools:** `read_file`, `list_folder_contents`, `fetch_web_page_text_content`, `chunk_file`, `summarize_chunks`. (as defined in `revisor_tools_adk` and `revisor_prompt.json`)
 
 ### 3.2. Orchestration Logic (`main_adk_controller.py`)
 
