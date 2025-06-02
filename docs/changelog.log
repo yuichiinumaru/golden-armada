@@ -3,7 +3,12 @@
 This file will be updated to reflect major changes, progress, and decisions throughout the project.
 
 ---
+## 2025-06-02 - Codebase Review and Tasklist Update
+*   Verified that DevAgent and RevisorAgent are already using Pydantic `output_model`s (`DevAgentOutput`, `RevisorAgentOutput`) for structured output, completing a pending task in `tasklist.md`.
+*   Verified that the AdminAgent logging mechanism for updating `changelog.log` and `tasklist.md` is implemented. Orchestrator, prompts, and tools are aligned for this functionality.
+*   Reviewed tool functions in `codeswarm/adk_core/tool_logic.py`. Functions exposed as ADK tools are generally robust. Noted that `summarize_chunks` in `tool_logic.py` differs from the ADK tool, where the ADK tool correctly passes chunks to the agent for LLM-based summarization.
 
+---
 [Pivot] Project pivoted from CAMEL AI to Google ADK/A2A framework. Rationale: Improve Gemini integration, error handling, and control.
 [Infra] Created `conversion-notes.md` to document migration plan and analysis.
 [Infra] Updated `.cursorrules` to align with ADK/A2A development focus.
