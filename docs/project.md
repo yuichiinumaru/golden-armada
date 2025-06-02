@@ -105,7 +105,11 @@ This section consolidates practical learnings from CodeSwarm development:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     *   `google-adk==1.1.1` was used. `gemini-1.5-flash-latest` (or more recent flash/pro models) proved compatible.
+=======
+    *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
+>>>>>>> Stashed changes
 =======
     *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
 >>>>>>> Stashed changes

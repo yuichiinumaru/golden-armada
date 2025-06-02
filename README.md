@@ -21,10 +21,13 @@ For detailed project specifications, architecture, and agent roles, please see [
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 -   **Gemini Models**: Configurable to use different Gemini models (e.g., `gemini-1.5-flash-latest`) for various agent roles via a `.env` file.
 -   **Pydantic Models**: Uses Pydantic models (e.g., `AdminTaskOutput`, `DevAgentOutput`, `RevisorAgentOutput`) for structured JSON communication between agents and the orchestrator.
 -   **Tool-Equipped Agents**: Agents use ADK-native tool calls for operations like file I/O and web browsing, based on assigned `FunctionTool` definitions.
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -82,11 +85,14 @@ For detailed project specifications, architecture, and agent roles, please see [
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     # gemini-1.5-flash-latest is a known compatible model with ADK 1.1.1
     ADMIN_MODEL=gemini-1.5-flash-latest
     DEV_MODEL=gemini-1.5-flash-latest
     REVISOR_MODEL=gemini-1.5-flash-latest
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -98,6 +104,9 @@ For detailed project specifications, architecture, and agent roles, please see [
     ADMIN_LOGGER_MODEL=gemini-2.5-flash-preview-05-20 # If using a separate model for AdminLogger
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
