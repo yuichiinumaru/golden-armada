@@ -241,14 +241,21 @@ The initial refactoring of CodeSwarm to the Google Agent Development Kit (ADK), 
 
 Since this initial plan was formulated, the project has continued to evolve. More detailed, phased planning, tracking ongoing tasks, and incorporating new strategic directions are now primarily managed in **`docs/tasklist.md`**. This task list reflects a deeper understanding of ADK capabilities and incorporates several advanced development fronts.
 
-Key evolutions include:
+Key evolutions and current strategic thrusts detailed in `docs/tasklist.md` include:
 
-*   **Advanced Research Phases:** `docs/tasklist.md` now includes a comprehensive "Phase 8: Advanced Research, Knowledge Base Integration, and Prompt Engineering Refinement." This phase formalizes:
+*   **Advanced Research and Tooling:**
     *   In-depth analysis of external project codebases and architectural patterns, using digests stored in `/docs/gitingest/`.
     *   Targeted research into Retrieval Augmented Generation (RAG) techniques, supported by documents in `/docs/research/RAG/`.
+    *   Evaluation and integration of Model Context Protocol (MCP) tools and the `fastapi_mcp` framework for enhancing agent capabilities.
+*   **Knowledge Management & Prompt Engineering:**
     *   A systematic approach to auditing, refining, and integrating a local Knowledge Base (KB) from `/codeswarm/prompts/kb/` into agent prompting strategies.
-*   **Refined ADK Understanding:** The "Key ADK Concepts" section in this document provided initial guidance. A more comprehensive and continuously updated set of lessons learned, ADK-specific behaviors, and debugging notes are maintained in:
-    *   **`docs/codeswarm_development_evolution.md`**: Chronicles the journey, challenges, and solutions encountered during ADK development.
-    *   **`.cursorrules`**: Contains concise rules and reminders based on practical ADK experience.
+    *   Ongoing refinement of agent instructions and collaborative workflows.
+*   **Continuous Testing and Refinement:**
+    *   Emphasis on iterative testing of agents and tools.
 
-This `plan.md` remains a valuable historical document detailing the foundational shift to ADK. For the most current development roadmap, detailed tasks, and advanced strategies, please refer to `docs/tasklist.md` and the other supplementary documents mentioned.
+The "Key ADK Concepts" section in this document provided initial guidance. A more comprehensive and continuously updated set of lessons learned, ADK-specific behaviors, and debugging notes are maintained in:
+
+*   **`docs/codeswarm_development_evolution.md`**: Chronicles the journey, challenges, and solutions encountered during ADK development.
+*   **`.cursorrules`**: Contains concise, operational rules and reminders based on practical ADK experience, including mandatory startup procedures and model usage policies.
+
+This `plan.md` remains a valuable historical document detailing the foundational shift to ADK. For the most current development roadmap, detailed tasks, and advanced strategies, please refer to **`docs/tasklist.md`**, **`docs/project.md`**, and the other supplementary documents mentioned.

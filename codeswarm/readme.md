@@ -1,109 +1,180 @@
-# CodeSwarm: ADK/A2A Multi-Agent Coding Project
+# CodeSwarm: A Multi-Agent Coding System (ADK-based)
 
-CodeSwarm is a multi-agent system built using the Google ADK (Agent Development Kit) and optionally the A2A protocol. It utilizes a team of AI agents (Admin, Developers, Revisors) to collaboratively work on coding projects based on user-defined goals, leveraging Gemini models for all LLM operations.
+CodeSwarm is a multi-agent system built using the Google Agent Development Kit (ADK). It employs a team of AI agents—Admin, Developer, and Revisor—to collaboratively work on coding projects based on user-defined goals. CodeSwarm leverages Gemini models for all LLM operations and is designed for tasks like code generation, modification, and review.
+
+## Overview
+
+The primary goal of CodeSwarm is to implement a robust multi-agent system that can:
+- Understand complex coding goals.
+- Break them down into manageable tasks.
+- Assign tasks to specialized agents.
+- Facilitate code generation and modification.
+- Conduct reviews of the generated code.
+- Maintain a log of activities and project status.
+
+For detailed project specifications, architecture, and agent roles, please see [docs/project.md](docs/project.md).
 
 ## Features
 
--   **Multi-Agent Collaboration**: Employs Admin, Developer, and Revisor agents for a structured workflow.
--   **Google ADK Powered**: Leverages the Google ADK framework for direct Gemini model integration and robust agent orchestration.
--   **Gemini Models**: Configurable to use different Gemini models for different agent roles via a `.env` file.
--   **Tool-Equipped Agents**: Agents use ADK FunctionTools for file I/O (read, write, list, search) and web browsing.
--   **Round-Based Workflow**: Iteratively refines code through development and review cycles.
--   **CLI Controllable**: Manage project initialization, goals, and iterations via command-line arguments.
--   **Dynamic Project Handling**: Can start new projects or work on existing ones.
+-   **Multi-Agent Collaboration**: Utilizes Admin, Developer, and Revisor agents for a structured and iterative workflow. The AdminAgent also handles logging tasks.
+-   **Google ADK Powered**: Built upon the Google ADK framework for direct Gemini model integration and agent orchestration (tested with `google-adk==1.1.1`).
+-   **Gemini Models**: Configurable to use specified Gemini models (e.g., `gemini-2.5-flash-preview-05-20`, `gemini-2.5-pro-preview-05-06`, `gemini-2.0-flash` as per `.cursorrules`) for various agent roles via a `.env` file.
+-   **Tool-Equipped Agents**: Agents use ADK-native tool calls for operations like file I/O and web browsing, based on assigned `FunctionTool` definitions.
+-   **Orchestrator-Managed Workflow**: A central controller manages task distribution, agent invocation, and `session.state` for context sharing.
+-   **CLI Controllable**: Initialize projects, define goals, manage rounds, and override models via command-line arguments.
+-   **Iterative Development**: Supports multiple rounds of development and review for refining outputs.
+-   **Dynamic Project Handling**: Can work within a user-specified project directory.
+-   **Knowledge Base Integration**: Designed to leverage a structured Knowledge Base in `codeswarm/prompts/kb/` to enhance agent instructions and performance.
+-   **MCP Exploration**: Investigating Model Context Protocol (MCP) for enhanced tool and agent interoperability.
 
 ## Project Structure
 
--   `main_adk_controller.py`: The main orchestration script that manages the agent workflow using ADK.
--   `adk_agents/`: Contains agent prompt definitions and agent creation functions for Admin, Dev, and Revisor agents.
--   `adk_core/`: Contains tool logic, ADK FunctionTool definitions, and ADK setup helpers.
--   `adk_config.py`: Loads `.env` variables (API keys, model names) and provides configuration for all agents.
--   `.env`: (Must be created manually) Stores API keys and agent model configurations. See "Setup" for details.
--   `project_logs/`: Directory containing `changelog.log`, `tasklist.md`, and `doclinks.md`.
--   `generated_code/`: Default directory where new projects initiated by CodeSwarm will be created.
+-   `codeswarm/main_adk_controller.py`: The main orchestration script that manages the agent workflow.
+-   `codeswarm/adk_agents/`: Contains agent prompt definitions (JSON files) and agent creation logic.
+-   `codeswarm/adk_core/`: Contains tool logic (`tool_logic.py`), ADK FunctionTool definitions, and ADK setup helpers.
+-   `codeswarm/adk_config.py`: Loads `.env` variables and provides configuration for agents and tools.
+-   `codeswarm/prompts/`: Contains agent system prompt templates.
+    -   `kb/`: Subdirectory for the modular Knowledge Base.
+-   `.env`: (Must be created manually in the project root) Stores API keys, model names, and the default project path.
+-   `docs/`: Contains detailed documentation including:
+    -   `project.md`: Overall project specifications and architecture.
+    -   `tasklist.md`: Primary planning and task tracking document.
+    -   `changelog.log`: Log of major changes.
+    -   `codeswarm_development_evolution.md`: History of development, lessons learned.
+    -   `advanced_development_patterns.md`: Ideas for future enhancements.
+    -   `gitingest/`: Digests of external GitHub repositories for research.
+    -   `research/`: Project-specific research documents (e.g., on RAG, MCP).
+-   `generated_code/`: Default output directory for code generated by CodeSwarm agents during operation.
+-   `project_logs/`: (Intended for logs generated by the CodeSwarm system itself during operation, distinct from `docs/changelog.log`).
+-   `.cursorrules`: Mandatory rules and guidelines for AI-assisted development of this project.
 
 ## Prerequisites
 
-1.  **Python**: Python 3.10 or higher.
+1.  **Python**: Python 3.10 or higher (Python 3.11 recommended).
 2.  **Conda (Recommended)**: For managing environments.
     ```bash
-    # Create a new conda environment (e.g., codeswarm_adk)
-    conda create -n codeswarm_adk python=3.11 # Or your preferred Python 3.10+ version
-    conda activate codeswarm_adk
+    # Create a new conda environment
+    conda create -n codeswarm_env python=3.11
+    conda activate codeswarm_env
     ```
-3.  **WSL (for Windows Users)**: Recommended if you prefer to run Python projects within a Linux environment on Windows.
-4.  **Gemini API Key**: You need a Gemini API key.
-5.  **Required Python Packages**:
-    From within your activated `codeswarm_adk` conda environment and the `codeswarm` project directory, run:
+3.  **Gemini API Key**: You need an active Gemini API key.
+4.  **Required Python Packages**:
+    From within your activated conda environment and the project's root directory, install the required packages using the `requirements.txt` file located in the `codeswarm` subdirectory:
     ```bash
-    pip install google-generativeai-adk python-dotenv requests beautifulsoup4
+    pip install -r codeswarm/requirements.txt
     ```
+    This will install key dependencies such as `google-adk[extensions]`, `google-genai`, `python-dotenv`, `requests`, `beautifulsoup4`, and `pydantic`.
 
 ## Setup
 
-1.  **Clone/Download CodeSwarm**: Ensure you have the `codeswarm` project directory.
-2.  **Navigate to Project Directory**:
+1.  **Clone the Repository**:
     ```bash
-    cd /path/to/your/codeswarm_project/codeswarm
+    git clone <repository_url>
+    cd codeswarm_project_root
     ```
-3.  **Create `.env` File**: In the `codeswarm/` directory, create a `.env` file with the following content, replacing placeholders with your actual values:
+2.  **Create `.env` File**: In the **project root directory**, create a `.env` file.
     ```env
+    # .env
     GEMINI_API_KEY=your_actual_gemini_api_key_here
-    ADMIN_MODEL_TYPE=gemini-1.5-pro-latest
-    DEV_MODEL_TYPE=gemini-2.5-flash-preview-05-20
-    REVISOR_MODEL_TYPE=gemini-2.5-flash-preview-05-20
+
+    # Specify the Gemini models for each agent role (must align with .cursorrules Rule 2.1)
+    ADMIN_MODEL=gemini-2.5-flash-preview-05-20
+    DEV_MODEL=gemini-2.5-flash-preview-05-20
+    REVISOR_MODEL=gemini-2.5-flash-preview-05-20
+    # Example for Pro model if needed for a specific agent:
+    # SOME_OTHER_AGENT_MODEL=gemini-2.5-pro-preview-05-06
+
+    # Optional: Default project path if not specified via CLI's --path argument.
+    DEFAULT_PROJECT_PATH=generated_code/my_default_project
+
+    # Optional: Model temperatures (defaults may be set in adk_config.py if not specified here)
+    # ADMIN_TEMPERATURE=0.5
+    # DEV_TEMPERATURE=0.7
+    # REVISOR_TEMPERATURE=0.4
     ```
-    You can adjust the `MODEL_TYPE` variables as needed if you want to experiment with different Gemini models for each role.
+    **Note on `DEFAULT_PROJECT_PATH`**: This path is relative to the project root. All file operations by agents are confined within this path.
 
 ## Running CodeSwarm
 
-Execute the `main_adk_controller.py` script from the `codeswarm/` directory. Ensure your conda environment is activated. If using WSL, ensure you are in your WSL terminal.
+Execute the `main_adk_controller.py` script as a module from the **project root directory**. Ensure your conda environment is activated.
 
 ```bash
-# Example:
-# conda activate codeswarm_adk # If not already active
-# cd /path/to/your/codeswarm_project/codeswarm
-
-python main_adk_controller.py --goal "Your project goal here" --path /absolute/path/to/project --pairs 1 --rounds 2
+# (Ensure you are in the project root directory where .env is located)
+python -m codeswarm.main_adk_controller --goal "Your project goal here" --path "my_project_subdirectory"
 ```
 
 **Command-Line Options:**
 
 -   `--goal TEXT`: The overall project goal or initial task description. (Required)
--   `--path TEXT`: Absolute path to an existing project folder the agents will work in. (Required)
+-   `-P TEXT, --path TEXT`: Path to the project directory (relative to project root, or absolute) where agents will work. If it doesn't exist, it might be created. Defaults to `DEFAULT_PROJECT_PATH` from `.env` if set and this option is not provided.
 -   `--pairs INTEGER`: Number of Dev/Revisor pairs. Default is 1.
--   `--rounds INTEGER`: Number of editing rounds. Default is 1.
+-   `--rounds INTEGER`: Number of development/review rounds. Default is 1.
+-   `--model TEXT`: Optional. Override the Gemini model for all agents (must be one of the allowed models in `.cursorrules`).
 -   `--help`: Show help message and exit.
 
 **Examples:**
 
-1.  **Start a new project:**
+1.  **Start a new project named "calculator_cli" (will be created in `DEFAULT_PROJECT_PATH` if not absolute):**
     ```bash
-    python main_adk_controller.py --goal "Create a Python script to parse CSV files" --path /absolute/path/to/new/project --pairs 1 --rounds 2
+    python -m codeswarm.main_adk_controller --goal "Create a Python CLI application for a simple calculator" --path "calculator_cli"
     ```
 
-2.  **Work on an existing project:**
+2.  **Work on an existing project (e.g., in `projects/existing_app` relative to project root):**
     ```bash
-    python main_adk_controller.py --goal "Refactor the main module and add unit tests" --path /absolute/path/to/existing/project --pairs 2 --rounds 3
+    python -m codeswarm.main_adk_controller --goal "Refactor the main module and add unit tests" --path "projects/existing_app" --pairs 1 --rounds 2
     ```
 
 ## How it Works
 
-1.  **Initialization**: The user provides a project goal and parameters (number of agent pairs, rounds, project path) via CLI arguments. The system determines the `target_project_path`.
-2.  **Admin Task Definition**: The `AdminAgent` receives the overall goal, the `target_project_path`, and the content of current log files (`tasklist.md`, `changelog.log`). It breaks down the goal into specific, actionable coding tasks and review instructions for Dev/Revisor pairs, outputting them in a structured JSON format. These tasks include file paths relative to the `target_project_path`.
-3.  **Dev/Revisor Cycle (per pair)**:
-    *   **Dev Phase**: A `DevAgent` receives a task description (including a target file path within the `target_project_path`) from the Admin. It writes new code or modifies existing code. The agent is expected to output the complete code content for the specified file. The orchestrator then uses the `write_file` tool to save this content to the actual file system at `target_project_path/filename.py`.
-    *   **Revisor Phase**: A `RevisorAgent` receives the file path (of the code just modified by its paired DevAgent) and review instructions. It uses `read_file` to get the code and `fetch_web_page_text_content` (if needed, to consult URLs from `doclinks.md`) to review. It generates constructive feedback.
-4.  **Admin Logging**: The `AdminAgent` collects all Dev outputs (e.g., confirmation of file write path) and Revisor feedback for the current round. It uses its `write_file` tool to update `project_logs/changelog.log` and `project_logs/tasklist.md`.
-5.  **Iteration**: The process repeats for the specified number of rounds.
-6.  **User Feedback Loop**: After the initial set of rounds completes, the user is prompted to review the state and can provide a new high-level prompt/adjustments and specify more rounds, or choose to terminate.
+CodeSwarm operates through a structured workflow managed by the `main_adk_controller.py` orchestrator:
+
+1.  **Initialization**:
+    *   User provides a project goal and parameters via CLI.
+    *   Orchestrator initializes agents and the ADK session, using `session.state` for context.
+    *   The `target_project_path` is established (based on `--path` or `DEFAULT_PROJECT_PATH`).
+
+2.  **Admin Task Definition (AdminAgent)**:
+    *   AdminAgent breaks down the goal into actionable tasks (JSON list). File paths in tasks are absolute, constructed based on `target_project_path`.
+
+3.  **Task Execution Loop (Orchestrator-led)**:
+    *   For each task:
+        *   **DevAgent Phase**: Generates/modifies code using tools (e.g., `write_file`) with absolute paths.
+        *   **RevisorAgent Phase**: Reviews code using tools (e.g., `read_file`).
+
+4.  **Logging (AdminAgent)**:
+    *   Updates `docs/changelog.log` and `docs/tasklist.md` within the CodeSwarm project's `docs/` directory.
+
+5.  **Iteration**: Repeats for specified rounds.
+
+## Key Files & Directories
+
+-   `codeswarm/main_adk_controller.py`: Main orchestrator.
+-   `codeswarm/adk_config.py`: Loads `.env` configurations.
+-   `codeswarm/adk_agents/`: Agent creation logic.
+-   `codeswarm/prompts/`: Agent prompt JSON files and `kb/` subdirectory.
+-   `codeswarm/adk_core/`: Tool logic, definitions, and ADK setup.
+-   `codeswarm/adk_models.py`: Pydantic models for structured agent outputs.
+-   `docs/`: All project documentation, including `tasklist.md`, `project.md`, `changelog.log`.
+-   `.cursorrules`: AI development guidelines for this project.
 
 ## Important Notes
 
--   **File Paths**:
-    -   When working with existing projects (`--path`), ensure the provided path is absolute. Agents will then operate on files within this existing structure.
-    -   For new projects (no `--path` specified), CodeSwarm creates a new sub-directory inside `codeswarm/generated_code/`. All agent file operations will be relative to this newly created project folder.
-    -   The `AdminAgent` is responsible for defining the correct file paths for `DevAgent` tasks, considering whether it's an existing project or a new one.
--   **Tool Docstrings**: The clarity of docstrings in `adk_core/tool_logic.py` is crucial for the LLM agents to correctly understand and use the tools. "Args:" sections should be complete.
--   **Error Handling**: The system includes robust error handling for tools and agent execution. However, complex or unexpected LLM outputs (e.g., malformed JSON from AdminAgent, or agent failing to use tools as instructed) might require observation and potential refinement of system prompts or manual intervention.
--   **JSON from AdminAgent**: The `AdminAgent` is instructed to output tasks in a clean JSON list format. The `main_adk_controller.py` includes logic to parse this output.
+-   **File Path Management**: The `target_project_path` confines all agent file operations.
+-   **Tool Usage**: Clear prompts and tool docstrings are crucial.
+-   **Session State (`session.state`)**: Critical for inter-agent communication and grounding.
+-   **`.cursorrules`**: Adherence to this file is mandatory for all development.
+
+## Further Information
+
+-   **Primary Task List & Roadmap**: [docs/tasklist.md](docs/tasklist.md)
+-   **Project Specifications & Architecture**: [docs/project.md](docs/project.md)
+-   **Development Changelog**: [docs/changelog.log](docs/changelog.log)
+-   **Detailed Technical Evolution & Lessons Learned**: [docs/codeswarm_development_evolution.md](docs/codeswarm_development_evolution.md)
+-   **Operational Rules for AI Coders**: [.cursorrules](.cursorrules)
+
+## Roadmap & Future Ideas
+Refer to `docs/tasklist.md` for the current detailed roadmap, which includes:
+- Enhanced RAG capabilities.
+- Sophisticated inter-agent communication.
+- MCP integration.
+- Advanced KB utilization.
