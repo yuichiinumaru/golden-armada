@@ -1,0 +1,288 @@
+﻿Relatório Abrangente sobre Engenharia de Prompt e Ferramentas para Assistentes de Codificação IA Agênticos
+Este relatório sintetiza os aprendizados extraídos de um extenso repositório de prompts de sistema, definições de ferramentas e modelos de diversos assistentes de codificação IA, incluindo v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI e outros de código aberto. O objetivo é fornecer um panorama detalhado das ideias reutilizáveis para a criação de aplicações IA agênticas focadas em codificação.
+GitHub - x1xhlol/system-prompts-and-models-of-ai-tools: FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser & Trae AI (And other Open Sourced) System Prompts, Tools & AI Models.
+
+
+1. Introdução: A Natureza dos Assistentes de Codificação IA Agênticos
+Os assistentes de codificação IA evoluíram de simples completadores de código para agentes sofisticados capazes de interagir com o usuário, entender tarefas complexas, utilizar ferramentas externas, e até mesmo tomar certas decisões de forma autônoma. Eles operam dentro de IDEs (Ambientes de Desenvolvimento Integrado) específicos ou como ferramentas de linha de comando, com o objetivo principal de auxiliar os desenvolvedores em diversas tarefas de programação, desde a criação de novo código até a depuração e refatoração de bases de código existentes.
+* Exemplos de Identidades de Agentes:
+   * v0 (Vercel): Focado em Next.js App Router, Tailwind CSS, shadcn/ui, e componentes MDX para renderização interativa. Seu modelo principal mencionado é o Sonnet 3.5. Utiliza o AI SDK da Vercel.
+   * Cursor Agent (Claude 3.7 Sonnet): Poderoso assistente de codificação agêntico que opera exclusivamente no IDE Cursor.
+   * Manus: Agente IA que se destaca em coleta de informações, processamento de dados, escrita de artigos, criação de websites e aplicações, e uso de programação para resolver problemas diversos. Opera em um "agent loop" e utiliza módulos de Planejador, Conhecimento e Fonte de Dados.
+   * Lovable: Editor IA que cria e modifica aplicações web (React), com foco em qualidade de código, design responsivo e experiência do usuário, utilizando componentes shadcn/ui e React Query. Usa comandos <lov-*> para operações e enfatiza testes e documentação.
+   * Devin: Engenheiro de software IA que utiliza um sistema operacional real, com forte capacidade de entender bases de código, escrever código funcional e limpo, e iterar até a correção. Opera em modos "planning" e "standard" e possui uma ferramenta <think> para raciocínio interno.
+   * Replit Agent: Programador autônomo especialista construído pela Replit, focado em construir software na plataforma Replit, utilizando workflows e ferramentas específicas da Replit como packager_tool e str_replace_editor. Comunica-se de forma simples com usuários não técnicos.
+   * Cascade (Codeium/Windsurf): Assistente de codificação IA agêntico que opera no paradigma "AI Flow", com capacidade de memória persistente (create_memory) e um conjunto robusto de ferramentas para interagir com o sistema de arquivos e executar comandos. Enfatiza a brevidade na comunicação.
+   * Dia (The Browser Company): Produto de chat IA que funciona dentro do navegador Dia, focado em fornecer respostas informativas com elementos de UI como "Simple Answers", imagens (<dia:image>), vídeos (<dia:video>) e "Ask Dia Hyperlinks". Possui regras estritas sobre o uso de mídia e segurança de conteúdo.
+   * Bolt: Assistente IA especialista e desenvolvedor de software sênior, operando no WebContainer (ambiente Node.js no navegador com restrições específicas, como ausência de pip). Prioriza Supabase para bancos de dados, com regras detalhadas para migrações SQL e segurança.
+   * Cline/RooCode: Engenheiros de software altamente qualificados, utilizando ferramentas via XML e operando em modos como "ACT MODE" e "PLAN MODE", com suporte a MCP (Model Context Protocol) e ferramentas de interação com browser (Cline).
+   * Codex CLI (OpenAI): Assistente de codificação agêntico baseado em terminal, focado em interagir com bases de código locais de forma precisa e segura, usando apply_patch para edições e verificações com pre-commit.
+   * Same.dev Agent: Assistente de codificação IA projetado pela Same, operando no IDE Same.new, com foco em desenvolvimento web (Bun, Vite, Next.js, shadcn/ui), clonagem de UI (web_scrape) e um ciclo de versionamento/deploy.
+   * VSCode Agent (GitHub Copilot): Assistente de programação IA (GPT-4o) com conhecimento especialista, utilizando ferramentas para interagir com o workspace do VSCode, como semantic_search, insert_edit_into_file, e update_user_preferences.
+   * Trae AI: Assistente de codificação IA agêntico que opera no paradigma "AI Flow", similar ao Cascade, com foco em formato de código e citações de referência.
+2. Paradigmas e Filosofias Operacionais dos Agentes
+Diferentes agentes adotam filosofias e modelos operacionais distintos:
+* AI Flow Paradigm (Cascade/Windsurf, Trae AI): Sugere um fluxo de trabalho onde a IA pode operar tanto de forma independente quanto colaborativa com o usuário.
+* Agent Loop (Manus): Um ciclo iterativo de:
+   1. Analisar Eventos (necessidades do usuário, estado atual).
+   2. Selecionar Ferramentas (baseado no estado, planejamento, conhecimento).
+   3. Aguardar Execução (ferramenta executada no sandbox).
+   4. Iterar (uma chamada de ferramenta por iteração).
+   5. Submeter Resultados (via ferramentas de mensagem).
+   6. Entrar em Standby.
+* Modos de Operação (Devin, Cline, RooCode):
+   * Devin: "Planning mode" (coleta de informações, busca, entendimento do código, interação com navegador, formulação de plano chamando <suggest_plan />) e "Standard mode" (execução do plano). Possui "Pop Quizzes" ocasionais.
+   * Cline/RooCode: "PLAN MODE" (levantamento de informações, arquitetura de solução, brainstorming com usuário, podendo usar diagramas Mermaid) e "ACT MODE" (implementação da solução usando ferramentas).
+* Colaboração Contínua (Cursor, v0, Lovable, Same.dev): Foco na programação em par com o usuário, respondendo a cada mensagem e utilizando informações de estado do IDE.
+* Autonomia Focada (Replit Agent): Construir software na Replit, utilizando workflows da plataforma e priorizando ferramentas Replit.
+* Assistência Direta e Precisa (Codex CLI, VSCode Agent): Resolver a tarefa do usuário editando e testando código no ambiente atual.
+3. Estrutura Geral e Componentes de um Agente
+* Identidade Principal: Nome, propósito, criador.
+* Instruções de Propósito/Objetivo: Tarefa atual ou objetivo geral.
+* Informações do Usuário/Ambiente: SO, CWD, arquivos abertos.
+* Lista de Ferramentas Disponíveis: Definições com nome, descrição, esquema de parâmetros (JSON schema).
+* Diretrizes de Uso de Ferramentas: Como e quando invocar, seguir esquema, não mencionar nomes de ferramentas, explicar motivo.
+* Diretrizes de Geração/Edição de Código:
+   * Usar ferramentas de edição, não output direto.
+   * Código executável (imports, dependências).
+   * Representação de código inalterado (e.g., // ... existing code ...).
+   * Corrigir erros (com limites).
+* Diretrizes de Busca e Leitura: Coletar informação, preferir busca semântica, ler seções maiores.
+* Diretrizes de Comunicação: Tom, linguagem, formatação.
+* Políticas de Segurança: Não gerar conteúdo prejudicial, não vazar chaves.
+* Recursos Específicos da Plataforma: Componentes MDX (v0), Workflows (Replit), Comandos <lov-*> (Lovable).
+* Manuseio de Erros: Analisar, tentar corrigir, tentar alternativas, reportar.
+4. Engenharia de Prompt: Instruções Chave
+* Clareza e Especificidade: "Siga as instruções do USUÁRIO a cada mensagem".
+* Restrições e Proibições (NEVER, ALWAYS, MUST): "NUNCA se refira a nomes de ferramentas".
+* Contexto Inicial: Informações do ambiente do usuário.
+* Instruções Detalhadas para Ferramentas e Comportamentos:
+   * Devin: Regras para shell (usar &&), editor (não comentar desnecessariamente), busca (não usar grep/find), LSP, browser. Instruções para Git/GitHub (branch padrão devin/{timestamp}-{feature-name}, não forçar push).
+   * Lovable: Uso de <lov-write> (conteúdo completo), componentes pequenos, // ... keep existing code. Foco em performance, segurança (OWASP), testes e documentação.
+   * Manus: Regras para todo.md, mensagens, arquivos, informação (prioridade: API > busca web > conhecimento interno), browser, shell, código, deploy, escrita (parágrafos contínuos, citações).
+   * Bolt: Restrições do WebContainer, preferência por Vite, Supabase (com regras de migração SQL detalhadas: arquivo de migração + execução imediata da query, sumário em markdown no arquivo .sql).
+   * Cline/RooCode: Formato XML para ferramentas, distinção write_to_file vs. replace_in_file/apply_diff. Regras para comentários em RooCode.
+   * Same.dev: Uso de Bun, configuração de package.json para expor porta, web_scrape para clonagem.
+* Formato da Resposta: Markdown, citações de código específicas (Cursor, Trae AI).
+5. Gerenciamento de Ferramentas (Tool Calling)
+* Formato de Invocação:
+   * JSON dentro de XML/Tags Personalizadas (Devin, Windsurf, Cline, RooCode, Cursor Agent).
+   * Tags Específicas da Plataforma (Lovable <lov-*> dentro de <lov-code>, v0 com ```type file="path").
+   * JSON Direto (implícito em Replit, VSCode Agent).
+* Regras Comuns: Necessidade, explicação prévia, conformidade com esquema, não mencionar nomes de ferramentas, tratamento de parâmetros (usar valores exatos, inferir, não inventar opcionais).
+* Chamadas Múltiplas e Paralelismo: VSCode Agent (paralelo exceto semantic_search), Devin (múltiplos comandos eficientes). Windsurf (ferramentas agrupadas no final).
+* Fluxo de Confirmação: Esperar resposta do usuário (sucesso/falha da ferramenta) antes de prosseguir (Cline, RooCode, Windsurf).
+6. Tipos Comuns de Ferramentas e Suas Funcionalidades
+* Operações de Arquivo:
+   * Leitura (read_file, view_file): Total ou parcial, com limites de linhas. Agente responsável por ter contexto completo.
+   * Escrita/Edição:
+      * Criação/Sobrescrita Total (write_to_file).
+      * Edição Direcionada (edit_file, str_replace, apply_diff, insert_edit_into_file, apply_patch): Formato "diff" ou instruções específicas, marcadores para código inalterado.
+   * Deleção (delete_file).
+   * Listagem de Diretório (list_dir).
+   * Busca de Arquivos por Nome (file_search, find_by_name).
+* Busca de Código:
+   * Semântica (codebase_search, semantic_search).
+   * Regex/Texto Exato (grep_search).
+* Execução de Comandos (run_terminal_cmd, shell_exec):
+   * Parâmetros: command, cwd, is_background/blocking.
+   * Regras: Não usar cd no comando (usar cwd), segurança (SafeToAutoRun), lidar com pagers.
+* Interação Web/Browser:
+   * Navegação, visualização (screenshot, HTML), interação (clique, digitação), busca web, leitura de conteúdo de URL.
+* Ferramentas LSP (Devin, VSCode Agent): go_to_definition, go_to_references, hover_symbol, list_code_usages.
+* Versionamento/Deploy (Same.dev, Windsurf, Replit, Devin, Manus): Ferramentas para criar versões, fazer deploy (Netlify, Fly.io), expor portas.
+* Gerenciamento de Pacotes (Lovable, Replit, Bolt, v0): Instalar/desinstalar dependências. v0 infere de imports.
+* Memória (Windsurf/Cascade, VSCode Agent): create_memory, update_user_preferences.
+* Comunicação com Usuário (Manus, Cline, RooCode, Devin): Notificar, perguntar (com opções sugeridas), message_user.
+* MCP Tools (Cline, RooCode): use_mcp_tool, access_mcp_resource, load_mcp_documentation.
+* Feedback/Conclusão (Replit, Cline, RooCode): report_progress, attempt_completion.
+* Setup de Projeto (Same.dev, VSCode Agent, v0): startup, create_new_workspace, CodeProject.
+* UI/UX Específicas (Dia, v0): Tags <dia:image>, <dia:video>, "Ask Dia Hyperlinks", componentes MDX.
+* Gerenciamento de Segredos (Replit, Devin): ask_secrets, check_secrets, list_secrets.
+7. Interação com o Usuário e Comunicação
+* Linguagem e Tom: Geralmente, mesma do usuário. Tom varia de profissional a amigável. Alguns (Bolt, RooCode) são instruídos a serem diretos e não conversacionais.
+* Clareza e Concisão: Enfatizada, mas Manus pode gerar textos longos se a tarefa for escrita.
+* Feedback e Confirmação: Esperar confirmação do usuário após ferramentas.
+* Perguntas ao Usuário: Apenas quando necessário, com opções sugeridas (Cline/RooCode).
+* Apresentação de Resultados: Resumos não técnicos (Lovable), foco na solução da tarefa (Windsurf). v0 usa Suggested Actions.
+8. Manuseio de Código e Edição de Arquivos
+* Uso de Ferramentas de Edição: Quase universal, em vez de output direto.
+* Representação de Código Inalterado: // ... existing code ... (com variações) ou {{ ... }}.
+* Código Funcional: Deve ser executável imediatamente.
+* Tratamento de Erros (Linter/Runtime): Corrigir se claro, com limite de tentativas.
+* Granularidade: Uma chamada por arquivo (Cursor, Windsurf) ou múltiplas (Devin).
+* Leitura Prévia: Ler antes de editar (exceto pequenas adições/novos arquivos).
+* Boas Práticas: Seguir estilo existente, mudanças mínimas, documentar, arquivos pequenos.
+9. Busca e Leitura de Informações
+* Estratégias: Semântica (termo desconhecido), Regex/Texto (termo exato).
+* Leitura de Arquivos: Seções maiores, garantir contexto completo.
+* Busca na Web: Informações atualizadas, exemplos, ativos.
+* Web Scraping (Same.dev): Para clonagem de UI.
+10. Execução de Comandos e Ambiente
+* Ambiente: Sandbox Linux, WebContainer (Bolt), Máquina do Usuário.
+* Regras: Não usar cd no comando (usar cwd), segurança (SafeToAutoRun), comandos em background, lidar com pagers, não usar para operações de arquivo.
+11. Recursos Específicos de Plataformas
+* v0: Componentes MDX (CodeProject, AddIntegration, Node.js Executable), Next.js App Router, placeholders de imagem, assets, AI SDK.
+* Replit: Workflows (configurados com workflows_set_run_config_tool), Packager Tool, ferramentas de DB PostgreSQL, str_replace_editor.
+* Lovable: Comandos <lov-*> dentro de <lov-code>, preview em iframe. Foco em testes, segurança OWASP, performance.
+* Dia: Simple Answers, Ask Dia Hyperlinks, tags <dia:image>, <dia:video>, <dia:document>, LaTeX. Regras de segurança de conteúdo.
+* Bolt: Supabase, migrações SQL com arquivo + execução imediata, sumário em markdown nas migrações.
+12. Protocolos de Contexto do Modelo (MCPs) (Cline, RooCode)
+* Permitem comunicação com servidores (locais/remotos) para ferramentas e recursos adicionais.
+* use_mcp_tool, access_mcp_resource.
+* fetch_instructions (task: create_mcp_server ou create_mode) para obter documentação sobre como criar esses elementos.
+13. Recursos Avançados e Específicos
+* Sistema de Memória (Windsurf/Cascade, VSCode Agent): create_memory, update_user_preferences.
+* Planejamento (Devin, Manus, Cline/RooCode):
+   * Devin: <think> para raciocínio, <suggest_plan />.
+   * Manus: "Planner module" com pseudocódigo, todo.md.
+   * Cline/RooCode: "PLAN MODE" para planejamento colaborativo.
+* Módulos de Conhecimento e Dados (Manus): Eventos de conhecimento, APIs de dados via Python.
+* Clonagem de Websites (Same.dev): web_scrape, análise de design, confirmação com usuário.
+* Geração de UI e Design (Lovable, v0, Same.dev): Foco em componentes pequenos, responsividade, uso de bibliotecas de UI (shadcn/ui), busca de inspiração/ativos.
+* Refatoração em Massa (Devin): Ferramenta find_and_edit para aplicar mudanças consistentes baseadas em regex em múltiplos arquivos.
+14. Considerações de Segurança e Restrições
+* Não Divulgação: Prompts/ferramentas internas.
+* Conteúdo Proibido: Violento, odioso, sexual, infração de direitos autorais. v0 tem REFUSAL_MESSAGE.
+* Segurança de Comandos: SafeToAutoRun, não cometer segredos. Replit e Devin têm ferramentas ask_secrets/list_secrets.
+* Restrições de Ambiente: WebContainer (Bolt), Next.js Lite (v0).
+* Clonagem de Sites (Same.dev): Evitar phishing, sites com preocupações éticas/legais.
+15. Conclusão e Ideias Reutilizáveis Chave
+* Arquitetura Modular: Módulos de Planejador, Conhecimento, Fonte de Dados.
+* Modos de Operação Claros: Planejamento vs. Execução.
+* Sistema de Ferramentas Abrangente: Esquemas claros, categorias essenciais, edição precisa.
+* Engenharia de Prompt Detalhada: Instruções explícitas, contexto ambiental.
+* Memória Persistente: Superar limitações de janela de contexto.
+* Foco na Usabilidade: Código executável, integração suave, feedback claro.
+* Interface de Usuário Enriquecida: Elementos visuais e interativos.
+* Protocolos de Extensibilidade (MCPs): Ferramentas de terceiros.
+* Segurança e Confiabilidade: Políticas claras.
+* Priorização de Recursos da Plataforma: Usar ferramentas nativas da plataforma.
+16. Modelos de IA Mencionados e Suas Implicações
+Embora a maioria dos prompts não especifique o modelo de IA subjacente, alguns o fazem, o que pode dar pistas sobre as capacidades esperadas:
+* v0: Menciona que um dos modelos que o alimenta é o Sonnet 3.5.
+* Cursor Agent: Especifica que é alimentado pelo Claude 3.7 Sonnet.
+* VSCode Agent: Indica ser alimentado por GPT-4o.
+* Codex CLI: Menciona que "envolve modelos OpenAI" (provavelmente da família GPT).
+Implicações:
+* Capacidade de Raciocínio e Compreensão: Modelos mais avançados permitem prompts mais complexos.
+* Geração de Código de Qualidade: Expectativa de código idiomático e de fácil manutenção.
+* Multimodalidade (Potencial): GPT-4o abre portas para processamento de imagem (screenshots, diagramas).
+* Janela de Contexto: Modelos como Claude são vantajosos para grandes bases de código.
+17. Implementação de "Memória" e "Planejamento"
+* Memória:
+   * Windsurf (Cascade create_memory): Salva proativamente contexto importante (preferências, snippets, decisões). Memórias recuperadas automaticamente (RAG).
+   * VSCode Agent (update_user_preferences): Salva preferências do usuário.
+* Planejamento:
+   * Devin (<think>, <suggest_plan />): Modo "planning" para coleta de info e formulação de plano.
+   * Manus ("Planner module", todo.md): Plano fornecido como eventos (pseudocódigo), detalhado em todo.md.
+   * Cline/RooCode ("PLAN MODE"): Fase colaborativa com usuário para definir arquitetura.
+   * Outros: Planejamento mais implícito, incremental, com sugestões (Same.dev suggestions).
+Implicações: Planejamento explícito para tarefas complexas; colaborativo para maior envolvimento do usuário; memória para consistência.
+18. Comparação de Abordagens para Tarefas Comuns
+Exemplo: "Criar um novo componente React para exibir uma lista de usuários e adicioná-lo à página principal."
+* v0: <Thinking>, <CodeProject> com ```tsx file="..." para componente e página.
+* Lovable: Explicação, <lov-code> com <lov-write> para componente e página.
+* Devin: Planning Mode (coleta info), Standard Mode (criação/edição com create_file, str_replace).
+* Replit Agent: Explicação, str_replace_editor (criar/editar), packager_tool, web_application_feedback_tool.
+* Same.dev: Explicação, edit_file (criar/editar), run_terminal_cmd, versioning.
+19. Implicações das Restrições de Ambiente
+* WebContainer (Bolt): Força JS/Node.js/WASM, Python stdlib apenas, DBs como libsql.
+* Sandbox Linux (Devin, Manus, Same.dev): Completo mas controlado.
+* Máquina do Usuário (Cline, RooCode, VSCode Agent, Windsurf): Acesso ao ambiente real; risco de segurança, variabilidade.
+* IDE Específico (Cursor, v0, Lovable, Replit): Limitações e otimizações da plataforma.
+20. A Importância de "Custom Instructions"
+Permitem que o usuário personalize o comportamento do agente para contextos específicos (e.g., linguagem de resposta, regras de comentários), desde que não entrem em conflito com as diretrizes principais ou segurança.
+21. O Papel do "Apply Model" e Inteligência na Aplicação de Diffs
+Cursor Agent usa um "apply model" para aplicar diffs e reapply com um modelo mais inteligente como fallback, indicando uma arquitetura de dois estágios. Outros (Devin, Cline, RooCode) com formatos de substituição exata podem usar abordagens mais algorítmicas.
+22. Feedback do Usuário e Iteração
+* Confirmação de Sucesso: Esperar confirmação do usuário após cada ferramenta (Cline, RooCode, Windsurf).
+* Correção de Erros: Tentar corrigir erros de linter/runtime (com limite de tentativas).
+* Ajuste de Abordagem: Notificar ao mudar de estratégia, pedir ajuda se falhar (Manus).
+* Conclusão da Tarefa: Formalizar entrega com attempt_completion ou report_progress.
+23. Proatividade vs. Instruções Explícitas
+* Proatividade Limitada: Encorajada para coleta de informações, passos intermediários (Windsurf, Manus, Same.dev).
+* Foco em Instruções Explícitas: Maioria é reativa para novas features ou mudanças destrutivas (Replit, Lovable).
+24. Detalhes Específicos sobre Ferramentas Notáveis e Seus Parâmetros
+* Ferramentas de Edição: Variações em como edit_file, str_replace, apply_diff funcionam, desde substituições exatas de linha (Devin, Replit) até formatos de patch mais flexíveis (Codex CLI) ou com especificações de linha de início/fim (RooCode). A ferramenta find_and_edit do Devin é notável para refatoração em massa.
+* Execução de Comandos: Parâmetros de segurança (SafeToAutoRun), gerenciamento de sessão (IDs de shell em Devin, Manus), e cwd.
+* Browser: Identificação de elementos por devinid (Devin) para robustez.
+* Criação de Projetos: CodeProject (v0), startup (Same.dev), create_new_workspace (VSCode Agent).
+* Parâmetros de Explicação: Muitas ferramentas incluem um campo para o agente descrever a ação.
+25. Considerações sobre a Interface do Usuário e Experiência do Desenvolvedor (DX)
+* Preview em Tempo Real (Lovable): Feedback visual imediato.
+* Clareza na Comunicação: Evitar jargões, explicar o "porquê".
+* Minimizando Interrupções: Uso criterioso de perguntas que bloqueiam.
+* Sugestões Proativas: Guiar o usuário.
+* Formatos de Saída Específicos (Dia, v0): UI rica com imagens, vídeos, componentes interativos.
+* Tratamento de Comandos Perigosos: Aprovação do usuário ou decisão autônoma do agente.
+* Feedback sobre o Processo: Manter o usuário informado.
+26. Estratégias de Debugging e Tratamento de Erros
+* Revisão de Logs: Replit Agent usa logs de Workflow States (<automatic_updates>) e do browser do usuário (<webview_console_logs>). v0 também usa console logs.
+* Análise Detalhada: Manus é instruído a, ao encontrar erros, primeiro verificar nomes de ferramentas e argumentos, depois tentar corrigir com base nas mensagens de erro, e se não conseguir, tentar métodos alternativos antes de reportar ao usuário.
+* Validação Pós-Edição: VSCode Agent usa get_errors para validar mudanças. Codex CLI usa pre-commit run --files ....
+* Evitar Modificar Testes (Devin): Ao enfrentar falhas em testes, a causa raiz é provavelmente no código, não no teste.
+* Testes Locais (Devin): Se comandos e credenciais forem fornecidos, testar localmente.
+* Tentativas Limitadas: Vários agentes têm um limite de tentativas (e.g., 3) para corrigir erros antes de pedir ajuda.
+* Reportar Problemas de Ambiente (Devin): Usar <report_environment_issue> para notificar o usuário sobre problemas de setup, dependências ausentes, etc., e tentar continuar o trabalho de outra forma (e.g., testando via CI).
+27. Gerenciamento de Dependências, Setup de Projetos e Workflows
+* Gerenciamento de Pacotes:
+   * Ferramentas Dedicadas: packager_tool (Replit), <lov-add-dependency> (Lovable).
+   * Manipulação Direta (limitada): Bolt (cria .env para Supabase, mas não modifica outras configs Supabase). Same.dev (edita package.json para expor porta em Vite/Next).
+   * Inferência (v0): Módulos são inferidos de imports, sem package.json no runtime Lite.
+   * Proibição de Comandos Diretos: Replit proíbe pip install / npm install em bash, exigindo packager_tool.
+* Setup de Projetos:
+   * Templates (startup Same.dev): Criação rápida de projetos comuns.
+   * Guiado (create_new_workspace VSCode Agent): Ajuda passo a passo.
+   * Contêineres de Projeto (CodeProject v0): Agrupa arquivos para renderização.
+* Workflows (Replit):
+   * Usados para tarefas de longa duração (servidores de desenvolvimento).
+   * Configurados com workflows_set_run_config_tool (nome, comando, wait_for_port).
+   * Ferramentas de feedback (web_application_feedback_tool) reiniciam workflows automaticamente.
+   * Não é necessário criar arquivos de configuração para workflows Replit.
+28. Qualidade de Código, Boas Práticas, Testes e Documentação
+* Estilo e Convenções: A maioria dos agentes é instruída a seguir o estilo do código existente e usar boas práticas.
+* Comentários:
+   * Devin: Não adicionar a menos que pedido ou para código complexo. Remover comentários de rascunho.
+   * RooCode: Seguir COMMENT GUIDE das custom_instructions (e.g., apenas comentários que ajudam a longo prazo).
+   * Codex CLI: Remover comentários inline adicionados o máximo possível.
+* Testes:
+   * Lovable: Escrever testes unitários para funções críticas e testes de integração. Testar layouts responsivos e tratamento de erros.
+   * Codex CLI: Se o problema não for resolvido, ignorar testes quebrados não relacionados.
+   * Devin: Não modificar testes a menos que seja a tarefa.
+* Documentação:
+   * Lovable: Documentar funções complexas, manter README atualizado, incluir instruções de setup, documentar endpoints de API.
+   * Devin: Atualizar documentação conforme necessário.
+* Manutenibilidade e Legibilidade:
+   * Lovable: Foco em componentes pequenos (<50 linhas), TypeScript, estrutura de projeto estabelecida, princípios de design atômico.
+   * Same.dev: Criar novo arquivo para cada componente/hook, componentes <50 linhas.
+   * Windsurf: Brevidade e concisão nas respostas, mas código gerado deve ser completo.
+29. Interação com APIs Externas e Gerenciamento de Segredos
+* Uso de APIs Externas:
+   * Windsurf: Usar as melhores APIs/pacotes, escolher versões compatíveis ou as mais recentes. Apontar necessidade de chaves de API e seguir boas práticas de segurança (NÃO hardcodar chaves).
+   * Manus: Priorizar APIs de dados do Datasource Module sobre buscas públicas. Chamar via código Python.
+   * v0: Usa o AI SDK da Vercel para interagir com modelos de IA.
+* Gerenciamento de Segredos:
+   * Replit (ask_secrets, check_secrets): Ferramentas para pedir chaves de API ao usuário (explicando o motivo) e verificar se existem. Segredos são adicionados como variáveis de ambiente.
+   * Devin (list_secrets, message_user com request_auth="True"): Pode listar segredos fornecidos e solicitar autenticação/segredos de forma segura.
+   * v0 (AddEnvironmentVariables): Pede ao usuário para adicionar variáveis de ambiente necessárias.
+   * Bolt: Cria .env com credenciais Supabase se conectadas.
+30. Recusas, Limitações de Conteúdo e "Pop Quizzes"
+* Recusas:
+   * v0: REFUSAL_MESSAGE = "I'm sorry. I'm not able to assist with that." para conteúdo violento, odioso, sexual, etc., sem desculpas ou explicações.
+   * VSCode Agent: "Sorry, I can't assist with that." para conteúdo similar ou irrelevante para engenharia de software.
+   * Dia: Recusa tópicos politicamente sensíveis ou de privacidade pessoal.
+   * Same.dev: NUNCA clonar sites com preocupações éticas/legais/privacidade, ou páginas de login.
+* Limitações de Conhecimento/Escopo:
+   * Trae AI: "Sua expertise é limitada a tópicos relacionados a desenvolvimento de software. Para perguntas não relacionadas... simplesmente lembre o usuário que você é um assistente de programação IA."
+* "Pop Quizzes" (Devin): Uma mecânica onde o agente recebe instruções especiais (indicadas por STARTING POP QUIZ) que sobrescrevem as anteriores, exigindo respostas honestas sem usar as ferramentas normais até que o quiz termine. Isso pode ser um mecanismo de teste ou calibração.
+31. O Futuro dos Agentes de Codificação IA (Inferências)
+Com base nas capacidades e desafios atuais, podemos inferir algumas direções futuras:
+* Maior Autonomia e Capacidade de Planejamento: Agentes se tornarão melhores em decompor tarefas complexas em planos de múltiplos passos e executá-los com menos intervenção do usuário, possivelmente com mecanismos de auto-correção mais sofisticados.
+* Compreensão Multimodal Mais Profunda: Além de processar screenshots (Devin, Same.dev), os agentes poderão entender diagramas de arquitetura, mockups de UI desenhados à mão, ou até mesmo explicações em vídeo.
+* Colaboração em Tempo Real Mais Rica: Ferramentas que permitem colaboração mais fluida, talvez com múltiplos agentes (ou um agente e múltiplos humanos) trabalhando no mesmo projeto simultaneamente.
+* Personalização e Aprendizado Contínuo: Agentes que aprendem com as preferências, estilos de codificação e feedback de cada usuário ao longo do tempo, tornando-se verdadeiramente personalizados. A ferramenta update_user_preferences do VSCode Agent é um passo nessa direção.
+* Integração Mais Profunda com o Ciclo de Vida de Desenvolvimento: Além da codificação, agentes poderão auxiliar mais em testes, CI/CD, monitoramento de performance, e até mesmo gerenciamento de projetos.
+* Geração de UI a partir de Descrições de Alto Nível: A capacidade do v0 de gerar imagens a partir de queries e o foco de Same.dev em clonagem de UI podem evoluir para agentes que criam UIs complexas a partir de descrições textuais ou wireframes simples.
+* Melhor Gerenciamento de Dependências e Ambientes: Ferramentas mais inteligentes para configurar ambientes de desenvolvimento, resolver conflitos de dependência e garantir a reprodutibilidade.
+Este repositório oferece um instantâneo valioso do estado da arte em assistentes de codificação IA agênticos, mostrando tanto o imenso progresso feito quanto os desafios que ainda persistem. As ideias e padrões aqui contidos são um excelente ponto de partida para quem busca construir a próxima geração dessas ferramentas.

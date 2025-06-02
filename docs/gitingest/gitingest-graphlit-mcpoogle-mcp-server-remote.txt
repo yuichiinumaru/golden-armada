@@ -1,0 +1,457 @@
+Directory structure:
+└── graphlit-mcpoogle-mcp-server-remote/
+    ├── README.md
+    ├── LICENSE
+    ├── next.config.ts
+    ├── package.json
+    ├── tsconfig.json
+    ├── app/
+    │   └── [transport]/
+    │       ├── resources.ts
+    │       ├── route.ts
+    │       └── tools.ts
+    └── public/
+        └── index.html
+
+================================================
+FILE: README.md
+================================================
+# Model Context Protocol (MCP) Server for McPoogle Search Engine
+
+## Overview
+
+[McPoogle](https://www.mcpoogle.com) is a search engine for [MCP](https://modelcontextprotocol.io) (Model Context Protocol) Servers and Tools. 
+
+McPoogle is under active development, and released in ‘alpha’. McPoogle can make mistakes, and may have unscheduled maintenance. Uses data ingested from 7000+ GitHub MCP Server READMEs, MCP docs, and other public sources.
+
+This MCP server provides search functionality within any MCP client for finding MCP servers or tools.
+
+For any questions on using the McPoogle search engine, please join our [Discord](https://discord.gg/ygFmfjy3Qx) community and post on the #mcpoogle channel.
+
+## Tools
+
+- Search MCP Servers
+
+## Installation
+
+In your MCP client, enter the McPoogle remote MCP server address: https://mcp.mcpoogle.com/sse
+
+![carbon - 2025-05-08T155431 185](https://github.com/user-attachments/assets/ea465833-56d7-40be-b376-941a09384e40)
+
+### Installing McPoogle in Cline:
+https://github.com/user-attachments/assets/73dfc4fc-ffec-458e-bd1c-c06b823af67c
+
+## Support
+
+For support with the McPoogle MCP Server, please submit a [GitHub Issue](https://github.com/graphlit/mcpoogle-mcp-server-remote/issues).  
+
+For further support with the Graphlit Platform, please join our [Discord](https://discord.gg/ygFmfjy3Qx) community.
+
+
+
+================================================
+FILE: LICENSE
+================================================
+MIT License
+
+Copyright (c) 2025 Unstruk Data Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+================================================
+FILE: next.config.ts
+================================================
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {};
+
+export default nextConfig;
+
+
+
+================================================
+FILE: package.json
+================================================
+{
+  "name": "mcpoogle-mcp-server",
+  "version": "1.0.0",
+  "description": "McPoogle MCP Server",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [
+    "McPoogle",
+    "API",
+    "LLM",
+    "MCP",
+    "search",
+    "Graphlit"
+  ],
+  "author": "Unstruk Data Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "@vercel/mcp-adapter": "^0.4.1",
+    "graphlit-client": "^1.0.20250519001",
+    "next": "15.2.4",
+    "redis": "^4.7.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
+
+
+
+================================================
+FILE: tsconfig.json
+================================================
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+
+
+
+================================================
+FILE: app/[transport]/resources.ts
+================================================
+import { Graphlit } from "graphlit-client";
+import { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
+import {
+    ContentTypes,
+    ContentFilter, 
+    EntityState,
+    GetContentQuery,
+} from "graphlit-client/dist/generated/graphql-types.js";
+
+export function registerResources(server: any) {
+
+    server.resource(
+    "Contents list: Returns list of content resources.",
+    new ResourceTemplate("contents://", {
+        list: async (extra) => {
+        const client = new Graphlit();
+        
+        const filter: ContentFilter = { 
+            states: [EntityState.Finished], // filter on finished contents only
+        };
+
+        try {
+            const response = await client.queryContents(filter);
+            
+            return {
+            resources: (response.contents?.results || [])
+                .filter(content => content !== null)
+                .map(content => ({
+                name: content.name,
+                description: content.description || '',
+                uri: `contents://${content.id}`,
+                mimeType: content.mimeType || 'text/markdown'
+                }))
+            };
+        } catch (error) {
+            console.error("Error fetching content list:", error);
+            return { resources: [] };
+        }
+        }
+    }),
+    async (uri: URL, variables: any) => {
+        return {
+        contents: []
+        };
+    }
+    );
+          
+    server.resource(
+        "Content: Returns content metadata and complete Markdown text. Accepts content resource URI, i.e. contents://{id}, where 'id' is a content identifier.",
+        new ResourceTemplate("contents://{id}", { list: undefined }),
+        async (uri: URL, variables: any) => {
+            const id = variables.id as string;
+            const client = new Graphlit();
+
+            try {
+                const response = await client.getContent(id);
+
+                return {
+                    contents: [
+                        {
+                            uri: uri.toString(),
+                            text: formatContent(response),
+                            mimeType: 'text/markdown'
+                        }
+                    ]
+                };
+            } catch (error) {
+                console.error("Error fetching content:", error);
+                return {
+                    contents: []
+                };
+            }
+        }
+    );
+}
+
+function formatContent(response: GetContentQuery): string {
+    const results: string[] = [];
+
+    const content = response.content;
+
+    if (!content) {
+        return "";
+    }
+
+    // Basic content details
+    results.push(`**Content ID:** ${content.id}`);
+    results.push(`**Name:** ${content.name}`);
+
+    if (content.creationDate) results.push(`**Ingestion Date:** ${content.creationDate}`);
+
+    // Links
+    if (content.links && content.type === ContentTypes.Page) {
+        results.push(...content.links
+            .slice(0, 1000)
+            .map(link => `**${link.linkType} Link:** ${link.uri}`));
+    }
+
+    if (content.markdown) {
+        results.push(content.markdown);
+        results.push("\n");
+    }
+
+    if (content.customSummary) {
+        results.push("**MCP Metadata:**");
+        results.push(content.customSummary);
+    }
+    
+    return results.join('\n');
+}
+
+
+
+================================================
+FILE: app/[transport]/route.ts
+================================================
+import { createMcpHandler } from "@vercel/mcp-adapter";
+import { registerTools } from './tools';
+import { registerResources } from './resources';
+import { NextRequest, NextResponse } from 'next/server';
+
+const DEFAULT_INSTRUCTIONS = `
+You are provided a set of MCP tools and resources that integrate with the [McPoogle](https://www.mcpoogle.com) search engine for MCP Servers and Tools.
+
+Use the 'search' MCP tool to find MCP Servers and Tools that match a given user prompt. The search results will include the name, description, and GitHub URL of each MCP Server.
+
+To use each of the McPoogle MCP tools, there may be environment variables which are required to be configured in your MCP client. These are described in the description for each tool.
+These must be configured in the MCP client YAML or JSON configuration file before you can use the tools. *Do not* set these directly in your Terminal or shell environment.
+
+## Best Practices:
+1. Never infer, guess at or hallucinate any URLs.
+2. Always attempt to use the most-specific tool for the task at hand.
+
+McPoogle is a search engine for [MCP](https://modelcontextprotocol.io) (Model Context Protocol) Servers and Tools. 
+
+Built by 🦝 in Seattle with [Graphlit](https://www.graphlit.com). 
+
+McPoogle is under active development, and released in 'alpha'. McPoogle can make mistakes, and may have unscheduled maintenance. Uses data ingested from 7000+ GitHub MCP Server READMEs, MCP docs, and other public sources.
+
+Love it? Hate it? Tell us on the Graphlit [Discord](https://discord.gg/ygFmfjy3Qx) #mcpoogle channel.
+
+### Use Graphlit with Cline, Cursor, Goose, Windsurf and other MCP clients
+Try our [Graphlit MCP Server](https://github.com/graphlit/graphlit-mcp-server) today, and please give a GitHub ⭐ if you like it, or hit us on the Graphlit [Discord](https://discord.gg/ygFmfjy3Qx) #mcp channel and tell us why you don't.
+
+Ingest anything from Slack, Discord, websites, Google Drive, email, Jira, Linear or GitHub into a Graphlit project - and then search and retrieve relevant knowledge within an MCP client like Cursor, Windsurf, Goose or Cline.
+`
+
+// Create the MCP handler with SSE support
+const mcpHandler = createMcpHandler(
+  (server) => {
+    registerTools(server);
+    registerResources(server);
+  },
+  {
+    instructions: DEFAULT_INSTRUCTIONS
+  },
+  {
+    redisUrl: process.env.REDIS_URL,
+    basePath: "/",
+    verboseLogs: true,
+    maxDuration: 60,
+  }
+);
+
+// Add CORS headers to the response
+function addCorsHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  
+  // Set CORS headers
+  headers.set('Access-Control-Allow-Origin', '*');
+  headers.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+  headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  headers.set('Access-Control-Allow-Credentials', 'true');
+  
+  // For SSE connections
+  headers.set('Cache-Control', 'no-cache');
+  headers.set('Connection', 'keep-alive');
+  
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+}
+
+// Handle OPTIONS requests for CORS preflight
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Max-Age': '86400',
+    },
+  });
+}
+
+// Wrap the handler with CORS support
+export async function GET(request: NextRequest) {
+  const response = await mcpHandler(request);
+  return addCorsHeaders(response);
+}
+
+export async function POST(request: NextRequest) {
+  const response = await mcpHandler(request);
+  return addCorsHeaders(response);
+}
+
+export async function DELETE(request: NextRequest) {
+  const response = await mcpHandler(request);
+  return addCorsHeaders(response);
+}
+
+
+
+================================================
+FILE: app/[transport]/tools.ts
+================================================
+import { Graphlit } from "graphlit-client";
+import { z } from "zod";
+import { 
+    ContentFilter, 
+    SearchTypes, 
+    RetrievalStrategyTypes, 
+    RerankingModelServiceTypes 
+} from "graphlit-client/dist/generated/graphql-types.js";
+
+export function registerTools(server: any) {
+    server.tool(
+    "searchMcpServers",
+    `Retrieve relevant MCP Servers and Tools from McPoogle search engine. Use this tool to find MCP Servers and Tools that match a given user prompt. The search results will include the name, description, and GitHub URL of each MCP Server.
+    Accepts an LLM user prompt for content retrieval. For best retrieval quality, provide only key words or phrases from the user prompt, which will be used to create text embeddings for a vector search query.
+    Returns the ranked content sources, including their content resource URI to retrieve the complete Markdown text.`,
+    { 
+        prompt: z.string().describe("LLM user prompt for MCP search.")
+    },
+    async ({ prompt }: { prompt: string }) => {
+        const client = new Graphlit();
+
+        try {
+        const filter: ContentFilter = { 
+            searchType: SearchTypes.Hybrid,
+        };
+
+        const response = await client.retrieveSources(prompt, filter, undefined, 
+        { 
+            type: RetrievalStrategyTypes.Content, // NOTE: Use Content retrieval strategy to return entire Markdown text
+            contentLimit: 50 // number of content sources to retrieve prior to reranking
+        }, 
+        { 
+            serviceType: RerankingModelServiceTypes.Cohere 
+        });
+        
+        const sources = response.retrieveSources?.results || [];
+        
+        return {
+            content: sources
+            .filter(source => source !== null)
+            .map(source => ({
+                type: "text",
+                mimeType: "application/json",
+                text: JSON.stringify({ 
+                    id: source.content?.id, 
+                    relevance: source.relevance,
+                    resourceUri: `contents://${source.content?.id}`
+                }, null, 2)
+            }))
+        };
+        } catch (err: unknown) {
+        const error = err as Error;
+        return {
+            content: [{
+            type: "text",
+            text: `Error: ${error.message}`
+            }],
+            isError: true
+        };
+        }
+    }
+    );
+}
+
+
+
+================================================
+FILE: public/index.html
+================================================
+<h1>MCP for McPoogle</h1>
+
+

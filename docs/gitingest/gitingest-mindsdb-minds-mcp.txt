@@ -1,0 +1,657 @@
+Directory structure:
+└── mindsdb-minds-mcp/
+    ├── README.md
+    ├── config.py
+    ├── docker-compose.yml
+    ├── Dockerfile
+    ├── Makefile
+    ├── pyproject.toml
+    ├── requirements-dev.txt
+    ├── requirements.txt
+    ├── server.py
+    ├── .flake8
+    ├── tests/
+    │   ├── __init__.py
+    │   ├── util.py
+    │   ├── integration/
+    │   │   └── __init__.py
+    │   └── unit/
+    │       ├── __init__.py
+    │       ├── test_resources.py
+    │       └── test_tools.py
+    └── .github/
+        └── workflows/
+            └── unit-tests.yml
+
+================================================
+FILE: README.md
+================================================
+# Minds MCP Server
+
+An MCP (Model Context Protocol) server for Minds, allowing LLMs to interact with the Minds SDK through a standardized interface.
+
+## Installation
+
+Install the required dependencies (virtual environment recommended)
+
+```bash
+python -m venv env
+source env/bin/activate
+```
+
+```bash
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+
+## Configuration
+
+The server can be configured using environment variables:
+
+### FastMCP Settings
+
+- `FASTMCP_DEBUG`: Enable debug mode (default: false)
+- `FASTMCP_LOG_LEVEL`: Set log level (default: INFO)
+- `FASTMCP_HOST`: Host to bind to (default: 0.0.0.0)
+- `FASTMCP_PORT`: Port to bind to (default: 8000)
+- `FASTMCP_SSE_PATH`: Path for SSE events (default: /sse)
+- `FASTMCP_MESSAGE_PATH`: Path for messages (default: /messages/)
+
+### Minds Settings
+
+- `MINDS_BASE_URL`: Base URL for the Minds API (default: https://mdb.ai)
+
+## Usage
+
+### Starting the Server
+
+```bash
+python -m server
+```
+
+### Resource Templates
+
+The server exposes the following resource templates according to the MCP specification:
+
+- `minds://{api_key}` - List all available Minds
+- `minds://{mind_name}/{api_key}` - Get a specific Mind by name
+
+### Tool Templates
+
+The server provides the following tool templates:
+
+- `completion` - Generate a completion using a specified Mind
+  - Parameters:
+    - `mind_name`: The ID of the Mind to use
+    - `message`: The message to complete
+    - `api_key`: The Minds API key
+
+## Development
+
+### Running Tests
+
+```bash
+# Run all tests
+python -m pytest
+
+# Run only unit tests
+python -m pytest tests/unit
+```
+
+### Development Mode
+
+For easier development, you can use the MCP development server:
+
+```bash
+mcp dev server.py
+```
+
+This will start the server and open the MCP Inspector in your browser for testing.
+
+## MCP Protocol
+
+This server implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/), which provides:
+
+- **Resource Templates**: Parameterized URL patterns for retrieving data
+- **Tool Templates**: Function signatures for executing actions
+- **Prompt Templates**: Reusable interaction templates (not used in this server)
+
+MCP clients can:
+1. Discover available resource and tool templates
+2. Instantiate templates with parameters
+3. Access resources and call tools in a standardized way
+
+
+================================================
+FILE: config.py
+================================================
+import os
+
+# Environment variables with defaults for Minds
+MINDS_BASE_URL = os.environ.get('MINDS_BASE_URL', 'https://mdb.ai')
+
+# FastMCP settings
+FASTMCP_DEBUG = os.environ.get('FASTMCP_DEBUG', 'false').lower() == 'true'
+FASTMCP_LOG_LEVEL = os.environ.get('FASTMCP_LOG_LEVEL', 'INFO')
+FASTMCP_HOST = os.environ.get('FASTMCP_HOST', '0.0.0.0')
+FASTMCP_PORT = int(os.environ.get('FASTMCP_PORT', '8000'))
+FASTMCP_SSE_PATH = os.environ.get('FASTMCP_SSE_PATH', '/sse')
+FASTMCP_MESSAGE_PATH = os.environ.get('FASTMCP_MESSAGE_PATH', '/messages/')
+
+
+
+================================================
+FILE: docker-compose.yml
+================================================
+services:
+  minds-mcp:
+    build: .
+    ports:
+      - "${FASTMCP_PORT:-8000}:${FASTMCP_PORT:-8000}"
+    environment:
+      - FASTMCP_HOST=${FASTMCP_HOST:-0.0.0.0}
+      - FASTMCP_PORT=${FASTMCP_PORT:-8000}
+      - FASTMCP_DEBUG=${FASTMCP_DEBUG:-false}
+      - FASTMCP_LOG_LEVEL=${FASTMCP_LOG_LEVEL:-INFO}
+      - FASTMCP_SSE_PATH=${FASTMCP_SSE_PATH:-/sse}
+      - FASTMCP_MESSAGE_PATH=${FASTMCP_MESSAGE_PATH:-/messages/}
+      - MINDS_BASE_URL=${MINDS_BASE_URL:-https://mdb.ai}
+      - MINDS_API_KEY=${MINDS_API_KEY:-}
+    restart: unless-stopped
+
+
+================================================
+FILE: Dockerfile
+================================================
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copy only the requirements files first to leverage Docker cache
+COPY requirements.txt requirements-dev.txt ./
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-dev.txt
+
+# Copy the rest of the application
+COPY . .
+
+# Expose the port the server runs on (default 8000)
+EXPOSE 8000
+
+# Command to run the server
+CMD ["python", "-m", "server"]
+
+
+================================================
+FILE: Makefile
+================================================
+.PHONY: setup test unit-tests lint run docker-build docker-run clean all
+
+# Default target when running 'make' with no arguments
+all: setup test
+
+# Setup development environment
+setup:
+	pip install -r requirements.txt
+	pip install -r requirements-dev.txt
+
+# Run all tests
+test:
+	pytest
+
+# Run only unit tests
+unit-tests:
+	pytest tests/unit
+
+# Run linting tools
+lint:
+	flake8 .
+	black --check .
+
+# Format code with black
+format:
+	black .
+
+# Run the server locally
+run:
+	python -m server
+
+# Build Docker image
+docker-build:
+	docker compose build
+
+# Run Docker container with docker compose
+docker-run:
+	docker compose up -d
+
+# Clean up Python cache files
+clean:
+	find . -type d -name __pycache__ -exec rm -rf {} +
+	find . -type f -name "*.pyc" -delete
+	find . -type f -name "*.pyo" -delete
+	find . -type f -name "*.pyd" -delete
+	find . -type f -name ".coverage" -delete
+	find . -type d -name "*.egg-info" -exec rm -rf {} +
+	find . -type d -name "*.egg" -exec rm -rf {} +
+	find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	find . -type d -name ".coverage" -exec rm -rf {} +
+	find . -type d -name "htmlcov" -exec rm -rf {} +
+	find . -type d -name "dist" -exec rm -rf {} +
+	find . -type d -name "build" -exec rm -rf {} +
+
+
+================================================
+FILE: pyproject.toml
+================================================
+[tool.black]
+skip-string-normalization = true
+
+
+================================================
+FILE: requirements-dev.txt
+================================================
+mcp[cli]
+pytest==8.3.5
+pytest-asyncio==0.23.5
+black==25.1.0
+flake8==7.1.2
+
+
+================================================
+FILE: requirements.txt
+================================================
+mcp==1.5.0
+minds_sdk==1.3.0
+
+
+================================================
+FILE: server.py
+================================================
+from typing import Dict, List
+from mcp.server.fastmcp import FastMCP
+from minds.client import Client
+
+# Import configuration
+from config import (
+    MINDS_BASE_URL,
+    FASTMCP_DEBUG,
+    FASTMCP_LOG_LEVEL,
+    FASTMCP_HOST,
+    FASTMCP_PORT,
+    FASTMCP_SSE_PATH,
+    FASTMCP_MESSAGE_PATH,
+)
+
+# Create the MCP server with customized settings
+mcp = FastMCP(
+    'Minds Enterprise',
+    debug=FASTMCP_DEBUG,
+    log_level=FASTMCP_LOG_LEVEL,
+    host=FASTMCP_HOST,
+    port=FASTMCP_PORT,
+    sse_path=FASTMCP_SSE_PATH,
+    message_path=FASTMCP_MESSAGE_PATH,
+)
+
+
+@mcp.resource('minds://{api_key}', mime_type='application/json')
+def get_minds(api_key: str) -> List[Dict]:
+    '''
+    Returns a list of available Minds for completion.
+
+    Args:
+        api_key: The Minds API key
+
+    Returns:
+        A list of Mind objects
+    '''
+    minds_client = Client(api_key, base_url=MINDS_BASE_URL)
+    all_minds = minds_client.minds.list()
+    all_mind_objs = []
+    for mind in all_minds:
+        all_mind_objs.append(
+            {
+                'name': mind.name,
+                'model_name': mind.model_name,
+                'provider': mind.provider,
+                'parameters': mind.parameters,
+                'datasources': mind.datasources,
+                'created_at': mind.created_at,
+                'updated_at': mind.updated_at,
+            }
+        )
+    return all_mind_objs
+
+
+@mcp.resource('minds://{mind_name}/{api_key}', mime_type='application/json')
+def get_mind(mind_name: str, api_key: str) -> Dict:
+    '''
+    Gets a Mind by name.
+
+    Args:
+        mind_name: The name of the Mind to retrieve
+        api_key: The Minds API key
+
+    Returns:
+        A Mind object
+    '''
+    minds_client = Client(api_key, base_url=MINDS_BASE_URL)
+    mind = minds_client.minds.get(mind_name)
+    return {
+        'name': mind.name,
+        'model_name': mind.model_name,
+        'provider': mind.provider,
+        'parameters': mind.parameters,
+        'datasources': mind.datasources,
+        'created_at': mind.created_at,
+        'updated_at': mind.updated_at,
+    }
+
+
+@mcp.tool()
+def completion(mind_name: str, message: str, api_key: str) -> str:
+    '''
+    Generate a completion using the specified Mind.
+
+    Args:
+        mind_name: The ID of the Mind to use for completion
+        message: The message to complete
+        api_key: The Minds API key
+
+    Returns:
+        A completion response, either as a string or as a stream of chunks
+    '''
+    minds_client = Client(api_key, base_url=MINDS_BASE_URL)
+    mind = minds_client.minds.get(mind_name)
+    return mind.completion(message)
+
+
+if __name__ == '__main__':
+    # Run the server - FastMCP already has host and port from initialization
+    mcp.run()
+
+
+
+================================================
+FILE: .flake8
+================================================
+[flake8]
+max-line-length = 120
+exclude = .git,__pycache__,build,dist,venv,.env,env
+ignore = E501
+
+
+================================================
+FILE: tests/__init__.py
+================================================
+
+
+
+================================================
+FILE: tests/util.py
+================================================
+'''
+Test utilities for MCP server tests.
+'''
+
+from unittest.mock import MagicMock
+from typing import Optional
+from minds.minds import Mind
+
+
+def create_mock_mind(
+    name: str,
+    model_name: str = 'gpt-4o',
+    provider: str = 'openai',
+    prompt_template: Optional[str] = None,
+) -> Mind:
+    '''
+    Create a mock Mind instance with consistent properties.
+
+    Args:
+        name: The name of the Mind
+        model_name: The model name (default: gpt-4o)
+        provider: The provider (default: openai)
+        prompt_template: Custom prompt template (default: generates one based on name)
+
+    Returns:
+        A mock Mind instance with the specified properties
+    '''
+    mock_mind = MagicMock(spec=Mind)
+    mock_mind.name = name
+    mock_mind.model_name = model_name
+    mock_mind.provider = provider
+
+    # Set parameters with prompt template
+    template = prompt_template or f'Template for {name}'
+    mock_mind.parameters = {'prompt_template': template}
+    mock_mind.prompt_template = template
+
+    # Add datasources attribute
+    mock_mind.datasources = []
+
+    # Add created_at and updated_at
+    mock_mind.created_at = "2023-01-01"
+    mock_mind.updated_at = "2023-01-02"
+
+    # Set up the completion method
+    mock_mind.completion.return_value = f'Completion response for {name}'
+
+    return mock_mind
+
+
+
+================================================
+FILE: tests/integration/__init__.py
+================================================
+
+
+
+================================================
+FILE: tests/unit/__init__.py
+================================================
+
+
+
+================================================
+FILE: tests/unit/test_resources.py
+================================================
+'''
+Unit tests for MCP server resources.
+'''
+
+import unittest
+from unittest.mock import patch, MagicMock
+
+import server
+from tests.util import create_mock_mind
+from minds.exceptions import ObjectNotFound
+
+
+class TestMindsResource(unittest.TestCase):
+    '''Tests for the minds resource endpoints'''
+
+    def test_get_minds(self) -> None:
+        '''Test that the get_minds function returns the expected list of minds'''
+        # Create mock minds
+        mock_minds = [
+            create_mock_mind('gpt4'),
+            create_mock_mind(
+                'claude3', model_name='claude-3-opus', provider='anthropic'
+            ),
+        ]
+
+        # Use patch as a context manager
+        with patch('server.Client') as mock_client_class:
+            # Configure the mock
+            mock_client = MagicMock()
+            mock_client.minds.list.return_value = mock_minds
+            mock_client_class.return_value = mock_client
+
+            # Call the function with test API key
+            result = server.get_minds('test_api_key')
+
+            # Verify the result
+            self.assertIsInstance(result, list)
+            self.assertEqual(len(result), 2)
+            self.assertEqual(result[0]['name'], 'gpt4')
+            self.assertEqual(result[1]['name'], 'claude3')
+
+            # Verify the client was called correctly
+            mock_client_class.assert_called_once_with(
+                'test_api_key', base_url='https://mdb.ai'
+            )
+            mock_client.minds.list.assert_called_once()
+
+    def test_get_mind(self) -> None:
+        '''Test that the get_mind resource returns the expected mind'''
+        # Create mock mind
+        mock_mind = create_mock_mind('gpt4')
+
+        # Use patch as a context manager
+        with patch('server.Client') as mock_client_class:
+            # Configure the mock
+            mock_client = MagicMock()
+            mock_client.minds.get.return_value = mock_mind
+            mock_client_class.return_value = mock_client
+
+            # Call the function with parameters in the correct order
+            result = server.get_mind('gpt4', 'test_api_key')
+
+            # Verify the result
+            self.assertIsInstance(result, dict)
+            self.assertEqual(result['name'], 'gpt4')
+            self.assertEqual(result['model_name'], 'gpt-4o')
+
+            # Verify the client was called correctly
+            mock_client_class.assert_called_once_with(
+                'test_api_key', base_url='https://mdb.ai'
+            )
+            mock_client.minds.get.assert_called_once_with('gpt4')
+
+    def test_get_mind_not_found(self) -> None:
+        '''Test that the get_mind resource handles ObjectNotFound exceptions'''
+        # Use patch as a context manager
+        with patch('server.Client') as mock_client_class:
+            # Configure the mock
+            mock_client = MagicMock()
+            mock_client.minds.get.side_effect = ObjectNotFound('Mind not found')
+            mock_client_class.return_value = mock_client
+
+            # Call the function and expect an exception
+            with self.assertRaises(ObjectNotFound):
+                server.get_mind('nonexistent_mind', 'test_api_key')
+
+            # Verify the client was called correctly
+            mock_client_class.assert_called_once_with(
+                'test_api_key', base_url='https://mdb.ai'
+            )
+            mock_client.minds.get.assert_called_once_with('nonexistent_mind')
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+
+================================================
+FILE: tests/unit/test_tools.py
+================================================
+'''
+Unit tests for MCP server tools.
+'''
+
+import unittest
+from unittest.mock import patch, MagicMock
+
+import server
+from tests.util import create_mock_mind
+from minds.exceptions import ObjectNotFound
+
+
+class TestCompletionTool(unittest.TestCase):
+    '''Tests for the completion tool'''
+
+    def test_completion(self) -> None:
+        '''Test that the completion tool returns the expected result'''
+        # Create mock mind
+        mock_mind = create_mock_mind('gpt4')
+        mock_mind.completion.return_value = 'Completion for test prompt'
+
+        # Use patch as a context manager
+        with patch('server.Client') as mock_client_class:
+            # Configure the mock
+            mock_client = MagicMock()
+            mock_client.minds.get.return_value = mock_mind
+            mock_client_class.return_value = mock_client
+
+            # Call the function with API key as the last parameter
+            result = server.completion('gpt4', 'test prompt', 'test_api_key')
+
+            # Verify the result is the expected string
+            self.assertEqual(result, 'Completion for test prompt')
+
+            # Verify the client was called correctly
+            mock_client_class.assert_called_once_with(
+                'test_api_key', base_url='https://mdb.ai'
+            )
+            mock_client.minds.get.assert_called_once_with('gpt4')
+            mock_mind.completion.assert_called_once_with('test prompt')
+
+    def test_completion_mind_not_found(self) -> None:
+        '''Test that the completion tool handles ObjectNotFound exceptions'''
+        # Use patch as a context manager
+        with patch('server.Client') as mock_client_class:
+            # Configure the mock
+            mock_client = MagicMock()
+            mock_client.minds.get.side_effect = ObjectNotFound('Mind not found')
+            mock_client_class.return_value = mock_client
+
+            # Call the function and expect an exception
+            with self.assertRaises(ObjectNotFound):
+                server.completion('nonexistent_mind', 'test prompt', 'test_api_key')
+
+            # Verify the client was called correctly
+            mock_client_class.assert_called_once_with(
+                'test_api_key', base_url='https://mdb.ai'
+            )
+            mock_client.minds.get.assert_called_once_with('nonexistent_mind')
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+
+================================================
+FILE: .github/workflows/unit-tests.yml
+================================================
+name: Run Unit Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+    
+    - name: Run unit tests
+      run: |
+        pytest tests/unit
+

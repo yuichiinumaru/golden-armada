@@ -1,0 +1,299 @@
+Directory structure:
+└── graphlit-ask-graphlit-mcp-server-remote/
+    ├── README.md
+    ├── LICENSE
+    ├── next.config.ts
+    ├── package.json
+    ├── tsconfig.json
+    ├── app/
+    │   └── [transport]/
+    │       ├── route.ts
+    │       └── tools.ts
+    └── public/
+        └── index.html
+
+================================================
+FILE: README.md
+================================================
+# Model Context Protocol (MCP) Server for Graphlit code generation and documentation
+
+## Overview
+
+Ask questions about using the Graphlit Platform, or specifically about the Graphlit API or SDKs.
+ 
+For any questions on using the AskGraphlit MCP tool, please join our [Discord](https://discord.gg/ygFmfjy3Qx) community and post on the #mcp channel.
+
+## Tools
+
+- Ask Graphlit
+
+## Installation
+
+In your MCP client, enter the Graphlit remote MCP server address: https://ask.mcp.graphlit.dev/sse
+
+![carbon - 2025-05-12T144550 152](https://github.com/user-attachments/assets/7889b843-9294-4d4f-96fb-f38417d5ac8c)
+
+## Support
+
+Please refer to the [Graphlit API Documentation](https://docs.graphlit.dev/).
+
+For support with the Graphlit MCP Server, please submit a [GitHub Issue](https://github.com/graphlit/ask-graphlit-mcp-server-remote/issues).  
+
+For further support with the Graphlit Platform, please join our [Discord](https://discord.gg/ygFmfjy3Qx) community.
+
+
+
+================================================
+FILE: LICENSE
+================================================
+MIT License
+
+Copyright (c) 2025 Unstruk Data Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+================================================
+FILE: next.config.ts
+================================================
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {};
+
+export default nextConfig;
+
+
+
+================================================
+FILE: package.json
+================================================
+{
+  "name": "ask-graphlit-mcp-server",
+  "version": "1.0.0",
+  "description": "AskGraphlit MCP Server",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [
+    "API",
+    "LLM",
+    "MCP",
+    "code generation",
+    "documentation",
+    "Graphlit"
+  ],
+  "author": "Unstruk Data Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "@vercel/mcp-adapter": "^0.4.1",
+    "graphlit-client": "^1.0.20250508001",
+    "next": "15.2.4",
+    "redis": "^4.7.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
+
+
+
+================================================
+FILE: tsconfig.json
+================================================
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+
+
+
+================================================
+FILE: app/[transport]/route.ts
+================================================
+import { createMcpHandler } from "@vercel/mcp-adapter";
+import { registerTools } from './tools';
+import { NextRequest, NextResponse } from 'next/server';
+
+const DEFAULT_INSTRUCTIONS = `
+You are provided a set of MCP tools that integrate with [Graphlit](https://www.graphlit.com) for SDK code generation and answering documentation questions.
+
+## Best Practices:
+1. Never infer, guess at or hallucinate any URLs.
+2. Always attempt to use the most-specific tool for the task at hand.
+
+Built with ☕ in Seattle with [Graphlit](https://www.graphlit.com). 
+
+Love it? Hate it? Tell us on the Graphlit [Discord](https://discord.gg/ygFmfjy3Qx) #mcp channel.
+
+### Use Graphlit with Cline, Cursor, Goose, Windsurf and other MCP clients
+Try our [Graphlit MCP Server](https://github.com/graphlit/graphlit-mcp-server) today, and please give a GitHub ⭐ if you like it, or hit us on the Graphlit [Discord](https://discord.gg/ygFmfjy3Qx) #mcp channel and tell us why you don't.
+
+Ingest anything from Slack, Discord, websites, Google Drive, email, Jira, Linear or GitHub into a Graphlit project - and then search and retrieve relevant knowledge within an MCP client like Cursor, Windsurf, Goose or Cline.
+`
+
+const mcpHandler = createMcpHandler(
+  (server) => {
+    registerTools(server);
+  },
+  {
+    instructions: DEFAULT_INSTRUCTIONS
+  },
+  {
+    redisUrl: process.env.REDIS_URL,
+    basePath: "/",
+    verboseLogs: true,
+    maxDuration: 60,
+  }
+);
+
+// Add CORS headers to the response
+function addCorsHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  
+  // Set CORS headers
+  headers.set('Access-Control-Allow-Origin', '*');
+  headers.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+  headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  headers.set('Access-Control-Allow-Credentials', 'true');
+  
+  // For SSE connections
+  headers.set('Cache-Control', 'no-cache');
+  headers.set('Connection', 'keep-alive');
+  
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+}
+
+// Handle OPTIONS requests for CORS preflight
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Max-Age': '86400',
+    },
+  });
+}
+
+// Wrap the handler with CORS support
+export async function GET(request: NextRequest) {
+  const response = await mcpHandler(request);
+  return addCorsHeaders(response);
+}
+
+export async function POST(request: NextRequest) {
+  const response = await mcpHandler(request);
+  return addCorsHeaders(response);
+}
+
+export async function DELETE(request: NextRequest) {
+  const response = await mcpHandler(request);
+  return addCorsHeaders(response);
+}
+
+
+
+================================================
+FILE: app/[transport]/tools.ts
+================================================
+import { Graphlit } from "graphlit-client";
+import { z } from "zod";
+
+export function registerTools(server: any) {
+    server.tool(
+    "askGraphlit",
+    `Ask questions about using the Graphlit Platform, or specifically about the Graphlit API or SDKs.
+    When the user asks about how to use the Graphlit API or SDKs, use this tool to provide a code sample in Python, TypeScript or C#.
+    Accepts an LLM user prompt. In your user prompt, mention the language you want the code sample in. Defaults to Python.
+    Returns the LLM prompt completion in Markdown format.`,
+    { 
+        prompt: z.string().describe("LLM user prompt.")
+    },
+    async ({ prompt }: { prompt: string }) => {
+        const client = new Graphlit();
+
+        try {
+        const response = await client.askGraphlit(prompt);
+        
+        const message = response.askGraphlit?.message;
+        
+        return {
+            content: [{
+            type: "text",
+            text: JSON.stringify(message, null, 2)
+            }]
+        };
+        } catch (err: unknown) {
+        const error = err as Error;
+        return {
+            content: [{
+            type: "text",
+            text: `Error: ${error.message}`
+            }],
+            isError: true
+        };
+        }
+    }
+    );
+}
+
+
+================================================
+FILE: public/index.html
+================================================
+<h1>MCP for AskGraphlit</h1>
+
+

@@ -1,0 +1,78 @@
+﻿Melhorias e Evolução para o Projeto Codeswarm (v3 - Foco em Prompts e Estratégias Avançadas)
+Este documento expande as ideias anteriores, incorporando uma análise mais profunda da engenharia de prompts e outras estratégias observadas no Devika, que podem ser adaptadas para o Codeswarm.
+1. Engenharia de Prompts Avançada (Inspirada no Devika)
+O Devika, embora não tenha um diretório de "prompts" formal como o Codeswarm está adotando, constrói seus prompts dinamicamente dentro de cada agente. As principais estratégias observadas são:
+* Contextualização Rica:
+   * Histórico da Conversa/Tarefa: Os prompts incluem o histórico relevante da interação do usuário e dos passos anteriores do agente para manter o contexto.
+      * Codeswarm: Seu AdminAgent já faz isso ao passar o task_description e o project_context. Isso pode ser expandido para incluir um resumo mais estruturado dos passos anteriores do plano ou das interações Dev/Revisor.
+   * Estado Atual do Projeto/Código: O CoderAgent do Devika recebe o código existente ao qual precisa adicionar ou modificar.
+      * Codeswarm: Seus DevAgents devem receber o snippet de código relevante ou a estrutura de arquivos necessária para a tarefa atual. O CodeReaderAgent (ou uma ferramenta) é crucial aqui.
+   * Resultados de Ferramentas: Informações coletadas por ferramentas (ex: resultados de pesquisa do ResearcherAgent, conteúdo de uma página web) são injetadas no prompt para o LLM processar.
+      * Codeswarm: Quando um DevAgent usa o ResearcherAgent, os resultados da pesquisa devem ser formatados e incluídos no prompt subsequente do DevAgent para geração de código.
+* Instruções Claras de Papel e Formato de Saída:
+   * Definição do Papel (Persona): Cada agente do Devika tem um prompt que define claramente seu papel e objetivo. Ex: "Você é um Agente Planejador especializado em quebrar objetivos complexos..."
+      * Codeswarm: Seus prompts para AdminAgent, DevAgent, RevisorAgent já devem fazer isso. Refine para garantir que o "tom" e a "especialidade" sejam bem definidos.
+   * Especificação do Formato de Saída: Quando o Devika espera uma saída estruturada (ex: uma lista de passos do Planner, um JSON do ActionAgent), o prompt instrui o LLM a gerar nesse formato.
+      * Codeswarm: Continue e expanda o uso de output_model com Pydantic no ADK. Para prompts mais complexos, você pode incluir exemplos de "few-shot" do formato de saída desejado diretamente no prompt.
+* Prompts de "Cadeia de Pensamento" (Chain-of-Thought - CoT) / Monólogo Interno:
+   * O InternalMonologueAgent do Devika é um exemplo explícito. Mesmo sem ele, outros agentes podem ser instruídos a "pensar passo a passo" antes de dar a resposta final.
+   * Exemplo de Prompt para o Planner do Devika (inferido): "Dado o objetivo '{objetivo_usuario}', primeiro liste as principais sub-tarefas. Para cada sub-tarefa, detalhe os passos necessários. Considere as dependências entre as tarefas. Finalmente, apresente o plano no seguinte formato JSON: ..."
+      * Codeswarm:
+         * AdminAgent (Planner): Ao gerar o plano, instrua-o a primeiro listar as macro-funcionalidades, depois detalhar as tarefas para cada uma, e então organizar em uma estrutura paralelizável.
+         * DevAgent: Antes de escrever o código, peça para ele descrever a abordagem que vai tomar, quais arquivos vai modificar, e quais funções/classes vai criar.
+         * RevisorAgent: Antes de dar o feedback, peça para ele listar os critérios de revisão que está usando e como o código se saiu em cada um.
+* Prompts Baseados em Exemplos (Few-Shot Prompting):
+   * Para tarefas complexas ou quando um formato de saída muito específico é necessário, incluir alguns exemplos (shots) de interações entrada/saída desejada no prompt pode melhorar drasticamente a qualidade da resposta do LLM.
+   * Codeswarm:
+      * Se o AdminAgent está gerando um tipo específico de plano, inclua 1-2 exemplos de objetivos e os planos resultantes.
+      * Se o DevAgent precisa gerar código em um estilo particular ou usando uma biblioteca específica de forma não trivial, forneça um pequeno exemplo.
+* Prompts de Refinamento Iterativo:
+   * O PatcherAgent do Devika funciona recebendo o código com erro e a mensagem de erro, e seu prompt é focado em "corrigir este código dado o seguinte erro".
+   * Codeswarm: O ciclo Dev/Revisor já é iterativo. Os prompts para o DevAgent em rodadas de correção devem incluir:
+      1. O código original.
+      2. O feedback específico do RevisorAgent.
+      3. A instrução clara: "Refatore o código original para endereçar os seguintes pontos do revisor: {feedback_revisor}".
+2. Estratégias Adicionais do Devika para Inspirar o Codeswarm
+* Gerenciamento de Estado Detalhado (src/state.py):
+   * Devika rastreia o "internal_monologue", informações da sessão do navegador (URL, screenshot), e comandos/saídas de terminal (embora a execução de terminal não seja uma ferramenta proeminente).
+   * Codeswarm:
+      * AdminAgent: Poderia manter um "estado do projeto" mais rico, incluindo o plano atual, o status de cada tarefa paralela, e um resumo das decisões chave tomadas.
+      * DevAgent/RevisorAgent: O session.state do ADK pode ser usado para armazenar o contexto específico da tarefa (arquivos relevantes, feedback anterior, etc.).
+      * Logging Estruturado: O logging detalhado do estado de cada agente em cada passo é crucial para a transparência e depuração do seu sistema paralelo. Os callbacks do ADK são perfeitos para isso.
+* Loop de Execução e Tomada de Decisão (Ex: RunnerAgent e ActionAgent):
+   * O RunnerAgent do Devika parece orquestrar o fluxo principal, decidindo qual agente chamar em seguida. O ActionAgent interpreta a intenção do usuário ou o estado atual para determinar a próxima ação.
+   * Codeswarm:
+      * Seu AdminAgent já cumpre parte desse papel.
+      * Considere se o AdminAgent precisa de um sub-componente (ou um prompt específico) para "decidir a próxima melhor ação" após cada ciclo de Dev/Revisor ou quando uma tarefa do plano é concluída. Isso pode envolver:
+         * Verificar se o objetivo geral foi alcançado.
+         * Identificar a próxima tarefa paralelizável do plano.
+         * Decidir se precisa de mais informações do usuário.
+* Contextualização de Erros para LLMs:
+   * Quando o Devika encontra um erro (ex: código que não compila, falha na API), ele tenta fornecer esse contexto de erro de volta ao LLM para auto-correção (especialmente via PatcherAgent).
+   * Codeswarm:
+      * Se um DevAgent produz código que falha nos testes do RevisorAgent (ou em testes automatizados), o feedback para o DevAgent deve incluir não apenas a descrição do erro, mas também os logs relevantes e o snippet de código que falhou. O prompt deve ser: "O código anterior resultou no erro X. Modifique-o para corrigir este erro."
+* "Experts" (Diretório src/experts/ no Devika):
+   * Devika tem um diretório experts com arquivos como web-design.py, stackoverflow.py, etc. Embora o conteúdo desses arquivos na codebase que analisamos seja mínimo ou placeholders, a ideia é interessante.
+   * Codeswarm:
+      * Você poderia ter "personas" de prompt especializadas para DevAgents dependendo do tipo de projeto (ex: "Você é um DevAgent especialista em Python/Django...", "Você é um DevAgent especialista em frontend com React...").
+      * Para o ResearcherAgent, prompts especializados poderiam ser usados para buscar em fontes específicas (ex: "Pesquise no StackOverflow por soluções para este erro Python:", "Pesquise na documentação oficial do React por...").
+      * Isso pode ser gerenciado carregando diferentes arquivos de prompt ou instruções base para os agentes, dependendo do contexto do projeto.
+* Geração de Documentação/Relatórios (ReporterAgent, src/documenter/pdf.py):
+   * Devika tem um ReporterAgent e a capacidade de gerar PDFs a partir de markdown.
+   * Codeswarm:
+      * Após a conclusão de um projeto ou de uma feature significativa, o AdminAgent poderia invocar um ReporterAgent.
+      * Este agente coletaria informações do plano, do histórico de commits (via GitAgent), e talvez resumos do código gerado para criar um relatório de desenvolvimento ou um esboço de documentação.
+      * Isso adiciona um valor significativo ao final do ciclo de vida do projeto.
+3. Integrando com a Estrutura Paralela do Codeswarm
+* Prompts para o AdminAgent Gerenciar Paralelismo:
+   * Quando o AdminAgent (atuando como Planner) cria o plano, o prompt deve incentivá-lo a identificar tarefas que podem ser executadas em paralelo.
+   * Ex: "Analise o objetivo e crie um plano de desenvolvimento. Identifique as principais funcionalidades. Para cada funcionalidade, liste as tarefas. Indique quais tarefas podem ser atribuídas a diferentes pares Dev/Revisor para serem trabalhadas simultaneamente."
+* Contexto para Agentes Paralelos:
+   * Cada par Dev/Revisor trabalhando em uma tarefa paralela precisa de um contexto claro e isolado para sua tarefa específica, mas também acesso (talvez via ResearcherAgent ou uma base de conhecimento compartilhada) a informações globais do projeto.
+* Sincronização e Integração:
+   * O AdminAgent precisará de uma lógica (e prompts) para gerenciar a integração do trabalho concluído pelos diferentes pares paralelos. Isso pode envolver:
+      * Revisar pull requests (se estiver usando Git).
+      * Resolver conflitos (talvez com a ajuda de um DevAgent especializado em merges).
+      * Garantir que o todo integrado funcione.
+Ao focar na engenharia de prompts detalhada, na contextualização rica e na adoção dessas estratégias de orquestração e especialização, o Codeswarm pode se tornar uma ferramenta de desenvolvimento assistido por IA ainda mais eficaz e inteligente.
+Lembre-se que a chave é a iteração. Comece implementando as ideias de prompt que parecem mais impactantes para os seus agentes atuais (Admin, Dev, Revisor) e, gradualmente, introduza novos agentes de suporte ou capacidades mais complexas.

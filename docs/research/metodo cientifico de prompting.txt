@@ -1,0 +1,75 @@
+Me ajude a melhorar meu método, descrito a seguir, fazendo uma analise critica dele e um brainstorm de ideias para melhorias. Primeiro foque na análise e no brainstorm, não reescreva o plano ainda (faremos isso depois).
+
+Na verdade o que estou desenvolvendo é uma metodologia de criação de codigo / programas com IA assistente de codigo (por exemplo Cursor AI, powered by openai o3 mini e anthropic claude 3.5 sonnet), voltado para pessoas que não sabem escrever código. O objetivo é chegar uma especie de algoritmo geral, para qualquer problema que pode ser resolvido com codigo. Estou chamando por enquanto de "método científico de construção de programas com IA", ou AI-PBSM
+
+O método resumidamente consiste em gastar mais tempo primeiro com vários micro testes, validando hipóteses, documentando e consolidando um planejamento inicial, e cautelosamente montando o quebra cabeça das soluções ideais antes de partir de fato para a versão final 1.0 do programa. O resultado final deve ser um prompt grande, mas bem estruturado, somado a uma documentação rica mas enxuta (pra nao sobrecarregar a ia com informações) e um roadmap completo de implementações, para guiar a IA geradora de código em cada passo do projeto.
+
+Em suma, gastando mais tempo planejando, evitamos retrabalho desnecessário, ou pior, e chegar cenários de point of no return, onde a IA começa a se perder das ideias iniciais, a conversa fica enorme e fica impossível achar as ideias no meio da bagunça. Observe os passos que listei a seguir e analise eles com cuidado. Veja que eu escrevi de forma bem genérica, generalista, realmente voltada para qualquer problema (inspirado em grande parte no método científico tradicional). Sua análise vai me ajudar a melhorar em precisão o que já está escrito, identificar lacunas e ajudar a preenche-las, e talvez repensar a ordem de certos elementos na lista.
+
+Fase 1 - descoberta inicial de meios
+1 - descrever o problema com a maior precisao possivel
+	- elaborar listas de perguntas usando IA para brainstorm, a fim de definir o problema da melhor forma possivel
+	- responder essas perguntas com saber próprio ou com pesquisas preliminares (possivelmente usando IA de deep research)
+	- elaborar qual seria a resolução ideal do problema, de forma abstrata
+2 - listar tudo o que é necessário "fazer funcionar", isto é, sabendo a resolução ideal do problema e tendo ela como alvo final: 
+	- quebrar o problema em pedaços
+	- voltar (reverse engineering) passo a passo, pedaço por pedaço. um exemplo curto e resumido: 
+		- neste pedaço, preciso baixar automaticamente um pdf do site tal
+		- para baixar preciso clicar no botao de download
+		- logo, vou precisar usar um simulador como Selenium, e inspecionar o elemento do botao de download, e achar um jeito de "fazer funcionar" o Selenium com esse botao
+3 - listar tudo o que precisa descobrir pra saber como fazer funcionar (vamos investigar à procura de que)
+	- inclui-se aqui pesquisar bibliotecas, api's, referencias de implementações abertas no github, inspecionar elementos (como no exemplo acima) entre outros
+	- nesta pesquisa, é importante extrair das documentações as partes específicas necessárias para o projeto
+4 - listar hipoteses sobre como fazer funcionar (quais as possibilidades que podemos esperar encontrar na investigação)
+	- por exemplo, "podemos simular um click em tal botão de download com o Selenium de 5 formas"
+5 - elaborar testes para validar as hipoteses (listar objetivos de busca e hipoteses é mais para ajudar a organizar a estruturação dos testes)
+	- por exemplo, escrever um test_click_download.py com todos os metodos de click tentando pegar o botao de download daquela pagina
+	- os testes tem que resultar em logs detalhados 
+6 - elaborar metodo simples para guardar os resultados dos testes e selecionar o vencedor entre os validados
+	- depois de varios testes, vão se acumular vários logs detalhados dos testes. tem que ter uma documentação pra guardar observações importantes, com foco nas ideias vencedoras / que sobreviveram aos testes
+	- a ideia de documentar resultados de testes de maneira consistente tem como fim de garantir solidez do planejamento posterior (não perder detalhes e observações importantes dos resultados dos testes sintetizando demais, nem complexificar demais e sobrecarregar de informação)
+	- portanto, antes de executar os testes, tem que ter isso definido desde o inicio, começar isso no meio do caminho vai ser inviável
+7 - executar testes e avaliar resultados
+	- nesta etapa serao rodados os testes planejados, e também outros testes criados no meio do caminho, pois na prática sempre descobrimos que tem um detalhe a mais não previsto na pesquisa, um detalhezinho que faz toda diferença, e teremos que fazer um teste novo pra lidar
+8 - repetir este ciclo de testes até sanar todas as duvidas / lacunas, para todos os subtopicos/topicos/etapas/partes do problema
+	- às vezes os testes todos falham e nenhuma das hipóteses que tínhamos em algum pedaço da resolução do problema funciona, por isso temos que voltar nesse caso à etapa de formulação de hipóteses (porém, dessa vez, já sabemos o que não funciona)
+
+Terminada a Fase 1, temos ideias vencedoras para resolver todos os pedaços do problema. Agora é hora de testar melhoramentos (principalmente de performance)
+
+Fase 2 - melhorias
+1 - fazer novo brainstorm de ideias para melhorar eficiencia das ideias validadadas (paralelismo, ajustar gatilhos e tempos de retry, etc)
+2 - listar hipoteses de melhoria e investigar como fazer funcionar (parecido com a fase 1)
+3 - elaborar testes para validar as hipoteses de melhoria
+4 - executar testes e avaliar resultados
+5 - documentar resultados
+6 - repetir ciclo até validar tudo
+
+3 - consolidação inicial
+1 - fazer um mvp juntanto as ideias vencedoras (com o minimo de arquivos necessario, so quebrar o codigo se ultrapassar 500 linhas)
+2 - testar até fazer funcionar tudo junto 80/20 
+ - por 80/20 nesse caso, quero dizer que nem sempre todos os ciclos do problema são necessarios para validar a solução. por ex:
+	- meu scraper baixa diarios oficiais do estado do rio de janeiro. quero baixar de todas as datas. ele tem que ir na pagina de datas, clicar na primeira data, estando na pagina de datas clicar no primeiro documento, clicar em download. se ele funcionar direitinho neste ciclo inteiro e ir para a próxima data com sucesso, eu não preciso fazer com todas as datas, umas 3 deve ser suficiente para validar o ciclo. 
+
+Fase 3 - refatoração
+1 - pesquisa com modelos de LLM capazes de reasoning parrudo (o1 pro, o3 high, grok 3, claude 3.7 thinking, etc) 
+	- refletir sobre a melhor arquitetura para empregar as ideias do mvp de forma escalavel
+	- revisar os resultados dos testes, a documentação, os resultados de testes do mvp, para recapitular o que sabemos que nao funciona
+	- brainstorm de maneiras de reformular o codigo com as melhores praticas de arquitetura de programação
+	- incluir pontas para ligar o frontend, se necessario
+2 - elaborar lista de hipoteses 
+3 - elaborar testes para essas hipoteses
+3 - executar testes
+4 - refletir sobre os resultados, avaliar melhor caminho de ação de acordo com requisitos, definir hipotese vencedoras
+5 - escrever roadmap completo e cursorrules para a hipotese vencedora
+6 - criar documentação enxugada para implemntar a refatoração
+	- incluir descrição do problema
+	- incluir descrição detalhada da solução proposta ja validada nos testes, podendo adcionar observações relevantes (principalmente para evitar erros da IA se o projeto for grande demais)
+	- incluir codigo do mvp para referencia
+	- incluir analise do codigo do mvp listando funçoes dele (o que fazem / pra que servem, pra onde devem ir, como podem ser aproveitadas na versao refatorada), para que a IA se baseie nas ideias vencedoras presentes nele ao maximo e não tenha que inventar nada, podendo focar nas partes que importa
+	- incluir arvore de arquivos na arquitetura nova e descrição detalhada cada modulo 
+	- criar um arquivo .cursorrules referenciando os arquivos de documentação para orientar a IA a consultá-los em cada caso
+7 - criar novo projeto no cursor.ai com a documentação enxugada
+8 - escrever os codigos novos
+9 - testar os codigos novos extensivamente em cenario realista
+10 - consolidar projeto (em um executavel, ou pacote poetry)
+	- criar documentação voltada para user final, readme.md, faq, requirements.txt, etc

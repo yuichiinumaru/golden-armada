@@ -102,7 +102,11 @@ Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-
 This section consolidates practical learnings from CodeSwarm development:
 
 *   **ADK Version and Model Compatibility:**
+<<<<<<< Updated upstream
     *   `google-adk==1.1.1` was used. `gemini-1.5-flash-latest` (or more recent flash/pro models) proved compatible.
+=======
+    *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
+>>>>>>> Stashed changes
 *   **`LlmAgent` Configuration (ADK 1.1.1):**
     *   `LlmAgent` instances for Admin, Dev, and Revisor are configured with the `output_model` parameter, assigning Pydantic models (`AdminTaskOutput`, `DevAgentOutput`, `RevisorAgentOutput`) to structure their responses. This is the primary method used for ensuring reliable output parsing.
     *   The `generation_config` does not set `response_mime_type: "application/json"` when `output_model` is used, as `output_model` handles the parsing. The note about `response_mime_type` conflicting with tool usage remains relevant if tools were enabled *without* `output_model` and JSON output was still desired.
@@ -126,3 +130,22 @@ This section consolidates practical learnings from CodeSwarm development:
     *   Historical changes and task updates are logged by AdminAgent in `docs/changelog.log` and `docs/tasklist.md` respectively.
 
 This document provides a blueprint for CodeSwarm. Detailed designs evolve with ongoing implementation and testing. For a detailed evolution and specific debugging notes, see `docs/codeswarm_development_evolution.md`.
+
+
+## Post-Initial Refactoring & Evolving Plan
+
+The initial refactoring of CodeSwarm to the Google Agent Development Kit (ADK), guided by the phases outlined above, has been largely completed and has established a solid foundation.
+
+Since this initial plan was formulated, the project has continued to evolve. More detailed, phased planning, tracking ongoing tasks, and incorporating new strategic directions are now primarily managed in **`docs/tasklist.md`**. This task list reflects a deeper understanding of ADK capabilities and incorporates several advanced development fronts.
+
+Key evolutions include:
+
+*   **Advanced Research Phases:** `docs/tasklist.md` now includes a comprehensive "Phase 8: Advanced Research, Knowledge Base Integration, and Prompt Engineering Refinement." This phase formalizes:
+    *   In-depth analysis of external project codebases and architectural patterns, using digests stored in `/docs/gitingest/`.
+    *   Targeted research into Retrieval Augmented Generation (RAG) techniques, supported by documents in `/docs/research/RAG/`.
+    *   A systematic approach to auditing, refining, and integrating a local Knowledge Base (KB) from `/codeswarm/prompts/kb/` into agent prompting strategies.
+*   **Refined ADK Understanding:** The "Key ADK Concepts" section in this document provided initial guidance. A more comprehensive and continuously updated set of lessons learned, ADK-specific behaviors, and debugging notes are maintained in:
+    *   **`docs/codeswarm_development_evolution.md`**: Chronicles the journey, challenges, and solutions encountered during ADK development.
+    *   **`.cursorrules`**: Contains concise rules and reminders based on practical ADK experience.
+
+This `plan.md` remains a valuable historical document detailing the foundational shift to ADK. For the most current development roadmap, detailed tasks, and advanced strategies, please refer to `docs/tasklist.md` and the other supplementary documents mentioned.

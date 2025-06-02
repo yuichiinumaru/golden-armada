@@ -1,0 +1,1688 @@
+Directory structure:
+└── brightdata-com-brightdata-mcp/
+    ├── README.md
+    ├── browser_session.js
+    ├── browser_tools.js
+    ├── CHANGELOG.md
+    ├── Dockerfile
+    ├── LICENSE
+    ├── package.json
+    ├── server.js
+    ├── smithery.yaml
+    ├── assets/
+    │   └── Tools.md
+    └── examples/
+        └── README.md
+
+================================================
+FILE: README.md
+================================================
+<p align="center">
+  <a href="https://brightdata.com/">
+    <img src="https://mintlify.s3.us-west-1.amazonaws.com/brightdata/logo/light.svg" width="300" alt="Bright Data Logo">
+  </a>
+</p>
+
+<h1 align="center">Bright Data MCP</h1>
+<h3 align="center">Enhance AI Agents with Real-Time Web Data</h3>
+
+<div align="center">
+  
+<p align="center">
+  <img src="https://img.shields.io/npm/v/@brightdata/mcp?label=version"  
+       alt="npm version"/>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/npm/dw/@brightdata/mcp"  
+       alt="npm downloads"/>
+  <a href="https://smithery.ai/server/@luminati-io/brightdata-mcp">
+    <img src="https://smithery.ai/badge/@luminati-io/brightdata-mcp"  
+         alt="Smithery score"/>
+  </a>
+</p>
+
+</div>
+
+## 🌟 Overview
+
+Welcome to the official Bright Data Model Context Protocol (MCP) server, enabling LLMs, agents and apps to access, discover and extract web data in real-time. This server allows MCP clients, such as Claude Desktop, Cursor, Windsurf and others, to seamlessly search the web, navigate websites, take action and retrieve data - without getting blocked - perfect for scraping tasks.
+
+![MCP](https://github.com/user-attachments/assets/b949cb3e-c80a-4a43-b6a5-e0d6cec619a7)
+
+## Table of Content
+- [🎬 Demo](#-demo)
+- [✨ Features](#-features)
+- [🚀 Quickstart with Claude Desktop](#-quickstart-with-claude-desktop)
+- [🔧 Available Tools](#-available-tools)
+- [⚠️ Security Best Practices](#%EF%B8%8F-security-best-practices)
+- [🔧 Account Setup](#-account-setup)
+- [🔌 Other MCP Clients](#-other-mcp-clients)
+- [🎮 Try Bright Data MCP Playgrounds](#-try-bright-data-mcp-playgrounds)
+- [💡 Usage Examples](#-usage-examples)
+- [⚠️ Troubleshooting](#%EF%B8%8F-troubleshooting)
+- [👨‍💻 Contributing](#-contributing)
+- [📞 Support](#-support)
+
+
+## 🎬 Demo
+
+The videos below demonstrate a minimal use case for Claude Desktop:
+
+https://github.com/user-attachments/assets/59f6ebba-801a-49ab-8278-1b2120912e33
+
+https://github.com/user-attachments/assets/61ab0bee-fdfa-4d50-b0de-5fab96b4b91d 
+
+For YouTube tutorials and demos: [Demo](https://github.com/brightdata-com/brightdata-mcp/blob/main/examples/README.md)
+
+## ✨ Features
+
+- **Real-time Web Access**: Access up-to-date information directly from the web
+- **Bypass Geo-restrictions**: Access content regardless of location constraints
+- **Web Unlocker**: Navigate websites with bot detection protection
+- **Browser Control**: Optional remote browser automation capabilities
+- **Seamless Integration**: Works with all MCP-compatible AI assistants
+
+## 🚀 Quickstart with Claude Desktop
+
+1. Install `nodejs` to get the `npx` command (node.js module runner). Installation instructions can be found on the [node.js website](https://nodejs.org/en/download)
+
+2. Go to Claude > Settings > Developer > Edit Config > claude_desktop_config.json to include the following:
+
+```json
+{
+  "mcpServers": {
+    "Bright Data": {
+      "command": "npx",
+      "args": ["@brightdata/mcp"],
+      "env": {
+        "API_TOKEN": "<insert-your-api-token-here>",
+        "WEB_UNLOCKER_ZONE": "<optional if you want to override the default mcp_unlocker zone name>",
+        "BROWSER_ZONE": "<optional browser zone name, defaults to mcp_browser>"
+      }
+    }
+  }
+}
+```
+## 🔧 Available Tools
+
+[List of Available Tools](https://github.com/brightdata-com/brightdata-mcp/blob/main/assets/Tools.md)
+
+## ⚠️ Security Best Practices
+
+**Important:** Always treat scraped web content as untrusted data. Never use raw scraped content directly in LLM prompts to avoid potential prompt injection risks. 
+Instead:
+- Filter and validate all web data before processing
+- Use structured data extraction rather than raw text (web_data tools)
+
+## 🔧 Account Setup
+
+1. Make sure you have an account on [brightdata.com](https://brightdata.com) (new users get free credit for testing, and pay as you go options are available)
+
+2. Get your API key from the [user settings page](https://brightdata.com/cp/setting/users)
+
+3. (Optional) Create a custom Web Unlocker zone 
+   - By default, we create a Web Unlocker zone automatically using your API token
+   - For more control, you can create your own Web Unlocker zone in your [control panel](https://brightdata.com/cp/zones) and specify it with the `WEB_UNLOCKER_ZONE` environment variable
+
+4. (Optional) To enable browser control tools:
+   - By default, the MCP tries to fetch credentials of `mcp_browser` zone.
+   - If you don't have an `mcp_browser` zone, you can :
+     - Create a Browser API zone in your [control panel](https://brightdata.com/cp/zones) or use an existing one and specify its name using the `BROWSER_ZONE` environment variable
+
+![Browser API Setup](https://github.com/user-attachments/assets/cb494aa8-d84d-4bb4-a509-8afb96872afe)
+
+## 🔌 Other MCP Clients
+
+To use this MCP server with other agent types, you should adapt the following to your specific software:
+
+- The full command to run the MCP server is `npx @brightdata/mcp`
+- The environment variable `API_TOKEN=<your-token>` must exist when running the server
+- (Optional) Set `BROWSER_ZONE=<zone-name>` to specify a custom Browser API zone name (defaults to `mcp_browser`)
+
+## 🔄 Breaking Changes
+
+### Browser Authentication Update
+
+**BREAKING CHANGE:** The `BROWSER_AUTH` environment variable has been replaced with `BROWSER_ZONE`.
+
+- **Before:** Users needed to provide `BROWSER_AUTH="user:pass"` from the Browser API zone
+- **Now:** Users only need to specify the browser zone name with `BROWSER_ZONE="zone_name"`
+- **Default:** If not specified, the system uses `mcp_browser` zone automatically
+- **Migration:** Replace `BROWSER_AUTH` with `BROWSER_ZONE` in your configuration and specify your Browser API zone name if `mcp_browser` doesn't exists
+
+## 🔄 Changelog
+
+[CHANGELOG.md](https://github.com/brightdata-com/brightdata-mcp/blob/main/CHANGELOG.md)
+
+## 🎮 Try Bright Data MCP Playgrounds
+
+Want to try Bright Data MCP without setting up anything? 
+
+Check out this playground on [Smithery](https://smithery.ai/server/@luminati-io/brightdata-mcp/tools):
+
+[![2025-05-06_10h44_20](https://github.com/user-attachments/assets/52517fa6-827d-4b28-b53d-f2020a13c3c4)](https://smithery.ai/server/@luminati-io/brightdata-mcp/tools)
+
+This platform provide an easy way to explore the capabilities of Bright Data MCP without any local setup. Just sign in and start experimenting with web data collection!
+
+## 💡 Usage Examples
+
+Some example queries that this MCP server will be able to help with:
+
+- "Google some movies that are releasing soon in [your area]"
+- "What's Tesla's current market cap?"
+- "What's the Wikipedia article of the day?"
+- "What's the 7-day weather forecast in [your location]?"
+- "Of the 3 highest paid tech CEOs, how long have their careers been?"
+
+## ⚠️ Troubleshooting
+
+### Timeouts when using certain tools
+
+Some tools can involve reading web data, and the amount of time needed to load the page can vary by quite a lot in extreme circumstances.
+
+To ensure that your agent will be able to consume the data, set a high enough timeout in your agent settings.
+
+A value of `180s` should be enough for 99% of requests, but some sites load slower than others, so tune this to your needs.
+
+### spawn npx ENOENT
+
+This error occurs when your system cannot find the `npx` command. To fix it:
+
+#### Finding npm/Node Path
+
+**macOS:**
+
+```
+which node
+```
+
+Shows path like `/usr/local/bin/node`
+
+**Windows:**
+
+```
+where node
+```
+
+Shows path like `C:\Program Files\nodejs\node.exe`
+
+#### Update your MCP configuration:
+
+Replace the `npx` command with the full path to Node, for example, on mac, it will look as follows:
+
+```
+"command": "/usr/local/bin/node"
+```
+
+## 👨‍💻 Contributing
+
+We welcome contributions to help improve the Bright Data MCP! Here's how you can help:
+
+1. **Report Issues**: If you encounter any bugs or have feature requests, please open an issue on our GitHub repository.
+2. **Submit Pull Requests**: Feel free to fork the repository and submit pull requests with enhancements or bug fixes.
+3. **Coding Style**: All JavaScript code should follow [Bright Data's JavaScript coding conventions](https://brightdata.com/dna/js_code). This ensures consistency across the codebase.
+4. **Documentation**: Improvements to documentation, including this README, are always appreciated.
+5. **Examples**: Share your use cases by contributing examples to help other users.
+
+For major changes, please open an issue first to discuss your proposed changes. This ensures your time is well spent and aligned with project goals.
+
+## 📞 Support
+
+If you encounter any issues or have questions, please reach out to the Bright Data support team or open an issue in the repository.
+
+
+
+================================================
+FILE: browser_session.js
+================================================
+'use strict'; /*jslint node:true es9:true*/
+import * as playwright from 'playwright';
+
+export class Browser_session {
+    constructor({cdp_endpoint}){
+        this.cdp_endpoint = cdp_endpoint;
+        this._domainSessions = new Map();
+        this._currentDomain = 'default';
+    }
+
+    _getDomain(url) {
+        try {
+            const urlObj = new URL(url);
+            return urlObj.hostname;
+        } catch(e) {
+            console.error(`Error extracting domain from ${url}:`, e);
+            return 'default';
+        }
+    }
+
+    async _getDomainSession(domain, {log}={}) {
+        if (!this._domainSessions.has(domain)) 
+        {
+            this._domainSessions.set(domain, {
+                browser: null,
+                page: null,
+                browserClosed: true
+            });
+        }
+        return this._domainSessions.get(domain);
+    }
+
+    async get_browser({log, domain='default'}={}){
+        try {
+            const session = await this._getDomainSession(domain, {log});
+            if (session.browser)
+            {
+                try { await session.browser.contexts(); }
+                catch(e){
+                    log?.(`Browser connection lost for domain ${domain} (${e.message}), `
+                        +`reconnecting...`);
+                    session.browser = null;
+                    session.page = null;
+                    session.browserClosed = true;
+                }
+            }
+            if (!session.browser)
+            {
+                log?.(`Connecting to Bright Data Scraping Browser for domain ${domain}.`);
+                session.browser = await playwright.chromium.connectOverCDP(
+                    this.cdp_endpoint);
+                session.browserClosed = false;
+                session.browser.on('disconnected', () => {
+                    log?.(`Browser disconnected for domain ${domain}`);
+                    session.browser = null;
+                    session.page = null;
+                    session.browserClosed = true;
+                });
+                log?.(`Connected to Bright Data Scraping Browser for domain ${domain}`);
+            }
+            return session.browser;
+        } catch(e){
+            console.error(`Error connecting to browser for domain ${domain}:`, e);
+            const session = this._domainSessions.get(domain);
+            if (session) 
+            {
+                session.browser = null;
+                session.page = null;
+                session.browserClosed = true;
+            }
+            throw e;
+        }
+    }
+
+    async get_page({url=null}={}){
+        if (url) 
+        {
+            this._currentDomain = this._getDomain(url);
+        }
+        const domain = this._currentDomain;
+        try {
+            const session = await this._getDomainSession(domain);
+            if (session.browserClosed || !session.page)
+            {
+                const browser = await this.get_browser({domain});
+                const existingContexts = browser.contexts();
+                if (existingContexts.length === 0)
+                {
+                    const context = await browser.newContext();
+                    session.page = await context.newPage();
+                }
+                else
+                {
+                    const existingPages = existingContexts[0]?.pages();
+                    if (existingPages && existingPages.length > 0)
+                        session.page = existingPages[0];
+                    else
+                        session.page = await existingContexts[0].newPage();
+                }
+                session.browserClosed = false;
+                session.page.once('close', ()=>{
+                    session.page = null;
+                });
+            }
+            return session.page;
+        } catch(e){
+            console.error(`Error getting page for domain ${domain}:`, e);
+            const session = this._domainSessions.get(domain);
+            if (session) 
+            {
+                session.browser = null;
+                session.page = null;
+                session.browserClosed = true;
+            }
+            throw e;
+        }
+    }
+
+    async close(domain=null){
+        if (domain) {
+            const session = this._domainSessions.get(domain);
+            if (session && session.browser) 
+            {
+                try { await session.browser.close(); }
+                catch(e){ console.error(`Error closing browser for domain ${domain}:`, e); }
+                session.browser = null;
+                session.page = null;
+                session.browserClosed = true;
+                this._domainSessions.delete(domain);
+            }
+        } else {
+            for (const [domain, session] of this._domainSessions.entries()) {
+                if (session.browser) 
+                {
+                    try { await session.browser.close(); }
+                    catch(e){ console.error(`Error closing browser for domain ${domain}:`, e); }
+                    session.browser = null;
+                    session.page = null;
+                    session.browserClosed = true;
+                }
+            }
+            this._domainSessions.clear();
+        }
+        if (!domain) 
+        {
+            this._currentDomain = 'default';
+        }
+    }
+}
+
+
+
+
+================================================
+FILE: browser_tools.js
+================================================
+'use strict'; /*jslint node:true es9:true*/
+import {UserError, imageContent as image_content} from 'fastmcp';
+import {z} from 'zod';
+import axios from 'axios';
+import {Browser_session} from './browser_session.js';
+let browser_zone = process.env.BROWSER_ZONE || 'mcp_browser';
+
+let open_session;
+const require_browser = async()=>{
+    if (!open_session)
+    {
+        open_session = new Browser_session({
+            cdp_endpoint: await calculate_cdp_endpoint(),
+        });
+    }
+    return open_session;
+};
+
+const calculate_cdp_endpoint = async()=>{
+    try {
+        const status_response = await axios({
+            url: 'https://api.brightdata.com/status',
+            method: 'GET',
+            headers: {authorization: `Bearer ${process.env.API_TOKEN}`},
+        });
+        const customer = status_response.data.customer;
+        const password_response = await axios({
+            url: `https://api.brightdata.com/zone/passwords?zone=${browser_zone}`,
+            method: 'GET',
+            headers: {authorization: `Bearer ${process.env.API_TOKEN}`},
+        });
+        const password = password_response.data.passwords[0];
+
+        return `wss://brd-customer-${customer}-zone-${browser_zone}:`
+            +`${password}@brd.superproxy.io:9222`;
+    } catch(e){
+        if (e.response?.status===422)
+            throw new Error(`Browser zone '${browser_zone}' does not exist`);
+        throw new Error(`Error retrieving browser credentials: ${e.message}`);
+    }
+};
+
+let scraping_browser_navigate = {
+    name: 'scraping_browser_navigate',
+    description: 'Navigate a scraping browser session to a new URL',
+    parameters: z.object({
+        url: z.string().describe('The URL to navigate to'),
+    }),
+    execute: async({url})=>{
+        const page = await (await require_browser()).get_page({url});
+        try {
+            await page.goto(url, {
+                timeout: 120000,
+                waitUntil: 'domcontentloaded',
+            });
+            return [
+                `Successfully navigated to ${url}`,
+                `Title: ${await page.title()}`,
+                `URL: ${page.url()}`,
+            ].join('\n');
+        } catch(e){
+            throw new UserError(`Error navigating to ${url}: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_go_back = {
+    name: 'scraping_browser_go_back',
+    description: 'Go back to the previous page',
+    parameters: z.object({}),
+    execute: async()=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            await page.goBack();
+            return [
+                'Successfully navigated back',
+                `Title: ${await page.title()}`,
+                `URL: ${page.url()}`,
+            ].join('\n');
+        } catch(e){
+            throw new UserError(`Error navigating back: ${e}`);
+        }
+    },
+};
+
+const scraping_browser_go_forward = {
+    name: 'scraping_browser_go_forward',
+    description: 'Go forward to the next page',
+    parameters: z.object({}),
+    execute: async()=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            await page.goForward();
+            return [
+                'Successfully navigated forward',
+                `Title: ${await page.title()}`,
+                `URL: ${page.url()}`,
+            ].join('\n');
+        } catch(e){
+            throw new UserError(`Error navigating forward: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_click = {
+    name: 'scraping_browser_click',
+    description: [
+        'Click on an element.',
+        'Avoid calling this unless you know the element selector (you can use '
+        +'other tools to find those)',
+    ].join('\n'),
+    parameters: z.object({
+        selector: z.string().describe('CSS selector for the element to click'),
+    }),
+    execute: async({selector})=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            await page.click(selector, {timeout: 5000});
+            return `Successfully clicked element: ${selector}`;
+        } catch(e){
+            throw new UserError(`Error clicking element ${selector}: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_links = {
+    name: 'scraping_browser_links',
+    description: [
+        'Get all links on the current page, text and selectors',
+        "It's strongly recommended that you call the links tool to check that "
+        +'your click target is valid',
+    ].join('\n'),
+    parameters: z.object({}),
+    execute: async()=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            const links = await page.$$eval('a', elements=>{
+                return elements.map(el=>{
+                    return {
+                        text: el.innerText,
+                        href: el.href,
+                        selector: el.outerHTML,
+                    };
+                });
+            });
+            return JSON.stringify(links, null, 2);
+        } catch(e){
+            throw new UserError(`Error getting links: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_type = {
+    name: 'scraping_browser_type',
+    description: 'Type text into an element',
+    parameters: z.object({
+        selector: z.string()
+            .describe('CSS selector for the element to type into'),
+        text: z.string().describe('Text to type'),
+        submit: z.boolean().optional()
+            .describe('Whether to submit the form after typing (press Enter)'),
+    }),
+    execute: async({selector, text, submit})=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            await page.fill(selector, text);
+            if (submit)
+                await page.press(selector, 'Enter');
+            return `Successfully typed "${text}" into element: `
+            +`${selector}${submit ? ' and submitted the form' : ''}`;
+        } catch(e){
+            throw new UserError(`Error typing into element ${selector}: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_wait_for = {
+    name: 'scraping_browser_wait_for',
+    description: 'Wait for an element to be visible on the page',
+    parameters: z.object({
+        selector: z.string().describe('CSS selector to wait for'),
+        timeout: z.number().optional()
+            .describe('Maximum time to wait in milliseconds (default: 30000)'),
+    }),
+    execute: async({selector, timeout})=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            await page.waitForSelector(selector, {timeout: timeout||30000});
+            return `Successfully waited for element: ${selector}`;
+        } catch(e){
+            throw new UserError(`Error waiting for element ${selector}: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_screenshot = {
+    name: 'scraping_browser_screenshot',
+    description: 'Take a screenshot of the current page',
+    parameters: z.object({
+        full_page: z.boolean().optional().describe([
+            'Whether to screenshot the full page (default: false)',
+            'You should avoid fullscreen if it\'s not important, since the '
+            +'images can be quite large',
+        ].join('\n')),
+    }),
+    execute: async({full_page = false})=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            const buffer = await page.screenshot({fullPage: full_page});
+            return image_content({buffer});
+        } catch(e){
+            throw new UserError(`Error taking screenshot: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_get_html = {
+    name: 'scraping_browser_get_html',
+    description: 'Get the HTML content of the current page. Avoid using the '
+    +'full_page option unless it is important to see things like script tags '
+    +'since this can be large',
+    parameters: z.object({
+        full_page: z.boolean().optional().describe([
+            'Whether to get the full page HTML including head and script tags',
+            'Avoid this if you only need the extra HTML, since it can be '
+            +'quite large',
+        ].join('\n')),
+    }),
+    execute: async({full_page = false})=>{
+        const page = await (await require_browser()).get_page();
+        try {
+            if (!full_page)
+                return await page.$eval('body', body=>body.innerHTML);
+            const html = await page.content();
+            if (!full_page && html)
+                return html.split('<body>')[1].split('</body>')[0];
+            return html;
+        } catch(e){
+            throw new UserError(`Error getting HTML content: ${e}`);
+        }
+    },
+};
+
+let scraping_browser_get_text = {
+    name: 'scraping_browser_get_text',
+    description: 'Get the text content of the current page',
+    parameters: z.object({}),
+    execute: async()=>{
+        const page = await (await require_browser()).get_page();
+        try { return await page.$eval('body', body=>body.innerText); }
+        catch(e){ throw new UserError(`Error getting text content: ${e}`); }
+    },
+};
+
+let scraping_browser_activation_instructions = {
+    name: 'scraping_browser_activation_instructions',
+    description: 'Instructions for activating the scraping browser',
+    parameters: z.object({}),
+    execute: async()=>{
+        return 'You need to run this MCP server with the BROWSER_AUTH '
+        +'environment varialbe before the browser tools will become '
+        +'available';
+    },
+};
+
+let browser_credentials;
+try {
+    browser_credentials = process.env.API_TOKEN ?
+        await calculate_cdp_endpoint() : null;
+} catch(e){
+    browser_credentials = null;
+}
+export const tools = browser_credentials ? [
+    scraping_browser_navigate,
+    scraping_browser_go_back,
+    scraping_browser_go_forward,
+    scraping_browser_links,
+    scraping_browser_click,
+    scraping_browser_type,
+    scraping_browser_wait_for,
+    scraping_browser_screenshot,
+    scraping_browser_get_text,
+    scraping_browser_get_html,
+] : [scraping_browser_activation_instructions];
+
+
+
+================================================
+FILE: CHANGELOG.md
+================================================
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [2.0.0] - 2025-05-26
+
+### Changed
+- Updated browser authentication to use API_TOKEN instead of previous authentication method
+- BROWSER_ZONE is now an optional parameter, the deafult zone is `mcp_browser`
+- Removed duplicate web_data_ tools
+
+## [1.9.2] - 2025-05-23
+
+### Fixed
+- Fixed GitHub references and repository settings
+
+## [1.9.1] - 2025-05-21
+
+### Fixed
+- Fixed spelling errors and improved coding conventions
+- Converted files back to Unix line endings for consistency
+
+## [1.9.0] - 2025-05-21
+
+### Added
+- Added 23 new web data tools for enhanced data collection capabilities
+- Added progress reporting functionality for better user feedback
+- Added default parameter handling for improved tool usability
+
+### Changed
+- Improved coding conventions and file formatting
+- Enhanced web data API endpoints integration
+
+## [1.8.3] - 2025-05-21
+
+### Added
+- Added Bright Data MCP with Claude demo video to README.md
+
+### Changed
+- Updated documentation with video demonstrations
+
+## [1.8.2] - 2025-05-13
+
+### Changed
+- Bumped FastMCP version for improved performance
+- Updated README.md with additional documentation
+
+## [1.8.1] - 2025-05-05
+
+### Added
+- Added 12 new WSAPI endpoints for enhanced functionality
+- Changed to polling mechanism for better reliability
+
+### Changed
+- Applied dos2unix formatting for consistency
+- Updated Docker configuration
+- Updated smithery.yaml configuration
+
+## [1.8.0] - 2025-05-03
+
+### Added
+- Added domain-based browser sessions to avoid navigation limit issues
+- Added automatic creation of required unlocker zone when not present
+
+### Fixed
+- Fixed browser context maintenance across tool calls with current domain tracking
+- Minor lint fixes
+
+## [1.0.0] - 2025-04-29
+
+### Added
+- Initial release of Bright Data MCP server
+- Browser automation capabilities with Bright Data integration
+- Core web scraping and data collection tools
+- Smithery.yaml configuration for deployment in Smithery.ai
+- MIT License
+- Demo materials and documentation
+
+### Documentation
+- Created comprehensive README.md
+- Added demo.md with usage examples
+- Created examples/README.md for sample implementations
+- Added Tools.md documentation for available tools
+
+---
+
+## Release Notes
+
+### Version 1.9.x Series
+The 1.9.x series focuses on expanding web data collection capabilities and improving authentication mechanisms. Key highlights include the addition of 23 new web data tools.
+
+### Version 1.8.x Series  
+The 1.8.x series introduced significant improvements to browser session management, WSAPI endpoints, and overall system reliability. Notable features include domain-based sessions and automatic zone creation.
+
+### Version 1.0.0
+Initial stable release providing core MCP server functionality for Bright Data integration with comprehensive browser automation and web scraping capabilities.
+
+
+
+
+================================================
+FILE: Dockerfile
+================================================
+FROM node:22.12-alpine AS builder
+
+
+COPY . /app
+WORKDIR /app
+
+
+RUN --mount=type=cache,target=/root/.npm npm install
+
+FROM node:22-alpine AS release
+
+WORKDIR /app
+
+
+COPY --from=builder /app/server.js /app/
+COPY --from=builder /app/browser_tools.js /app/
+COPY --from=builder /app/browser_session.js /app/
+COPY --from=builder /app/package.json /app/
+COPY --from=builder /app/package-lock.json /app/
+
+
+ENV NODE_ENV=production
+
+
+RUN npm ci --ignore-scripts --omit-dev
+
+
+ENTRYPOINT ["node", "server.js"]
+
+
+
+================================================
+FILE: LICENSE
+================================================
+MIT License
+
+Copyright (c) 2025 Bright Data
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+================================================
+FILE: package.json
+================================================
+{
+    "name": "@brightdata/mcp",
+    "version": "2.0.0",
+    "description": "An MCP interface into the Bright Data toolset",
+    "type": "module",
+    "bin": {
+        "@brightdata/mcp": "./server.js"
+    },
+    "keywords": [
+        "mcp",
+        "brightdata"
+    ],
+    "author": "Bright Data",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/brightdata-com/brightdata-mcp.git"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^1.8.4",
+        "fastmcp": "^1.27.6",
+        "playwright": "^1.51.1",
+        "zod": "^3.24.2"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "server.js",
+        "browser_tools.js",
+        "browser_session.js"
+    ]
+}
+
+
+
+================================================
+FILE: server.js
+================================================
+#!/usr/bin/env node
+'use strict'; /*jslint node:true es9:true*/
+import {FastMCP} from 'fastmcp';
+import {z} from 'zod';
+import axios from 'axios';
+import {tools as browser_tools} from './browser_tools.js';
+import {createRequire} from 'node:module';
+const require = createRequire(import.meta.url);
+const package_json = require('./package.json');
+const api_token = process.env.API_TOKEN;
+const unlocker_zone = process.env.WEB_UNLOCKER_ZONE || 'mcp_unlocker';
+
+if (!api_token)
+    throw new Error('Cannot run MCP server without API_TOKEN env');
+
+const api_headers = ()=>({
+    'user-agent': `${package_json.name}/${package_json.version}`,
+    authorization: `Bearer ${api_token}`,
+});
+
+async function ensure_required_zones(){
+    try {
+        console.error('Checking for required zones...');
+        let response = await axios({
+            url: 'https://api.brightdata.com/zone/get_active_zones',
+            method: 'GET',
+            headers: api_headers(),
+        });
+        let zones = response.data || [];
+        let has_unlocker_zone = zones.some(zone=>zone.name==unlocker_zone);
+        if (!has_unlocker_zone)
+        {
+            console.error(`Required zone "${unlocker_zone}" not found, `
+                +`creating it...`);
+            await axios({
+                url: 'https://api.brightdata.com/zone',
+                method: 'POST',
+                headers: {
+                    ...api_headers(),
+                    'Content-Type': 'application/json',
+                },
+                data: {
+                    zone: {name: unlocker_zone, type: 'unblocker'},
+                    plan: {type: 'unblocker'},
+                },
+            });
+            console.error(`Zone "${unlocker_zone}" created successfully`);
+        }
+        else
+            console.error(`Required zone "${unlocker_zone}" already exists`);
+    } catch(e){
+        console.error('Error checking/creating zones:',
+            e.response?.data||e.message);
+    }
+}
+
+await ensure_required_zones();
+
+let server = new FastMCP({
+    name: 'Bright Data',
+    version: package_json.version,
+});
+let debug_stats = {tool_calls: {}};
+
+server.addTool({
+    name: 'search_engine',
+    description: 'Scrape search results from Google, Bing or Yandex. Returns '
+    +'SERP results in markdown (URL, title, description)',
+    parameters: z.object({
+        query: z.string(),
+        engine: z.enum([
+            'google',
+            'bing',
+            'yandex',
+        ]).optional().default('google'),
+    }),
+    execute: tool_fn('search_engine', async({query, engine})=>{
+        let response = await axios({
+            url: 'https://api.brightdata.com/request',
+            method: 'POST',
+            data: {
+                url: search_url(engine, query),
+                zone: unlocker_zone,
+                format: 'raw',
+                data_format: 'markdown',
+            },
+            headers: api_headers(),
+            responseType: 'text',
+        });
+        return response.data;
+    }),
+});
+
+server.addTool({
+    name: 'scrape_as_markdown',
+    description: 'Scrape a single webpage URL with advanced options for '
+    +'content extraction and get back the results in MarkDown language. '
+    +'This tool can unlock any webpage even if it uses bot detection or '
+    +'CAPTCHA.',
+    parameters: z.object({url: z.string().url()}),
+    execute: tool_fn('scrape_as_markdown', async({url})=>{
+        let response = await axios({
+            url: 'https://api.brightdata.com/request',
+            method: 'POST',
+            data: {
+                url,
+                zone: unlocker_zone,
+                format: 'raw',
+                data_format: 'markdown',
+            },
+            headers: api_headers(),
+            responseType: 'text',
+        });
+        return response.data;
+    }),
+});
+server.addTool({
+    name: 'scrape_as_html',
+    description: 'Scrape a single webpage URL with advanced options for '
+    +'content extraction and get back the results in HTML. '
+    +'This tool can unlock any webpage even if it uses bot detection or '
+    +'CAPTCHA.',
+    parameters: z.object({url: z.string().url()}),
+    execute: tool_fn('scrape_as_html', async({url})=>{
+        let response = await axios({
+            url: 'https://api.brightdata.com/request',
+            method: 'POST',
+            data: {
+                url,
+                zone: unlocker_zone,
+                format: 'raw',
+            },
+            headers: api_headers(),
+            responseType: 'text',
+        });
+        return response.data;
+    }),
+});
+
+server.addTool({
+    name: 'session_stats',
+    description: 'Tell the user about the tool usage during this session',
+    parameters: z.object({}),
+    execute: tool_fn('session_stats', async()=>{
+        let used_tools = Object.entries(debug_stats.tool_calls);
+        let lines = ['Tool calls this session:'];
+        for (let [name, calls] of used_tools)
+            lines.push(`- ${name} tool: called ${calls} times`);
+        return lines.join('\n');
+    }),
+});
+
+const datasets = [{
+    id: 'amazon_product',
+    dataset_id: 'gd_l7q7dkf244hwjntr0',
+    description: [
+        'Quickly read structured amazon product data.',
+        'Requires a valid product URL with /dp/ in it.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'amazon_product_reviews',
+    dataset_id: 'gd_le8e811kzy4ggddlq',
+    description: [
+        'Quickly read structured amazon product review data.',
+        'Requires a valid product URL with /dp/ in it.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'amazon_product_search',
+    dataset_id: 'gd_lwdb4vjm1ehb499uxs',
+    description: [
+        'Quickly read structured amazon product search data.',
+        'Requires a valid search keyword and amazon domain URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['keyword', 'url', 'pages_to_search'],
+    defaults: {pages_to_search: '1'},
+}, {
+    id: 'walmart_product',
+    dataset_id: 'gd_l95fol7l1ru6rlo116',
+    description: [
+        'Quickly read structured walmart product data.',
+        'Requires a valid product URL with /ip/ in it.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'walmart_seller',
+    dataset_id: 'gd_m7ke48w81ocyu4hhz0',
+    description: [
+        'Quickly read structured walmart seller data.',
+        'Requires a valid walmart seller URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'ebay_product',
+    dataset_id: 'gd_ltr9mjt81n0zzdk1fb',
+    description: [
+        'Quickly read structured ebay product data.',
+        'Requires a valid ebay product URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'homedepot_products',
+    dataset_id: 'gd_lmusivh019i7g97q2n',
+    description: [
+        'Quickly read structured homedepot product data.',
+        'Requires a valid homedepot product URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'zara_products',
+    dataset_id: 'gd_lct4vafw1tgx27d4o0',
+    description: [
+        'Quickly read structured zara product data.',
+        'Requires a valid zara product URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'etsy_products',
+    dataset_id: 'gd_ltppk0jdv1jqz25mz',
+    description: [
+        'Quickly read structured etsy product data.',
+        'Requires a valid etsy product URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'bestbuy_products',
+    dataset_id: 'gd_ltre1jqe1jfr7cccf',
+    description: [
+        'Quickly read structured bestbuy product data.',
+        'Requires a valid bestbuy product URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'linkedin_person_profile',
+    dataset_id: 'gd_l1viktl72bvl7bjuj0',
+    description: [
+        'Quickly read structured linkedin people profile data.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'linkedin_company_profile',
+    dataset_id: 'gd_l1vikfnt1wgvvqz95w',
+    description: [
+        'Quickly read structured linkedin company profile data',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'linkedin_job_listings',
+    dataset_id: 'gd_lpfll7v5hcqtkxl6l',
+    description: [
+        'Quickly read structured linkedin job listings data',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'linkedin_posts',
+    dataset_id: 'gd_lyy3tktm25m4avu764',
+    description: [
+        'Quickly read structured linkedin posts data',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'linkedin_people_search',
+    dataset_id: 'gd_m8d03he47z8nwb5xc',
+    description: [
+        'Quickly read structured linkedin people search data',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url', 'first_name', 'last_name'],
+}, {
+    id: 'crunchbase_company',
+    dataset_id: 'gd_l1vijqt9jfj7olije',
+    description: [
+        'Quickly read structured crunchbase company data',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'zoominfo_company_profile',
+    dataset_id: 'gd_m0ci4a4ivx3j5l6nx',
+    description: [
+        'Quickly read structured ZoomInfo company profile data.',
+        'Requires a valid ZoomInfo company URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'instagram_profiles',
+    dataset_id: 'gd_l1vikfch901nx3by4',
+    description: [
+        'Quickly read structured Instagram profile data.',
+        'Requires a valid Instagram URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'instagram_posts',
+    dataset_id: 'gd_lk5ns7kz21pck8jpis',
+    description: [
+        'Quickly read structured Instagram post data.',
+        'Requires a valid Instagram URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'instagram_reels',
+    dataset_id: 'gd_lyclm20il4r5helnj',
+    description: [
+        'Quickly read structured Instagram reel data.',
+        'Requires a valid Instagram URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'instagram_comments',
+    dataset_id: 'gd_ltppn085pokosxh13',
+    description: [
+        'Quickly read structured Instagram comments data.',
+        'Requires a valid Instagram URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'facebook_posts',
+    dataset_id: 'gd_lyclm1571iy3mv57zw',
+    description: [
+        'Quickly read structured Facebook post data.',
+        'Requires a valid Facebook post URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'facebook_marketplace_listings',
+    dataset_id: 'gd_lvt9iwuh6fbcwmx1a',
+    description: [
+        'Quickly read structured Facebook marketplace listing data.',
+        'Requires a valid Facebook marketplace listing URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'facebook_company_reviews',
+    dataset_id: 'gd_m0dtqpiu1mbcyc2g86',
+    description: [
+        'Quickly read structured Facebook company reviews data.',
+        'Requires a valid Facebook company URL and number of reviews.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url', 'num_of_reviews'],
+}, {
+    id: 'facebook_events',
+    dataset_id: 'gd_m14sd0to1jz48ppm51',
+    description: [
+        'Quickly read structured Facebook events data.',
+        'Requires a valid Facebook event URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'tiktok_profiles',
+    dataset_id: 'gd_l1villgoiiidt09ci',
+    description: [
+        'Quickly read structured Tiktok profiles data.',
+        'Requires a valid Tiktok profile URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'tiktok_posts',
+    dataset_id: 'gd_lu702nij2f790tmv9h',
+    description: [
+        'Quickly read structured Tiktok post data.',
+        'Requires a valid Tiktok post URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'tiktok_shop',
+    dataset_id: 'gd_m45m1u911dsa4274pi',
+    description: [
+        'Quickly read structured Tiktok shop data.',
+        'Requires a valid Tiktok shop product URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'tiktok_comments',
+    dataset_id: 'gd_lkf2st302ap89utw5k',
+    description: [
+        'Quickly read structured Tiktok comments data.',
+        'Requires a valid Tiktok video URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'google_maps_reviews',
+    dataset_id: 'gd_luzfs1dn2oa0teb81',
+    description: [
+        'Quickly read structured Google maps reviews data.',
+        'Requires a valid Google maps URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url', 'days_limit'],
+    defaults: {days_limit: '3'},
+}, {
+    id: 'google_shopping',
+    dataset_id: 'gd_ltppk50q18kdw67omz',
+    description: [
+        'Quickly read structured Google shopping data.',
+        'Requires a valid Google shopping product URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'google_play_store',
+    dataset_id: 'gd_lsk382l8xei8vzm4u',
+    description: [
+        'Quickly read structured Google play store data.',
+        'Requires a valid Google play store app URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'apple_app_store',
+    dataset_id: 'gd_lsk9ki3u2iishmwrui',
+    description: [
+        'Quickly read structured apple app store data.',
+        'Requires a valid apple app store app URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'reuter_news',
+    dataset_id: 'gd_lyptx9h74wtlvpnfu',
+    description: [
+        'Quickly read structured reuter news data.',
+        'Requires a valid reuter news report URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'github_repository_file',
+    dataset_id: 'gd_lyrexgxc24b3d4imjt',
+    description: [
+        'Quickly read structured github repository data.',
+        'Requires a valid github repository file URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'yahoo_finance_business',
+    dataset_id: 'gd_lmrpz3vxmz972ghd7',
+    description: [
+        'Quickly read structured yahoo finance business data.',
+        'Requires a valid yahoo finance business URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'x_posts',
+    dataset_id: 'gd_lwxkxvnf1cynvib9co',
+    description: [
+        'Quickly read structured X post data.',
+        'Requires a valid X post URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'zillow_properties_listing',
+    dataset_id: 'gd_lfqkr8wm13ixtbd8f5',
+    description: [
+        'Quickly read structured zillow properties listing data.',
+        'Requires a valid zillow properties listing URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'booking_hotel_listings',
+    dataset_id: 'gd_m5mbdl081229ln6t4a',
+    description: [
+        'Quickly read structured booking hotel listings data.',
+        'Requires a valid booking hotel listing URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'youtube_profiles',
+    dataset_id: 'gd_lk538t2k2p1k3oos71',
+    description: [
+        'Quickly read structured youtube profiles data.',
+        'Requires a valid youtube profile URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}, {
+    id: 'youtube_comments',
+    dataset_id: 'gd_lk9q0ew71spt1mxywf',
+    description: [
+        'Quickly read structured youtube comments data.',
+        'Requires a valid youtube video URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url', 'num_of_comments'],
+    defaults: {num_of_comments: '10'},
+}, {
+    id: 'reddit_posts',
+    dataset_id: 'gd_lvz8ah06191smkebj4',
+    description: [
+        'Quickly read structured reddit posts data.',
+        'Requires a valid reddit post URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+},
+{
+    id: 'youtube_videos',
+    dataset_id: 'gd_m5mbdl081229ln6t4a',
+    description: [
+        'Quickly read structured YouTube videos data.',
+        'Requires a valid YouTube video URL.',
+        'This can be a cache lookup, so it can be more reliable than scraping',
+    ].join('\n'),
+    inputs: ['url'],
+}];
+for (let {dataset_id, id, description, inputs, defaults = {}} of datasets)
+{
+    let parameters = {};
+    for (let input of inputs)
+    {
+        let param_schema = input=='url' ? z.string().url() : z.string();
+        parameters[input] = defaults[input] !== undefined ?
+            param_schema.default(defaults[input]) : param_schema;
+    }
+    server.addTool({
+        name: `web_data_${id}`,
+        description,
+        parameters: z.object(parameters),
+        execute: tool_fn(`web_data_${id}`, async(data, ctx)=>{
+            let trigger_response = await axios({
+                url: 'https://api.brightdata.com/datasets/v3/trigger',
+                params: {dataset_id, include_errors: true},
+                method: 'POST',
+                data: [data],
+                headers: api_headers(),
+            });
+            if (!trigger_response.data?.snapshot_id)
+                throw new Error('No snapshot ID returned from request');
+            let snapshot_id = trigger_response.data.snapshot_id;
+            console.error(`[web_data_${id}] triggered collection with `
+                +`snapshot ID: ${snapshot_id}`);
+            let max_attempts = 600;
+            let attempts = 0;
+            while (attempts < max_attempts)
+            {
+                try {
+                    if (ctx && ctx.reportProgress)
+                    {
+                        await ctx.reportProgress({
+                            progress: attempts,
+                            total: max_attempts,
+                            message: `Polling for data (attempt `
+                                +`${attempts + 1}/${max_attempts})`,
+                        });
+                    }
+                    let snapshot_response = await axios({
+                        url: `https://api.brightdata.com/datasets/v3`
+                            +`/snapshot/${snapshot_id}`,
+                        params: {format: 'json'},
+                        method: 'GET',
+                        headers: api_headers(),
+                    });
+                    if (snapshot_response.data?.status === 'running')
+                    {
+                        console.error(`[web_data_${id}] snapshot not ready, `
+                            +`polling again (attempt `
+                            +`${attempts + 1}/${max_attempts})`);
+                        attempts++;
+                        await new Promise(resolve=>setTimeout(resolve, 1000));
+                        continue;
+                    }
+                    console.error(`[web_data_${id}] snapshot data received `
+                        +`after ${attempts + 1} attempts`);
+                    let result_data = JSON.stringify(snapshot_response.data);
+                    return result_data;
+                } catch(e){
+                    console.error(`[web_data_${id}] polling error: `
+                        +`${e.message}`);
+                    attempts++;
+                    await new Promise(resolve=>setTimeout(resolve, 1000));
+                }
+            }
+            throw new Error(`Timeout after ${max_attempts} seconds waiting `
+                +`for data`);
+        }),
+    });
+}
+
+for (let tool of browser_tools)
+    server.addTool(tool);
+
+console.error('Starting server...');
+server.start({transportType: 'stdio'});
+function tool_fn(name, fn){
+    return async(data, ctx)=>{
+        debug_stats.tool_calls[name] = debug_stats.tool_calls[name]||0;
+        debug_stats.tool_calls[name]++;
+        let ts = Date.now();
+        console.error(`[%s] executing %s`, name, JSON.stringify(data));
+        try { return await fn(data, ctx); }
+        catch(e){
+            if (e.response)
+            {
+                console.error(`[%s] error %s %s: %s`, name, e.response.status,
+                    e.response.statusText, e.response.data);
+                let message = e.response.data;
+                if (message?.length)
+                    throw new Error(`HTTP ${e.response.status}: ${message}`);
+            }
+            else
+                console.error(`[%s] error %s`, name, e.stack);
+            throw e;
+        } finally {
+            let dur = Date.now()-ts;
+            console.error(`[%s] tool finished in %sms`, name, dur);
+        }
+    };
+}
+
+function search_url(engine, query){
+    let q = encodeURIComponent(query);
+    if (engine=='yandex')
+        return `https://yandex.com/search/?text=${q}`;
+    if (engine=='bing')
+        return `https://www.bing.com/search?q=${q}`;
+    return `https://www.google.com/search?q=${q}`;
+}
+
+
+
+
+================================================
+FILE: smithery.yaml
+================================================
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - apiToken
+    properties:
+      apiToken:
+        type: string
+        description: "Bright Data API token, available in your Bright Data account settings"
+      webUnlockerZone:
+        type: string
+        description: "Optional: The Web Unlocker zone name (defaults to 'mcp_unlocker')"
+      browserZone:
+        type: string
+        description: "Optional: Zone name for the Browser API (enables browser control tools, deafults to 'mcp_browser')"
+  commandFunction: |-
+    config => ({ 
+      command: 'node', 
+      args: ['server.js'], 
+      env: { 
+        API_TOKEN: config.apiToken,
+        WEB_UNLOCKER_ZONE: config.webUnlockerZone || 'mcp_unlocker',
+        BROWSER_ZONE: config.browserZone || ''
+      } 
+    })
+
+
+
+================================================
+FILE: assets/Tools.md
+================================================
+|Feature|Description|
+|---|---|
+|search_engine|Scrape search results from Google, Bing or Yandex. Returns SERP results in markdown (URL, title, description)|
+|scrape_as_markdown|Scrape a single webpage URL with advanced options for content extraction and get back the results in MarkDown language. This tool can unlock any webpage even if it uses bot detection or CAPTCHA.|
+|scrape_as_html|Scrape a single webpage URL with advanced options for content extraction and get back the results in HTML. This tool can unlock any webpage even if it uses bot detection or CAPTCHA.|
+|session_stats|Tell the user about the tool usage during this session|
+|web_data_amazon_product|Quickly read structured amazon product data. Requires a valid product URL with /dp/ in it. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_amazon_product_reviews|Quickly read structured amazon product review data. Requires a valid product URL with /dp/ in it. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_linkedin_person_profile|Quickly read structured linkedin people profile data. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_linkedin_company_profile|Quickly read structured linkedin company profile data. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_zoominfo_company_profile|Quickly read structured ZoomInfo company profile data. Requires a valid ZoomInfo company URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_instagram_profiles|Quickly read structured Instagram profile data. Requires a valid Instagram URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_instagram_posts|Quickly read structured Instagram post data. Requires a valid Instagram URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_instagram_reels|Quickly read structured Instagram reel data. Requires a valid Instagram URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_instagram_comments|Quickly read structured Instagram comments data. Requires a valid Instagram URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_facebook_posts|Quickly read structured Facebook post data. Requires a valid Facebook post URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_facebook_marketplace_listings|Quickly read structured Facebook marketplace listing data. Requires a valid Facebook marketplace listing URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_facebook_company_reviews|Quickly read structured Facebook company reviews data. Requires a valid Facebook company URL and number of reviews. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_x_posts|Quickly read structured X post data. Requires a valid X post URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_zillow_properties_listing|Quickly read structured zillow properties listing data. Requires a valid zillow properties listing URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_booking_hotel_listings|Quickly read structured booking hotel listings data. Requires a valid booking hotel listing URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_youtube_videos|Quickly read structured YouTube videos data. Requires a valid YouTube video URL. This can be a cache lookup, so it can be more reliable than scraping|
+|scraping_browser_navigate|Navigate a scraping browser session to a new URL|
+|scraping_browser_go_back|Go back to the previous page|
+|scraping_browser_go_forward|Go forward to the next page|
+|scraping_browser_click|Click on an element. Avoid calling this unless you know the element selector (you can use other tools to find those)|
+|scraping_browser_links|Get all links on the current page, text and selectors. It's strongly recommended that you call the links tool to check that your click target is valid|
+|scraping_browser_type|Type text into an element|
+|scraping_browser_wait_for|Wait for an element to be visible on the page|
+|scraping_browser_screenshot|Take a screenshot of the current page|
+|scraping_browser_get_html|Get the HTML content of the current page. Avoid using the full_page option unless it is important to see things like script tags since this can be large|
+|scraping_browser_get_text|Get the text content of the current page|
+|web_data_amazon_product_search|Quickly read structured amazon product search data. Requires a valid search keyword and amazon domain URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_walmart_product|Quickly read structured walmart product data. Requires a valid product URL with /ip/ in it. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_walmart_seller|Quickly read structured walmart seller data. Requires a valid walmart seller URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_ebay_product|Quickly read structured ebay product data. Requires a valid ebay product URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_homedepot_products|Quickly read structured homedepot product data. Requires a valid homedepot product URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_zara_products|Quickly read structured zara product data. Requires a valid zara product URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_etsy_products|Quickly read structured etsy product data. Requires a valid etsy product URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_bestbuy_products|Quickly read structured bestbuy product data. Requires a valid bestbuy product URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_linkedin_job_listings|Quickly read structured linkedin job listings data. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_linkedin_posts|Quickly read structured linkedin posts data. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_linkedin_people_search|Quickly read structured linkedin people search data. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_crunchbase_company|Quickly read structured crunchbase company data. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_facebook_events|Quickly read structured Facebook events data. Requires a valid Facebook event URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_tiktok_profiles|Quickly read structured Tiktok profiles data. Requires a valid Tiktok profile URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_tiktok_posts|Quickly read structured Tiktok post data. Requires a valid Tiktok post URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_tiktok_shop|Quickly read structured Tiktok shop data. Requires a valid Tiktok shop product URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_tiktok_comments|Quickly read structured Tiktok comments data. Requires a valid Tiktok video URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_google_maps_reviews|Quickly read structured Google maps reviews data. Requires a valid Google maps URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_google_shopping|Quickly read structured Google shopping data. Requires a valid Google shopping product URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_google_play_store|Quickly read structured Google play store data. Requires a valid Google play store app URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_apple_app_store|Quickly read structured apple app store data. Requires a valid apple app store app URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_reuter_news|Quickly read structured reuter news data. Requires a valid reuter news report URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_github_repository_file|Quickly read structured github repository data. Requires a valid github repository file URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_yahoo_finance_business|Quickly read structured yahoo finance business data. Requires a valid yahoo finance business URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_youtube_profiles|Quickly read structured youtube profiles data. Requires a valid youtube profile URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_youtube_comments|Quickly read structured youtube comments data. Requires a valid youtube video URL. This can be a cache lookup, so it can be more reliable than scraping|
+|web_data_reddit_posts|Quickly read structured reddit posts data. Requires a valid reddit post URL. This can be a cache lookup, so it can be more reliable than scraping|
+
+
+
+================================================
+FILE: examples/README.md
+================================================
+# MCP Usage Examples
+
+A curated list of community demos using Bright Data's MCP server.
+
+## 🧠 Notable Examples
+
+- **AI voice agent that closed 4 deals & made $596 overnight 🤑**  
+  [📹 YouTube Demo](https://www.youtube.com/watch?v=YGzT3sVdwdY) 
+
+   [💻 GitHub Repo](https://github.com/llSourcell/my_ai_intern)
+
+- **Langgraph with mcp-adapters demo**
+
+  [📹 YouTube Demo](https://www.youtube.com/watch?v=6DXuadyaJ4g)
+  
+  [💻 Source Code](https://github.com/techwithtim/BrightDataMCPServerAgent)
+
+- **Researcher Agent built with Google ADK that is connected to Bright Data's MCP to fetch real-time data**
+
+   [📹 YouTube Demo](https://www.youtube.com/watch?v=r7WG6dXWdUI)
+  
+  [💻Source Code](https://github.com/MeirKaD/MCP_ADK)
+
+- **Replacing 3 MCP servers with our MCP server to avoid getting blocked 🤯**  
+
+  [📹 YouTube Demo](https://www.youtube.com/watch?v=0xmE0OJrNmg) 
+
+- **Scrape ANY Website In Realtime With This Powerful AI MCP Server**
+
+   [📹 YouTube Demo](https://www.youtube.com/watch?v=bL5JIeGL3J0)
+ 
+---
+
+Got a cool example? Open a PR or contact us!
+
+

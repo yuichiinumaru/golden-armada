@@ -47,3 +47,20 @@ This file will be updated to reflect major changes, progress, and decisions thro
 [AGENT_LOGIC] Addressed DevAgent issues with `write_file` tool (KeyError: 'file_path', content being `None`) by refining `dev_prompt.json` to ensure correct parameter passing based on tool schema.
 [CONFIG] Implemented loading of model temperatures from `.env` file via `adk_config.py` and passing them to `LlmAgent` via `generation_config`.
 ---
+[DOCS] Consolidated `docs/codeswarm_development_evolution.md` and `docs/lessons.md`, prioritizing `lessons.md` content and saving as `docs/codeswarm_development_evolution.md`. Reflects updated understanding of model compatibility (targeting current Gemini models like 1.5 Pro).
+[DOCS] Reviewed `docs/chat before.md` and confirmed its historical insights are largely superseded or integrated into `docs/codeswarm_development_evolution.md`.
+[DOCS] Deleted `docs/chat_history_main_controller_refactor.json` as it was deemed not sufficiently populated or currently useful.
+[DOCS] Merged insights from `docs/research/MCP Techniques Use Cases.txt` and `docs/research/MCP ADK CAses.txt` into `docs/mcp_integration_ideas.md`, ensuring ADK/A2A/Gemini compatibility.
+[DOCS] Updated `docs/tasklist.md` to refine AdminAgent task logging, clarify testing approaches for tools and agents, and adjust the description of testing large document handling to be contingent on RAG/VectorDB implementation.
+[DOCS] Created "Phase 8: Advanced Research, Knowledge Base Integration, and Prompt Engineering Refinement" in `docs/tasklist.md`.
+[DOCS] Added new research tasks to `docs/tasklist.md` (Phase 8) for:
+    - Analyzing code and architectural patterns from external repository digests in `/docs/gitingest/`.
+    - Extracting insights from RAG research documents in `/docs/research/RAG/`.
+[DOCS] Reorganized and refined existing knowledge base and prompt engineering tasks within the new Phase 8 of `docs/tasklist.md`.
+[DOCS] Updated `docs/tasklist.md` to improve flow and clarity:
+    - Added a note on "Testing Philosophy" to Phase 4, encouraging concurrent test development.
+    - Added a note to RAG implementation tasks (Phase 6.1) to highlight dependency on research from Phase 8.
+    - Refined "AdminAgent Task Management & Progress Logging" (Phase 3) to focus on file-based task lists for the phase, deferring MCP considerations.
+[RESOURCES] Added multiple `*.txt` files to `/docs/gitingest/` containing code digests from various relevant GitHub repositories for research purposes.
+[RESOURCES] Added multiple `*.txt` and `*.ipynb` files to `/docs/research/RAG/` containing research material on RAG techniques.
+[RESOURCES] Noted the existence and planned systematic integration of various JSON and text/markdown files in `/codeswarm/prompts/kb/` intended for knowledge base and prompt augmentation.

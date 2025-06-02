@@ -1,0 +1,1438 @@
+Directory structure:
+└── weidwonder-terminal-mcp-server/
+    ├── README.md
+    ├── Dockerfile
+    ├── package.json
+    ├── PROJ_INFO_4AI.md
+    ├── README_CN.md
+    ├── smithery.yaml
+    ├── tsconfig.json
+    └── src/
+        ├── executor.ts
+        ├── index.ts
+        └── ssh.ts
+
+================================================
+FILE: README.md
+================================================
+# Terminal MCP Server
+[![smithery badge](https://smithery.ai/badge/@weidwonder/terminal-mcp-server)](https://smithery.ai/server/@weidwonder/terminal-mcp-server)
+
+*[中文文档](README_CN.md)*
+
+Terminal MCP Server is a Model Context Protocol (MCP) server that allows executing commands on local or remote hosts. It provides a simple yet powerful interface for AI models and other applications to execute system commands, either on the local machine or on remote hosts via SSH.
+
+## Features
+
+- **Local Command Execution**: Execute commands directly on the local machine
+- **Remote Command Execution**: Execute commands on remote hosts via SSH
+- **Session Persistence**: Support for persistent sessions that reuse the same terminal environment for a specified time (default 20 minutes)
+- **Environment Variables**: Set custom environment variables for commands
+- **Multiple Connection Methods**: Connect via stdio or SSE (Server-Sent Events)
+
+## Installation
+
+### Installing via Smithery
+
+To install terminal-mcp-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@weidwonder/terminal-mcp-server):
+
+```bash
+npx -y @smithery/cli install @weidwonder/terminal-mcp-server --client claude
+```
+
+### Manual Installation
+```bash
+# Clone the repository
+git clone https://github.com/weidwonder/terminal-mcp-server.git
+cd terminal-mcp-server
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+```
+
+## Usage
+
+### Starting the Server
+
+```bash
+# Start the server using stdio (default mode)
+npm start
+
+# Or run the built file directly
+node build/index.js
+```
+
+### Starting the Server in SSE Mode
+
+The SSE (Server-Sent Events) mode allows you to connect to the server remotely via HTTP.
+
+```bash
+# Start the server in SSE mode
+npm run start:sse
+
+# Or run the built file directly with SSE flag
+node build/index.js --sse
+```
+
+You can customize the SSE server with the following command-line options:
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--port` or `-p` | The port to listen on | 8080 |
+| `--endpoint` or `-e` | The endpoint path | /sse |
+| `--host` or `-h` | The host to bind to | localhost |
+
+Example with custom options:
+
+```bash
+# Start SSE server on port 3000, endpoint /mcp, and bind to all interfaces
+node build/index.js --sse --port 3000 --endpoint /mcp --host 0.0.0.0
+```
+
+This will start the server and listen for SSE connections at `http://0.0.0.0:3000/mcp`.
+
+### Testing with MCP Inspector
+
+```bash
+# Start the MCP Inspector tool
+npm run inspector
+```
+
+## The execute_command Tool
+
+The execute_command tool is the core functionality provided by Terminal MCP Server, used to execute commands on local or remote hosts.
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| command | string | Yes | The command to execute |
+| host | string | No | The remote host to connect to. If not provided, the command will be executed locally |
+| username | string | Required when host is specified | The username for SSH connection |
+| session | string | No | Session name, defaults to "default". The same session name will reuse the same terminal environment for 20 minutes |
+| env | object | No | Environment variables, defaults to an empty object |
+
+### Examples
+
+#### Executing a Command Locally
+
+```json
+{
+  "command": "ls -la",
+  "session": "my-local-session",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
+```
+
+#### Executing a Command on a Remote Host
+
+```json
+{
+  "host": "example.com",
+  "username": "user",
+  "command": "ls -la",
+  "session": "my-remote-session",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
+```
+
+## Configuring with AI Assistants
+
+### Configuring with Roo Code
+
+1. Open VSCode and install the Roo Code extension
+2. Open the Roo Code settings file: `~/Library/Application Support/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`
+3. Add the following configuration:
+
+#### For stdio mode (local connection)
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp": {
+      "command": "node",
+      "args": ["/path/to/terminal-mcp-server/build/index.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### For SSE mode (remote connection)
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp-sse": {
+      "url": "http://localhost:8080/sse",
+      "headers": {}
+    }
+  }
+}
+```
+
+Replace `localhost:8080/sse` with your actual server address, port, and endpoint if you've customized them.
+
+### Configuring with Cline
+
+1. Open the Cline settings file: `~/.cline/config.json`
+2. Add the following configuration:
+
+#### For stdio mode (local connection)
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp": {
+      "command": "node",
+      "args": ["/path/to/terminal-mcp-server/build/index.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### For SSE mode (remote connection)
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp-sse": {
+      "url": "http://localhost:8080/sse",
+      "headers": {}
+    }
+  }
+}
+```
+
+### Configuring with Claude Desktop
+
+1. Open the Claude Desktop settings file: `~/Library/Application Support/Claude/claude_desktop_config.json`
+2. Add the following configuration:
+
+#### For stdio mode (local connection)
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp": {
+      "command": "node",
+      "args": ["/path/to/terminal-mcp-server/build/index.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### For SSE mode (remote connection)
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp-sse": {
+      "url": "http://localhost:8080/sse",
+      "headers": {}
+    }
+  }
+}
+```
+
+## Best Practices
+
+### Command Execution
+
+- Before running commands, it's best to determine the system type (Mac, Linux, etc.)
+- Use full paths to avoid path-related issues
+- For command sequences that need to maintain environment, use `&&` to connect multiple commands
+- For long-running commands, consider using `nohup` or `screen`/`tmux`
+
+### SSH Connection
+
+- Ensure SSH key-based authentication is set up
+- If connection fails, check if the key file exists (default path: `~/.ssh/id_rsa`)
+- Make sure the SSH service is running on the remote host
+
+### Session Management
+
+- Use the session parameter to maintain environment between related commands
+- For operations requiring specific environments, use the same session name
+- Note that sessions will automatically close after 20 minutes of inactivity
+
+### Error Handling
+
+- Command execution results include both stdout and stderr
+- Check stderr to determine if the command executed successfully
+- For complex operations, add verification steps to ensure success
+
+## Important Notes
+
+- For remote command execution, SSH key-based authentication must be set up in advance
+- For local command execution, commands will run in the context of the user who started the server
+- Session timeout is 20 minutes, after which the connection will be automatically closed
+
+
+
+================================================
+FILE: Dockerfile
+================================================
+# Generated by https://smithery.ai. See: https://smithery.ai/docs/config#dockerfile
+FROM node:lts-alpine
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json and package-lock.json are copied
+COPY package*.json ./
+
+# Install dependencies (skip prepare script to avoid build issues, we'll explicitly run build step)
+RUN npm install --ignore-scripts
+
+# Copy app source code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Expose port 8080 for SSE mode (if used)
+EXPOSE 8080
+
+# Command to run the application
+CMD ["node", "build/index.js"]
+
+
+
+================================================
+FILE: package.json
+================================================
+{
+  "name": "terminal-mcp-server",
+  "version": "0.1.0",
+  "description": "操作X主机",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "terminal-mcp-server": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "start": "node build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0",
+    "ssh2": "^1.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "@types/ssh2": "^1.15.4",
+    "typescript": "^5.3.3"
+  }
+}
+
+
+
+================================================
+FILE: PROJ_INFO_4AI.md
+================================================
+# terminal-mcp-server
+
+This file contains information about the terminal-mcp-server project.
+
+## 功能
+
+该项目是一个 MCP Server，用于控制本地或其他主机。支持通过 stdio 和 SSE 两种方式连接。目前只提供 execute_command 功能，用于在本地或远程主机上执行命令。
+
+## 最新修改
+
+2025-03-21（下午2点）：
+
+* 更新了README.md和README_CN.md文件中的仓库克隆路径，从`yourusername`改为`weidwonder`
+* 删除了不再使用的`src/scripts/deploy.sh`脚本文件和`src/scripts`目录
+
+2025-03-21（下午）：
+
+* 修复了会话持久化功能的bug，确保在使用相同的session名称再次连接时，能够正确复用现有的终端，而不是创建新的连接或终端。
+* 改进了会话检查逻辑，确保只有在会话真正有效时才复用它。
+* 添加了更多的会话状态检查，确保在会话断开连接时能够正确重新建立连接。
+* 为SSH连接添加了keepalive功能，每分钟发送一次keepalive包，减少连接断开的可能性。
+* 改进了本地命令执行的会话管理，确保本地会话也能正确跟踪和清理。
+* 添加了更多的日志记录，以便更好地跟踪会话的创建、复用和断开连接。
+* 删除了不再使用的`ssh.ts`文件，避免代码混淆。
+
+2025-03-21（上午）：
+
+* 修改了 execute_command 功能，将 host 参数改为可选参数。如果不提供 host，则直接在本地终端执行命令。
+* 添加了 username 参数，用于指定 SSH 连接的用户名（当指定 host 时必填）。
+* 重构了代码，将 SSHManager 类重命名为 CommandExecutor，并添加了本地命令执行功能。
+* 在工具描述中添加了关于系统类型判断的提示。
+* 保留了会话持久化功能，无论是本地还是远程命令执行，都可以通过 session 参数指定会话名称，在 20 分钟内持久复用同一个终端。
+* 简化了 MCP Server，只保留 execute_command 功能，移除了 get_system_info、list_processes 和 kill_process 功能。
+* 更新了 @modelcontextprotocol/sdk 版本从 0.6.0 到 1.6.0。
+* 添加了 SSE 服务器支持，可以通过 HTTP 远程连接到服务器。
+* 添加了命令行参数支持，可以通过 --sse 选项启用 SSE 服务器。
+* 添加了 .gitignore 文件，用于 GitHub 仓库。
+* 添加了新的 npm 脚本：start 和 start:sse。
+
+2025-03-09：
+
+* 增加了一个参数来指定主机。
+* 将 SSH 连接改为持久会话。
+* 增加了 SSH 连接超时自动关闭功能（20 分钟无活动自动关闭）。
+* 增加了指定会话名称的功能。
+* 为 execute_command 工具增加了 env 参数，允许用户手动指定环境变量。
+
+## 使用方法
+
+```bash
+npm start
+```
+
+或者
+
+```bash
+node build/index.js
+```
+
+## execute_command 工具
+
+execute_command 工具用于在本地或远程主机上执行命令。它需要以下参数：
+
+* `command`：要执行的命令（必需）
+* `host`：要连接的主机（可选，如果不提供则在本地执行命令）
+* `username`：SSH连接的用户名（当指定host时必填）
+* `session`：会话名称，默认为 default（可选）。相同的session名称，在20分钟内是持久复用一个终端，这样在操作一些需要环境比如conda环境的时候，可以一直在环境中。
+* `env`：环境变量，默认为空对象（可选）
+
+示例（本地执行）：
+
+```json
+{
+  "command": "ls -la",
+  "session": "my-session",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
+```
+
+示例（远程执行）：
+
+```json
+{
+  "host": "example.com",
+  "username": "user",
+  "command": "ls -la",
+  "session": "my-session",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
+
+
+================================================
+FILE: README_CN.md
+================================================
+# Terminal MCP Server
+
+Terminal MCP Server 是一个基于 Model Context Protocol (MCP) 的服务器，用于在本地或远程主机上执行命令。它提供了一个简单而强大的接口，允许 AI 模型和其他应用程序执行系统命令，无论是在本地机器上还是通过 SSH 在远程主机上。
+
+## 功能特性
+
+- **本地命令执行**：直接在本地机器上执行命令
+- **远程命令执行**：通过 SSH 在远程主机上执行命令
+- **会话持久化**：支持会话持久化，在指定时间内（默认 20 分钟）复用同一个终端环境
+- **环境变量支持**：允许为命令设置自定义环境变量
+- **多种连接方式**：支持通过 stdio 和 SSE (Server-Sent Events) 两种方式连接
+
+## 安装
+
+```bash
+# 克隆仓库
+git clone https://github.com/weidwonder/terminal-mcp-server.git
+cd terminal-mcp-server
+
+# 安装依赖
+npm install
+
+# 构建项目
+npm run build
+```
+
+## 使用方法
+
+### 启动服务器
+
+```bash
+# 使用 stdio 方式启动服务器（默认模式）
+npm start
+
+# 或者直接运行构建后的文件
+node build/index.js
+```
+
+### 以 SSE 模式启动服务器
+
+SSE (Server-Sent Events) 模式允许您通过 HTTP 远程连接到服务器。
+
+```bash
+# 以 SSE 模式启动服务器
+npm run start:sse
+
+# 或者直接运行构建后的文件并添加 SSE 标志
+node build/index.js --sse
+```
+
+您可以使用以下命令行选项自定义 SSE 服务器：
+
+| 选项 | 描述 | 默认值 |
+|------|------|--------|
+| `--port` 或 `-p` | 监听的端口 | 8080 |
+| `--endpoint` 或 `-e` | 端点路径 | /sse |
+| `--host` 或 `-h` | 绑定的主机地址 | localhost |
+
+自定义选项示例：
+
+```bash
+# 在端口 3000，端点 /mcp，并绑定到所有网络接口上启动 SSE 服务器
+node build/index.js --sse --port 3000 --endpoint /mcp --host 0.0.0.0
+```
+
+这将启动服务器并在 `http://0.0.0.0:3000/mcp` 监听 SSE 连接。
+
+### 使用 MCP Inspector 测试
+
+```bash
+# 启动 MCP Inspector 工具
+npm run inspector
+```
+
+## execute_command 工具
+
+execute_command 工具是 Terminal MCP Server 提供的核心功能，用于在本地或远程主机上执行命令。
+
+### 参数
+
+| 参数名 | 类型 | 必填 | 描述 |
+|--------|------|------|------|
+| command | string | 是 | 要执行的命令 |
+| host | string | 否 | 要连接的远程主机。如果不提供，则在本地执行命令 |
+| username | string | 当指定 host 时必填 | SSH 连接的用户名 |
+| session | string | 否 | 会话名称，默认为 "default"。相同的 session 名称在 20 分钟内会持久复用同一个终端环境 |
+| env | object | 否 | 环境变量，默认为空对象 |
+
+### 使用示例
+
+#### 本地执行命令
+
+```json
+{
+  "command": "ls -la",
+  "session": "my-local-session",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
+```
+
+#### 远程执行命令
+
+```json
+{
+  "host": "example.com",
+  "username": "user",
+  "command": "ls -la",
+  "session": "my-remote-session",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
+```
+
+## 配置到 AI 助手
+
+### 配置到 Roo Code
+
+1. 打开 VSCode 并安装 Roo Code 扩展
+2. 打开 Roo Code 设置文件：`~/Library/Application Support/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`
+3. 添加以下配置：
+
+#### 对于 stdio 模式（本地连接）
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp": {
+      "command": "node",
+      "args": ["/path/to/terminal-mcp-server/build/index.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### 对于 SSE 模式（远程连接）
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp-sse": {
+      "url": "http://localhost:8080/sse",
+      "headers": {}
+    }
+  }
+}
+```
+
+如果您自定义了服务器地址、端口或端点，请将 `localhost:8080/sse` 替换为您的实际配置。
+
+### 配置到 Cline
+
+1. 打开 Cline 设置文件：`~/.cline/config.json`
+2. 添加以下配置：
+
+#### 对于 stdio 模式（本地连接）
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp": {
+      "command": "node",
+      "args": ["/path/to/terminal-mcp-server/build/index.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### 对于 SSE 模式（远程连接）
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp-sse": {
+      "url": "http://localhost:8080/sse",
+      "headers": {}
+    }
+  }
+}
+```
+
+### 配置到 Claude Desktop
+
+1. 打开 Claude Desktop 设置文件：`~/Library/Application Support/Claude/claude_desktop_config.json`
+2. 添加以下配置：
+
+#### 对于 stdio 模式（本地连接）
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp": {
+      "command": "node",
+      "args": ["/path/to/terminal-mcp-server/build/index.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### 对于 SSE 模式（远程连接）
+
+```json
+{
+  "mcpServers": {
+    "terminal-mcp-sse": {
+      "url": "http://localhost:8080/sse",
+      "headers": {}
+    }
+  }
+}
+```
+
+## 最佳实践
+
+### 命令执行
+
+- 在执行命令前，最好先判断系统类型（Mac、Linux 等）
+- 使用完整路径以避免路径相关问题
+- 对于需要保持环境的命令序列，使用 `&&` 连接多个命令
+- 对于长时间运行的命令，考虑使用 `nohup` 或 `screen`/`tmux`
+
+### SSH 连接
+
+- 确保已经设置了 SSH 免密登录（使用密钥认证）
+- 如果连接失败，检查密钥文件是否存在（默认路径：`~/.ssh/id_rsa`）
+- 确保远程主机的 SSH 服务正在运行
+
+### 会话管理
+
+- 利用 session 参数在相关命令之间保持环境
+- 对于需要特定环境的操作，使用相同的 session 名称
+- 注意会话会在 20 分钟无活动后自动关闭
+
+### 错误处理
+
+- 命令执行结果会包含 stdout 和 stderr
+- 检查 stderr 以确定命令是否成功执行
+- 对于复杂操作，添加验证步骤以确保操作成功
+
+## 注意事项
+
+- 远程执行命令时，需要提前设置 SSH 免密登录
+- 本地执行命令时，命令将在启动服务器的用户上下文中执行
+- 会话超时时间为 20 分钟，超时后会自动断开连接
+
+
+================================================
+FILE: smithery.yaml
+================================================
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    properties:
+      sse:
+        type: boolean
+        default: false
+        description: If true, run the server in SSE mode instead of default stdio mode.
+      port:
+        type: number
+        default: 8080
+        description: Port to listen on when running in SSE mode.
+      endpoint:
+        type: string
+        default: /sse
+        description: Endpoint path for SSE connections.
+      host:
+        type: string
+        default: localhost
+        description: Host to bind to when running in SSE mode.
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => { const args = []; if(config.sse){ args.push('--sse'); if(config.port) { args.push('--port', config.port.toString()); } if(config.endpoint){ args.push('--endpoint', config.endpoint); } if(config.host){ args.push('--host', config.host); } } return { command: 'node', args: ['build/index.js', ...args] }; }
+  exampleConfig:
+    sse: true
+    port: 3000
+    endpoint: /mcp
+    host: 0.0.0.0
+
+
+
+================================================
+FILE: tsconfig.json
+================================================
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "outDir": "./build",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
+
+
+
+================================================
+FILE: src/executor.ts
+================================================
+import { Client } from 'ssh2';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as os from 'os';
+import { exec } from 'child_process';
+import { log } from './index.js';
+
+export class CommandExecutor {
+  private sessions: Map<string, {
+    client: Client | null;
+    connection: Promise<void> | null;
+    timeout: NodeJS.Timeout | null;
+    host?: string;
+    env?: Record<string, string>; // 添加环境变量存储
+    shell?: any; // 添加shell会话
+    shellReady?: boolean; // shell是否准备好
+  }> = new Map();
+  
+  private sessionTimeout: number = 20 * 60 * 1000; // 20 minutes
+
+  constructor() {}
+
+  private getSessionKey(host: string | undefined, sessionName: string): string {
+    return `${host || 'local'}-${sessionName}`;
+  }
+
+  async connect(host: string, username: string, sessionName: string = 'default'): Promise<void> {
+    const sessionKey = this.getSessionKey(host, sessionName);
+    const session = this.sessions.get(sessionKey);
+    
+    // 如果会话存在且连接有效，直接返回现有连接
+    if (session?.connection && session?.client) {
+      // 检查客户端是否仍然连接
+      if (session.client.listenerCount('ready') > 0 || session.client.listenerCount('data') > 0) {
+        log.info(`Reusing existing session: ${sessionKey}`);
+        return session.connection;
+      }
+      // 如果客户端已断开连接，清理旧会话
+      log.info(`Session ${sessionKey} disconnected, creating new session`);
+      this.sessions.delete(sessionKey);
+    }
+
+    try {
+      const privateKey = fs.readFileSync(path.join(os.homedir(), '.ssh', 'id_rsa'));
+
+      const client = new Client();
+      const connection = new Promise<void>((resolve, reject) => {
+        client
+          .on('ready', () => {
+            log.info(`Session ${sessionKey} connected`);
+            this.resetTimeout(sessionKey);
+            
+            // 创建一个交互式shell
+            client.shell((err, stream) => {
+              if (err) {
+                log.error(`Failed to create interactive shell: ${err.message}`);
+                reject(err);
+                return;
+              }
+              
+              log.info(`Creating interactive shell for session ${sessionKey}`);
+              
+              // 获取会话对象
+              const sessionData = this.sessions.get(sessionKey);
+              if (sessionData) {
+                // 设置shell和shellReady标志
+                sessionData.shell = stream;
+                sessionData.shellReady = true;
+                
+                // 更新会话
+                this.sessions.set(sessionKey, sessionData);
+              }
+              
+              // 处理shell关闭事件
+              stream.on('close', () => {
+                log.info(`Interactive shell for session ${sessionKey} closed`);
+                const sessionData = this.sessions.get(sessionKey);
+                if (sessionData) {
+                  sessionData.shellReady = false;
+                  this.sessions.set(sessionKey, sessionData);
+                }
+              });
+              
+              // 等待shell准备好
+              stream.write('echo "Shell ready"\n');
+              
+              // 解析promise
+              resolve();
+            });
+          })
+          .on('error', (err) => {
+            log.error(`会话 ${sessionKey} 连接错误:`, err.message);
+            reject(err);
+          })
+          .connect({
+            host: host,
+            username: username,
+            privateKey: privateKey,
+            keepaliveInterval: 60000, // 每分钟发送一次keepalive包
+          });
+      });
+
+      log.info(`Creating new session: ${sessionKey}`);
+      this.sessions.set(sessionKey, {
+        client,
+        connection,
+        timeout: null,
+        host,
+        shell: null,
+        shellReady: false
+      });
+
+      return connection;
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('ENOENT')) {
+        throw new Error('SSH key file does not exist, please ensure SSH key-based authentication is set up');
+      }
+      throw error;
+    }
+  }
+
+  private resetTimeout(sessionKey: string): void {
+    const session = this.sessions.get(sessionKey);
+    if (!session) return;
+
+    if (session.timeout) {
+      clearTimeout(session.timeout);
+    }
+
+    session.timeout = setTimeout(async () => {
+      log.info(`Session ${sessionKey} timeout, disconnecting`);
+      await this.disconnectSession(sessionKey);
+    }, this.sessionTimeout);
+
+    this.sessions.set(sessionKey, session);
+  }
+
+  async executeCommand(
+    command: string,
+    options: {
+      host?: string;
+      username?: string;
+      session?: string;
+      env?: Record<string, string>;
+    } = {}
+  ): Promise<{stdout: string; stderr: string}> {
+    const { host, username, session = 'default', env = {} } = options;
+    const sessionKey = this.getSessionKey(host, session);
+
+    // 如果指定了host，则使用SSH执行命令
+    if (host) {
+      if (!username) {
+        throw new Error('Username is required when using SSH');
+      }
+      
+      let sessionData = this.sessions.get(sessionKey);
+      
+      // 检查会话是否存在且有效
+      let needNewConnection = false;
+      if (!sessionData || sessionData.host !== host) {
+        needNewConnection = true;
+      } else if (sessionData.client) {
+        // 检查客户端是否仍然连接
+        if (sessionData.client.listenerCount('ready') === 0 && sessionData.client.listenerCount('data') === 0) {
+          log.info(`Session ${sessionKey} disconnected, reconnecting`);
+          needNewConnection = true;
+        }
+      } else {
+        needNewConnection = true;
+      }
+      
+      // 如果需要新连接，则创建
+      if (needNewConnection) {
+        log.info(`Creating new connection for command execution: ${sessionKey}`);
+        await this.connect(host, username, session);
+        sessionData = this.sessions.get(sessionKey);
+      } else {
+        log.info(`Reusing existing session for command execution: ${sessionKey}`);
+      }
+      
+      if (!sessionData || !sessionData.client) {
+        throw new Error(`无法创建到 ${host} 的SSH会话`);
+      }
+      
+      this.resetTimeout(sessionKey);
+
+      // 检查是否有交互式shell可用
+      if (sessionData.shellReady && sessionData.shell) {
+        log.info(`Executing command using interactive shell: ${command}`);
+        return new Promise((resolve, reject) => {
+          let stdout = "";
+          let stderr = "";
+          let commandFinished = false;
+          const uniqueMarker = `CMD_END_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+          
+          // 构建环境变量设置命令
+          const envSetup = Object.entries(env)
+            .map(([key, value]) => `export ${key}="${String(value).replace(/"/g, '\\"')}"`)
+            .join(' && ');
+          
+          // 如果有环境变量，先设置环境变量，再执行命令
+          const fullCommand = envSetup ? `${envSetup} && ${command}` : command;
+          
+          // 添加数据处理器
+          const dataHandler = (data: Buffer) => {
+            const str = data.toString();
+            log.debug(`Shell数据: ${str}`);
+            
+            if (str.includes(uniqueMarker)) {
+              // 命令执行完成
+              commandFinished = true;
+              
+              // 提取命令输出（从命令开始到标记之前的内容）
+              const lines = stdout.split('\n');
+              let commandOutput = '';
+              let foundCommand = false;
+              
+              for (const line of lines) {
+                if (foundCommand) {
+                  if (line.includes(uniqueMarker)) {
+                    break;
+                  }
+                  commandOutput += line + '\n';
+                } else if (line.includes(fullCommand)) {
+                  foundCommand = true;
+                }
+              }
+              
+              // 解析输出
+              resolve({ stdout: commandOutput.trim(), stderr });
+              
+              // 移除处理器
+              sessionData.shell.removeListener('data', dataHandler);
+              clearTimeout(timeout);
+            } else if (!commandFinished) {
+              stdout += str;
+            }
+          };
+          
+          // 添加错误处理器
+          const errorHandler = (err: Error) => {
+            stderr += err.message;
+            reject(err);
+            sessionData.shell.removeListener('data', dataHandler);
+            sessionData.shell.removeListener('error', errorHandler);
+          };
+          
+          // 监听数据和错误
+          sessionData.shell.on('data', dataHandler);
+          sessionData.shell.on('error', errorHandler);
+          
+          // 执行命令并添加唯一标记
+          // 使用一个更明确的方式来执行命令和捕获输出
+          sessionData.shell.write(`echo "Starting command execution: ${fullCommand}"\n`);
+          sessionData.shell.write(`${fullCommand}\n`);
+          sessionData.shell.write(`echo "${uniqueMarker}"\n`);
+          
+          // 设置超时
+          const timeout = setTimeout(() => {
+            if (!commandFinished) {
+              stderr += "Command execution timed out";
+              resolve({ stdout, stderr });
+              sessionData.shell.removeListener('data', dataHandler);
+              sessionData.shell.removeListener('error', errorHandler);
+            }
+          }, 30000); // 30秒超时
+        });
+      } else {
+        log.info(`Executing command using exec: ${command}`);
+        return new Promise((resolve, reject) => {
+          // 构建环境变量设置命令
+          const envSetup = Object.entries(env)
+            .map(([key, value]) => `export ${key}="${String(value).replace(/"/g, '\\"')}"`)
+            .join(' && ');
+          
+          // 如果有环境变量，先设置环境变量，再执行命令
+          const fullCommand = envSetup ? `${envSetup} && ${command}` : command;
+          
+          sessionData?.client?.exec(`/bin/bash --login -c "${fullCommand.replace(/"/g, '\\"')}"`, (err, stream) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+
+            let stdout = "";
+            let stderr = '';
+
+            stream
+              .on("data", (data: Buffer) => {
+                this.resetTimeout(sessionKey);
+                stdout += data.toString();
+              })
+              .stderr.on('data', (data: Buffer) => {
+                stderr += data.toString();
+              })
+              .on('close', () => {
+                resolve({ stdout, stderr });
+              })
+              .on('error', (err) => {
+                reject(err);
+              });
+          });
+        });
+      }
+    } 
+    // 否则在本地执行命令
+    else {
+      // 在本地执行命令时，也使用会话机制来保持环境变量
+      log.info(`Executing command using local session: ${sessionKey}`);
+      
+      // 检查是否已有本地会话
+      let sessionData = this.sessions.get(sessionKey);
+      let sessionEnv = {};
+      
+      if (!sessionData) {
+        // 为本地会话创建一个空条目，以便跟踪超时
+        sessionData = {
+          client: null,
+          connection: null,
+          timeout: null,
+          host: undefined,
+          env: { ...env } // 保存初始环境变量
+        };
+        this.sessions.set(sessionKey, sessionData);
+        log.info(`Creating new local session: ${sessionKey}`);
+        sessionEnv = env;
+      } else {
+        log.info(`Reusing existing local session: ${sessionKey}`);
+        // 合并现有会话环境变量和新的环境变量
+        if (!sessionData.env) {
+          sessionData.env = {};
+        }
+        sessionData.env = { ...sessionData.env, ...env };
+        sessionEnv = sessionData.env;
+        // 更新会话
+        this.sessions.set(sessionKey, sessionData);
+      }
+      
+      this.resetTimeout(sessionKey);
+      
+      return new Promise((resolve, reject) => {
+        // 构建环境变量，优先级：系统环境变量 < 会话环境变量 < 当前命令环境变量
+        const envVars = { ...process.env, ...sessionEnv };
+        
+        // 执行命令
+        log.info(`Executing local command: ${command}`);
+        exec(command, { env: envVars }, (error, stdout, stderr) => {
+          if (error && error.code !== 0) {
+            // 我们不直接拒绝，而是返回错误信息作为stderr
+            resolve({ stdout, stderr: stderr || error.message });
+          } else {
+            resolve({ stdout, stderr });
+          }
+        });
+      });
+    }
+  }
+
+  private async disconnectSession(sessionKey: string): Promise<void> {
+    const session = this.sessions.get(sessionKey);
+    if (session) {
+      if (session.shell) {
+        log.info(`Closing interactive shell for session ${sessionKey}`);
+        session.shell.end();
+        session.shellReady = false;
+      }
+      if (session.client) {
+        log.info(`Disconnecting SSH connection for session ${sessionKey}`);
+        session.client.end();
+      }
+      if (session.timeout) {
+        clearTimeout(session.timeout);
+      }
+      log.info(`Disconnecting session: ${sessionKey}`);
+      this.sessions.delete(sessionKey);
+    }
+  }
+
+  async disconnect(): Promise<void> {
+    const disconnectPromises = Array.from(this.sessions.keys()).map(
+      sessionKey => this.disconnectSession(sessionKey)
+    );
+    
+    await Promise.all(disconnectPromises);
+    this.sessions.clear();
+  }
+}
+
+
+================================================
+FILE: src/index.ts
+================================================
+#!/usr/bin/env node
+
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+  ErrorCode,
+  McpError,
+} from "@modelcontextprotocol/sdk/types.js";
+import { CommandExecutor } from "./executor.js";
+
+// 全局日志函数，确保所有日志都通过stderr输出
+export const log = {
+  debug: (message: string, ...args: any[]) => {
+    if (process.env.DEBUG === 'true') {
+      console.error(`[DEBUG] ${message}`, ...args);
+    }
+  },
+  info: (message: string, ...args: any[]) => {
+    console.error(`[INFO] ${message}`, ...args);
+  },
+  warn: (message: string, ...args: any[]) => {
+    console.error(`[WARN] ${message}`, ...args);
+  },
+  error: (message: string, ...args: any[]) => {
+    console.error(`[ERROR] ${message}`, ...args);
+  }
+};
+
+const commandExecutor = new CommandExecutor();
+
+// 创建服务器
+function createServer() {
+  const server = new Server(
+    {
+      name: "remote-ops-server",
+      version: "0.1.0",
+    },
+    {
+      capabilities: {
+        tools: {},
+      },
+    }
+  );
+
+  server.setRequestHandler(ListToolsRequestSchema, async () => {
+    return {
+      tools: [
+        {
+          name: "execute_command",
+          description: "Execute commands on remote hosts or locally (This tool can be used for both remote hosts and the current machine)",
+          inputSchema: {
+            type: "object",
+            properties: {
+              host: {
+                type: "string",
+                description: "Host to connect to (optional, if not provided the command will be executed locally)"
+              },
+              username: {
+                type: "string",
+                description: "Username for SSH connection (required when host is specified)"
+              },
+              session: {
+                type: "string",
+                description: "Session name, defaults to 'default'. The same session name will reuse the same terminal environment for 20 minutes, which is useful for operations requiring specific environments like conda.",
+                default: "default"
+              },
+              command: {
+                type: "string",
+                description: "Command to execute. Before running commands, it's best to determine the system type (Mac, Linux, etc.)"
+              },
+              env: {
+                type: "object",
+                description: "Environment variables",
+                default: {}
+              }
+            },
+            required: ["command"]
+          }
+        }
+      ]
+    };
+  });
+
+  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    try {
+      if (request.params.name !== "execute_command") {
+        throw new McpError(ErrorCode.MethodNotFound, "Unknown tool");
+      }
+      
+      const host = request.params.arguments?.host ? String(request.params.arguments.host) : undefined;
+      const username = request.params.arguments?.username ? String(request.params.arguments.username) : undefined;
+      const session = String(request.params.arguments?.session || "default");
+      const command = String(request.params.arguments?.command);
+      if (!command) {
+        throw new McpError(ErrorCode.InvalidParams, "Command is required");
+      }
+      const env = request.params.arguments?.env || {};
+
+      // 如果指定了host但没有指定username
+      if (host && !username) {
+        throw new McpError(ErrorCode.InvalidParams, "Username is required when host is specified");
+      }
+
+      try {
+        const result = await commandExecutor.executeCommand(command, {
+          host,
+          username,
+          session,
+          env: env as Record<string, string>
+        });
+        
+        return {
+          content: [{
+            type: "text",
+            text: `Command Output:\nstdout: ${result.stdout}\nstderr: ${result.stderr}`
+          }]
+        };
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('SSH')) {
+          throw new McpError(
+            ErrorCode.InternalError,
+            `SSH connection error: ${error.message}. Please ensure SSH key-based authentication is set up.`
+          );
+        }
+        throw error;
+      }
+    } catch (error) {
+      if (error instanceof McpError) {
+        throw error;
+      }
+      throw new McpError(
+        ErrorCode.InternalError,
+        error instanceof Error ? error.message : String(error)
+      );
+    }
+  });
+
+  return server;
+}
+
+async function main() {
+  try {
+    // 使用标准输入输出
+    const server = createServer();
+    
+    // 设置MCP错误处理程序
+    server.onerror = (error) => {
+      log.error(`MCP Error: ${error.message}`);
+    };
+    
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    log.info("Remote Ops MCP server running on stdio");
+
+    // 处理进程退出
+    process.on('SIGINT', async () => {
+      log.info("Shutting down server...");
+      await commandExecutor.disconnect();
+      process.exit(0);
+    });
+  } catch (error) {
+    log.error("Server error:", error);
+    process.exit(1);
+  }
+}
+
+main().catch((error) => {
+  log.error("Server error:", error);
+  process.exit(1);
+});
+
+
+
+================================================
+FILE: src/ssh.ts
+================================================
+import { Client } from 'ssh2';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as os from 'os';
+
+export class SSHManager {
+  private client: Client | null = null;
+  private connection: Promise<void> | null = null;
+  private timeout: NodeJS.Timeout | null = null;
+  private sessionTimeout: number = 20 * 60 * 1000; // 20 minutes
+
+  constructor() {
+    this.client = new Client();
+  }
+
+  async connect(host: string): Promise<void> {
+    if (this.connection) {
+      return this.connection;
+    }
+
+    const privateKey = fs.readFileSync(path.join(os.homedir(), '.ssh', 'id_rsa'));
+
+    this.connection = new Promise((resolve, reject) => {
+      this.client = new Client();
+      this.client
+        .on('ready', () => {
+          this.resetTimeout();
+          resolve();
+        })
+        .on('error', (err) => {
+          reject(err);
+        })
+        .connect({
+          host: host,
+          username: 'weidwonder',
+          privateKey: privateKey,
+        });
+    });
+
+    return this.connection;
+  }
+
+  private resetTimeout(): void {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+
+    this.timeout = setTimeout(async () => {
+      console.log('SSH session timeout, disconnecting');
+      await this.disconnect();
+    }, this.sessionTimeout);
+  }
+
+  async executeCommand(host: string, command: string, env: Record<string, string> | {} = {}): Promise<{stdout: string; stderr: string}> {
+    if (!this.client) {
+      await this.connect(host);
+    }
+    this.resetTimeout();
+
+    return new Promise((resolve, reject) => {
+      // 使用完整的shell路径，以交互式登录模式执行命令
+      // 这更接近于用户直接SSH登录的体验
+      
+      // 构建环境变量设置命令
+      const envSetup = Object.entries(env as Record<string, string>)
+        .map(([key, value]) => `export ${key}="${String(value).replace(/"/g, '\\"')}"`)
+        .join(' && ');
+      
+      // 如果有环境变量，先设置环境变量，再执行命令
+      const fullCommand = envSetup ? `${envSetup} && ${command}` : command;
+      
+      this.client?.exec(`/bin/bash --login -c "${fullCommand}"`, (err, stream) => {
+        if (err) {
+          reject(err);
+          return
+        }
+
+        let stdout = ""
+        let stderr = '';
+
+        stream
+          .on("data", (data: Buffer) => {
+            this.resetTimeout();
+            stdout += data.toString();
+          })
+          .stderr.on('data', (data: Buffer) => {
+            stderr += data.toString();
+          })
+          .on('close', () => {
+            resolve({ stdout, stderr });
+          })
+          .on('error', (err) => {
+            reject(err);
+          });
+      });
+    });
+  }
+
+  async disconnect(): Promise<void> {
+    if (this.client) {
+      this.client.end();
+      this.client = null;
+      this.connection = null;
+    }
+  }
+}
+

@@ -18,9 +18,14 @@ For detailed project specifications, architecture, and agent roles, please see [
 
 -   **Multi-Agent Collaboration**: Utilizes Admin, Developer, and Revisor agents for a structured and iterative workflow. The AdminAgent also handles logging tasks.
 -   **Google ADK Powered**: Built upon the Google ADK framework for direct Gemini model integration and agent orchestration (tested with `google-adk==1.1.1`).
+<<<<<<< Updated upstream
 -   **Gemini Models**: Configurable to use different Gemini models (e.g., `gemini-1.5-flash-latest`) for various agent roles via a `.env` file.
 -   **Pydantic Models**: Uses Pydantic models (e.g., `AdminTaskOutput`, `DevAgentOutput`, `RevisorAgentOutput`) for structured JSON communication between agents and the orchestrator.
 -   **Tool-Equipped Agents**: Agents use ADK-native tool calls for operations like file I/O and web browsing, based on assigned `FunctionTool` definitions.
+=======
+-   **Gemini Models**: Configurable to use different Gemini models (e.g., `gemini-2.5-flash-preview-05-20`) for various agent roles via a `.env` file.
+-   **Tool-Equipped Agents**: Agents can request tool execution (e.g., file I/O) managed by the orchestrator or use ADK-native tool calls.
+>>>>>>> Stashed changes
 -   **Orchestrator-Managed Workflow**: A central controller manages task distribution, agent invocation, and `session.state` for context sharing.
 -   **CLI Controllable**: Initialize projects, define goals, manage rounds, and override models via command-line arguments.
 -   **Iterative Development**: Supports multiple rounds of development and review for refining outputs.
@@ -68,10 +73,18 @@ For detailed project specifications, architecture, and agent roles, please see [
     GEMINI_API_KEY=your_actual_gemini_api_key_here
 
     # Specify the Gemini models for each agent role
+<<<<<<< Updated upstream
     # gemini-1.5-flash-latest is a known compatible model with ADK 1.1.1
     ADMIN_MODEL=gemini-1.5-flash-latest
     DEV_MODEL=gemini-1.5-flash-latest
     REVISOR_MODEL=gemini-1.5-flash-latest
+=======
+    # gemini-2.5-flash-preview-05-20 is a known compatible model with ADK 1.1.1
+    ADMIN_MODEL=gemini-2.5-flash-preview-05-20
+    DEV_MODEL=gemini-2.5-flash-preview-05-20
+    REVISOR_MODEL=gemini-2.5-flash-preview-05-20
+    ADMIN_LOGGER_MODEL=gemini-2.5-flash-preview-05-20 # If using a separate model for AdminLogger
+>>>>>>> Stashed changes
 
     # Optional: Default project path if not specified via CLI's --path argument.
     # This should be an absolute path or a path relative to where you run the script.

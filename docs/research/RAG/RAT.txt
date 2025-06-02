@@ -1,0 +1,201 @@
+USE REASONING MODELS LIKE DEEPSEEK-R1 TO TRANSFORM YOUR RAG INTO RAT
+FOR SMARTER AI
+
+_Retrieval-Augmented Thinking (RAT)_ is an advanced concept that
+combines retrieval-based systems with iterative reasoning, allowing AI
+models to generate thoughtful and context-aware answers. Unlike
+Retrieval-Augmented Generation (RAG), RAT goes beyond by incorporating
+reasoning loops that refine the output through multiple iterations.
+
+In this article, we’ll dive into:
+
+	* What Retrieval-Augmented Thinking (RAT) is.
+	* Why RAT is a game-changer for AI systems.
+	* How to implement RAT in Python using RAGLight framework.
+
+WHAT IS RETRIEVAL-AUGMENTED THINKING (RAT)?
+
+At its core, RAT is an enhancement of Retrieval-Augmented Generation
+(RAG). While RAG integrates document retrieval with language model
+inference to answer questions based on context, RAT introduces an
+ITERATIVE REASONING STEP. This allows the model to “think” by
+refining its answers through a series of reasoning cycles, making the
+outputs more accurate and contextually rich.
+
+KEY FEATURES OF RAT:
+
+	* ITERATIVE REASONING: Models reason over multiple iterations to
+refine their understanding.
+	* DYNAMIC RETRIEVAL: Adjusts the retrieval context based on evolving
+reflections.
+	* CONTEXTUAL PRECISION: Combines retrieval, reasoning, and generation
+for superior results.
+
+WHY RAT MATTERS
+
+Traditional RAG systems excel at generating context-aware answers.
+However, they often lack:
+
+	* REFINEMENT: A single-pass inference may miss nuances in complex
+queries.
+	* DEEP UNDERSTANDING: Without iteration, the output may not fully
+address multifaceted problems.
+
+If you’re not familiar with RAG, you can read my article about this
+topic.
+
+RAT addresses these gaps by introducing reasoning loops that mimic
+human thought processes. This makes it invaluable for applications
+like:
+
+	* Complex question answering.
+	* Domain-specific AI assistants.
+	* Research-intensive workflows.
+
+Here’s how RAT works step-by-step, as shown in the diagram:
+
+1. USER INPUT:
+
+	* The user asks a question, just like in RAG. For example:
+
+_“How can I improve my productivity?”_
+
+2. KNOWLEDGE RETRIEVAL:
+
+	* The system retrieves relevant chunks of information from the
+knowledge base (e.g., documents, articles) related to the question.
+	* Example: The retrieved chunks might include articles about time
+management, productivity techniques, or tools like task
+prioritization.
+
+3. REASONING LOOP (ITERATIVE REFINEMENT):
+
+	* INITIAL REFLECTION: The reasoning LLM starts with the retrieved
+chunks and the user question. It generates an initial REFLECTION or
+reasoning.
+
+Example: _“Focus on prioritizing tasks effectively.”_
+
+	* ITERATION: The system feeds this reflection back into the retrieval
+and reasoning process. Each iteration refines the retrieved context
+and generates more nuanced reasoning.
+	* Iteration 2: _“Break tasks into smaller chunks and prioritize
+them by urgency and importance.”_
+	* Iteration 3: _“Implement time-blocking and eliminate distractions
+for deep work.”_
+
+4. FINAL REFLECTION:
+
+	* After completing the specified number of iterations (or stopping
+when the reasoning stabilizes), the system produces a FINAL REFLECTION
+— a detailed, well-thought-out understanding of the problem.
+	* Final Reflection: _“To improve productivity, prioritize tasks
+using the Eisenhower matrix, break them into smaller chunks, and use
+time-blocking for focused work.”_
+
+5. AUGMENTED GENERATION:
+
+	* The refined reasoning (final reflection) is passed to the answering
+LLM. This LLM combines the reasoning with the original question to
+generate a final, user-friendly answer.
+	* Final Answer: _“To boost your productivity, start by prioritizing
+tasks using the Eisenhower matrix. Break them into manageable steps,
+and use time-blocking to stay focused.”_
+
+WHY USE RAGLIGHT FOR RAT IMPLEMENTATION ?
+
+RAGLIGHT is a versatile framework that simplifies the implementation
+of RAG and RAT pipelines by offering modular components for retrieval,
+reasoning, and generation workflows. With prebuilt integrations and an
+extensible design, you can focus on enhancing your AI’s capabilities
+without reinventing the wheel.
+
+Here’s how to set up RAT and RAG pipelines using RAGLight, along
+with detailed explanations of key parameters and customization
+options.
+
+SETTING UP A RAT PIPELINE
+
+from raglight.rat.simple_rat_api import RATPipeline
+from raglight.models.data_source_model import FolderSource, GitHubSource
+from raglight.config.settings import Settings
+Settings.setup_logging()
+
+pipeline = RATPipeline(knowledge_base=[ FolderSource(path="<path to your folder with pdf>/knowledge_base"), GitHubSource(url="https://github.com/Bessouat40/RAGLight") ], model_name="llama3", reasoning_model_name="deepseek-r1:1.5b", reflection=1)
+
+pipeline.build()
+
+response = pipeline.generate("How can I create an easy RAGPipeline using raglight framework ? Give me the the easier python implementation") print(response)
+
+UNDERSTANDING RAGLIGHT PARAMETERS
+
+KNOWLEDGE_BASE
+
+A list defining the sources of knowledge. RAGLight supports:
+
+	* FOLDERSOURCE: Path to a local folder containing documents (e.g.,
+PDFs, text files).
+	* GITHUBSOURCE: URL to a GitHub repository to include in the
+knowledge base.
+
+You can combine multiple folders and repositories to create a
+comprehensive knowledge base.
+
+MODEL_NAME
+
+The name of the LLM used for final generation. RAGLight currently
+supports models from OLLAMA that are pulled locally.
+
+You can replace "llama3" with other models like "deepseek-r1:1.5b" or
+any model compatible with Ollama and pulled locally. You can use
+reasoning models too.
+
+REASONING_MODEL_NAME (RAT-SPECIFIC)
+
+Specifies the model used for iterative reasoning in RAT pipelines. You
+have to choose reasoning models.
+
+Actually RAGLight only support deepseek models` like deepseek-r1:1.5b.
+
+REFLECTION (RAT-SPECIFIC)
+
+Defines the number of reasoning iterations to perform. Each iteration
+refines the retrieved context and the reasoning logic.
+
+Increase the number of iterations for deeper reasoning or reduce it
+for faster processing.
+
+PIPELINE.BUILD()
+
+This function processes the knowledge base, generates embeddings, and
+initializes the vector store.
+
+HOW IT WORKS:
+
+	* Parses the knowledge base sources (e.g., folders, GitHub
+repositories).
+	* Creates embeddings for all documents using the specified model.
+	* Stores embeddings in a vector store for retrieval.
+
+PIPELINE.GENERATE(QUERY)
+
+Generates a response based on the user’s query and the retrieved
+context from the knowledge base.
+
+HOW IT WORKS:
+
+	* Transforms the user query into an embedding.
+	* Retrieves relevant documents or chunks from the vector store.
+	* (For RAT pipelines) Iteratively refines the response using the
+reasoning model.
+	* Produces a final, context-aware response.
+
+CONCLUSION
+
+Ready to build smarter AI systems with RAT? Explore RAGLIGHT on
+GitHub:
+
+👉 RAGLight Repository
+
+Start implementing Retrieval-Augmented Thinking today and unlock the
+next level of AI reasoning! 🚀

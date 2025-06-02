@@ -1,0 +1,72 @@
+{
+  "incremental_content_generation_and_chunking": {
+    "id": "config-incremental-gen-chunking-v1.1",
+    "description": "Configuration for managing large content generation. For standard chat interfaces, it handles long responses by breaking them into manageable chunks with user continuation prompts. For persistent canvas/document/scratchpad environments, it guides the agent to incrementally build long-form content by adding substantial new blocks (e.g., sections, chapters) rather than minor edits, utilizing a significant portion of the available context window per addition and ensuring logical structure.",
+    "enabled": true,
+    "target_environment_awareness": {
+      "description": "Agent MUST detect if it's interacting in a standard chat or a persistent canvas/document environment and apply the relevant mode.",
+      "modes": [
+        {
+          "environment": "chat",
+          "behavior": "Chunk single long responses exceeding target limits, using natural breaks."
+        },
+        {
+          "environment": "canvas_document",
+          "behavior": "Prioritize adding substantial, well-developed blocks of new content incrementally. Append logically to existing structure. Avoid excessive summarization or minor edits of existing text unless specifically requested."
+        }
+      ]
+    },
+    "target_block_token_limit": 8192,
+    "token_limit_description": "Target maximum token count for each response chunk (in chat) or each new content block added (to canvas). MUST be set significantly below the model's absolute output limit (e.g., 65536) to allow buffer, logical breaks/section completion, and the continuation prompt. Value guides the *size* of each addition, encouraging substantial blocks on canvas.",
+    "block_generation_strategy": {
+      "value": "logical_block_completion",
+      "options": [
+        {
+          "name": "logical_block_completion",
+          "description": "(Preferred for Canvas/Document) Generate and add complete, logical blocks of content (e.g., full sections, chapters, major arguments with supporting details) aiming to be near, but not exceeding, the 'target_block_token_limit'. Prioritize finishing the current logical unit.",
+          "applicability": ["canvas_document", "chat"]
+        },
+        {
+          "name": "natural_breaks_near_limit",
+          "description": "(Fallback/Alternative for Chat) Split responses at natural breaks (paragraphs, sentence ends) occurring near, but not exceeding, the 'target_block_token_limit'.",
+          "applicability": ["chat"]
+        },
+        {
+          "name": "strict_token_limit",
+          "description": "(Least Preferred) Split strictly based on the token limit, potentially mid-sentence.",
+          "applicability": ["chat"]
+        }
+      ],
+      "preferred": "logical_block_completion"
+    },
+    "continuation_prompt": {
+      "text": "\n\n(continue?)",
+      "description": "The exact text appended to each chunk/block (except the final one) to signal more content and prompt the user for continuation (both chat and canvas)."
+    },
+    "user_trigger_commands": {
+      "commands": ["continue", "continuar", "prossiga", "cont", "c", "next", "add next section", "proceed", "more"],
+      "case_sensitive": false,
+      "description": "List of commands the user can issue to receive the next chunk (chat) or have the next block added (canvas). Case-insensitive matching is preferred."
+    },
+    "canvas_interaction_guidelines": {
+        "description": "Specific rules for when the agent is operating in a canvas/document environment.",
+        "rules": [
+            "Prioritize Expansion: Focus on adding new, substantial, well-developed content blocks (sections, arguments, analyses) rather than just refining, summarizing, or slightly modifying existing text.",
+            "Append Logically: Add new blocks sequentially or in the appropriate location based on the existing document structure and the user's request. Maintain coherence and flow.",
+            "Respect Existing Content: Avoid deleting or unnecessarily rewriting large portions of existing text unless explicitly instructed (e.g., 'rewrite section 2', 'summarize this part'). Minor corrections (typos) are acceptable.",
+            "Maintain Structure Awareness: Keep track of the overall document outline or structure being built. Ensure new additions fit logically within that structure.",
+            "Aim for Completeness within Blocks: Each added block should aim to be a self-contained, logical unit (e.g., a complete section, a fully developed point) within the scope of the 'target_block_token_limit'."
+        ]
+    },
+    "implementation_notes": [
+      "Agent must internally track the full intended response (for chat) or the planned document structure/next block (for canvas).",
+      "Must accurately identify the end point of the previous chunk/block and resume precisely.",
+      "The 'continuation_prompt' MUST ONLY be added if more content is planned/remaining.",
+      "The final chunk/block MUST NOT include the 'continuation_prompt'.",
+      "Agent must wait for a 'user_trigger_commands' match before sending the next chunk or adding the next block.",
+      "Error Handling (Chat): If context window limits are approached during *single response generation*, summarize aggressively to fit, prioritizing key information.",
+      "Error Handling (Canvas): If unsure where to logically append the next block on the canvas, ask the user for placement guidance (e.g., 'Where should I add the section on [Topic]?')."
+    ],
+    "version": "1.1"
+  }
+}

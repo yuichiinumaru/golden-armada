@@ -135,12 +135,17 @@ Organize and manage prompts effectively, especially as they grow in complexity:
     *   Load the JSON/YAML file.
     *   Create helper functions to build the final prompt string, inserting common elements or task-specific details before passing it to the `LlmAgent`.
     *   Ensure final prompts include placeholders (like `{user_input}`) that ADK will fill from event data.
-3.  **Benefits:** Versioning, collaboration, easier iteration, and potential for A/B testing prompts.
+3.  **Integrate Structured Knowledge Bases:**
+    *   Leverage a dedicated Knowledge Base (e.g., in `/codeswarm/prompts/kb/`) containing modular instructions, guidelines, and contextual information.
+    *   Design prompts to reference or incorporate elements from this KB, enhancing consistency and reducing redundancy in individual prompts.
+4.  **Learn from External Examples:**
+    *   Analyze prompt engineering techniques from successful open-source AI agent projects (e.g., insights gathered in `/docs/gitingest/`) to inform CodeSwarm's prompt design.
+5.  **Benefits:** Versioning, collaboration, easier iteration, potential for A/B testing prompts, and more intelligent agent behavior through access to curated knowledge.
 
 ## Future Vision: A2A and MCP Integration
 
 *   **Agent-to-Agent (A2A) Communication:** For future scalability, individual agents (Admin, Dev, Revisor) could evolve into independent services communicating via A2A protocols. This allows for distributed operation and integration of agents built with different frameworks.
-*   **Model Context Protocol (MCP):** If agents become distributed, MCP can standardize how they exchange contextual information and invoke capabilities. CodeSwarm could leverage MCP to interact with a wider ecosystem of external tools. For more on this, see [docs/mcp_integration_ideas.md](docs/mcp_integration_ideas.md).
+*   **Model Context Protocol (MCP):** If agents become distributed, MCP can standardize how they exchange contextual information and invoke capabilities. CodeSwarm could leverage MCP to interact with a wider ecosystem of external tools. For more on this, see [docs/mcp_integration_ideas.md](docs/mcp_integration_ideas.md). (Note: Analysis of external MCP implementations, such as those digested in `/docs/gitingest/`, will further inform these integration strategies as per Phase 8.1 of `docs/tasklist.md`).
 
 ## Advanced Prompt Engineering for CodeSwarm Agents (Inspired by Devika & Community Prompts)
 

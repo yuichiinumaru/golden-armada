@@ -1,56 +1,127 @@
 # Rules for CodeSwarm ADK/A2A Multi-Agent Coding Project
 
+## 0. Mandatory First Steps for New Conversations
+    - **Objective:** Ensure full context awareness before any codebase interaction.
+    - **Procedure:**
+        1. **Thoroughly read and understand ALL rules in this `.cursorrules` file.**
+        2. **Familiarize yourself with the project's documentation suite (primary first, then supporting):**
+            - `docs/tasklist.md` (Understand current goals, phases, and tasks)
+            - `docs/project.md` (Grasp overall architecture, agent roles, design choices)
+            - `docs/codeswarm_development_evolution.md` (Learn from past challenges and solutions)
+            - `docs/advanced_development_patterns.md` (Understand future vision and advanced techniques)
+            - `docs/plan.md` (Historical context of ADK refactor)
+            - `docs/mcp_integration_ideas.md` (Context for MCP tool integration)
+            - `docs/changelog.log` (Review recent major changes)
+            - Review contents of `docs/gitingest/` (digests of external projects for inspiration).
+            - Review contents of `docs/research/` and its subdirectories like `docs/research/RAG/` (project-specific research).
+        3. **Analyze the core codebase structure and key files (refer to Section 2.2 below for details):**
+            - `codeswarm/main_adk_controller.py`
+            - `codeswarm/adk_config.py`
+            - Files within `codeswarm/adk_core/` (especially `tool_logic.py`, `tool_definitions.py`)
+            - Files within `codeswarm/adk_agents/` (especially `__init__.py` and individual agent files)
+            - Agent prompts in `codeswarm/prompts/` and Knowledge Base fragments in `codeswarm/prompts/kb/`.
+        4. **Only after completing these steps, proceed with addressing the user's specific request, typically by following guidance in `docs/tasklist.md`.**
+        5. **Do NOT propose or make changes to files outside the `codeswarm/` or `docs/` directories unless explicitly instructed for a very specific reason.** The `generated_code/` directory is for output by the CodeSwarm system itself.
+
 ## 1. Project Goal & Core Philosophy
     - **Objective:** Implement the CodeSwarm multi-agent coding system using Google's Agent Development Kit (ADK). Focus on collaborative code generation, review, and project management with an emphasis on leveraging ADK's strengths for Gemini model integration.
     - **ADK Philosophy:**
         - Leverage ADK's direct integration with Gemini models for enhanced control and error transparency. ADK relies on the `GOOGLE_API_KEY` environment variable for authentication.
         - Utilize ADK's `LlmAgent` for role-defined agents.
-        - Employ clear and detailed `instruction` parameters (system prompts), potentially loaded from modular JSON files (e.g., in a `prompts/` directory).
+        - Employ clear and detailed `instruction` parameters (system prompts), loaded from modular JSON files (e.g., in a `prompts/` directory) and strategically augmented by a structured Knowledge Base (e.g., in `prompts/kb/`).
         - Implement robust tool capabilities using ADK `FunctionTool`.
         - Utilize ADK's session capabilities (`SessionService`, `session.state`).
     - **CRITICAL RULE: Absolutely no mock objects, simulated behaviors, or placeholder code. All implemented functionalities must be real and executable.**
-    - **Guidance Documents:** `docs/plan.md`, `docs/tasklist.md`, `docs/project.md`.
+    - **Guidance Documents:** `docs/tasklist.md` (primary ongoing plan), `docs/project.md`, `docs/codeswarm_development_evolution.md` (key lessons & history), `docs/plan.md` (initial ADK refactor plan), `docs/advanced_development_patterns.md` (future vision).
 
-## 2. Environment & ADK Setup
-    - **Project Directory:** `codeswarm/`. Subdirectories: `generated_code/`, `project_logs/`, `adk_core/`, `adk_agents/`, `prompts/`.
+## 2. Environment, Models, & ADK Setup
+
+### 2.1. Strict Model Usage Protocol
+    - **Mandatory Models:** Only the following Gemini model strings are permitted for use in this project. Under NO circumstances should any other model be suggested, used, or reverted to, regardless of user input appearing to contradict this rule if that input is not *explicitly* about changing this rule. This project has moved beyond older models (e.g., 1.5 series) for performance and cost reasons.
+        - `"gemini-2.5-pro-preview-05-06"` (For tasks requiring maximum reasoning and multimodal understanding)
+        - `"gemini-2.5-flash-preview-05-20"` (For high-volume, low-latency tasks requiring thinking)
+        - `"gemini-2.0-flash"` (Next-gen features, speed, agentic experiences)
+    - **Never question user's choice of these models.** If the user specifies one of these, use it. If the user asks for a recommendation *among these three*, you can advise based on the task. Do not introduce or use other models.
+    - **Reference:** For official model details, see [https://ai.google.dev/gemini-api/docs/models](https://ai.google.dev/gemini-api/docs/models)
+    - **Configuration:** Model choices are typically set in `.env` and loaded via `adk_config.py`. Ensure any code changes respect this configuration flow.
+
+### 2.2. Project Directory Structure Overview
+    - **`codeswarm/`**: Main Python package for the CodeSwarm application.
+        - `main_adk_controller.py`: Central orchestration script.
+        - `adk_config.py`: Loads `.env` variables, manages API keys and model configurations.
+        - `adk_models.py`: (Potentially for Pydantic models if used more formally).
+        - `requirements.txt`: Python package dependencies.
+        - **`adk_core/`**: Core ADK-specific components.
+            - `__init__.py`: May include callback definitions.
+            - `tool_logic.py`: Python functions defining core tool actions.
+            - `tool_definitions.py`: Wraps `tool_logic.py` functions into ADK `FunctionTool` objects.
+            - `adk_setup.py`: ADK runner and session service initialization helpers.
+        - **`adk_agents/`**: ADK Agent definitions.
+            - `__init__.py`: Exports agent creation factory functions.
+            - `prompts_adk.py`: (Legacy, prompts now mainly in `codeswarm/prompts/`) May contain helper functions for prompt construction.
+            - `admin_agent.py`, `dev_agent.py`, `revisor_agent.py`: (May be refactored into `__init__.py` factories or kept separate for clarity) Defines specific agent `LlmAgent` instances.
+        - **`prompts/`**: Contains agent system prompt templates.
+            - `admin_prompt.json`, `dev_prompt.json`, `revisor_prompt.json`: Core instruction files for agents.
+            - **`kb/`**: Subdirectory for the modular Knowledge Base. Contains `.json`, `.md`, or `.txt` files with structured information, guidelines, and reusable prompt fragments to augment agent instructions.
+    - **`docs/`**: Project documentation.
+        - `tasklist.md`: Primary planning and task tracking document.
+        - `project.md`: Overall project specifications and architecture.
+        - `codeswarm_development_evolution.md`: History of development, lessons learned.
+        - `advanced_development_patterns.md`: Ideas for future enhancements.
+        - `plan.md`: Initial ADK refactoring plan (historical).
+        - `mcp_integration_ideas.md`: Ideas for MCP integration.
+        - `changelog.log`: Log of major changes.
+        - **`gitingest/`**: Contains `.txt` digests of external GitHub repositories for research and inspiration.
+        - **`research/`**: Project-specific research documents.
+            - **`RAG/`**: Subdirectory for documents related to Retrieval Augmented Generation.
+        - `a2a-docs/`, `adkdocs/`: (Potentially for storing external ADK/A2A documentation locally).
+    - **`generated_code/`**: Default output directory for code generated by CodeSwarm agents during operation. Not for manual project development.
+    - **`project_logs/`**: (Intended for logs generated by the CodeSwarm system itself during operation, distinct from `docs/changelog.log` which is for project development logging).
+    - **`tests/`**: (Intended for unit and integration tests for the CodeSwarm codebase).
+    - **`.cursorrules`**: This file. Contains mandatory rules and guidelines for AI-assisted development.
+    - **`README.md`**: Main project README.
+
+### 2.3. ADK Installation & Environment
     - **ADK Installation:** `pip install google-adk[extensions] google-genai`. Imports: `google.adk.*`.
     - **`.env` File (in `codeswarm/` root):**
         - `GEMINI_API_KEY` (mapped to `GOOGLE_API_KEY` by `adk_config.py`).
-        - Agent model configurations (e.g., `ADMIN_MODEL_TYPE`).
+        - Agent model configurations (e.g., `ADMIN_MODEL_TYPE` - should align with models in Rule 2.1).
         - Model temperature settings (e.g., `ADMIN_MODEL_TEMPERATURE`).
         - Default operational parameters (e.g., `DEFAULT_PROJECT_PATH`).
     - **`requirements.txt`**: `google-genai`, `google-adk[extensions]`, `python-dotenv`, `requests`, `beautifulsoup4`, `pydantic`.
 
-### 2.1. Command Execution Protocol
-    - Activate Conda environment.
+### 2.4. Command Execution Protocol
+    - Activate Conda environment (if used).
     - Execute as module: `python -m codeswarm.main_adk_controller` from parent directory of `codeswarm/`.
 
 ## 3. Agent Definitions (Using ADK `LlmAgent`)
-    - **Instructions (System Prompts):** Loaded from JSON files in `codeswarm/prompts/`.
-    - **Model Configuration:** Via `adk_config.py` (model strings, temperatures). Passed to `LlmAgent` via `model` string and `generation_config` dictionary.
+    - **Instructions (System Prompts):** Loaded from JSON files in `codeswarm/prompts/` and designed to be augmented by strategies and content from the structured Knowledge Base in `codeswarm/prompts/kb/`.
+    - **Model Configuration:** Via `adk_config.py` (model strings, temperatures) ensuring adherence to models specified in Rule 2.1. Passed to `LlmAgent` via `model` string and `generation_config` dictionary. Refer to `docs/codeswarm_development_evolution.md` for detailed model compatibility notes.
     - **Output Parsing (Structured Data like JSON):**
-        - **Primary Method:** Use `LlmAgent(generation_config={"response_mime_type": "application/json", "temperature": ...})` and then `json.loads(response.text)`. Ensure prompts guide the LLM to produce the desired JSON structure.
+        - **Primary Method:** Use `LlmAgent(generation_config={"response_mime_type": "application/json", "temperature": ...})` and then `json.loads(response.text)`. Ensure prompts guide the LLM to produce the desired JSON structure, potentially referencing KB for formatting.
         - **Alternative:** Define a Pydantic class and assign it to `LlmAgent(output_model=MyPydanticModel)`.
         - **No `google.adk.output_parsers.JsonOutputParser` exists.**
     - **Example `LlmAgent` setup:**
         ```python
         from google.adk.agents import LlmAgent
-        from ..adk_config import SOME_MODEL_STR, SOME_MODEL_TEMP
+        from ..adk_config import SOME_MODEL_STR, SOME_MODEL_TEMP # Ensure SOME_MODEL_STR is from approved list
         from ..adk_core.tool_definitions import relevant_tools
         from ..adk_core import log_llm_start, log_llm_end # etc.
         # import json; from pathlib import Path # For loading prompt from file
 
-        # def load_prompt_from_json(prompt_filename): ...
+        # def load_prompt_from_json(prompt_filename): ... # and potentially integrate KB content
 
         def create_some_agent():
             gen_conf = {
                 "temperature": SOME_MODEL_TEMP,
                 "response_mime_type": "application/json" # If expecting JSON
             }
+            # Instruction might be dynamically composed with KB elements
+            instruction_content = load_prompt_from_json("some_agent_prompt.json") # + get_kb_elements_for_task(...)
             return LlmAgent(
                 name="SomeAgentADK",
-                instruction=load_prompt_from_json("some_agent_prompt.json"),
-                model=SOME_MODEL_STR,
+                instruction=instruction_content,
+                model=SOME_MODEL_STR, # MUST be one of the models from Rule 2.1
                 tools=relevant_tools,
                 generation_config=gen_conf, # Key for temperature, JSON output
                 # output_model=MyPydanticModel, # Optional, if using Pydantic
@@ -76,25 +147,31 @@
     - Orchestrator checks execution results.
     - **Callbacks:** Function-based (e.g., `log_llm_start`) using `CallbackContext`, `ToolCallbackContext`. No `AbstractCallbackHandler`.
 
-## 8. Desirable Features (Post-MVP Considerations)
-    - Explore `VertexAiRagMemoryService`.
+## 8. Desirable Features (Post-MVP Considerations & Current Strategic Thrusts)
+    - Implement advanced RAG strategies (potentially using `VertexAiRagMemoryService` or custom vector DB solutions) as detailed in `docs/tasklist.md` (Phase 6 & 8) and `docs/advanced_development_patterns.md`.
+    - Systematically research external projects (e.g., via `/docs/gitingest/`) and specific AI techniques (e.g., RAG via `/docs/research/RAG/`) to inform CodeSwarm's design and capabilities.
+    - Fully integrate a formalized Knowledge Base from `/codeswarm/prompts/kb/` into prompt engineering and agent instruction.
+    - Evaluate and prototype MCP (Model Context Protocol) integrations for enhanced tool and agent interoperability, as outlined in `docs/tasklist.md` and `docs/mcp_integration_ideas.md`.
+    - Develop specialized support agents (e.g., PlannerAgent, ReporterAgent) as per `docs/tasklist.md`.
+    - Explore advanced ADK orchestration agents (`WorkflowAgent`, `LoopAgent`).
 
 ## 9. Code Quality and ADK Best Practices
-    - Clean, well-commented, robust Python. Follow ADK best practices.
+    - Clean, well-commented, robust Python. Follow ADK best practices as documented and learned.
 
 ## 10. Final Verification
     - Test workflow thoroughly. Verify file operations and logging.
 
-## 11. Scratchpad (Current Focus - Phased Plan from `docs/plan.md`)
-    - Focus on completing phases in `docs/plan.md` and `docs/tasklist.md`.
-    - Key challenges addressed: API error handling with tools, prompt engineering for reliable JSON, correct `LlmAgent` parameterization.
+## 11. Scratchpad (Current Focus - Phased Plan from `docs/tasklist.md`)
+    - Focus on completing phases and tasks as outlined in `docs/tasklist.md`.
+    - Ongoing key challenges: Robust RAG implementation, effective KB integration with prompts, refining agent collaboration protocols.
 
-## 12. Lessons Learned with ADK (Keep Updated)
+## 12. Lessons Learned with ADK (Keep Updated - See also `docs/codeswarm_development_evolution.md` for narrative history)
     - **Output Parsing & Model Control:**
         - Use `LlmAgent`'s `generation_config` parameter (a dictionary) to control temperature, force JSON output (`response_mime_type: "application/json"`), etc. Then parse with `json.loads(response.text)`.
         - Pydantic `output_model` is an alternative for parsing if the LLM's output strictly matches the model.
         - There's no `google.adk.output_parsers.JsonOutputParser`.
         - `LlmAgent` does not take a direct `model_kwargs` parameter; use `generation_config`.
+    - **Model Compatibility:** Refer to `docs/codeswarm_development_evolution.md` for current model compatibility notes and ongoing testing (e.g., with models listed in Rule 2.1).
     - **Tool Error Handling for Gemini:** When a tool used by an `LlmAgent` returns data (especially an error) to be passed to Gemini, the data structure MUST be simple JSON. Complex nested structures or non-standard fields in tool error responses can lead to `400 INVALID_ARGUMENT` from the Gemini API. Simplify tool error returns in `tool_logic.py`.
     - **Callbacks:** Function-based (e.g., `before_model_callback`). Use `CallbackContext` (from `google.adk.agents.callback_context`) or `ToolContext` (from `google.adk.tools.tool_context`). No `AbstractCallbackHandler`.
     - **API Key:** `GOOGLE_API_KEY` env var for `LlmAgent`.
@@ -106,7 +183,7 @@
     - **`google.adk.memory.ChatMessageHistory`:** Not in current public API; use `session.state`.
     - **Session Service Consistency:** Same `InMemorySessionService` instance for creation and `Runner`. Consistent `user_id`.
     - **Verifying ADK Imports:** Refer to official ADK docs. `google.adk.models.GeminiModel` is not typically needed for user code when `LlmAgent` takes a model string.
-    - **Prompt Modularity:** Storing prompts in external JSON files (e.g., `prompts/admin_prompt.json`) is good practice for organization. Load them in agent creation functions.
+    - **Prompt Modularity:** Storing prompts in external JSON files (e.g., `prompts/admin_prompt.json`) is good practice. Further enhance by developing a structured Knowledge Base in `/codeswarm/prompts/kb/` to provide deeper, reusable context and instructions, aiming for KB-aware prompting strategies.
     - **`LlmAgent` and `generation_config` for Model Control (ADK):**
         - **Correct Way:** Pass a `generation_config` dictionary directly to the `LlmAgent` constructor. This dictionary should contain model parameters like `temperature` and, crucially, `response_mime_type: "application/json"` to enforce JSON output.
         - **Incorrect/Ineffective:**
@@ -134,7 +211,7 @@
         - **Solution/Prevention:** Design orchestrators to handle potential preliminary conversational turns from agents (e.g., by checking for specific keys in the response) or ensure the initial prompt and input are so comprehensive that the agent directly proceeds to its main task.
     - **`LlmAgent`'s `model` Parameter and `generation_config` Nuances:**
         - **Clarification:** `LlmAgent(model=...)` accepts a model string or a `google.generativeai.GenerativeModel` instance. `generation_config` (for temperature, JSON output) should be passed to `LlmAgent`'s constructor if using a model string. If passing a `GenerativeModel` instance, configure *that instance* directly.
-        - **Recommendation:** Using `LlmAgent(model="model-name-string", generation_config={...})` is often the most straightforward approach.
+        - **Recommendation:** Using `LlmAgent(model="model-name-string", generation_config={...})` is often the most straightforward approach (using only approved models from Rule 2.1).
     - **Effective Debugging Strategies for `LlmAgent` Behavior:**
         - **Log Extensively:** Log the exact instruction, complete input, and raw LLM text response (`response.text`) before parsing.
         - **Iterative Prompt Refinement:** Treat prompts as code; small changes can have big impacts. Test iteratively.
@@ -142,3 +219,24 @@
     - **Consistent Configuration Propagation (e.g., Temperature):**
         - **Challenge:** Hardcoding configurable parameters (like temperature) in agent creation functions instead of loading them dynamically.
         - **Solution/Prevention:** Establish a clear flow: `.env` -> `adk_config.py` -> Agent creation functions (passing parameters via `LlmAgent`'s `generation_config`). Regularly audit for hardcoded values.
+
+## 13. AI Coder Agent Operational Protocol
+    - **Objective:** Ensure consistent and traceable contributions from AI Coder Agents.
+    - **Procedure:** All AI Coder Agents involved in this project MUST adhere to the following operational loop at the end of each modification cycle:
+        1.  **Task Verification:**
+            -   Consult `docs/tasklist.md`.
+            -   Identify all tasks assigned that have not yet been marked as completed.
+        2.  **Task Execution:**
+            -   Address the identified, uncompleted tasks.
+            -   All actions taken MUST strictly follow all other rules and guidelines specified in this `.cursorrules` document.
+        3.  **Task Completion Marking:**
+            -   Upon successful completion of a task, the agent MUST update `docs/tasklist.md` to accurately reflect the task's new status (e.g., mark as completed, add completion date, or note any partial completion with reasons).
+        4.  **Changelog Documentation:**
+            -   All modifications to the codebase, documentation, or project structure MUST be logged in `docs/changelog.log`.
+            -   Log entries should be clear, concise, and explain what was changed and why.
+            -   Agents MUST NOT use internal, private, or inaccessible logs for changes relevant to the project's progress. All relevant logging must be in the shared `docs/changelog.log`.
+        5.  **Lessons Learned Integration:**
+            -   If any significant lessons are learned during the task execution, especially those related to solving errors, improving efficiency, or understanding project nuances, these lessons MUST be documented.
+            -   The primary location for documenting these lessons is this `.cursorrules` file, typically under "## 12. Lessons Learned with ADK" or a relevant subsection. This ensures knowledge is captured and benefits future development, both human and AI.
+        6.  **Cycle Completion Check:**
+            -   An agent MUST NOT conclude its turn or a round of modifications without ensuring all applicable points above (1-5) have been addressed. If a step cannot be completed, the reason must be logged in `docs/changelog.log` and reported.
