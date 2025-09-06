@@ -102,23 +102,7 @@ Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-
 This section consolidates practical learnings from CodeSwarm development:
 
 *   **ADK Version and Model Compatibility:**
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    *   `google-adk==1.1.1` was used. `gemini-1.5-flash-latest` (or more recent flash/pro models) proved compatible.
-=======
     *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
->>>>>>> Stashed changes
-=======
-    *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
->>>>>>> Stashed changes
-=======
-    *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
->>>>>>> Stashed changes
-=======
-    *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
->>>>>>> Stashed changes
 *   **`LlmAgent` Configuration (ADK 1.1.1):**
     *   `LlmAgent` instances for Admin, Dev, and Revisor are configured with the `output_model` parameter, assigning Pydantic models (`AdminTaskOutput`, `DevAgentOutput`, `RevisorAgentOutput`) to structure their responses. This is the primary method used for ensuring reliable output parsing.
     *   The `generation_config` does not set `response_mime_type: "application/json"` when `output_model` is used, as `output_model` handles the parsing. The note about `response_mime_type` conflicting with tool usage remains relevant if tools were enabled *without* `output_model` and JSON output was still desired.
