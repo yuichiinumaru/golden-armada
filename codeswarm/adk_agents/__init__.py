@@ -42,23 +42,15 @@ def create_admin_llm_agent(model_override=None):
     
     llm_generate_content_config = {
         "temperature": ADMIN_MODEL_TEMPERATURE,
-        # "response_mime_type": "application/json" # Removed due to API conflict with function calling
     }
-    
-    # If there are no tools, we might be able to use response_mime_type.
-    # However, AdminAgent is expected to have tools.
-    # If, for some reason, admin_tools_adk could be empty/None,
-    # you might add logic here:
-    # if not admin_tools_adk:
-    #     llm_generate_content_config["response_mime_type"] = "application/json"
 
     agent_parameters = {
         "name": "AdminAgentADK",
         "model": model_name_to_use,
         "instruction": load_instruction_from_file("admin_prompt.json"),
-        "tools": admin_tools_adk, # AdminAgent has tools
+        "tools": admin_tools_adk,
+        "output_schema": AdminTaskOutput,
         "generate_content_config": llm_generate_content_config,
-        "output_model": AdminTaskOutput,
         "before_model_callback": log_llm_start,
         "after_model_callback": log_llm_end,
         "before_tool_callback": log_tool_start,
@@ -67,7 +59,7 @@ def create_admin_llm_agent(model_override=None):
 
     try:
         agent = LlmAgent(**agent_parameters)
-        print(f"INFO: LlmAgent '{agent.name}' created successfully (model: {model_name_to_use}, output_model: AdminTaskOutput). generate_content_config: {llm_generate_content_config}")
+        print(f"INFO: LlmAgent '{agent.name}' created successfully (model: {model_name_to_use}). generate_content_config: {llm_generate_content_config}")
         return agent
     except Exception as e:
         print(f"ERROR: LlmAgent creation failed for '{agent_parameters.get('name')}'. Error: {e}")
@@ -78,14 +70,13 @@ def create_dev_llm_agent(dev_id: int, model_override=None):
     model_to_use = model_override if model_override else DEV_MODEL_STR
     dev_llm_generate_content_config = {
         "temperature": DEV_MODEL_TEMPERATURE,
-        # "response_mime_type": "application/json" # Not needed with output_model
     }
     return LlmAgent(
         name=f"DevAgentADK_{dev_id}",
         model=model_to_use,
         instruction=load_instruction_from_file("dev_prompt.json"),
         tools=dev_tools_adk,
-        output_model=DevAgentOutput,
+        output_schema=DevAgentOutput,
         generate_content_config=dev_llm_generate_content_config,
         before_model_callback=log_llm_start,
         after_model_callback=log_llm_end,
@@ -97,14 +88,13 @@ def create_revisor_llm_agent(revisor_id: int, model_override=None):
     model_to_use = model_override if model_override else REVISOR_MODEL_STR
     revisor_llm_generate_content_config = {
         "temperature": REVISOR_MODEL_TEMPERATURE,
-        # "response_mime_type": "application/json" # Not needed with output_model
     }
     return LlmAgent(
         name=f"RevisorAgentADK_{revisor_id}",
         model=model_to_use,
         instruction=load_instruction_from_file("revisor_prompt.json"),
         tools=revisor_tools_adk,
-        output_model=RevisorAgentOutput,
+        output_schema=RevisorAgentOutput,
         generate_content_config=revisor_llm_generate_content_config,
         before_model_callback=log_llm_start,
         after_model_callback=log_llm_end,

@@ -15,7 +15,7 @@ The ADK provides a more direct interface to Gemini models, facilitating a robust
 
 ### 3.1. Agent Roles and Responsibilities
 
-Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-adk==1.1.1`). Input grounding for agents heavily relies on `session.state`.
+Agents are implemented using ADK's `LlmAgent`. Input grounding for agents heavily relies on `session.state`.
 
 *   **AdminAgent (Project Manager):**
     *   **Responsibilities:**
@@ -23,7 +23,7 @@ Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-
         *   Defines project scope and breaks down complex goals into a sequence of smaller, actionable tasks. This may involve a two-step internal process:
             1.  **Interpreter (Cognitive):** Understands input, generates task content in natural language. (Tool-less, `tools_override=[]`).
             2.  **Formatter (Structuring):** Takes natural language and structures it into the required JSON output format for the orchestrator. (Tool-less, `tools_override=[]`).
-        *   Outputs a list of tasks in a structured JSON format. The `AdminAgent` is configured with `output_model=AdminTaskOutput` (from `codeswarm.adk_models`) for its task assignment output, and this Pydantic model is validated by the orchestrator.
+        *   Outputs a list of tasks in a structured JSON format. The `AdminAgent` is configured with `output_schema=AdminTaskOutput` (from `codeswarm.adk_models`) for its task assignment output, and this Pydantic model is validated by the orchestrator.
         *   Prompts must be precise for reliable JSON. AdminAgent is prompted to construct absolute paths for `file_to_edit_or_create` in its tasks, based on the `target_project_path` provided by the orchestrator (as per the 'PATH CONSTRUCTION CRITICAL RULE' in `admin_prompt.json`).
         *   Receives summaries of Dev work and Revisor feedback to inform subsequent rounds (if applicable).
         *   Handles logging and updates during its "logging_and_updates" phase, as defined in its prompt and orchestrated by `main_adk_controller.py`. This includes updating `docs/changelog.log` and `docs/tasklist.md`.
@@ -33,7 +33,7 @@ Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-
     *   **Responsibilities:**
         *   Receives a specific coding/processing task (e.g., `create_or_update_file`, `execute_python_script`) from the orchestrator. Task details, including the absolute `file_to_edit_or_create`, are provided via `session.state`.
         *   Generates code or text content.
-        *   Is assigned `tools=dev_tools_adk` (which includes tools like `write_file`, `read_file`) and uses `output_model=DevAgentOutput`.
+        *   Is assigned `tools=dev_tools_adk` (which includes tools like `write_file`, `read_file`) and uses `output_schema=DevAgentOutput`.
         *   Expected to use ADK's native tool calling mechanism for file operations based on its prompt and available tools. Its final output, structured by `DevAgentOutput`, reflects the outcome of these operations (e.g., success message, file path).
     *   **Tools (ADK-native):** File I/O (`write_file`, `read_file` via `dev_tools_adk`), potentially script execution (`execute_python_code` with user confirmation, if added to `dev_tools_adk`).
 
@@ -44,21 +44,16 @@ Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-
         *   Analyzes the code/text against the original development task, review focus areas, and general best practices.
         *   May use tools like `fetch_web_page_text_content` to consult external documentation or standards.
         *   Formulates detailed, constructive `review_comments` and determines an `approved` status. The RevisorAgent does not write or modify code itself.
-        *   ADK's native tool calling mechanism is used.
+        *   ADK's native tool calling mechanism is used. `output_schema` is set to `RevisorAgentOutput`.
     *   **Tools:** `read_file`, `list_folder_contents`, `fetch_web_page_text_content`, `chunk_file`, `summarize_chunks`. (as defined in `revisor_tools_adk` and `revisor_prompt.json`)
 
 ### 3.2. Orchestration Logic (`main_adk_controller.py`)
 
 *   The central controller script manages the workflow:
     1.  User provides initial goal, `target_project_path`, number of agent pairs (X), and rounds.
-    2.  Orchestrator initializes AdminAgent, X DevAgents, and X RevisorAgents. It manages `session.state` for contextual data.
-    3.  **Round-Based Workflow:**
-        *   **Admin - Task Definition:** Orchestrator invokes AdminAgent with the goal and project context (via `session.state`). Admin returns a list of structured tasks (JSON via `AdminTaskOutput`).
-        *   **Task Execution Loop:** Orchestrator iterates through the task list. For each task:
-            *   **Dev Phase:** Passes task details to DevAgent_i (using `session.state` for paths, etc.). DevAgent_i uses its ADK-native tools (e.g., `write_file`) to perform the task. Its output (via `DevAgentOutput`) confirms the action.
-            *   **Revisor Phase:** If applicable, orchestrator passes the path of the file modified/created by DevAgent_i to RevisorAgent_i (via `session.state`). RevisorAgent_i reviews and returns feedback (via `RevisorAgentOutput`).
-        *   **Admin - Logging:** After all tasks in a round (or periodically), orchestrator invokes AdminAgent (in its "logging_and_updates" phase) to update `docs/changelog.log` and `docs/tasklist.md` with a summary.
-    4.  The system can loop for multiple rounds if designed for iterative development.
+    2.  Orchestrator initializes the workflow, which is a `SequentialAgent` containing a `LoopAgent`.
+    3.  The `LoopAgent` is configured with `max_iterations` set to the number of rounds specified by the user.
+    4.  Inside the loop, the `AdminAgent` is invoked to define tasks, followed by a `ParallelAgent` that executes the dev/revisor pairs.
     5.  User confirmation is implemented in the orchestrator for potentially dangerous tools requested by agents (e.g., script execution, if such tools are enabled for agents).
 
 ### 3.3. Tool Abstractions (`tool_logic.py`)
@@ -102,18 +97,18 @@ Agents are implemented using ADK's `LlmAgent` (specifically tested with `google-
 This section consolidates practical learnings from CodeSwarm development:
 
 *   **ADK Version and Model Compatibility:**
-    *   `google-adk==1.1.1` was used. `gemini-2.5-flash-preview-05-20` proved compatible, while other models (e.g., `gemini-pro`) sometimes caused 404 errors due to ADK 1.1.1 potentially targeting an older API endpoint.
-*   **`LlmAgent` Configuration (ADK 1.1.1):**
-    *   `LlmAgent` instances for Admin, Dev, and Revisor are configured with the `output_model` parameter, assigning Pydantic models (`AdminTaskOutput`, `DevAgentOutput`, `RevisorAgentOutput`) to structure their responses. This is the primary method used for ensuring reliable output parsing.
-    *   The `generation_config` does not set `response_mime_type: "application/json"` when `output_model` is used, as `output_model` handles the parsing. The note about `response_mime_type` conflicting with tool usage remains relevant if tools were enabled *without* `output_model` and JSON output was still desired.
+    *   The project now uses a more recent version of `google-adk`. It is compatible with `gemini-2.5-flash-preview-05-20`.
+*   **`LlmAgent` Configuration:**
+    *   `LlmAgent` instances for Admin, Dev, and Revisor are configured with the `output_schema` parameter, assigning Pydantic models (`AdminTaskOutput`, `DevAgentOutput`, `RevisorAgentOutput`) to structure their responses. This is the primary method used for ensuring reliable output parsing.
+    *   The `generation_config` is used for setting parameters like `temperature`.
 *   **Tool Usage and Dispatch:**
     *   **Granular Tasks:** AdminAgent should break down goals into small, specific tasks for reliability.
-    *   **ADK-Native Tool Calls:** All agents (Admin for logging, Dev for coding, Revisor for reading) are designed to use ADK's native tool calling mechanism, facilitated by their assigned `tools` (e.g., `admin_tools_adk`, `dev_tools_adk`) and `output_model`.
+    *   **ADK-Native Tool Calls:** All agents (Admin for logging, Dev for coding, Revisor for reading) are designed to use ADK's native tool calling mechanism, facilitated by their assigned `tools` (e.g., `admin_tools_adk`, `dev_tools_adk`) and `output_schema`.
     *   **Cognitive Tasks:** Use `tools_override=[]` for agents or specific agent phases not needing tools (e.g., the initial task generation phase of AdminAgent).
 *   **Path Handling:**
     *   AdminAgent is prompted to generate absolute paths in its task definitions, based on the `target_project_path`.
     *   The orchestrator validates these paths against the `target_project_path` for safety before passing them to DevAgents.
-*   **Session Management (ADK 1.1.1):**
+*   **Session Management:**
     *   `InMemorySessionService` is used. Ensure the same service instance is used for session creation and `Runner`.
     *   Consistent `user_id` is crucial when creating and retrieving sessions.
     *   `session.state` is vital for passing contextual data (project goals, file paths) between orchestrator and agents, and for input grounding in prompts.

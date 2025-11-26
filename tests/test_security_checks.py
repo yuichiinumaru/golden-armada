@@ -82,11 +82,17 @@ class TestPathSafetyChecks(unittest.TestCase):
                 # We also need to ensure that if they are the same, it's considered safe.
                 # And if the constructed path is a subdirectory, it must also have a separator.
 
+                # Heuristic to detect Windows-style absolute paths, which os.path.join
+                # on POSIX systems would incorrectly treat as relative.
+                is_win_abs_path = len(relative_path_input) > 2 and relative_path_input[1] == ':' and relative_path_input[0].isalpha()
+
                 is_safe = False
-                if abs_constructed_path == abs_target_project_path:
-                    is_safe = True
-                elif abs_constructed_path.startswith(abs_target_project_path + os.sep):
-                    is_safe = True
+                # Only run the startswith check if it's not a cross-platform absolute path issue.
+                if not (is_win_abs_path and os.name != 'nt'):
+                    if abs_constructed_path == abs_target_project_path:
+                        is_safe = True
+                    elif abs_constructed_path.startswith(abs_target_project_path + os.sep):
+                        is_safe = True
 
                 # Debug print for diagnostics if a test fails
                 # print(
