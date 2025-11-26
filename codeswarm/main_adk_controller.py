@@ -109,7 +109,7 @@ async def main_async(args_list=None):
     session = await session_service.create_session(app_name="codeswarm", user_id=MAIN_USER_ID)
     print(f"[Sessão] Nova sessão criada: {session.id}")
 
-    workflow = create_codeswarm_workflow(pairs=args.pairs, model_override=args.model)
+    workflow = create_codeswarm_workflow(pairs=args.pairs, rounds=args.rounds, model_override=args.model)
     
     runner = get_runner(
         agent_instance=workflow,

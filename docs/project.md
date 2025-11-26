@@ -51,14 +51,9 @@ Agents are implemented using ADK's `LlmAgent`. Input grounding for agents heavil
 
 *   The central controller script manages the workflow:
     1.  User provides initial goal, `target_project_path`, number of agent pairs (X), and rounds.
-    2.  Orchestrator initializes AdminAgent, X DevAgents, and X RevisorAgents. It manages `session.state` for contextual data.
-    3.  **Round-Based Workflow:**
-        *   **Admin - Task Definition:** Orchestrator invokes AdminAgent with the goal and project context (via `session.state`). Admin returns a list of structured tasks (JSON via `AdminTaskOutput`).
-        *   **Task Execution Loop:** Orchestrator iterates through the task list. For each task:
-            *   **Dev Phase:** Passes task details to DevAgent_i (using `session.state` for paths, etc.). DevAgent_i uses its ADK-native tools (e.g., `write_file`) to perform the task. Its output (via `DevAgentOutput`) confirms the action.
-            *   **Revisor Phase:** If applicable, orchestrator passes the path of the file modified/created by DevAgent_i to RevisorAgent_i (via `session.state`). RevisorAgent_i reviews and returns feedback (via `RevisorAgentOutput`).
-        *   **Admin - Logging:** After all tasks in a round (or periodically), orchestrator invokes AdminAgent (in its "logging_and_updates" phase) to update `docs/changelog.log` and `docs/tasklist.md` with a summary.
-    4.  The system can loop for multiple rounds if designed for iterative development.
+    2.  Orchestrator initializes the workflow, which is a `SequentialAgent` containing a `LoopAgent`.
+    3.  The `LoopAgent` is configured with `max_iterations` set to the number of rounds specified by the user.
+    4.  Inside the loop, the `AdminAgent` is invoked to define tasks, followed by a `ParallelAgent` that executes the dev/revisor pairs.
     5.  User confirmation is implemented in the orchestrator for potentially dangerous tools requested by agents (e.g., script execution, if such tools are enabled for agents).
 
 ### 3.3. Tool Abstractions (`tool_logic.py`)
@@ -113,7 +108,7 @@ This section consolidates practical learnings from CodeSwarm development:
 *   **Path Handling:**
     *   AdminAgent is prompted to generate absolute paths in its task definitions, based on the `target_project_path`.
     *   The orchestrator validates these paths against the `target_project_path` for safety before passing them to DevAgents.
-*   **Session Management (ADK 1.1.1):**
+*   **Session Management:**
     *   `InMemorySessionService` is used. Ensure the same service instance is used for session creation and `Runner`.
     *   Consistent `user_id` is crucial when creating and retrieving sessions.
     *   `session.state` is vital for passing contextual data (project goals, file paths) between orchestrator and agents, and for input grounding in prompts.
