@@ -17,7 +17,7 @@ For detailed project specifications, architecture, and agent roles, please see [
 ## Features
 
 -   **Multi-Agent Collaboration**: Utilizes Admin, Developer, and Revisor agents for a structured and iterative workflow. The AdminAgent also handles logging tasks.
--   **Google ADK Powered**: Built upon the Google ADK framework for direct Gemini model integration and agent orchestration (tested with `google-adk==1.1.1`).
+-   **Google ADK Powered**: Built upon the Google ADK framework for direct Gemini model integration and agent orchestration.
 -   **Gemini Models**: Configurable to use different Gemini models (e.g., `gemini-2.5-flash-preview-05-20`) for various agent roles via a `.env` file.
 -   **Tool-Equipped Agents**: Agents can request tool execution (e.g., file I/O) managed by the orchestrator or use ADK-native tool calls.
 -   **Orchestrator-Managed Workflow**: A central controller manages task distribution, agent invocation, and `session.state` for context sharing.
