@@ -129,22 +129,33 @@ async def main_async(args_list=None):
     # Update the session with the initial state
     session.state.update(initial_state)
 
-    message_for_agent = Content(parts=[Part(text=json.dumps(initial_state))])
+    for i in range(args.rounds):
+        print(f"--- Round {i+1} of {args.rounds} ---")
+        message_for_agent = Content(parts=[Part(text=json.dumps(session.state))])
 
-    async for event in runner.run_async(
-        user_id=MAIN_USER_ID,
-        session_id=session.id,
-        new_message=message_for_agent
-    ):
-        if event.is_final_response():
-            if event.content and event.content.parts:
-                final_part = event.content.parts[-1]
-                if final_part.text:
-                    print(f"Workflow finalizou com a seguinte mensagem: {final_part.text}")
+        async for event in runner.run_async(
+            user_id=MAIN_USER_ID,
+            session_id=session.id,
+            new_message=message_for_agent
+        ):
+            if event.is_final_response():
+                if event.content and event.content.parts:
+                    final_part = event.content.parts[-1]
+                    if final_part.text:
+                        print(f"Round {i+1} finished with message: {final_part.text}")
+                        # Here you might update the session state based on the output
+                        # For example, if the agent returns a summary in a structured way
+                        try:
+                            response_data = json.loads(final_part.text)
+                            if "summary" in response_data:
+                                session.state["summaries"].append(response_data["summary"])
+                        except json.JSONDecodeError:
+                            pass # Or handle non-json responses
+                    else:
+                        print(f"Round {i+1} finished.")
                 else:
-                    print("Workflow finalizou.")
-            else:
-                print("Workflow finalizou.")
+                    print(f"Round {i+1} finished.")
+    print("--- All rounds complete ---")
 
 if __name__ == "__main__":
     try:
