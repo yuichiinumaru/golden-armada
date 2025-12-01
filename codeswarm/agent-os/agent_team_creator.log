@@ -1,0 +1,1499 @@
+2025-10-20 18:16:08,079 | INFO | 🚀 AGENT TEAM CREATOR - Iniciando...
+2025-10-20 18:16:08,079 | INFO | 📁 Diretório de agentes: ../01-generated-agents
+2025-10-20 18:16:08,079 | INFO | 🌐 Porta do servidor: 8000
+2025-10-20 18:16:08,079 | INFO | 🔢 Limite de agentes: 3
+2025-10-20 18:16:08,080 | INFO | 🔍 Procurando agentes em: ../01-generated-agents
+2025-10-20 18:16:08,080 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 18:16:08,080 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 18:16:08,080 | INFO | 📥 Carregando 3 agentes...
+2025-10-20 18:16:08,081 | INFO | 📥 [1/3] Carregando: 197-test_results_analyzer_agent.py
+2025-10-20 18:16:08,081 | INFO | ✅ Carregado: TestResultsAnalyzerAgent
+2025-10-20 18:16:08,081 | INFO | 📥 [2/3] Carregando: 009-api_tester_agent.py
+2025-10-20 18:16:08,082 | INFO | ✅ Carregado: ApiTesterAgent
+2025-10-20 18:16:08,082 | INFO | 📥 [3/3] Carregando: 091-knowledge_synthesizer_agent.py
+2025-10-20 18:16:08,082 | INFO | ✅ Carregado: KnowledgeSynthesizerAgent
+2025-10-20 18:16:08,083 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 18:16:08,083 | INFO | 👥 Criando Team 'AgentMaker Team - 3 Agentes' com 3 agentes
+2025-10-20 18:16:08,083 | INFO | ✅ Team criado com sucesso
+2025-10-20 18:16:08,083 | INFO | 🏗️  Criando Agent OS com Team: AgentMaker Team - 3 Agentes
+2025-10-20 18:16:08,547 | DEBUG | connect_tcp.started host='os-api.agno.com' port=443 local_address=None timeout=60 socket_options=None
+2025-10-20 18:16:08,677 | DEBUG | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x70a22e70ca40>
+2025-10-20 18:16:08,678 | DEBUG | start_tls.started ssl_context=<ssl.SSLContext object at 0x70a226329fd0> server_hostname='os-api.agno.com' timeout=60
+2025-10-20 18:16:08,918 | DEBUG | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x70a22e876e10>
+2025-10-20 18:16:08,918 | DEBUG | send_request_headers.started request=<Request [b'POST']>
+2025-10-20 18:16:08,918 | DEBUG | send_request_headers.complete
+2025-10-20 18:16:08,918 | DEBUG | send_request_body.started request=<Request [b'POST']>
+2025-10-20 18:16:08,918 | DEBUG | send_request_body.complete
+2025-10-20 18:16:08,919 | DEBUG | receive_response_headers.started request=<Request [b'POST']>
+2025-10-20 18:16:09,047 | DEBUG | receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Mon, 20 Oct 2025 21:15:56 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'93'), (b'Connection', b'keep-alive'), (b'server', b'uvicorn')])
+2025-10-20 18:16:09,048 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 18:16:09,048 | DEBUG | receive_response_body.started request=<Request [b'POST']>
+2025-10-20 18:16:09,048 | DEBUG | receive_response_body.complete
+2025-10-20 18:16:09,048 | DEBUG | response_closed.started
+2025-10-20 18:16:09,048 | DEBUG | response_closed.complete
+2025-10-20 18:16:09,048 | DEBUG | close.started
+2025-10-20 18:16:09,048 | DEBUG | close.complete
+2025-10-20 18:16:09,048 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 18:16:09,049 | INFO | 🌐 Iniciando servidor Agent OS na porta 8000...
+2025-10-20 18:16:09,049 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 18:16:09,049 | INFO | 📚 Documentação: http://localhost:8000/docs
+2025-10-20 18:16:09,049 | INFO | 👥 Teams: http://localhost:8000/teams
+2025-10-20 18:16:09,049 | INFO | 🤖 Agentes: http://localhost:8000/agents
+2025-10-20 18:16:09,049 | INFO | 🔧 Configuração: http://localhost:8000/config
+2025-10-20 18:16:09,049 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 18:16:09,305 | INFO | 📋 App FastAPI: <fastapi.applications.FastAPI object at 0x70a22643f0b0>
+2025-10-20 18:16:09,305 | INFO | 📋 Rotas disponíveis: 52
+2025-10-20 18:16:09,305 | INFO |   📍 {'HEAD', 'GET'} /openapi.json
+2025-10-20 18:16:09,305 | INFO |   📍 {'HEAD', 'GET'} /docs
+2025-10-20 18:16:09,305 | INFO |   📍 {'GET'} /config
+2025-10-20 18:16:09,305 | INFO |   📍 {'GET'} /agents
+2025-10-20 18:16:09,305 | INFO |   📍 {'GET'} /teams
+2025-10-20 18:16:42,379 | INFO | 🚀 AGENT TEAM CREATOR - Iniciando...
+2025-10-20 18:16:42,379 | INFO | 📁 Diretório de agentes: ../01-generated-agents
+2025-10-20 18:16:42,379 | INFO | 🌐 Porta do servidor: 8000
+2025-10-20 18:16:42,379 | INFO | 🔢 Carregando TODOS os agentes
+2025-10-20 18:16:42,379 | INFO | 🔍 Procurando agentes em: ../01-generated-agents
+2025-10-20 18:16:42,380 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 18:16:42,380 | INFO | 📥 Carregando 222 agentes...
+2025-10-20 18:16:42,380 | INFO | 📥 [1/222] Carregando: 197-test_results_analyzer_agent.py
+2025-10-20 18:16:42,381 | INFO | ✅ Carregado: TestResultsAnalyzerAgent
+2025-10-20 18:16:42,381 | INFO | 📥 [2/222] Carregando: 009-api_tester_agent.py
+2025-10-20 18:16:42,382 | INFO | ✅ Carregado: ApiTesterAgent
+2025-10-20 18:16:42,382 | INFO | 📥 [3/222] Carregando: 091-knowledge_synthesizer_agent.py
+2025-10-20 18:16:42,382 | INFO | ✅ Carregado: KnowledgeSynthesizerAgent
+2025-10-20 18:16:42,382 | INFO | 📥 [4/222] Carregando: 129-project_analyst_agent.py
+2025-10-20 18:16:42,383 | INFO | ✅ Carregado: ProjectAnalystAgent
+2025-10-20 18:16:42,383 | INFO | 📥 [5/222] Carregando: 181-sprint_prioritizer_agent.py
+2025-10-20 18:16:42,384 | ERROR | ❌ Erro ao carregar 181-sprint_prioritizer_agent.py: invalid syntax. Perhaps you forgot a comma? (181-sprint_prioritizer_agent.py, line 69)
+2025-10-20 18:16:42,384 | INFO | 📥 [6/222] Carregando: 056-documentation_engineer_agent.py
+2025-10-20 18:16:42,384 | INFO | ✅ Carregado: DocumentationEngineerAgent
+2025-10-20 18:16:42,384 | INFO | 📥 [7/222] Carregando: 165-seo_content_planner_agent.py
+2025-10-20 18:16:42,385 | INFO | ✅ Carregado: SeoContentPlannerAgent
+2025-10-20 18:16:42,385 | INFO | 📥 [8/222] Carregando: 205-twitter_engager_agent.py
+2025-10-20 18:16:42,385 | INFO | ✅ Carregado: TwitterEngagerAgent
+2025-10-20 18:16:42,385 | INFO | 📥 [9/222] Carregando: 204-tutorial_engineer_agent.py
+2025-10-20 18:16:42,386 | INFO | ✅ Carregado: TutorialEngineerAgent
+2025-10-20 18:16:42,386 | INFO | 📥 [10/222] Carregando: 121-performance_benchmarker_agent.py
+2025-10-20 18:16:42,386 | INFO | ✅ Carregado: PerformanceBenchmarkerAgent
+2025-10-20 18:16:42,386 | INFO | 📥 [11/222] Carregando: 007-api_designer_agent.py
+2025-10-20 18:16:42,387 | INFO | ✅ Carregado: ApiDesignerAgent
+2025-10-20 18:16:42,387 | INFO | 📥 [12/222] Carregando: 190-tdd_orchestrator_agent.py
+2025-10-20 18:16:42,387 | ERROR | ❌ Erro ao carregar 190-tdd_orchestrator_agent.py: unterminated string literal (detected at line 236) (190-tdd_orchestrator_agent.py, line 236)
+2025-10-20 18:16:42,387 | INFO | 📥 [13/222] Carregando: 086-iot_engineer_agent.py
+2025-10-20 18:16:42,388 | INFO | ✅ Carregado: IotEngineerAgent
+2025-10-20 18:16:42,388 | INFO | 📥 [14/222] Carregando: 034-customer_success_manager_agent.py
+2025-10-20 18:16:42,389 | INFO | ✅ Carregado: CustomerSuccessManagerAgent
+2025-10-20 18:16:42,389 | INFO | 📥 [15/222] Carregando: 013-backend_architect_agent.py
+2025-10-20 18:16:42,389 | ERROR | ❌ Erro ao carregar 013-backend_architect_agent.py: unterminated string literal (detected at line 69) (013-backend_architect_agent.py, line 69)
+2025-10-20 18:16:42,389 | INFO | 📥 [16/222] Carregando: 166-seo_content_refresher_agent.py
+2025-10-20 18:16:42,390 | INFO | ✅ Carregado: SeoContentRefresherAgent
+2025-10-20 18:16:42,390 | INFO | 📥 [17/222] Carregando: 036-data_analyst_agent.py
+2025-10-20 18:16:42,390 | INFO | ✅ Carregado: DataAnalystAgent
+2025-10-20 18:16:42,390 | INFO | 📥 [18/222] Carregando: 069-finance_tracker_agent.py
+2025-10-20 18:16:42,391 | INFO | ✅ Carregado: FinanceTrackerAgent
+2025-10-20 18:16:42,391 | INFO | 📥 [19/222] Carregando: 023-cloud_architect_agent.py
+2025-10-20 18:16:42,391 | INFO | ✅ Carregado: CloudArchitectAgent
+2025-10-20 18:16:42,392 | INFO | 📥 [20/222] Carregando: 067-fastapi_pro_agent.py
+2025-10-20 18:16:42,392 | ERROR | ❌ Erro ao carregar 067-fastapi_pro_agent.py: unterminated string literal (detected at line 226) (067-fastapi_pro_agent.py, line 226)
+2025-10-20 18:16:42,392 | INFO | 📥 [21/222] Carregando: 183-sre_engineer_agent.py
+2025-10-20 18:16:42,393 | INFO | ✅ Carregado: SreEngineerAgent
+2025-10-20 18:16:42,393 | INFO | 📥 [22/222] Carregando: 012-architect_reviewer_agent.py
+2025-10-20 18:16:42,393 | INFO | ✅ Carregado: ArchitectReviewerAgent
+2025-10-20 18:16:42,393 | INFO | 📥 [23/222] Carregando: 001-accessibility_tester_agent.py
+2025-10-20 18:16:42,394 | INFO | ✅ Carregado: AccessibilityTesterAgent
+2025-10-20 18:16:42,394 | INFO | 📥 [24/222] Carregando: 158-security_auditor_agent.py
+2025-10-20 18:16:42,394 | INFO | ✅ Carregado: SecurityAuditorAgent
+2025-10-20 18:16:42,394 | INFO | 📥 [25/222] Carregando: 193-technical_writer_agent.py
+2025-10-20 18:16:42,395 | INFO | ✅ Carregado: TechnicalWriterAgent
+2025-10-20 18:16:42,395 | INFO | 📥 [26/222] Carregando: 062-elixir_pro_agent.py
+2025-10-20 18:16:42,395 | INFO | ✅ Carregado: ElixirProAgent
+2025-10-20 18:16:42,395 | INFO | 📥 [27/222] Carregando: 114-multi_agent_coordinator_agent.py
+2025-10-20 18:16:42,396 | INFO | ✅ Carregado: MultiAgentCoordinatorAgent
+2025-10-20 18:16:42,396 | INFO | 📥 [28/222] Carregando: 188-tailwind_css_expert_agent.py
+2025-10-20 18:16:42,397 | INFO | ✅ Carregado: TailwindCssExpertAgent
+2025-10-20 18:16:42,397 | INFO | 📥 [29/222] Carregando: 032-csharp_developer_agent.py
+2025-10-20 18:16:42,397 | INFO | ✅ Carregado: CsharpDeveloperAgent
+2025-10-20 18:16:42,397 | INFO | 📥 [30/222] Carregando: 214-vue_component_architect_agent.py
+2025-10-20 18:16:42,398 | INFO | ✅ Carregado: VueComponentArchitectAgent
+2025-10-20 18:16:42,398 | INFO | 📥 [31/222] Carregando: 047-devops_engineer_agent.py
+2025-10-20 18:16:42,398 | INFO | ✅ Carregado: DevopsEngineerAgent
+2025-10-20 18:16:42,398 | INFO | 📥 [32/222] Carregando: 068-feedback_synthesizer_agent.py
+2025-10-20 18:16:42,399 | INFO | ✅ Carregado: FeedbackSynthesizerAgent
+2025-10-20 18:16:42,399 | INFO | 📥 [33/222] Carregando: 124-performance_optimizer_agent.py
+2025-10-20 18:16:42,399 | INFO | ✅ Carregado: PerformanceOptimizerAgent
+2025-10-20 18:16:42,399 | INFO | 📥 [34/222] Carregando: 109-mlops_engineer_agent.py
+2025-10-20 18:16:42,400 | INFO | ✅ Carregado: MlopsEngineerAgent
+2025-10-20 18:16:42,400 | INFO | 📥 [35/222] Carregando: 151-rust_engineer_agent.py
+2025-10-20 18:16:42,401 | INFO | ✅ Carregado: RustEngineerAgent
+2025-10-20 18:16:42,401 | INFO | 📥 [36/222] Carregando: 213-visual_storyteller_agent.py
+2025-10-20 18:16:42,401 | INFO | ✅ Carregado: VisualStorytellerAgent
+2025-10-20 18:16:42,401 | INFO | 📥 [37/222] Carregando: 144-reddit_community_builder_agent.py
+2025-10-20 18:16:42,402 | INFO | ✅ Carregado: RedditCommunityBuilderAgent
+2025-10-20 18:16:42,402 | INFO | 📥 [38/222] Carregando: 048-devops_incident_responder_agent.py
+2025-10-20 18:16:42,402 | INFO | ✅ Carregado: DevopsIncidentResponderAgent
+2025-10-20 18:16:42,402 | INFO | 📥 [39/222] Carregando: 180-spring_boot_engineer_agent.py
+2025-10-20 18:16:42,403 | INFO | ✅ Carregado: SpringBootEngineerAgent
+2025-10-20 18:16:42,403 | INFO | 📥 [40/222] Carregando: 058-dotnet_core_expert_agent.py
+2025-10-20 18:16:42,404 | INFO | ✅ Carregado: DotnetCoreExpertAgent
+2025-10-20 18:16:42,404 | INFO | 📥 [41/222] Carregando: 182-sql_pro_agent.py
+2025-10-20 18:16:42,404 | INFO | ✅ Carregado: SqlProAgent
+2025-10-20 18:16:42,404 | INFO | 📥 [42/222] Carregando: 065-error_detective_agent.py
+2025-10-20 18:16:42,405 | INFO | ✅ Carregado: ErrorDetectiveAgent
+2025-10-20 18:16:42,405 | INFO | 📥 [43/222] Carregando: 003-ai_engineer_agent.py
+2025-10-20 18:16:42,405 | INFO | ✅ Carregado: AiEngineerAgent
+2025-10-20 18:16:42,406 | INFO | 📥 [44/222] Carregando: 016-blockchain_developer_agent.py
+2025-10-20 18:16:42,406 | INFO | ✅ Carregado: BlockchainDeveloperAgent
+2025-10-20 18:16:42,406 | INFO | 📥 [45/222] Carregando: 029-content_marketer_agent.py
+2025-10-20 18:16:42,407 | INFO | ✅ Carregado: ContentMarketerAgent
+2025-10-20 18:16:42,407 | INFO | 📥 [46/222] Carregando: 163-seo_cannibalization_detector_agent.py
+2025-10-20 18:16:42,407 | INFO | ✅ Carregado: SeoCannibalizationDetectorAgent
+2025-10-20 18:16:42,407 | INFO | 📥 [47/222] Carregando: 102-machine_learning_engineer_agent.py
+2025-10-20 18:16:42,408 | INFO | ✅ Carregado: MachineLearningEngineerAgent
+2025-10-20 18:16:42,408 | INFO | 📥 [48/222] Carregando: 075-game_developer_agent.py
+2025-10-20 18:16:42,409 | INFO | ✅ Carregado: GameDeveloperAgent
+2025-10-20 18:16:42,409 | INFO | 📥 [49/222] Carregando: 110-mobile_app_builder_agent.py
+2025-10-20 18:16:42,409 | ERROR | ❌ Erro ao carregar 110-mobile_app_builder_agent.py: unterminated string literal (detected at line 69) (110-mobile_app_builder_agent.py, line 69)
+2025-10-20 18:16:42,409 | INFO | 📥 [50/222] Carregando: 167-seo_content_writer_agent.py
+2025-10-20 18:16:42,410 | INFO | ✅ Carregado: SeoContentWriterAgent
+2025-10-20 18:16:42,410 | INFO | 📥 [51/222] Carregando: 005-angular_architect_agent.py
+2025-10-20 18:16:42,411 | INFO | ✅ Carregado: AngularArchitectAgent
+2025-10-20 18:16:42,411 | INFO | 📥 [52/222] Carregando: 024-code_archaeologist_agent.py
+2025-10-20 18:16:42,411 | INFO | ✅ Carregado: CodeArchaeologistAgent
+2025-10-20 18:16:42,411 | INFO | 📥 [53/222] Carregando: 002-agent_organizer_agent.py
+2025-10-20 18:16:42,412 | INFO | ✅ Carregado: AgentOrganizerAgent
+2025-10-20 18:16:42,412 | INFO | 📥 [54/222] Carregando: 186-support_responder_agent.py
+2025-10-20 18:16:42,412 | INFO | ✅ Carregado: SupportResponderAgent
+2025-10-20 18:16:42,412 | INFO | 📥 [55/222] Carregando: 063-embedded_systems_agent.py
+2025-10-20 18:16:42,413 | INFO | ✅ Carregado: EmbeddedSystemsAgent
+2025-10-20 18:16:42,413 | INFO | 📥 [56/222] Carregando: 071-flutter_expert_agent.py
+2025-10-20 18:16:42,413 | INFO | ✅ Carregado: FlutterExpertAgent
+2025-10-20 18:16:42,413 | INFO | 📥 [57/222] Carregando: 208-ui_ux_designer_agent.py
+2025-10-20 18:16:42,414 | INFO | ✅ Carregado: UiUxDesignerAgent
+2025-10-20 18:16:42,414 | INFO | 📥 [58/222] Carregando: 161-senior_frontend_architect_agent.py
+2025-10-20 18:16:42,415 | INFO | ✅ Carregado: SeniorFrontendArchitectAgent
+2025-10-20 18:16:42,415 | INFO | 📥 [59/222] Carregando: 098-legacy_modernizer_agent.py
+2025-10-20 18:16:42,415 | INFO | ✅ Carregado: LegacyModernizerAgent
+2025-10-20 18:16:42,415 | INFO | 📥 [60/222] Carregando: 064-error_coordinator_agent.py
+2025-10-20 18:16:42,416 | INFO | ✅ Carregado: ErrorCoordinatorAgent
+2025-10-20 18:16:42,416 | INFO | 📥 [61/222] Carregando: 108-ml_engineer_agent.py
+2025-10-20 18:16:42,416 | INFO | ✅ Carregado: MlEngineerAgent
+2025-10-20 18:16:42,416 | INFO | 📥 [62/222] Carregando: 194-terraform_engineer_agent.py
+2025-10-20 18:16:42,417 | INFO | ✅ Carregado: TerraformEngineerAgent
+2025-10-20 18:16:42,417 | INFO | 📥 [63/222] Carregando: 195-terraform_specialist_agent.py
+2025-10-20 18:16:42,418 | INFO | ✅ Carregado: TerraformSpecialistAgent
+2025-10-20 18:16:42,418 | INFO | 📥 [64/222] Carregando: 038-data_researcher_agent.py
+2025-10-20 18:16:42,418 | INFO | ✅ Carregado: DataResearcherAgent
+2025-10-20 18:16:42,418 | INFO | 📥 [65/222] Carregando: 170-seo_snippet_hunter_agent.py
+2025-10-20 18:16:42,419 | INFO | ✅ Carregado: SeoSnippetHunterAgent
+2025-10-20 18:16:42,419 | INFO | 📥 [66/222] Carregando: 092-kotlin_specialist_agent.py
+2025-10-20 18:16:42,419 | INFO | ✅ Carregado: KotlinSpecialistAgent
+2025-10-20 18:16:42,419 | INFO | 📥 [67/222] Carregando: 088-java_pro_agent.py
+2025-10-20 18:16:42,420 | ERROR | ❌ Erro ao carregar 088-java_pro_agent.py: unterminated string literal (detected at line 226) (088-java_pro_agent.py, line 226)
+2025-10-20 18:16:42,420 | INFO | 📥 [68/222] Carregando: 015-backend_security_coder_agent.py
+2025-10-20 18:16:42,420 | INFO | ✅ Carregado: BackendSecurityCoderAgent
+2025-10-20 18:16:42,420 | INFO | 📥 [69/222] Carregando: 123-performance_monitor_agent.py
+2025-10-20 18:16:42,421 | INFO | ✅ Carregado: PerformanceMonitorAgent
+2025-10-20 18:16:42,421 | INFO | 📥 [70/222] Carregando: 103-market_researcher_agent.py
+2025-10-20 18:16:42,422 | INFO | ✅ Carregado: MarketResearcherAgent
+2025-10-20 18:16:42,422 | INFO | 📥 [71/222] Carregando: 157-search_specialist_agent.py
+2025-10-20 18:16:42,422 | INFO | ✅ Carregado: SearchSpecialistAgent
+2025-10-20 18:16:42,422 | INFO | 📥 [72/222] Carregando: 030-context_manager_agent.py
+2025-10-20 18:16:42,423 | INFO | ✅ Carregado: ContextManagerAgent
+2025-10-20 18:16:42,423 | INFO | 📥 [73/222] Carregando: 127-postgres_pro_agent.py
+2025-10-20 18:16:42,423 | INFO | ✅ Carregado: PostgresProAgent
+2025-10-20 18:16:42,423 | INFO | 📥 [74/222] Carregando: 199-tiktok_strategist_agent.py
+2025-10-20 18:16:42,424 | ERROR | ❌ Erro ao carregar 199-tiktok_strategist_agent.py: '(' was never closed (199-tiktok_strategist_agent.py, line 65)
+2025-10-20 18:16:42,424 | INFO | 📥 [75/222] Carregando: 111-mobile_app_developer_agent.py
+2025-10-20 18:16:42,425 | INFO | ✅ Carregado: MobileAppDeveloperAgent
+2025-10-20 18:16:42,425 | INFO | 📥 [76/222] Carregando: 217-vue_state_manager_agent.py
+2025-10-20 18:16:42,425 | INFO | ✅ Carregado: VueStateManagerAgent
+2025-10-20 18:16:42,425 | INFO | 📥 [77/222] Carregando: 113-mobile_security_coder_agent.py
+2025-10-20 18:16:42,426 | INFO | ✅ Carregado: MobileSecurityCoderAgent
+2025-10-20 18:16:42,426 | INFO | 📥 [78/222] Carregando: 019-business_analyst_agent.py
+2025-10-20 18:16:42,426 | INFO | ✅ Carregado: BusinessAnalystAgent
+2025-10-20 18:16:42,426 | INFO | 📥 [79/222] Carregando: 045-deployment_engineer_agent.py
+2025-10-20 18:16:42,427 | INFO | ✅ Carregado: DeploymentEngineerAgent
+2025-10-20 18:16:42,427 | INFO | 📥 [80/222] Carregando: 041-database_administrator_agent.py
+2025-10-20 18:16:42,427 | INFO | ✅ Carregado: DatabaseAdministratorAgent
+2025-10-20 18:16:42,427 | INFO | 📥 [81/222] Carregando: 145-refactor_agent_agent.py
+2025-10-20 18:16:42,428 | ERROR | ❌ Erro ao carregar 145-refactor_agent_agent.py: unterminated string literal (detected at line 69) (145-refactor_agent_agent.py, line 69)
+2025-10-20 18:16:42,428 | INFO | 📥 [82/222] Carregando: 133-python_pro_agent.py
+2025-10-20 18:16:42,429 | INFO | ✅ Carregado: PythonProAgent
+2025-10-20 18:16:42,429 | INFO | 📥 [83/222] Carregando: 160-senior_backend_architect_agent.py
+2025-10-20 18:16:42,429 | INFO | ✅ Carregado: SeniorBackendArchitectAgent
+2025-10-20 18:16:42,429 | INFO | 📥 [84/222] Carregando: 072-frontend_developer_agent.py
+2025-10-20 18:16:42,430 | INFO | ✅ Carregado: FrontendDeveloperAgent
+2025-10-20 18:16:42,430 | INFO | 📥 [85/222] Carregando: 126-platform_engineer_agent.py
+2025-10-20 18:16:42,430 | INFO | ✅ Carregado: PlatformEngineerAgent
+2025-10-20 18:16:42,430 | INFO | 📥 [86/222] Carregando: 099-legal_advisor_agent.py
+2025-10-20 18:16:42,431 | INFO | ✅ Carregado: LegalAdvisorAgent
+2025-10-20 18:16:42,431 | INFO | 📥 [87/222] Carregando: 120-penetration_tester_agent.py
+2025-10-20 18:16:42,431 | INFO | ✅ Carregado: PenetrationTesterAgent
+2025-10-20 18:16:42,431 | INFO | 📥 [88/222] Carregando: 074-fullstack_developer_agent.py
+2025-10-20 18:16:42,432 | INFO | ✅ Carregado: FullstackDeveloperAgent
+2025-10-20 18:16:42,432 | INFO | 📥 [89/222] Carregando: 105-mermaid_expert_agent.py
+2025-10-20 18:16:42,433 | INFO | ✅ Carregado: MermaidExpertAgent
+2025-10-20 18:16:42,433 | INFO | 📥 [90/222] Carregando: 025-code_reviewer_agent.py
+2025-10-20 18:16:42,433 | INFO | ✅ Carregado: CodeReviewerAgent
+2025-10-20 18:16:42,433 | INFO | 📥 [91/222] Carregando: 192-tech_lead_orchestrator_agent.py
+2025-10-20 18:16:42,434 | INFO | ✅ Carregado: TechLeadOrchestratorAgent
+2025-10-20 18:16:42,434 | INFO | 📥 [92/222] Carregando: 159-security_engineer_agent.py
+2025-10-20 18:16:42,435 | INFO | ✅ Carregado: SecurityEngineerAgent
+2025-10-20 18:16:42,435 | INFO | 📥 [93/222] Carregando: 172-seo_structure_architect_agent.py
+2025-10-20 18:16:42,435 | INFO | ✅ Carregado: SeoStructureArchitectAgent
+2025-10-20 18:16:42,435 | INFO | 📥 [94/222] Carregando: 046-devops_automator_agent.py
+2025-10-20 18:16:42,436 | ERROR | ❌ Erro ao carregar 046-devops_automator_agent.py: unterminated string literal (detected at line 69) (046-devops_automator_agent.py, line 69)
+2025-10-20 18:16:42,436 | INFO | 📥 [95/222] Carregando: 004-analytics_reporter_agent.py
+2025-10-20 18:16:42,436 | INFO | ✅ Carregado: AnalyticsReporterAgent
+2025-10-20 18:16:42,436 | INFO | 📥 [96/222] Carregando: 125-php_pro_agent.py
+2025-10-20 18:16:42,437 | INFO | ✅ Carregado: PhpProAgent
+2025-10-20 18:16:42,437 | INFO | 📥 [97/222] Carregando: 155-scala_pro_agent.py
+2025-10-20 18:16:42,438 | INFO | ✅ Carregado: ScalaProAgent
+2025-10-20 18:16:42,438 | INFO | 📥 [98/222] Carregando: 139-rails_expert_agent.py
+2025-10-20 18:16:42,438 | INFO | ✅ Carregado: RailsExpertAgent
+2025-10-20 18:16:42,438 | INFO | 📥 [99/222] Carregando: 115-network_engineer_agent.py
+2025-10-20 18:16:42,439 | INFO | ✅ Carregado: NetworkEngineerAgent
+2025-10-20 18:16:42,439 | INFO | 📥 [100/222] Carregando: 028-content_creator_agent.py
+2025-10-20 18:16:42,439 | INFO | ✅ Carregado: ContentCreatorAgent
+2025-10-20 18:16:42,439 | INFO | 📥 [101/222] Carregando: 081-hybrid_cloud_architect_agent.py
+2025-10-20 18:16:42,440 | ERROR | ❌ Erro ao carregar 081-hybrid_cloud_architect_agent.py: unterminated string literal (detected at line 215) (081-hybrid_cloud_architect_agent.py, line 215)
+2025-10-20 18:16:42,440 | INFO | 📥 [102/222] Carregando: 168-seo_keyword_strategist_agent.py
+2025-10-20 18:16:42,440 | INFO | ✅ Carregado: SeoKeywordStrategistAgent
+2025-10-20 18:16:42,440 | INFO | 📥 [103/222] Carregando: 220-wordpress_master_agent.py
+2025-10-20 18:16:42,441 | INFO | ✅ Carregado: WordpressMasterAgent
+2025-10-20 18:16:42,441 | INFO | 📥 [104/222] Carregando: 191-team_configurator_agent.py
+2025-10-20 18:16:42,442 | ERROR | ❌ Erro ao carregar 191-team_configurator_agent.py: invalid syntax. Perhaps you forgot a comma? (191-team_configurator_agent.py, line 69)
+2025-10-20 18:16:42,442 | INFO | 📥 [105/222] Carregando: 080-hr_pro_agent.py
+2025-10-20 18:16:42,442 | INFO | ✅ Carregado: HrProAgent
+2025-10-20 18:16:42,442 | INFO | 📥 [106/222] Carregando: 169-seo_meta_optimizer_agent.py
+2025-10-20 18:16:42,443 | INFO | ✅ Carregado: SeoMetaOptimizerAgent
+2025-10-20 18:16:42,443 | INFO | 📥 [107/222] Carregando: 141-react_component_architect_agent.py
+2025-10-20 18:16:42,444 | INFO | ✅ Carregado: ReactComponentArchitectAgent
+2025-10-20 18:16:42,444 | INFO | 📥 [108/222] Carregando: 008-api_documenter_agent.py
+2025-10-20 18:16:42,444 | INFO | ✅ Carregado: ApiDocumenterAgent
+2025-10-20 18:16:42,444 | INFO | 📥 [109/222] Carregando: 212-ux_researcher_agent.py
+2025-10-20 18:16:42,445 | INFO | ✅ Carregado: UxResearcherAgent
+2025-10-20 18:16:42,445 | INFO | 📥 [110/222] Carregando: 146-refactoring_specialist_agent.py
+2025-10-20 18:16:42,445 | INFO | ✅ Carregado: RefactoringSpecialistAgent
+2025-10-20 18:16:42,445 | INFO | 📥 [111/222] Carregando: 209-ui_ux_master_agent.py
+2025-10-20 18:16:42,446 | INFO | ✅ Carregado: UiUxMasterAgent
+2025-10-20 18:16:42,446 | INFO | 📥 [112/222] Carregando: 006-api_architect_agent.py
+2025-10-20 18:16:42,446 | INFO | ✅ Carregado: ApiArchitectAgent
+2025-10-20 18:16:42,446 | INFO | 📥 [113/222] Carregando: 061-electron_pro_agent.py
+2025-10-20 18:16:42,447 | INFO | ✅ Carregado: ElectronProAgent
+2025-10-20 18:16:42,447 | INFO | 📥 [114/222] Carregando: 119-payment_integration_agent.py
+2025-10-20 18:16:42,448 | INFO | ✅ Carregado: PaymentIntegrationAgent
+2025-10-20 18:16:42,448 | INFO | 📥 [115/222] Carregando: 215-vue_expert_agent.py
+2025-10-20 18:16:42,448 | INFO | ✅ Carregado: VueExpertAgent
+2025-10-20 18:16:42,448 | INFO | 📥 [116/222] Carregando: 200-tool_evaluator_agent.py
+2025-10-20 18:16:42,449 | INFO | ✅ Carregado: ToolEvaluatorAgent
+2025-10-20 18:16:42,449 | INFO | 📥 [117/222] Carregando: 147-reference_builder_agent.py
+2025-10-20 18:16:42,449 | INFO | ✅ Carregado: ReferenceBuilderAgent
+2025-10-20 18:16:42,449 | INFO | 📥 [118/222] Carregando: 152-rust_pro_agent.py
+2025-10-20 18:16:42,450 | INFO | ✅ Carregado: RustProAgent
+2025-10-20 18:16:42,450 | INFO | 📥 [119/222] Carregando: 128-product_manager_agent.py
+2025-10-20 18:16:42,451 | INFO | ✅ Carregado: ProductManagerAgent
+2025-10-20 18:16:42,451 | INFO | 📥 [120/222] Carregando: 164-seo_content_auditor_agent.py
+2025-10-20 18:16:42,451 | INFO | ✅ Carregado: SeoContentAuditorAgent
+2025-10-20 18:16:42,451 | INFO | 📥 [121/222] Carregando: 189-task_distributor_agent.py
+2025-10-20 18:16:42,452 | INFO | ✅ Carregado: TaskDistributorAgent
+2025-10-20 18:16:42,452 | INFO | 📥 [122/222] Carregando: 148-research_analyst_agent.py
+2025-10-20 18:16:42,452 | INFO | ✅ Carregado: ResearchAnalystAgent
+2025-10-20 18:16:42,453 | INFO | 📥 [123/222] Carregando: 134-qa_expert_agent.py
+2025-10-20 18:16:42,453 | INFO | ✅ Carregado: QaExpertAgent
+2025-10-20 18:16:42,453 | INFO | 📥 [124/222] Carregando: 131-project_shipper_agent.py
+2025-10-20 18:16:42,454 | ERROR | ❌ Erro ao carregar 131-project_shipper_agent.py: unterminated string literal (detected at line 69) (131-project_shipper_agent.py, line 69)
+2025-10-20 18:16:42,454 | INFO | 📥 [125/222] Carregando: 066-experiment_tracker_agent.py
+2025-10-20 18:16:42,454 | ERROR | ❌ Erro ao carregar 066-experiment_tracker_agent.py: invalid syntax. Perhaps you forgot a comma? (066-experiment_tracker_agent.py, line 69)
+2025-10-20 18:16:42,454 | INFO | 📥 [126/222] Carregando: 138-rails_backend_expert_agent.py
+2025-10-20 18:16:42,455 | ERROR | ❌ Erro ao carregar 138-rails_backend_expert_agent.py: invalid syntax. Perhaps you forgot a comma? (138-rails_backend_expert_agent.py, line 69)
+2025-10-20 18:16:42,455 | INFO | 📥 [127/222] Carregando: 082-incident_responder_agent.py
+2025-10-20 18:16:42,456 | INFO | ✅ Carregado: IncidentResponderAgent
+2025-10-20 18:16:42,456 | INFO | 📥 [128/222] Carregando: 112-mobile_developer_agent.py
+2025-10-20 18:16:42,456 | INFO | ✅ Carregado: MobileDeveloperAgent
+2025-10-20 18:16:42,456 | INFO | 📥 [129/222] Carregando: 014-backend_developer_agent.py
+2025-10-20 18:16:42,457 | INFO | ✅ Carregado: BackendDeveloperAgent
+2025-10-20 18:16:42,457 | INFO | 📥 [130/222] Carregando: 051-django_backend_expert_agent.py
+2025-10-20 18:16:42,457 | INFO | ✅ Carregado: DjangoBackendExpertAgent
+2025-10-20 18:16:42,457 | INFO | 📥 [131/222] Carregando: 093-kubernetes_architect_agent.py
+2025-10-20 18:16:42,458 | ERROR | ❌ Erro ao carregar 093-kubernetes_architect_agent.py: unterminated string literal (detected at line 209) (093-kubernetes_architect_agent.py, line 209)
+2025-10-20 18:16:42,458 | INFO | 📥 [132/222] Carregando: 079-growth_hacker_agent.py
+2025-10-20 18:16:42,458 | INFO | ✅ Carregado: GrowthHackerAgent
+2025-10-20 18:16:42,458 | INFO | 📥 [133/222] Carregando: 027-compliance_auditor_agent.py
+2025-10-20 18:16:42,459 | INFO | ✅ Carregado: ComplianceAuditorAgent
+2025-10-20 18:16:42,459 | INFO | 📥 [134/222] Carregando: 219-whimsy_injector_agent.py
+2025-10-20 18:16:42,459 | ERROR | ❌ Erro ao carregar 219-whimsy_injector_agent.py: unterminated string literal (detected at line 69) (219-whimsy_injector_agent.py, line 69)
+2025-10-20 18:16:42,459 | INFO | 📥 [135/222] Carregando: 077-golang_pro_agent.py
+2025-10-20 18:16:42,460 | INFO | ✅ Carregado: GolangProAgent
+2025-10-20 18:16:42,460 | INFO | 📥 [136/222] Carregando: 178-spec_tester_agent.py
+2025-10-20 18:16:42,461 | INFO | ✅ Carregado: SpecTesterAgent
+2025-10-20 18:16:42,461 | INFO | 📥 [137/222] Carregando: 042-database_optimizer_agent.py
+2025-10-20 18:16:42,461 | INFO | ✅ Carregado: DatabaseOptimizerAgent
+2025-10-20 18:16:42,461 | INFO | 📥 [138/222] Carregando: 097-laravel_specialist_agent.py
+2025-10-20 18:16:42,462 | INFO | ✅ Carregado: LaravelSpecialistAgent
+2025-10-20 18:16:42,462 | INFO | 📥 [139/222] Carregando: 037-data_engineer_agent.py
+2025-10-20 18:16:42,462 | INFO | ✅ Carregado: DataEngineerAgent
+2025-10-20 18:16:42,462 | INFO | 📥 [140/222] Carregando: 060-dx_optimizer_agent.py
+2025-10-20 18:16:42,463 | INFO | ✅ Carregado: DxOptimizerAgent
+2025-10-20 18:16:42,463 | INFO | 📥 [141/222] Carregando: 179-spec_validator_agent.py
+2025-10-20 18:16:42,463 | INFO | ✅ Carregado: SpecValidatorAgent
+2025-10-20 18:16:42,464 | INFO | 📥 [142/222] Carregando: 116-nextjs_developer_agent.py
+2025-10-20 18:16:42,464 | INFO | ✅ Carregado: NextjsDeveloperAgent
+2025-10-20 18:16:42,464 | INFO | 📥 [143/222] Carregando: 033-csharp_pro_agent.py
+2025-10-20 18:16:42,465 | INFO | ✅ Carregado: CsharpProAgent
+2025-10-20 18:16:42,465 | INFO | 📥 [144/222] Carregando: 136-rails_activerecord_expert_agent.py
+2025-10-20 18:16:42,465 | INFO | ✅ Carregado: RailsActiverecordExpertAgent
+2025-10-20 18:16:42,465 | INFO | 📥 [145/222] Carregando: 153-sales_automator_agent.py
+2025-10-20 18:16:42,466 | INFO | ✅ Carregado: SalesAutomatorAgent
+2025-10-20 18:16:42,466 | INFO | 📥 [146/222] Carregando: 085-ios_developer_agent.py
+2025-10-20 18:16:42,466 | INFO | ✅ Carregado: IosDeveloperAgent
+2025-10-20 18:16:42,466 | INFO | 📥 [147/222] Carregando: 198-test_writer_fixer_agent.py
+2025-10-20 18:16:42,467 | ERROR | ❌ Erro ao carregar 198-test_writer_fixer_agent.py: invalid syntax. Perhaps you forgot a comma? (198-test_writer_fixer_agent.py, line 69)
+2025-10-20 18:16:42,467 | INFO | 📥 [148/222] Carregando: 021-chaos_engineer_agent.py
+2025-10-20 18:16:42,468 | INFO | ✅ Carregado: ChaosEngineerAgent
+2025-10-20 18:16:42,468 | INFO | 📥 [149/222] Carregando: 132-prompt_engineer_agent.py
+2025-10-20 18:16:42,468 | INFO | ✅ Carregado: PromptEngineerAgent
+2025-10-20 18:16:42,468 | INFO | 📥 [150/222] Carregando: 149-risk_manager_agent.py
+2025-10-20 18:16:42,469 | INFO | ✅ Carregado: RiskManagerAgent
+2025-10-20 18:16:42,469 | INFO | 📥 [151/222] Carregando: 011-architect_review_agent.py
+2025-10-20 18:16:42,470 | INFO | ✅ Carregado: ArchitectReviewAgent
+2025-10-20 18:16:42,470 | INFO | 📥 [152/222] Carregando: 031-cpp_pro_agent.py
+2025-10-20 18:16:42,470 | INFO | ✅ Carregado: CppProAgent
+2025-10-20 18:16:42,470 | INFO | 📥 [153/222] Carregando: 174-spec_architect_agent.py
+2025-10-20 18:16:42,471 | INFO | ✅ Carregado: SpecArchitectAgent
+2025-10-20 18:16:42,471 | INFO | 📥 [154/222] Carregando: 216-vue_nuxt_expert_agent.py
+2025-10-20 18:16:42,471 | INFO | ✅ Carregado: VueNuxtExpertAgent
+2025-10-20 18:16:42,471 | INFO | 📥 [155/222] Carregando: 185-studio_producer_agent.py
+2025-10-20 18:16:42,472 | ERROR | ❌ Erro ao carregar 185-studio_producer_agent.py: unterminated string literal (detected at line 69) (185-studio_producer_agent.py, line 69)
+2025-10-20 18:16:42,472 | INFO | 📥 [156/222] Carregando: 203-trend_researcher_agent.py
+2025-10-20 18:16:42,473 | ERROR | ❌ Erro ao carregar 203-trend_researcher_agent.py: '(' was never closed (203-trend_researcher_agent.py, line 65)
+2025-10-20 18:16:42,473 | INFO | 📥 [157/222] Carregando: 184-studio_coach_agent.py
+2025-10-20 18:16:42,473 | ERROR | ❌ Erro ao carregar 184-studio_coach_agent.py: invalid syntax. Perhaps you forgot a comma? (184-studio_coach_agent.py, line 69)
+2025-10-20 18:16:42,473 | INFO | 📥 [158/222] Carregando: 053-django_orm_expert_agent.py
+2025-10-20 18:16:42,474 | INFO | ✅ Carregado: DjangoOrmExpertAgent
+2025-10-20 18:16:42,474 | INFO | 📥 [159/222] Carregando: 154-sales_engineer_agent.py
+2025-10-20 18:16:42,475 | INFO | ✅ Carregado: SalesEngineerAgent
+2025-10-20 18:16:42,475 | INFO | 📥 [160/222] Carregando: 100-legal_compliance_checker_agent.py
+2025-10-20 18:16:42,475 | INFO | ✅ Carregado: LegalComplianceCheckerAgent
+2025-10-20 18:16:42,475 | INFO | 📥 [161/222] Carregando: 196-test_automator_agent.py
+2025-10-20 18:16:42,476 | INFO | ✅ Carregado: TestAutomatorAgent
+2025-10-20 18:16:42,476 | INFO | 📥 [162/222] Carregando: 096-laravel_eloquent_expert_agent.py
+2025-10-20 18:16:42,476 | INFO | ✅ Carregado: LaravelEloquentExpertAgent
+2025-10-20 18:16:42,476 | INFO | 📥 [163/222] Carregando: 022-cli_developer_agent.py
+2025-10-20 18:16:42,477 | INFO | ✅ Carregado: CliDeveloperAgent
+2025-10-20 18:16:42,477 | INFO | 📥 [164/222] Carregando: 143-react_specialist_agent.py
+2025-10-20 18:16:42,478 | INFO | ✅ Carregado: ReactSpecialistAgent
+2025-10-20 18:16:42,478 | INFO | 📥 [165/222] Carregando: 130-project_manager_agent.py
+2025-10-20 18:16:42,478 | INFO | ✅ Carregado: ProjectManagerAgent
+2025-10-20 18:16:42,478 | INFO | 📥 [166/222] Carregando: 094-kubernetes_specialist_agent.py
+2025-10-20 18:16:42,479 | INFO | ✅ Carregado: KubernetesSpecialistAgent
+2025-10-20 18:16:42,479 | INFO | 📥 [167/222] Carregando: 057-documentation_specialist_agent.py
+2025-10-20 18:16:42,479 | INFO | ✅ Carregado: DocumentationSpecialistAgent
+2025-10-20 18:16:42,479 | INFO | 📥 [168/222] Carregando: 176-spec_orchestrator_agent.py
+2025-10-20 18:16:42,480 | INFO | ✅ Carregado: SpecOrchestratorAgent
+2025-10-20 18:16:42,480 | INFO | 📥 [169/222] Carregando: 162-seo_authority_builder_agent.py
+2025-10-20 18:16:42,480 | INFO | ✅ Carregado: SeoAuthorityBuilderAgent
+2025-10-20 18:16:42,480 | INFO | 📥 [170/222] Carregando: 101-llm_architect_agent.py
+2025-10-20 18:16:42,481 | INFO | ✅ Carregado: LlmArchitectAgent
+2025-10-20 18:16:42,481 | INFO | 📥 [171/222] Carregando: 050-django_api_developer_agent.py
+2025-10-20 18:16:42,482 | INFO | ✅ Carregado: DjangoApiDeveloperAgent
+2025-10-20 18:16:42,482 | INFO | 📥 [172/222] Carregando: 171-seo_specialist_agent.py
+2025-10-20 18:16:42,482 | INFO | ✅ Carregado: SeoSpecialistAgent
+2025-10-20 18:16:42,482 | INFO | 📥 [173/222] Carregando: 095-laravel_backend_expert_agent.py
+2025-10-20 18:16:42,483 | INFO | ✅ Carregado: LaravelBackendExpertAgent
+2025-10-20 18:16:42,483 | INFO | 📥 [174/222] Carregando: 202-trend_analyst_agent.py
+2025-10-20 18:16:42,483 | INFO | ✅ Carregado: TrendAnalystAgent
+2025-10-20 18:16:42,483 | INFO | 📥 [175/222] Carregando: 206-typescript_pro_agent.py
+2025-10-20 18:16:42,484 | INFO | ✅ Carregado: TypescriptProAgent
+2025-10-20 18:16:42,484 | INFO | 📥 [176/222] Carregando: 122-performance_engineer_agent.py
+2025-10-20 18:16:42,485 | INFO | ✅ Carregado: PerformanceEngineerAgent
+2025-10-20 18:16:42,485 | INFO | 📥 [177/222] Carregando: 055-docs_architect_agent.py
+2025-10-20 18:16:42,485 | INFO | ✅ Carregado: DocsArchitectAgent
+2025-10-20 18:16:42,485 | INFO | 📥 [178/222] Carregando: 084-instagram_curator_agent.py
+2025-10-20 18:16:42,486 | INFO | ✅ Carregado: InstagramCuratorAgent
+2025-10-20 18:16:42,486 | INFO | 📥 [179/222] Carregando: 020-c_pro_agent.py
+2025-10-20 18:16:42,486 | INFO | ✅ Carregado: CProAgent
+2025-10-20 18:16:42,486 | INFO | 📥 [180/222] Carregando: 142-react_nextjs_expert_agent.py
+2025-10-20 18:16:42,487 | INFO | ✅ Carregado: ReactNextjsExpertAgent
+2025-10-20 18:16:42,487 | INFO | 📥 [181/222] Carregando: 070-fintech_engineer_agent.py
+2025-10-20 18:16:42,488 | INFO | ✅ Carregado: FintechEngineerAgent
+2025-10-20 18:16:42,488 | INFO | 📥 [182/222] Carregando: 117-nlp_engineer_agent.py
+2025-10-20 18:16:42,488 | INFO | ✅ Carregado: NlpEngineerAgent
+2025-10-20 18:16:42,488 | INFO | 📥 [183/222] Carregando: 049-devops_troubleshooter_agent.py
+2025-10-20 18:16:42,489 | INFO | ✅ Carregado: DevopsTroubleshooterAgent
+2025-10-20 18:16:42,489 | INFO | 📥 [184/222] Carregando: 104-mcp_developer_agent.py
+2025-10-20 18:16:42,489 | INFO | ✅ Carregado: McpDeveloperAgent
+2025-10-20 18:16:42,489 | INFO | 📥 [185/222] Carregando: 210-ui_visual_validator_agent.py
+2025-10-20 18:16:42,490 | INFO | ✅ Carregado: UiVisualValidatorAgent
+2025-10-20 18:16:42,490 | INFO | 📥 [186/222] Carregando: 222-workflow_orchestrator_agent.py
+2025-10-20 18:16:42,491 | INFO | ✅ Carregado: WorkflowOrchestratorAgent
+2025-10-20 18:16:42,491 | INFO | 📥 [187/222] Carregando: 076-git_workflow_manager_agent.py
+2025-10-20 18:16:42,491 | INFO | ✅ Carregado: GitWorkflowManagerAgent
+2025-10-20 18:16:42,491 | INFO | 📥 [188/222] Carregando: 087-java_architect_agent.py
+2025-10-20 18:16:42,492 | INFO | ✅ Carregado: JavaArchitectAgent
+2025-10-20 18:16:42,492 | INFO | 📥 [189/222] Carregando: 043-debugger_agent.py
+2025-10-20 18:16:42,492 | INFO | ✅ Carregado: DebuggerAgent
+2025-10-20 18:16:42,492 | INFO | 📥 [190/222] Carregando: 107-minecraft_bukkit_pro_agent.py
+2025-10-20 18:16:42,493 | INFO | ✅ Carregado: MinecraftBukkitProAgent
+2025-10-20 18:16:42,493 | INFO | 📥 [191/222] Carregando: 173-spec_analyst_agent.py
+2025-10-20 18:16:42,493 | INFO | ✅ Carregado: SpecAnalystAgent
+2025-10-20 18:16:42,493 | INFO | 📥 [192/222] Carregando: 035-customer_support_agent.py
+2025-10-20 18:16:42,494 | INFO | ✅ Carregado: CustomerSupportAgent
+2025-10-20 18:16:42,494 | INFO | 📥 [193/222] Carregando: 089-javascript_pro_agent.py
+2025-10-20 18:16:42,495 | INFO | ✅ Carregado: JavascriptProAgent
+2025-10-20 18:16:42,495 | INFO | 📥 [194/222] Carregando: 106-microservices_architect_agent.py
+2025-10-20 18:16:42,495 | INFO | ✅ Carregado: MicroservicesArchitectAgent
+2025-10-20 18:16:42,495 | INFO | 📥 [195/222] Carregando: 140-rapid_prototyper_agent.py
+2025-10-20 18:16:42,496 | ERROR | ❌ Erro ao carregar 140-rapid_prototyper_agent.py: unterminated string literal (detected at line 69) (140-rapid_prototyper_agent.py, line 69)
+2025-10-20 18:16:42,496 | INFO | 📥 [196/222] Carregando: 083-infrastructure_maintainer_agent.py
+2025-10-20 18:16:42,496 | INFO | ✅ Carregado: InfrastructureMaintainerAgent
+2025-10-20 18:16:42,496 | INFO | 📥 [197/222] Carregando: 187-swift_expert_agent.py
+2025-10-20 18:16:42,497 | INFO | ✅ Carregado: SwiftExpertAgent
+2025-10-20 18:16:42,497 | INFO | 📥 [198/222] Carregando: 090-joker_agent.py
+2025-10-20 18:16:42,498 | ERROR | ❌ Erro ao carregar 090-joker_agent.py: invalid syntax. Perhaps you forgot a comma? (090-joker_agent.py, line 69)
+2025-10-20 18:16:42,498 | INFO | 📥 [199/222] Carregando: 177-spec_planner_agent.py
+2025-10-20 18:16:42,498 | INFO | ✅ Carregado: SpecPlannerAgent
+2025-10-20 18:16:42,498 | INFO | 📥 [200/222] Carregando: 039-data_scientist_agent.py
+2025-10-20 18:16:42,499 | INFO | ✅ Carregado: DataScientistAgent
+2025-10-20 18:16:42,499 | INFO | 📥 [201/222] Carregando: 201-tooling_engineer_agent.py
+2025-10-20 18:16:42,499 | INFO | ✅ Carregado: ToolingEngineerAgent
+2025-10-20 18:16:42,499 | INFO | 📥 [202/222] Carregando: 221-workflow_optimizer_agent.py
+2025-10-20 18:16:42,500 | INFO | ✅ Carregado: WorkflowOptimizerAgent
+2025-10-20 18:16:42,500 | INFO | 📥 [203/222] Carregando: 211-unity_developer_agent.py
+2025-10-20 18:16:42,500 | INFO | ✅ Carregado: UnityDeveloperAgent
+2025-10-20 18:16:42,500 | INFO | 📥 [204/222] Carregando: 207-ui_designer_agent.py
+2025-10-20 18:16:42,501 | INFO | ✅ Carregado: UiDesignerAgent
+2025-10-20 18:16:42,501 | INFO | 📥 [205/222] Carregando: 137-rails_api_developer_agent.py
+2025-10-20 18:16:42,502 | INFO | ✅ Carregado: RailsApiDeveloperAgent
+2025-10-20 18:16:42,502 | INFO | 📥 [206/222] Carregando: 150-ruby_pro_agent.py
+2025-10-20 18:16:42,502 | INFO | ✅ Carregado: RubyProAgent
+2025-10-20 18:16:42,502 | INFO | 📥 [207/222] Carregando: 018-build_engineer_agent.py
+2025-10-20 18:16:42,503 | INFO | ✅ Carregado: BuildEngineerAgent
+2025-10-20 18:16:42,503 | INFO | 📥 [208/222] Carregando: 218-websocket_engineer_agent.py
+2025-10-20 18:16:42,504 | INFO | ✅ Carregado: WebsocketEngineerAgent
+2025-10-20 18:16:42,504 | INFO | 📥 [209/222] Carregando: 059-dotnet_framework_4.8_expert_agent.py
+2025-10-20 18:16:42,504 | ERROR | ❌ Erro ao carregar 059-dotnet_framework_4.8_expert_agent.py: invalid decimal literal (059-dotnet_framework_4.8_expert_agent.py, line 40)
+2025-10-20 18:16:42,504 | INFO | 📥 [210/222] Carregando: 118-observability_engineer_agent.py
+2025-10-20 18:16:42,505 | INFO | ✅ Carregado: ObservabilityEngineerAgent
+2025-10-20 18:16:42,505 | INFO | 📥 [211/222] Carregando: 073-frontend_security_coder_agent.py
+2025-10-20 18:16:42,506 | INFO | ✅ Carregado: FrontendSecurityCoderAgent
+2025-10-20 18:16:42,506 | INFO | 📥 [212/222] Carregando: 135-quant_analyst_agent.py
+2025-10-20 18:16:42,506 | INFO | ✅ Carregado: QuantAnalystAgent
+2025-10-20 18:16:42,506 | INFO | 📥 [213/222] Carregando: 078-graphql_architect_agent.py
+2025-10-20 18:16:42,507 | INFO | ✅ Carregado: GraphqlArchitectAgent
+2025-10-20 18:16:42,507 | INFO | 📥 [214/222] Carregando: 026-competitive_analyst_agent.py
+2025-10-20 18:16:42,507 | INFO | ✅ Carregado: CompetitiveAnalystAgent
+2025-10-20 18:16:42,507 | INFO | 📥 [215/222] Carregando: 044-dependency_manager_agent.py
+2025-10-20 18:16:42,508 | INFO | ✅ Carregado: DependencyManagerAgent
+2025-10-20 18:16:42,508 | INFO | 📥 [216/222] Carregando: 017-brand_guardian_agent.py
+2025-10-20 18:16:42,509 | INFO | ✅ Carregado: BrandGuardianAgent
+2025-10-20 18:16:42,509 | INFO | 📥 [217/222] Carregando: 040-database_admin_agent.py
+2025-10-20 18:16:42,509 | INFO | ✅ Carregado: DatabaseAdminAgent
+2025-10-20 18:16:42,509 | INFO | 📥 [218/222] Carregando: 010-app_store_optimizer_agent.py
+2025-10-20 18:16:42,510 | INFO | ✅ Carregado: AppStoreOptimizerAgent
+2025-10-20 18:16:42,510 | INFO | 📥 [219/222] Carregando: 054-django_pro_agent.py
+2025-10-20 18:16:42,510 | ERROR | ❌ Erro ao carregar 054-django_pro_agent.py: unterminated string literal (detected at line 214) (054-django_pro_agent.py, line 214)
+2025-10-20 18:16:42,510 | INFO | 📥 [220/222] Carregando: 052-django_developer_agent.py
+2025-10-20 18:16:42,511 | INFO | ✅ Carregado: DjangoDeveloperAgent
+2025-10-20 18:16:42,511 | INFO | 📥 [221/222] Carregando: 156-scrum_master_agent.py
+2025-10-20 18:16:42,511 | INFO | ✅ Carregado: ScrumMasterAgent
+2025-10-20 18:16:42,511 | INFO | 📥 [222/222] Carregando: 175-spec_developer_agent.py
+2025-10-20 18:16:42,512 | INFO | ✅ Carregado: SpecDeveloperAgent
+2025-10-20 18:16:42,512 | INFO | ✅ Carregados 198 agentes com sucesso
+2025-10-20 18:16:42,512 | WARNING | ⚠️  24 agentes falharam ao carregar
+2025-10-20 18:16:42,512 | INFO | 👥 Criando Team 'AgentMaker Team - 198 Agentes' com 198 agentes
+2025-10-20 18:16:42,512 | INFO | ✅ Team criado com sucesso
+2025-10-20 18:16:42,512 | INFO | 🏗️  Criando Agent OS com Team: AgentMaker Team - 198 Agentes
+2025-10-20 18:16:42,879 | DEBUG | connect_tcp.started host='os-api.agno.com' port=443 local_address=None timeout=60 socket_options=None
+2025-10-20 18:16:43,000 | DEBUG | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x75c88c062f00>
+2025-10-20 18:16:43,000 | DEBUG | start_tls.started ssl_context=<ssl.SSLContext object at 0x75c883cf5c50> server_hostname='os-api.agno.com' timeout=60
+2025-10-20 18:16:43,240 | DEBUG | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x75c88bf35ee0>
+2025-10-20 18:16:43,241 | DEBUG | send_request_headers.started request=<Request [b'POST']>
+2025-10-20 18:16:43,241 | DEBUG | send_request_headers.complete
+2025-10-20 18:16:43,241 | DEBUG | send_request_body.started request=<Request [b'POST']>
+2025-10-20 18:16:43,241 | DEBUG | send_request_body.complete
+2025-10-20 18:16:43,241 | DEBUG | receive_response_headers.started request=<Request [b'POST']>
+2025-10-20 18:16:43,372 | DEBUG | receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Mon, 20 Oct 2025 21:16:31 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'93'), (b'Connection', b'keep-alive'), (b'server', b'uvicorn')])
+2025-10-20 18:16:43,372 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 18:16:43,372 | DEBUG | receive_response_body.started request=<Request [b'POST']>
+2025-10-20 18:16:43,373 | DEBUG | receive_response_body.complete
+2025-10-20 18:16:43,373 | DEBUG | response_closed.started
+2025-10-20 18:16:43,373 | DEBUG | response_closed.complete
+2025-10-20 18:16:43,373 | DEBUG | close.started
+2025-10-20 18:16:43,373 | DEBUG | close.complete
+2025-10-20 18:16:43,373 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 18:16:43,373 | INFO | 🌐 Iniciando servidor Agent OS na porta 8000...
+2025-10-20 18:16:43,373 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 18:16:43,373 | INFO | 📚 Documentação: http://localhost:8000/docs
+2025-10-20 18:16:43,373 | INFO | 👥 Teams: http://localhost:8000/teams
+2025-10-20 18:16:43,373 | INFO | 🤖 Agentes: http://localhost:8000/agents
+2025-10-20 18:16:43,373 | INFO | 🔧 Configuração: http://localhost:8000/config
+2025-10-20 18:16:43,373 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 18:16:43,578 | INFO | 📋 App FastAPI: <fastapi.applications.FastAPI object at 0x75c883d42ab0>
+2025-10-20 18:16:43,578 | INFO | 📋 Rotas disponíveis: 52
+2025-10-20 18:16:43,578 | INFO |   📍 {'GET', 'HEAD'} /openapi.json
+2025-10-20 18:16:43,579 | INFO |   📍 {'GET', 'HEAD'} /docs
+2025-10-20 18:16:43,579 | INFO |   📍 {'GET'} /config
+2025-10-20 18:16:43,579 | INFO |   📍 {'GET'} /agents
+2025-10-20 18:16:43,579 | INFO |   📍 {'GET'} /teams
+2025-10-20 18:22:07,696 | INFO | 🚀 AGENT TEAM CREATOR - Iniciando...
+2025-10-20 18:22:07,696 | INFO | 📁 Diretório de agentes: ../01-generated-agents
+2025-10-20 18:22:07,696 | INFO | 🌐 Porta do servidor: 8000
+2025-10-20 18:22:07,696 | INFO | 🔢 Carregando TODOS os agentes
+2025-10-20 18:22:07,697 | ERROR | ❌ Diretório não encontrado: ../01-generated-agents
+2025-10-20 18:57:43,486 | INFO | 🚀 AGENT TEAM CREATOR - Iniciando...
+2025-10-20 18:57:43,486 | INFO | 📁 Diretório de agentes: ../01-test-agents
+2025-10-20 18:57:43,486 | INFO | 🌐 Porta do servidor: 8000
+2025-10-20 18:57:43,486 | INFO | 🔢 Limite de agentes: 3
+2025-10-20 18:57:43,486 | INFO | 🔍 Procurando agentes em: ../01-test-agents
+2025-10-20 18:57:43,487 | INFO | 📁 Encontrados 3 arquivos de agentes
+2025-10-20 18:57:43,487 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 18:57:43,487 | INFO | 📥 Carregando 3 agentes...
+2025-10-20 18:57:43,487 | INFO | 🔑 Using single API key
+2025-10-20 18:57:43,487 | INFO | ✅ Carregado: AccessibilityTesterAgent
+2025-10-20 18:57:43,488 | INFO | 🔑 Using single API key
+2025-10-20 18:57:43,488 | INFO | ✅ Carregado: AiEngineerAgent
+2025-10-20 18:57:43,488 | INFO | 📥 [3/3] Carregando: 002-agent_organizer_agent.py
+2025-10-20 18:57:43,489 | INFO | 🔑 Using single API key
+2025-10-20 18:57:43,489 | INFO | ✅ Carregado: AgentOrganizerAgent
+2025-10-20 18:57:43,489 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 18:57:43,489 | INFO | 👥 Criando Team 'AgentMaker Team - 3 Agentes' com 3 agentes
+2025-10-20 18:57:43,489 | INFO | ✅ Team criado com sucesso
+2025-10-20 18:57:43,489 | INFO | 🏗️  Criando Agent OS com Team: AgentMaker Team - 3 Agentes
+2025-10-20 18:57:44,367 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 18:57:44,368 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 18:57:44,368 | INFO | 🌐 Iniciando servidor Agent OS na porta 8000...
+2025-10-20 18:57:44,368 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 18:57:44,368 | INFO | 📚 Documentação: http://localhost:8000/docs
+2025-10-20 18:57:44,368 | INFO | 👥 Teams: http://localhost:8000/teams
+2025-10-20 18:57:44,368 | INFO | 🤖 Agentes: http://localhost:8000/agents
+2025-10-20 18:57:44,368 | INFO | 🔧 Configuração: http://localhost:8000/config
+2025-10-20 18:57:44,368 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 19:31:43,003 | INFO | 🚀 AGENT TEAM CREATOR - Iniciando...
+2025-10-20 19:31:43,003 | INFO | 📁 Diretório de agentes: ../01-agents
+2025-10-20 19:31:43,003 | INFO | 🌐 Porta do servidor: 8000
+2025-10-20 19:31:43,003 | INFO | 🔢 Carregando TODOS os agentes
+2025-10-20 19:31:43,003 | INFO | 🔍 Procurando agentes em: ../01-agents
+2025-10-20 19:31:43,004 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 19:31:43,004 | INFO | 📥 Carregando 222 agentes...
+2025-10-20 19:31:43,004 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,005 | INFO | ✅ Carregado: TestResultsAnalyzerAgent
+2025-10-20 19:31:43,005 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,005 | INFO | ✅ Carregado: ApiTesterAgent
+2025-10-20 19:31:43,006 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,006 | INFO | ✅ Carregado: KnowledgeSynthesizerAgent
+2025-10-20 19:31:43,007 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,007 | INFO | ✅ Carregado: ProjectAnalystAgent
+2025-10-20 19:31:43,008 | ERROR | ❌ Erro ao carregar 181-sprint_prioritizer_agent.py: invalid syntax. Perhaps you forgot a comma? (181-sprint_prioritizer_agent.py, line 118)
+2025-10-20 19:31:43,010 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,010 | INFO | ✅ Carregado: DocumentationEngineerAgent
+2025-10-20 19:31:43,012 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,012 | INFO | ✅ Carregado: SeoContentPlannerAgent
+2025-10-20 19:31:43,014 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,015 | INFO | ✅ Carregado: TwitterEngagerAgent
+2025-10-20 19:31:43,017 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,017 | INFO | ✅ Carregado: TutorialEngineerAgent
+2025-10-20 19:31:43,017 | INFO | 📥 [10/222] Carregando: 121-performance_benchmarker_agent.py
+2025-10-20 19:31:43,019 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,019 | INFO | ✅ Carregado: PerformanceBenchmarkerAgent
+2025-10-20 19:31:43,021 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,021 | INFO | ✅ Carregado: ApiDesignerAgent
+2025-10-20 19:31:43,022 | ERROR | ❌ Erro ao carregar 190-tdd_orchestrator_agent.py: unterminated string literal (detected at line 285) (190-tdd_orchestrator_agent.py, line 285)
+2025-10-20 19:31:43,024 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,024 | INFO | ✅ Carregado: IotEngineerAgent
+2025-10-20 19:31:43,027 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,027 | INFO | ✅ Carregado: CustomerSuccessManagerAgent
+2025-10-20 19:31:43,028 | ERROR | ❌ Erro ao carregar 013-backend_architect_agent.py: unterminated string literal (detected at line 118) (013-backend_architect_agent.py, line 118)
+2025-10-20 19:31:43,030 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,030 | INFO | ✅ Carregado: SeoContentRefresherAgent
+2025-10-20 19:31:43,032 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,032 | INFO | ✅ Carregado: DataAnalystAgent
+2025-10-20 19:31:43,034 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,034 | INFO | ✅ Carregado: FinanceTrackerAgent
+2025-10-20 19:31:43,036 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,036 | INFO | ✅ Carregado: CloudArchitectAgent
+2025-10-20 19:31:43,036 | INFO | 📥 [20/222] Carregando: 067-fastapi_pro_agent.py
+2025-10-20 19:31:43,037 | ERROR | ❌ Erro ao carregar 067-fastapi_pro_agent.py: unterminated string literal (detected at line 275) (067-fastapi_pro_agent.py, line 275)
+2025-10-20 19:31:43,039 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,039 | INFO | ✅ Carregado: SreEngineerAgent
+2025-10-20 19:31:43,041 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,041 | INFO | ✅ Carregado: ArchitectReviewerAgent
+2025-10-20 19:31:43,044 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,044 | INFO | ✅ Carregado: AccessibilityTesterAgent
+2025-10-20 19:31:43,046 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,046 | INFO | ✅ Carregado: SecurityAuditorAgent
+2025-10-20 19:31:43,048 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,048 | INFO | ✅ Carregado: TechnicalWriterAgent
+2025-10-20 19:31:43,050 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,050 | INFO | ✅ Carregado: ElixirProAgent
+2025-10-20 19:31:43,052 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,053 | INFO | ✅ Carregado: MultiAgentCoordinatorAgent
+2025-10-20 19:31:43,055 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,055 | INFO | ✅ Carregado: TailwindCssExpertAgent
+2025-10-20 19:31:43,057 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,057 | INFO | ✅ Carregado: CsharpDeveloperAgent
+2025-10-20 19:31:43,057 | INFO | 📥 [30/222] Carregando: 214-vue_component_architect_agent.py
+2025-10-20 19:31:43,060 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,060 | INFO | ✅ Carregado: VueComponentArchitectAgent
+2025-10-20 19:31:43,062 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,062 | INFO | ✅ Carregado: DevopsEngineerAgent
+2025-10-20 19:31:43,064 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,064 | INFO | ✅ Carregado: FeedbackSynthesizerAgent
+2025-10-20 19:31:43,066 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,066 | INFO | ✅ Carregado: PerformanceOptimizerAgent
+2025-10-20 19:31:43,068 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,068 | INFO | ✅ Carregado: MlopsEngineerAgent
+2025-10-20 19:31:43,070 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,071 | INFO | ✅ Carregado: RustEngineerAgent
+2025-10-20 19:31:43,073 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,073 | INFO | ✅ Carregado: VisualStorytellerAgent
+2025-10-20 19:31:43,075 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,076 | INFO | ✅ Carregado: RedditCommunityBuilderAgent
+2025-10-20 19:31:43,078 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,078 | INFO | ✅ Carregado: DevopsIncidentResponderAgent
+2025-10-20 19:31:43,080 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,080 | INFO | ✅ Carregado: SpringBootEngineerAgent
+2025-10-20 19:31:43,080 | INFO | 📥 [40/222] Carregando: 058-dotnet_core_expert_agent.py
+2025-10-20 19:31:43,082 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,083 | INFO | ✅ Carregado: DotnetCoreExpertAgent
+2025-10-20 19:31:43,085 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,085 | INFO | ✅ Carregado: SqlProAgent
+2025-10-20 19:31:43,087 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,087 | INFO | ✅ Carregado: ErrorDetectiveAgent
+2025-10-20 19:31:43,089 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,089 | INFO | ✅ Carregado: AiEngineerAgent
+2025-10-20 19:31:43,092 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,092 | INFO | ✅ Carregado: BlockchainDeveloperAgent
+2025-10-20 19:31:43,094 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,094 | INFO | ✅ Carregado: ContentMarketerAgent
+2025-10-20 19:31:43,096 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,096 | INFO | ✅ Carregado: SeoCannibalizationDetectorAgent
+2025-10-20 19:31:43,098 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,098 | INFO | ✅ Carregado: MachineLearningEngineerAgent
+2025-10-20 19:31:43,101 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,101 | INFO | ✅ Carregado: GameDeveloperAgent
+2025-10-20 19:31:43,101 | ERROR | ❌ Erro ao carregar 110-mobile_app_builder_agent.py: unterminated string literal (detected at line 118) (110-mobile_app_builder_agent.py, line 118)
+2025-10-20 19:31:43,102 | INFO | 📥 [50/222] Carregando: 167-seo_content_writer_agent.py
+2025-10-20 19:31:43,104 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,104 | INFO | ✅ Carregado: SeoContentWriterAgent
+2025-10-20 19:31:43,106 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,106 | INFO | ✅ Carregado: AngularArchitectAgent
+2025-10-20 19:31:43,108 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,108 | INFO | ✅ Carregado: CodeArchaeologistAgent
+2025-10-20 19:31:43,110 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,111 | INFO | ✅ Carregado: AgentOrganizerAgent
+2025-10-20 19:31:43,113 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,113 | INFO | ✅ Carregado: SupportResponderAgent
+2025-10-20 19:31:43,115 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,115 | INFO | ✅ Carregado: EmbeddedSystemsAgent
+2025-10-20 19:31:43,117 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,117 | INFO | ✅ Carregado: FlutterExpertAgent
+2025-10-20 19:31:43,119 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,119 | INFO | ✅ Carregado: UiUxDesignerAgent
+2025-10-20 19:31:43,122 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,122 | INFO | ✅ Carregado: SeniorFrontendArchitectAgent
+2025-10-20 19:31:43,124 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,124 | INFO | ✅ Carregado: LegacyModernizerAgent
+2025-10-20 19:31:43,124 | INFO | 📥 [60/222] Carregando: 064-error_coordinator_agent.py
+2025-10-20 19:31:43,126 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,127 | INFO | ✅ Carregado: ErrorCoordinatorAgent
+2025-10-20 19:31:43,129 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,129 | INFO | ✅ Carregado: MlEngineerAgent
+2025-10-20 19:31:43,131 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,131 | INFO | ✅ Carregado: TerraformEngineerAgent
+2025-10-20 19:31:43,133 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,133 | INFO | ✅ Carregado: TerraformSpecialistAgent
+2025-10-20 19:31:43,136 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,136 | INFO | ✅ Carregado: DataResearcherAgent
+2025-10-20 19:31:43,138 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,138 | INFO | ✅ Carregado: SeoSnippetHunterAgent
+2025-10-20 19:31:43,140 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,140 | INFO | ✅ Carregado: KotlinSpecialistAgent
+2025-10-20 19:31:43,140 | ERROR | ❌ Erro ao carregar 088-java_pro_agent.py: unterminated string literal (detected at line 275) (088-java_pro_agent.py, line 275)
+2025-10-20 19:31:43,143 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,143 | INFO | ✅ Carregado: BackendSecurityCoderAgent
+2025-10-20 19:31:43,145 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,145 | INFO | ✅ Carregado: PerformanceMonitorAgent
+2025-10-20 19:31:43,145 | INFO | 📥 [70/222] Carregando: 103-market_researcher_agent.py
+2025-10-20 19:31:43,148 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,148 | INFO | ✅ Carregado: MarketResearcherAgent
+2025-10-20 19:31:43,150 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,150 | INFO | ✅ Carregado: SearchSpecialistAgent
+2025-10-20 19:31:43,152 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,152 | INFO | ✅ Carregado: ContextManagerAgent
+2025-10-20 19:31:43,154 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,154 | INFO | ✅ Carregado: PostgresProAgent
+2025-10-20 19:31:43,155 | ERROR | ❌ Erro ao carregar 199-tiktok_strategist_agent.py: '(' was never closed (199-tiktok_strategist_agent.py, line 114)
+2025-10-20 19:31:43,157 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,157 | INFO | ✅ Carregado: MobileAppDeveloperAgent
+2025-10-20 19:31:43,160 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,160 | INFO | ✅ Carregado: VueStateManagerAgent
+2025-10-20 19:31:43,162 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,162 | INFO | ✅ Carregado: MobileSecurityCoderAgent
+2025-10-20 19:31:43,165 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,165 | INFO | ✅ Carregado: BusinessAnalystAgent
+2025-10-20 19:31:43,167 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,167 | INFO | ✅ Carregado: DeploymentEngineerAgent
+2025-10-20 19:31:43,167 | INFO | 📥 [80/222] Carregando: 041-database_administrator_agent.py
+2025-10-20 19:31:43,170 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,170 | INFO | ✅ Carregado: DatabaseAdministratorAgent
+2025-10-20 19:31:43,171 | ERROR | ❌ Erro ao carregar 145-refactor_agent_agent.py: unterminated string literal (detected at line 118) (145-refactor_agent_agent.py, line 118)
+2025-10-20 19:31:43,173 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,173 | INFO | ✅ Carregado: PythonProAgent
+2025-10-20 19:31:43,176 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,176 | INFO | ✅ Carregado: SeniorBackendArchitectAgent
+2025-10-20 19:31:43,179 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,179 | INFO | ✅ Carregado: FrontendDeveloperAgent
+2025-10-20 19:31:43,181 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,181 | INFO | ✅ Carregado: PlatformEngineerAgent
+2025-10-20 19:31:43,183 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,183 | INFO | ✅ Carregado: LegalAdvisorAgent
+2025-10-20 19:31:43,186 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,186 | INFO | ✅ Carregado: PenetrationTesterAgent
+2025-10-20 19:31:43,188 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,188 | INFO | ✅ Carregado: FullstackDeveloperAgent
+2025-10-20 19:31:43,190 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,190 | INFO | ✅ Carregado: MermaidExpertAgent
+2025-10-20 19:31:43,191 | INFO | 📥 [90/222] Carregando: 025-code_reviewer_agent.py
+2025-10-20 19:31:43,194 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,194 | INFO | ✅ Carregado: CodeReviewerAgent
+2025-10-20 19:31:43,196 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,196 | INFO | ✅ Carregado: TechLeadOrchestratorAgent
+2025-10-20 19:31:43,198 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,198 | INFO | ✅ Carregado: SecurityEngineerAgent
+2025-10-20 19:31:43,201 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,201 | INFO | ✅ Carregado: SeoStructureArchitectAgent
+2025-10-20 19:31:43,202 | ERROR | ❌ Erro ao carregar 046-devops_automator_agent.py: unterminated string literal (detected at line 118) (046-devops_automator_agent.py, line 118)
+2025-10-20 19:31:43,204 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,204 | INFO | ✅ Carregado: AnalyticsReporterAgent
+2025-10-20 19:31:43,206 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,206 | INFO | ✅ Carregado: PhpProAgent
+2025-10-20 19:31:43,208 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,208 | INFO | ✅ Carregado: ScalaProAgent
+2025-10-20 19:31:43,211 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,211 | INFO | ✅ Carregado: RailsExpertAgent
+2025-10-20 19:31:43,213 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,213 | INFO | ✅ Carregado: NetworkEngineerAgent
+2025-10-20 19:31:43,214 | INFO | 📥 [100/222] Carregando: 028-content_creator_agent.py
+2025-10-20 19:31:43,216 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,216 | INFO | ✅ Carregado: ContentCreatorAgent
+2025-10-20 19:31:43,216 | ERROR | ❌ Erro ao carregar 081-hybrid_cloud_architect_agent.py: unterminated string literal (detected at line 264) (081-hybrid_cloud_architect_agent.py, line 264)
+2025-10-20 19:31:43,218 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,219 | INFO | ✅ Carregado: SeoKeywordStrategistAgent
+2025-10-20 19:31:43,221 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,221 | INFO | ✅ Carregado: WordpressMasterAgent
+2025-10-20 19:31:43,222 | ERROR | ❌ Erro ao carregar 191-team_configurator_agent.py: invalid syntax. Perhaps you forgot a comma? (191-team_configurator_agent.py, line 118)
+2025-10-20 19:31:43,224 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,224 | INFO | ✅ Carregado: HrProAgent
+2025-10-20 19:31:43,227 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,227 | INFO | ✅ Carregado: SeoMetaOptimizerAgent
+2025-10-20 19:31:43,229 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,229 | INFO | ✅ Carregado: ReactComponentArchitectAgent
+2025-10-20 19:31:43,232 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,232 | INFO | ✅ Carregado: ApiDocumenterAgent
+2025-10-20 19:31:43,234 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,234 | INFO | ✅ Carregado: UxResearcherAgent
+2025-10-20 19:31:43,234 | INFO | 📥 [110/222] Carregando: 146-refactoring_specialist_agent.py
+2025-10-20 19:31:43,236 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,236 | INFO | ✅ Carregado: RefactoringSpecialistAgent
+2025-10-20 19:31:43,239 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,239 | INFO | ✅ Carregado: UiUxMasterAgent
+2025-10-20 19:31:43,242 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,242 | INFO | ✅ Carregado: ApiArchitectAgent
+2025-10-20 19:31:43,244 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,244 | INFO | ✅ Carregado: ElectronProAgent
+2025-10-20 19:31:43,247 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,247 | INFO | ✅ Carregado: PaymentIntegrationAgent
+2025-10-20 19:31:43,249 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,249 | INFO | ✅ Carregado: VueExpertAgent
+2025-10-20 19:31:43,251 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,251 | INFO | ✅ Carregado: ToolEvaluatorAgent
+2025-10-20 19:31:43,253 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,254 | INFO | ✅ Carregado: ReferenceBuilderAgent
+2025-10-20 19:31:43,256 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,256 | INFO | ✅ Carregado: RustProAgent
+2025-10-20 19:31:43,259 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,259 | INFO | ✅ Carregado: ProductManagerAgent
+2025-10-20 19:31:43,259 | INFO | 📥 [120/222] Carregando: 164-seo_content_auditor_agent.py
+2025-10-20 19:31:43,261 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,261 | INFO | ✅ Carregado: SeoContentAuditorAgent
+2025-10-20 19:31:43,264 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,264 | INFO | ✅ Carregado: TaskDistributorAgent
+2025-10-20 19:31:43,266 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,266 | INFO | ✅ Carregado: ResearchAnalystAgent
+2025-10-20 19:31:43,268 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,269 | INFO | ✅ Carregado: QaExpertAgent
+2025-10-20 19:31:43,270 | ERROR | ❌ Erro ao carregar 131-project_shipper_agent.py: unterminated string literal (detected at line 118) (131-project_shipper_agent.py, line 118)
+2025-10-20 19:31:43,270 | ERROR | ❌ Erro ao carregar 066-experiment_tracker_agent.py: invalid syntax. Perhaps you forgot a comma? (066-experiment_tracker_agent.py, line 118)
+2025-10-20 19:31:43,271 | ERROR | ❌ Erro ao carregar 138-rails_backend_expert_agent.py: invalid syntax. Perhaps you forgot a comma? (138-rails_backend_expert_agent.py, line 118)
+2025-10-20 19:31:43,274 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,274 | INFO | ✅ Carregado: IncidentResponderAgent
+2025-10-20 19:31:43,276 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,276 | INFO | ✅ Carregado: MobileDeveloperAgent
+2025-10-20 19:31:43,279 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,279 | INFO | ✅ Carregado: BackendDeveloperAgent
+2025-10-20 19:31:43,279 | INFO | 📥 [130/222] Carregando: 051-django_backend_expert_agent.py
+2025-10-20 19:31:43,281 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,282 | INFO | ✅ Carregado: DjangoBackendExpertAgent
+2025-10-20 19:31:43,282 | ERROR | ❌ Erro ao carregar 093-kubernetes_architect_agent.py: unterminated string literal (detected at line 258) (093-kubernetes_architect_agent.py, line 258)
+2025-10-20 19:31:43,284 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,284 | INFO | ✅ Carregado: GrowthHackerAgent
+2025-10-20 19:31:43,287 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,287 | INFO | ✅ Carregado: ComplianceAuditorAgent
+2025-10-20 19:31:43,288 | ERROR | ❌ Erro ao carregar 219-whimsy_injector_agent.py: unterminated string literal (detected at line 118) (219-whimsy_injector_agent.py, line 118)
+2025-10-20 19:31:43,290 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,290 | INFO | ✅ Carregado: GolangProAgent
+2025-10-20 19:31:43,293 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,293 | INFO | ✅ Carregado: SpecTesterAgent
+2025-10-20 19:31:43,295 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,295 | INFO | ✅ Carregado: DatabaseOptimizerAgent
+2025-10-20 19:31:43,298 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,298 | INFO | ✅ Carregado: LaravelSpecialistAgent
+2025-10-20 19:31:43,300 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,300 | INFO | ✅ Carregado: DataEngineerAgent
+2025-10-20 19:31:43,300 | INFO | 📥 [140/222] Carregando: 060-dx_optimizer_agent.py
+2025-10-20 19:31:43,302 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,302 | INFO | ✅ Carregado: DxOptimizerAgent
+2025-10-20 19:31:43,305 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,305 | INFO | ✅ Carregado: SpecValidatorAgent
+2025-10-20 19:31:43,307 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,307 | INFO | ✅ Carregado: NextjsDeveloperAgent
+2025-10-20 19:31:43,310 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,310 | INFO | ✅ Carregado: CsharpProAgent
+2025-10-20 19:31:43,313 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,313 | INFO | ✅ Carregado: RailsActiverecordExpertAgent
+2025-10-20 19:31:43,315 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,315 | INFO | ✅ Carregado: SalesAutomatorAgent
+2025-10-20 19:31:43,318 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,318 | INFO | ✅ Carregado: IosDeveloperAgent
+2025-10-20 19:31:43,319 | ERROR | ❌ Erro ao carregar 198-test_writer_fixer_agent.py: invalid syntax. Perhaps you forgot a comma? (198-test_writer_fixer_agent.py, line 118)
+2025-10-20 19:31:43,321 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,321 | INFO | ✅ Carregado: ChaosEngineerAgent
+2025-10-20 19:31:43,323 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,323 | INFO | ✅ Carregado: PromptEngineerAgent
+2025-10-20 19:31:43,324 | INFO | 📥 [150/222] Carregando: 149-risk_manager_agent.py
+2025-10-20 19:31:43,326 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,326 | INFO | ✅ Carregado: RiskManagerAgent
+2025-10-20 19:31:43,329 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,329 | INFO | ✅ Carregado: ArchitectReviewAgent
+2025-10-20 19:31:43,331 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,331 | INFO | ✅ Carregado: CppProAgent
+2025-10-20 19:31:43,333 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,333 | INFO | ✅ Carregado: SpecArchitectAgent
+2025-10-20 19:31:43,336 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,336 | INFO | ✅ Carregado: VueNuxtExpertAgent
+2025-10-20 19:31:43,337 | ERROR | ❌ Erro ao carregar 185-studio_producer_agent.py: unterminated string literal (detected at line 118) (185-studio_producer_agent.py, line 118)
+2025-10-20 19:31:43,338 | ERROR | ❌ Erro ao carregar 203-trend_researcher_agent.py: '(' was never closed (203-trend_researcher_agent.py, line 114)
+2025-10-20 19:31:43,338 | ERROR | ❌ Erro ao carregar 184-studio_coach_agent.py: invalid syntax. Perhaps you forgot a comma? (184-studio_coach_agent.py, line 118)
+2025-10-20 19:31:43,341 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,341 | INFO | ✅ Carregado: DjangoOrmExpertAgent
+2025-10-20 19:31:43,344 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,344 | INFO | ✅ Carregado: SalesEngineerAgent
+2025-10-20 19:31:43,344 | INFO | 📥 [160/222] Carregando: 100-legal_compliance_checker_agent.py
+2025-10-20 19:31:43,347 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,347 | INFO | ✅ Carregado: LegalComplianceCheckerAgent
+2025-10-20 19:31:43,349 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,349 | INFO | ✅ Carregado: TestAutomatorAgent
+2025-10-20 19:31:43,352 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,352 | INFO | ✅ Carregado: LaravelEloquentExpertAgent
+2025-10-20 19:31:43,354 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,354 | INFO | ✅ Carregado: CliDeveloperAgent
+2025-10-20 19:31:43,357 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,357 | INFO | ✅ Carregado: ReactSpecialistAgent
+2025-10-20 19:31:43,359 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,359 | INFO | ✅ Carregado: ProjectManagerAgent
+2025-10-20 19:31:43,362 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,362 | INFO | ✅ Carregado: KubernetesSpecialistAgent
+2025-10-20 19:31:43,364 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,364 | INFO | ✅ Carregado: DocumentationSpecialistAgent
+2025-10-20 19:31:43,366 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,366 | INFO | ✅ Carregado: SpecOrchestratorAgent
+2025-10-20 19:31:43,369 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,369 | INFO | ✅ Carregado: SeoAuthorityBuilderAgent
+2025-10-20 19:31:43,369 | INFO | 📥 [170/222] Carregando: 101-llm_architect_agent.py
+2025-10-20 19:31:43,371 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,371 | INFO | ✅ Carregado: LlmArchitectAgent
+2025-10-20 19:31:43,375 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,375 | INFO | ✅ Carregado: DjangoApiDeveloperAgent
+2025-10-20 19:31:43,378 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,378 | INFO | ✅ Carregado: SeoSpecialistAgent
+2025-10-20 19:31:43,380 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,380 | INFO | ✅ Carregado: LaravelBackendExpertAgent
+2025-10-20 19:31:43,382 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,382 | INFO | ✅ Carregado: TrendAnalystAgent
+2025-10-20 19:31:43,384 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,384 | INFO | ✅ Carregado: TypescriptProAgent
+2025-10-20 19:31:43,387 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,387 | INFO | ✅ Carregado: PerformanceEngineerAgent
+2025-10-20 19:31:43,389 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,389 | INFO | ✅ Carregado: DocsArchitectAgent
+2025-10-20 19:31:43,391 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,391 | INFO | ✅ Carregado: InstagramCuratorAgent
+2025-10-20 19:31:43,393 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,393 | INFO | ✅ Carregado: CProAgent
+2025-10-20 19:31:43,393 | INFO | 📥 [180/222] Carregando: 142-react_nextjs_expert_agent.py
+2025-10-20 19:31:43,395 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,396 | INFO | ✅ Carregado: ReactNextjsExpertAgent
+2025-10-20 19:31:43,398 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,398 | INFO | ✅ Carregado: FintechEngineerAgent
+2025-10-20 19:31:43,400 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,400 | INFO | ✅ Carregado: NlpEngineerAgent
+2025-10-20 19:31:43,402 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,402 | INFO | ✅ Carregado: DevopsTroubleshooterAgent
+2025-10-20 19:31:43,404 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,404 | INFO | ✅ Carregado: McpDeveloperAgent
+2025-10-20 19:31:43,406 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,406 | INFO | ✅ Carregado: UiVisualValidatorAgent
+2025-10-20 19:31:43,408 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,408 | INFO | ✅ Carregado: WorkflowOrchestratorAgent
+2025-10-20 19:31:43,411 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,411 | INFO | ✅ Carregado: GitWorkflowManagerAgent
+2025-10-20 19:31:43,413 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,413 | INFO | ✅ Carregado: JavaArchitectAgent
+2025-10-20 19:31:43,415 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,415 | INFO | ✅ Carregado: DebuggerAgent
+2025-10-20 19:31:43,415 | INFO | 📥 [190/222] Carregando: 107-minecraft_bukkit_pro_agent.py
+2025-10-20 19:31:43,417 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,417 | INFO | ✅ Carregado: MinecraftBukkitProAgent
+2025-10-20 19:31:43,419 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,419 | INFO | ✅ Carregado: SpecAnalystAgent
+2025-10-20 19:31:43,421 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,421 | INFO | ✅ Carregado: CustomerSupportAgent
+2025-10-20 19:31:43,424 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,424 | INFO | ✅ Carregado: JavascriptProAgent
+2025-10-20 19:31:43,426 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,426 | INFO | ✅ Carregado: MicroservicesArchitectAgent
+2025-10-20 19:31:43,427 | ERROR | ❌ Erro ao carregar 140-rapid_prototyper_agent.py: unterminated string literal (detected at line 118) (140-rapid_prototyper_agent.py, line 118)
+2025-10-20 19:31:43,430 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,430 | INFO | ✅ Carregado: InfrastructureMaintainerAgent
+2025-10-20 19:31:43,432 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,432 | INFO | ✅ Carregado: SwiftExpertAgent
+2025-10-20 19:31:43,433 | ERROR | ❌ Erro ao carregar 090-joker_agent.py: invalid syntax. Perhaps you forgot a comma? (090-joker_agent.py, line 118)
+2025-10-20 19:31:43,435 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,435 | INFO | ✅ Carregado: SpecPlannerAgent
+2025-10-20 19:31:43,435 | INFO | 📥 [200/222] Carregando: 039-data_scientist_agent.py
+2025-10-20 19:31:43,437 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,438 | INFO | ✅ Carregado: DataScientistAgent
+2025-10-20 19:31:43,440 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,440 | INFO | ✅ Carregado: ToolingEngineerAgent
+2025-10-20 19:31:43,442 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,442 | INFO | ✅ Carregado: WorkflowOptimizerAgent
+2025-10-20 19:31:43,445 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,445 | INFO | ✅ Carregado: UnityDeveloperAgent
+2025-10-20 19:31:43,447 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,447 | INFO | ✅ Carregado: UiDesignerAgent
+2025-10-20 19:31:43,449 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,449 | INFO | ✅ Carregado: RailsApiDeveloperAgent
+2025-10-20 19:31:43,451 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,451 | INFO | ✅ Carregado: RubyProAgent
+2025-10-20 19:31:43,453 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,453 | INFO | ✅ Carregado: BuildEngineerAgent
+2025-10-20 19:31:43,455 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,456 | INFO | ✅ Carregado: WebsocketEngineerAgent
+2025-10-20 19:31:43,456 | ERROR | ❌ Erro ao carregar 059-dotnet_framework_4.8_expert_agent.py: invalid decimal literal (059-dotnet_framework_4.8_expert_agent.py, line 86)
+2025-10-20 19:31:43,456 | INFO | 📥 [210/222] Carregando: 118-observability_engineer_agent.py
+2025-10-20 19:31:43,458 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,459 | INFO | ✅ Carregado: ObservabilityEngineerAgent
+2025-10-20 19:31:43,461 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,461 | INFO | ✅ Carregado: FrontendSecurityCoderAgent
+2025-10-20 19:31:43,464 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,464 | INFO | ✅ Carregado: QuantAnalystAgent
+2025-10-20 19:31:43,466 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,466 | INFO | ✅ Carregado: GraphqlArchitectAgent
+2025-10-20 19:31:43,468 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,468 | INFO | ✅ Carregado: CompetitiveAnalystAgent
+2025-10-20 19:31:43,470 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,470 | INFO | ✅ Carregado: DependencyManagerAgent
+2025-10-20 19:31:43,472 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,472 | INFO | ✅ Carregado: BrandGuardianAgent
+2025-10-20 19:31:43,475 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,475 | INFO | ✅ Carregado: DatabaseAdminAgent
+2025-10-20 19:31:43,477 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,477 | INFO | ✅ Carregado: AppStoreOptimizerAgent
+2025-10-20 19:31:43,477 | ERROR | ❌ Erro ao carregar 054-django_pro_agent.py: unterminated string literal (detected at line 263) (054-django_pro_agent.py, line 263)
+2025-10-20 19:31:43,477 | INFO | 📥 [220/222] Carregando: 052-django_developer_agent.py
+2025-10-20 19:31:43,479 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,479 | INFO | ✅ Carregado: DjangoDeveloperAgent
+2025-10-20 19:31:43,481 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,481 | INFO | ✅ Carregado: ScrumMasterAgent
+2025-10-20 19:31:43,482 | INFO | 📥 [222/222] Carregando: 175-spec_developer_agent.py
+2025-10-20 19:31:43,484 | INFO | 🔑 Using local API key rotation (index: 21)
+2025-10-20 19:31:43,484 | INFO | ✅ Carregado: SpecDeveloperAgent
+2025-10-20 19:31:43,484 | INFO | ✅ Carregados 198 agentes com sucesso
+2025-10-20 19:31:43,484 | WARNING | ⚠️  24 agentes falharam ao carregar
+2025-10-20 19:31:43,484 | INFO | 👥 Criando Team 'AgentMaker Team - 198 Agentes' com 198 agentes
+2025-10-20 19:31:43,484 | INFO | ✅ Team criado com sucesso
+2025-10-20 19:31:43,484 | INFO | 🏗️  Criando Agent OS com Team: AgentMaker Team - 198 Agentes
+2025-10-20 19:31:44,408 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 19:31:44,408 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 19:31:44,408 | INFO | 🌐 Iniciando servidor Agent OS na porta 8000...
+2025-10-20 19:31:44,408 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 19:31:44,408 | INFO | 📚 Documentação: http://localhost:8000/docs
+2025-10-20 19:31:44,408 | INFO | 👥 Teams: http://localhost:8000/teams
+2025-10-20 19:31:44,408 | INFO | 🤖 Agentes: http://localhost:8000/agents
+2025-10-20 19:31:44,408 | INFO | 🔧 Configuração: http://localhost:8000/config
+2025-10-20 19:31:44,408 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 19:31:55,918 | INFO | 🚀 AGENT TEAM CREATOR - Iniciando...
+2025-10-20 19:31:55,918 | INFO | 📁 Diretório de agentes: ../01-agents
+2025-10-20 19:31:55,918 | INFO | 🌐 Porta do servidor: 8000
+2025-10-20 19:31:55,918 | INFO | 🔢 Carregando TODOS os agentes
+2025-10-20 19:31:55,918 | INFO | 🔍 Procurando agentes em: ../01-agents
+2025-10-20 19:31:55,919 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 19:31:55,919 | INFO | 📥 Carregando 222 agentes...
+2025-10-20 19:31:55,920 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,920 | INFO | ✅ Carregado: TestResultsAnalyzerAgent
+2025-10-20 19:31:55,921 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,921 | INFO | ✅ Carregado: ApiTesterAgent
+2025-10-20 19:31:55,922 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,922 | INFO | ✅ Carregado: KnowledgeSynthesizerAgent
+2025-10-20 19:31:55,923 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,923 | INFO | ✅ Carregado: ProjectAnalystAgent
+2025-10-20 19:31:55,924 | ERROR | ❌ Erro ao carregar 181-sprint_prioritizer_agent.py: invalid syntax. Perhaps you forgot a comma? (181-sprint_prioritizer_agent.py, line 118)
+2025-10-20 19:31:55,925 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,925 | INFO | ✅ Carregado: DocumentationEngineerAgent
+2025-10-20 19:31:55,926 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,926 | INFO | ✅ Carregado: SeoContentPlannerAgent
+2025-10-20 19:31:55,927 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,927 | INFO | ✅ Carregado: TwitterEngagerAgent
+2025-10-20 19:31:55,928 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,928 | INFO | ✅ Carregado: TutorialEngineerAgent
+2025-10-20 19:31:55,928 | INFO | 📥 [10/222] Carregando: 121-performance_benchmarker_agent.py
+2025-10-20 19:31:55,928 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,929 | INFO | ✅ Carregado: PerformanceBenchmarkerAgent
+2025-10-20 19:31:55,930 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,930 | INFO | ✅ Carregado: ApiDesignerAgent
+2025-10-20 19:31:55,931 | ERROR | ❌ Erro ao carregar 190-tdd_orchestrator_agent.py: unterminated string literal (detected at line 285) (190-tdd_orchestrator_agent.py, line 285)
+2025-10-20 19:31:55,932 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,932 | INFO | ✅ Carregado: IotEngineerAgent
+2025-10-20 19:31:55,933 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,933 | INFO | ✅ Carregado: CustomerSuccessManagerAgent
+2025-10-20 19:31:55,934 | ERROR | ❌ Erro ao carregar 013-backend_architect_agent.py: unterminated string literal (detected at line 118) (013-backend_architect_agent.py, line 118)
+2025-10-20 19:31:55,935 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,935 | INFO | ✅ Carregado: SeoContentRefresherAgent
+2025-10-20 19:31:55,936 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,936 | INFO | ✅ Carregado: DataAnalystAgent
+2025-10-20 19:31:55,937 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,937 | INFO | ✅ Carregado: FinanceTrackerAgent
+2025-10-20 19:31:55,938 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,938 | INFO | ✅ Carregado: CloudArchitectAgent
+2025-10-20 19:31:55,938 | INFO | 📥 [20/222] Carregando: 067-fastapi_pro_agent.py
+2025-10-20 19:31:55,939 | ERROR | ❌ Erro ao carregar 067-fastapi_pro_agent.py: unterminated string literal (detected at line 275) (067-fastapi_pro_agent.py, line 275)
+2025-10-20 19:31:55,939 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,939 | INFO | ✅ Carregado: SreEngineerAgent
+2025-10-20 19:31:55,940 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,940 | INFO | ✅ Carregado: ArchitectReviewerAgent
+2025-10-20 19:31:55,941 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,941 | INFO | ✅ Carregado: AccessibilityTesterAgent
+2025-10-20 19:31:55,942 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,942 | INFO | ✅ Carregado: SecurityAuditorAgent
+2025-10-20 19:31:55,943 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,943 | INFO | ✅ Carregado: TechnicalWriterAgent
+2025-10-20 19:31:55,945 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,945 | INFO | ✅ Carregado: ElixirProAgent
+2025-10-20 19:31:55,946 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,946 | INFO | ✅ Carregado: MultiAgentCoordinatorAgent
+2025-10-20 19:31:55,947 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,947 | INFO | ✅ Carregado: TailwindCssExpertAgent
+2025-10-20 19:31:55,948 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,948 | INFO | ✅ Carregado: CsharpDeveloperAgent
+2025-10-20 19:31:55,948 | INFO | 📥 [30/222] Carregando: 214-vue_component_architect_agent.py
+2025-10-20 19:31:55,949 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,949 | INFO | ✅ Carregado: VueComponentArchitectAgent
+2025-10-20 19:31:55,950 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,950 | INFO | ✅ Carregado: DevopsEngineerAgent
+2025-10-20 19:31:55,951 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,951 | INFO | ✅ Carregado: FeedbackSynthesizerAgent
+2025-10-20 19:31:55,952 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,952 | INFO | ✅ Carregado: PerformanceOptimizerAgent
+2025-10-20 19:31:55,953 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,953 | INFO | ✅ Carregado: MlopsEngineerAgent
+2025-10-20 19:31:55,954 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,954 | INFO | ✅ Carregado: RustEngineerAgent
+2025-10-20 19:31:55,955 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,955 | INFO | ✅ Carregado: VisualStorytellerAgent
+2025-10-20 19:31:55,955 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,955 | INFO | ✅ Carregado: RedditCommunityBuilderAgent
+2025-10-20 19:31:55,956 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,956 | INFO | ✅ Carregado: DevopsIncidentResponderAgent
+2025-10-20 19:31:55,957 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,957 | INFO | ✅ Carregado: SpringBootEngineerAgent
+2025-10-20 19:31:55,957 | INFO | 📥 [40/222] Carregando: 058-dotnet_core_expert_agent.py
+2025-10-20 19:31:55,958 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,958 | INFO | ✅ Carregado: DotnetCoreExpertAgent
+2025-10-20 19:31:55,959 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,959 | INFO | ✅ Carregado: SqlProAgent
+2025-10-20 19:31:55,960 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,960 | INFO | ✅ Carregado: ErrorDetectiveAgent
+2025-10-20 19:31:55,961 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,961 | INFO | ✅ Carregado: AiEngineerAgent
+2025-10-20 19:31:55,963 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,963 | INFO | ✅ Carregado: BlockchainDeveloperAgent
+2025-10-20 19:31:55,964 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,964 | INFO | ✅ Carregado: ContentMarketerAgent
+2025-10-20 19:31:55,965 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,965 | INFO | ✅ Carregado: SeoCannibalizationDetectorAgent
+2025-10-20 19:31:55,965 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,966 | INFO | ✅ Carregado: MachineLearningEngineerAgent
+2025-10-20 19:31:55,967 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,967 | INFO | ✅ Carregado: GameDeveloperAgent
+2025-10-20 19:31:55,968 | ERROR | ❌ Erro ao carregar 110-mobile_app_builder_agent.py: unterminated string literal (detected at line 118) (110-mobile_app_builder_agent.py, line 118)
+2025-10-20 19:31:55,968 | INFO | 📥 [50/222] Carregando: 167-seo_content_writer_agent.py
+2025-10-20 19:31:55,969 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,969 | INFO | ✅ Carregado: SeoContentWriterAgent
+2025-10-20 19:31:55,969 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,970 | INFO | ✅ Carregado: AngularArchitectAgent
+2025-10-20 19:31:55,970 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,970 | INFO | ✅ Carregado: CodeArchaeologistAgent
+2025-10-20 19:31:55,972 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,972 | INFO | ✅ Carregado: AgentOrganizerAgent
+2025-10-20 19:31:55,973 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,973 | INFO | ✅ Carregado: SupportResponderAgent
+2025-10-20 19:31:55,974 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,974 | INFO | ✅ Carregado: EmbeddedSystemsAgent
+2025-10-20 19:31:55,975 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,975 | INFO | ✅ Carregado: FlutterExpertAgent
+2025-10-20 19:31:55,976 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,976 | INFO | ✅ Carregado: UiUxDesignerAgent
+2025-10-20 19:31:55,977 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,977 | INFO | ✅ Carregado: SeniorFrontendArchitectAgent
+2025-10-20 19:31:55,978 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,979 | INFO | ✅ Carregado: LegacyModernizerAgent
+2025-10-20 19:31:55,979 | INFO | 📥 [60/222] Carregando: 064-error_coordinator_agent.py
+2025-10-20 19:31:55,979 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,979 | INFO | ✅ Carregado: ErrorCoordinatorAgent
+2025-10-20 19:31:55,980 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,980 | INFO | ✅ Carregado: MlEngineerAgent
+2025-10-20 19:31:55,981 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,981 | INFO | ✅ Carregado: TerraformEngineerAgent
+2025-10-20 19:31:55,982 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,982 | INFO | ✅ Carregado: TerraformSpecialistAgent
+2025-10-20 19:31:55,983 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,983 | INFO | ✅ Carregado: DataResearcherAgent
+2025-10-20 19:31:55,984 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,984 | INFO | ✅ Carregado: SeoSnippetHunterAgent
+2025-10-20 19:31:55,985 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,985 | INFO | ✅ Carregado: KotlinSpecialistAgent
+2025-10-20 19:31:55,986 | ERROR | ❌ Erro ao carregar 088-java_pro_agent.py: unterminated string literal (detected at line 275) (088-java_pro_agent.py, line 275)
+2025-10-20 19:31:55,986 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,987 | INFO | ✅ Carregado: BackendSecurityCoderAgent
+2025-10-20 19:31:55,987 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,987 | INFO | ✅ Carregado: PerformanceMonitorAgent
+2025-10-20 19:31:55,987 | INFO | 📥 [70/222] Carregando: 103-market_researcher_agent.py
+2025-10-20 19:31:55,988 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,988 | INFO | ✅ Carregado: MarketResearcherAgent
+2025-10-20 19:31:55,989 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,989 | INFO | ✅ Carregado: SearchSpecialistAgent
+2025-10-20 19:31:55,990 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,990 | INFO | ✅ Carregado: ContextManagerAgent
+2025-10-20 19:31:55,991 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,991 | INFO | ✅ Carregado: PostgresProAgent
+2025-10-20 19:31:55,993 | ERROR | ❌ Erro ao carregar 199-tiktok_strategist_agent.py: '(' was never closed (199-tiktok_strategist_agent.py, line 114)
+2025-10-20 19:31:55,994 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,994 | INFO | ✅ Carregado: MobileAppDeveloperAgent
+2025-10-20 19:31:55,996 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,996 | INFO | ✅ Carregado: VueStateManagerAgent
+2025-10-20 19:31:55,997 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,997 | INFO | ✅ Carregado: MobileSecurityCoderAgent
+2025-10-20 19:31:55,998 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,998 | INFO | ✅ Carregado: BusinessAnalystAgent
+2025-10-20 19:31:55,999 | INFO | 🔑 Using local API key rotation (index: 11)
+2025-10-20 19:31:55,999 | INFO | ✅ Carregado: DeploymentEngineerAgent
+2025-10-20 19:31:55,999 | INFO | 📥 [80/222] Carregando: 041-database_administrator_agent.py
+2025-10-20 19:31:56,000 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,000 | INFO | ✅ Carregado: DatabaseAdministratorAgent
+2025-10-20 19:31:56,001 | ERROR | ❌ Erro ao carregar 145-refactor_agent_agent.py: unterminated string literal (detected at line 118) (145-refactor_agent_agent.py, line 118)
+2025-10-20 19:31:56,001 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,002 | INFO | ✅ Carregado: PythonProAgent
+2025-10-20 19:31:56,002 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,003 | INFO | ✅ Carregado: SeniorBackendArchitectAgent
+2025-10-20 19:31:56,003 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,003 | INFO | ✅ Carregado: FrontendDeveloperAgent
+2025-10-20 19:31:56,004 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,004 | INFO | ✅ Carregado: PlatformEngineerAgent
+2025-10-20 19:31:56,005 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,005 | INFO | ✅ Carregado: LegalAdvisorAgent
+2025-10-20 19:31:56,006 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,006 | INFO | ✅ Carregado: PenetrationTesterAgent
+2025-10-20 19:31:56,007 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,007 | INFO | ✅ Carregado: FullstackDeveloperAgent
+2025-10-20 19:31:56,008 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,008 | INFO | ✅ Carregado: MermaidExpertAgent
+2025-10-20 19:31:56,008 | INFO | 📥 [90/222] Carregando: 025-code_reviewer_agent.py
+2025-10-20 19:31:56,009 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,009 | INFO | ✅ Carregado: CodeReviewerAgent
+2025-10-20 19:31:56,010 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,010 | INFO | ✅ Carregado: TechLeadOrchestratorAgent
+2025-10-20 19:31:56,011 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,011 | INFO | ✅ Carregado: SecurityEngineerAgent
+2025-10-20 19:31:56,012 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,012 | INFO | ✅ Carregado: SeoStructureArchitectAgent
+2025-10-20 19:31:56,013 | ERROR | ❌ Erro ao carregar 046-devops_automator_agent.py: unterminated string literal (detected at line 118) (046-devops_automator_agent.py, line 118)
+2025-10-20 19:31:56,014 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,015 | INFO | ✅ Carregado: AnalyticsReporterAgent
+2025-10-20 19:31:56,015 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,015 | INFO | ✅ Carregado: PhpProAgent
+2025-10-20 19:31:56,016 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,016 | INFO | ✅ Carregado: ScalaProAgent
+2025-10-20 19:31:56,017 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,017 | INFO | ✅ Carregado: RailsExpertAgent
+2025-10-20 19:31:56,018 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,018 | INFO | ✅ Carregado: NetworkEngineerAgent
+2025-10-20 19:31:56,018 | INFO | 📥 [100/222] Carregando: 028-content_creator_agent.py
+2025-10-20 19:31:56,019 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,019 | INFO | ✅ Carregado: ContentCreatorAgent
+2025-10-20 19:31:56,020 | ERROR | ❌ Erro ao carregar 081-hybrid_cloud_architect_agent.py: unterminated string literal (detected at line 264) (081-hybrid_cloud_architect_agent.py, line 264)
+2025-10-20 19:31:56,020 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,021 | INFO | ✅ Carregado: SeoKeywordStrategistAgent
+2025-10-20 19:31:56,021 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,021 | INFO | ✅ Carregado: WordpressMasterAgent
+2025-10-20 19:31:56,022 | ERROR | ❌ Erro ao carregar 191-team_configurator_agent.py: invalid syntax. Perhaps you forgot a comma? (191-team_configurator_agent.py, line 118)
+2025-10-20 19:31:56,023 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,023 | INFO | ✅ Carregado: HrProAgent
+2025-10-20 19:31:56,024 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,025 | INFO | ✅ Carregado: SeoMetaOptimizerAgent
+2025-10-20 19:31:56,026 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,026 | INFO | ✅ Carregado: ReactComponentArchitectAgent
+2025-10-20 19:31:56,026 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,027 | INFO | ✅ Carregado: ApiDocumenterAgent
+2025-10-20 19:31:56,027 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,027 | INFO | ✅ Carregado: UxResearcherAgent
+2025-10-20 19:31:56,027 | INFO | 📥 [110/222] Carregando: 146-refactoring_specialist_agent.py
+2025-10-20 19:31:56,028 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,028 | INFO | ✅ Carregado: RefactoringSpecialistAgent
+2025-10-20 19:31:56,029 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,029 | INFO | ✅ Carregado: UiUxMasterAgent
+2025-10-20 19:31:56,030 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,030 | INFO | ✅ Carregado: ApiArchitectAgent
+2025-10-20 19:31:56,031 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,031 | INFO | ✅ Carregado: ElectronProAgent
+2025-10-20 19:31:56,032 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,032 | INFO | ✅ Carregado: PaymentIntegrationAgent
+2025-10-20 19:31:56,033 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,033 | INFO | ✅ Carregado: VueExpertAgent
+2025-10-20 19:31:56,034 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,034 | INFO | ✅ Carregado: ToolEvaluatorAgent
+2025-10-20 19:31:56,034 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,035 | INFO | ✅ Carregado: ReferenceBuilderAgent
+2025-10-20 19:31:56,035 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,035 | INFO | ✅ Carregado: RustProAgent
+2025-10-20 19:31:56,036 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,036 | INFO | ✅ Carregado: ProductManagerAgent
+2025-10-20 19:31:56,036 | INFO | 📥 [120/222] Carregando: 164-seo_content_auditor_agent.py
+2025-10-20 19:31:56,037 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,037 | INFO | ✅ Carregado: SeoContentAuditorAgent
+2025-10-20 19:31:56,038 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,038 | INFO | ✅ Carregado: TaskDistributorAgent
+2025-10-20 19:31:56,039 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,040 | INFO | ✅ Carregado: ResearchAnalystAgent
+2025-10-20 19:31:56,040 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,041 | INFO | ✅ Carregado: QaExpertAgent
+2025-10-20 19:31:56,042 | ERROR | ❌ Erro ao carregar 131-project_shipper_agent.py: unterminated string literal (detected at line 118) (131-project_shipper_agent.py, line 118)
+2025-10-20 19:31:56,043 | ERROR | ❌ Erro ao carregar 066-experiment_tracker_agent.py: invalid syntax. Perhaps you forgot a comma? (066-experiment_tracker_agent.py, line 118)
+2025-10-20 19:31:56,044 | ERROR | ❌ Erro ao carregar 138-rails_backend_expert_agent.py: invalid syntax. Perhaps you forgot a comma? (138-rails_backend_expert_agent.py, line 118)
+2025-10-20 19:31:56,045 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,045 | INFO | ✅ Carregado: IncidentResponderAgent
+2025-10-20 19:31:56,046 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,046 | INFO | ✅ Carregado: MobileDeveloperAgent
+2025-10-20 19:31:56,048 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,048 | INFO | ✅ Carregado: BackendDeveloperAgent
+2025-10-20 19:31:56,048 | INFO | 📥 [130/222] Carregando: 051-django_backend_expert_agent.py
+2025-10-20 19:31:56,049 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,049 | INFO | ✅ Carregado: DjangoBackendExpertAgent
+2025-10-20 19:31:56,049 | ERROR | ❌ Erro ao carregar 093-kubernetes_architect_agent.py: unterminated string literal (detected at line 258) (093-kubernetes_architect_agent.py, line 258)
+2025-10-20 19:31:56,050 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,050 | INFO | ✅ Carregado: GrowthHackerAgent
+2025-10-20 19:31:56,051 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,051 | INFO | ✅ Carregado: ComplianceAuditorAgent
+2025-10-20 19:31:56,052 | ERROR | ❌ Erro ao carregar 219-whimsy_injector_agent.py: unterminated string literal (detected at line 118) (219-whimsy_injector_agent.py, line 118)
+2025-10-20 19:31:56,053 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,053 | INFO | ✅ Carregado: GolangProAgent
+2025-10-20 19:31:56,054 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,054 | INFO | ✅ Carregado: SpecTesterAgent
+2025-10-20 19:31:56,055 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,055 | INFO | ✅ Carregado: DatabaseOptimizerAgent
+2025-10-20 19:31:56,055 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,055 | INFO | ✅ Carregado: LaravelSpecialistAgent
+2025-10-20 19:31:56,056 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,056 | INFO | ✅ Carregado: DataEngineerAgent
+2025-10-20 19:31:56,056 | INFO | 📥 [140/222] Carregando: 060-dx_optimizer_agent.py
+2025-10-20 19:31:56,057 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,057 | INFO | ✅ Carregado: DxOptimizerAgent
+2025-10-20 19:31:56,058 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,058 | INFO | ✅ Carregado: SpecValidatorAgent
+2025-10-20 19:31:56,059 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,059 | INFO | ✅ Carregado: NextjsDeveloperAgent
+2025-10-20 19:31:56,060 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,060 | INFO | ✅ Carregado: CsharpProAgent
+2025-10-20 19:31:56,061 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,061 | INFO | ✅ Carregado: RailsActiverecordExpertAgent
+2025-10-20 19:31:56,062 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,062 | INFO | ✅ Carregado: SalesAutomatorAgent
+2025-10-20 19:31:56,063 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,063 | INFO | ✅ Carregado: IosDeveloperAgent
+2025-10-20 19:31:56,064 | ERROR | ❌ Erro ao carregar 198-test_writer_fixer_agent.py: invalid syntax. Perhaps you forgot a comma? (198-test_writer_fixer_agent.py, line 118)
+2025-10-20 19:31:56,065 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,065 | INFO | ✅ Carregado: ChaosEngineerAgent
+2025-10-20 19:31:56,066 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,066 | INFO | ✅ Carregado: PromptEngineerAgent
+2025-10-20 19:31:56,066 | INFO | 📥 [150/222] Carregando: 149-risk_manager_agent.py
+2025-10-20 19:31:56,068 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,068 | INFO | ✅ Carregado: RiskManagerAgent
+2025-10-20 19:31:56,069 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,069 | INFO | ✅ Carregado: ArchitectReviewAgent
+2025-10-20 19:31:56,070 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,070 | INFO | ✅ Carregado: CppProAgent
+2025-10-20 19:31:56,071 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,071 | INFO | ✅ Carregado: SpecArchitectAgent
+2025-10-20 19:31:56,071 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,071 | INFO | ✅ Carregado: VueNuxtExpertAgent
+2025-10-20 19:31:56,073 | ERROR | ❌ Erro ao carregar 185-studio_producer_agent.py: unterminated string literal (detected at line 118) (185-studio_producer_agent.py, line 118)
+2025-10-20 19:31:56,074 | ERROR | ❌ Erro ao carregar 203-trend_researcher_agent.py: '(' was never closed (203-trend_researcher_agent.py, line 114)
+2025-10-20 19:31:56,075 | ERROR | ❌ Erro ao carregar 184-studio_coach_agent.py: invalid syntax. Perhaps you forgot a comma? (184-studio_coach_agent.py, line 118)
+2025-10-20 19:31:56,076 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,076 | INFO | ✅ Carregado: DjangoOrmExpertAgent
+2025-10-20 19:31:56,077 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,077 | INFO | ✅ Carregado: SalesEngineerAgent
+2025-10-20 19:31:56,077 | INFO | 📥 [160/222] Carregando: 100-legal_compliance_checker_agent.py
+2025-10-20 19:31:56,078 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,078 | INFO | ✅ Carregado: LegalComplianceCheckerAgent
+2025-10-20 19:31:56,079 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,079 | INFO | ✅ Carregado: TestAutomatorAgent
+2025-10-20 19:31:56,080 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,080 | INFO | ✅ Carregado: LaravelEloquentExpertAgent
+2025-10-20 19:31:56,081 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,081 | INFO | ✅ Carregado: CliDeveloperAgent
+2025-10-20 19:31:56,082 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,082 | INFO | ✅ Carregado: ReactSpecialistAgent
+2025-10-20 19:31:56,083 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,083 | INFO | ✅ Carregado: ProjectManagerAgent
+2025-10-20 19:31:56,084 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,084 | INFO | ✅ Carregado: KubernetesSpecialistAgent
+2025-10-20 19:31:56,085 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,086 | INFO | ✅ Carregado: DocumentationSpecialistAgent
+2025-10-20 19:31:56,086 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,087 | INFO | ✅ Carregado: SpecOrchestratorAgent
+2025-10-20 19:31:56,087 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,088 | INFO | ✅ Carregado: SeoAuthorityBuilderAgent
+2025-10-20 19:31:56,088 | INFO | 📥 [170/222] Carregando: 101-llm_architect_agent.py
+2025-10-20 19:31:56,088 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,089 | INFO | ✅ Carregado: LlmArchitectAgent
+2025-10-20 19:31:56,090 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,090 | INFO | ✅ Carregado: DjangoApiDeveloperAgent
+2025-10-20 19:31:56,091 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,091 | INFO | ✅ Carregado: SeoSpecialistAgent
+2025-10-20 19:31:56,091 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,092 | INFO | ✅ Carregado: LaravelBackendExpertAgent
+2025-10-20 19:31:56,092 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,092 | INFO | ✅ Carregado: TrendAnalystAgent
+2025-10-20 19:31:56,094 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,094 | INFO | ✅ Carregado: TypescriptProAgent
+2025-10-20 19:31:56,095 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,095 | INFO | ✅ Carregado: PerformanceEngineerAgent
+2025-10-20 19:31:56,096 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,096 | INFO | ✅ Carregado: DocsArchitectAgent
+2025-10-20 19:31:56,097 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,097 | INFO | ✅ Carregado: InstagramCuratorAgent
+2025-10-20 19:31:56,098 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,098 | INFO | ✅ Carregado: CProAgent
+2025-10-20 19:31:56,098 | INFO | 📥 [180/222] Carregando: 142-react_nextjs_expert_agent.py
+2025-10-20 19:31:56,099 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,099 | INFO | ✅ Carregado: ReactNextjsExpertAgent
+2025-10-20 19:31:56,100 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,100 | INFO | ✅ Carregado: FintechEngineerAgent
+2025-10-20 19:31:56,100 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,101 | INFO | ✅ Carregado: NlpEngineerAgent
+2025-10-20 19:31:56,101 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,101 | INFO | ✅ Carregado: DevopsTroubleshooterAgent
+2025-10-20 19:31:56,102 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,102 | INFO | ✅ Carregado: McpDeveloperAgent
+2025-10-20 19:31:56,103 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,103 | INFO | ✅ Carregado: UiVisualValidatorAgent
+2025-10-20 19:31:56,104 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,104 | INFO | ✅ Carregado: WorkflowOrchestratorAgent
+2025-10-20 19:31:56,105 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,105 | INFO | ✅ Carregado: GitWorkflowManagerAgent
+2025-10-20 19:31:56,106 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,106 | INFO | ✅ Carregado: JavaArchitectAgent
+2025-10-20 19:31:56,107 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,107 | INFO | ✅ Carregado: DebuggerAgent
+2025-10-20 19:31:56,107 | INFO | 📥 [190/222] Carregando: 107-minecraft_bukkit_pro_agent.py
+2025-10-20 19:31:56,108 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,109 | INFO | ✅ Carregado: MinecraftBukkitProAgent
+2025-10-20 19:31:56,110 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,110 | INFO | ✅ Carregado: SpecAnalystAgent
+2025-10-20 19:31:56,111 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,111 | INFO | ✅ Carregado: CustomerSupportAgent
+2025-10-20 19:31:56,112 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,112 | INFO | ✅ Carregado: JavascriptProAgent
+2025-10-20 19:31:56,113 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,113 | INFO | ✅ Carregado: MicroservicesArchitectAgent
+2025-10-20 19:31:56,114 | ERROR | ❌ Erro ao carregar 140-rapid_prototyper_agent.py: unterminated string literal (detected at line 118) (140-rapid_prototyper_agent.py, line 118)
+2025-10-20 19:31:56,115 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,115 | INFO | ✅ Carregado: InfrastructureMaintainerAgent
+2025-10-20 19:31:56,116 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,116 | INFO | ✅ Carregado: SwiftExpertAgent
+2025-10-20 19:31:56,117 | ERROR | ❌ Erro ao carregar 090-joker_agent.py: invalid syntax. Perhaps you forgot a comma? (090-joker_agent.py, line 118)
+2025-10-20 19:31:56,118 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,118 | INFO | ✅ Carregado: SpecPlannerAgent
+2025-10-20 19:31:56,118 | INFO | 📥 [200/222] Carregando: 039-data_scientist_agent.py
+2025-10-20 19:31:56,119 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,119 | INFO | ✅ Carregado: DataScientistAgent
+2025-10-20 19:31:56,120 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,120 | INFO | ✅ Carregado: ToolingEngineerAgent
+2025-10-20 19:31:56,121 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,121 | INFO | ✅ Carregado: WorkflowOptimizerAgent
+2025-10-20 19:31:56,122 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,122 | INFO | ✅ Carregado: UnityDeveloperAgent
+2025-10-20 19:31:56,123 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,123 | INFO | ✅ Carregado: UiDesignerAgent
+2025-10-20 19:31:56,124 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,124 | INFO | ✅ Carregado: RailsApiDeveloperAgent
+2025-10-20 19:31:56,124 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,125 | INFO | ✅ Carregado: RubyProAgent
+2025-10-20 19:31:56,125 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,125 | INFO | ✅ Carregado: BuildEngineerAgent
+2025-10-20 19:31:56,126 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,126 | INFO | ✅ Carregado: WebsocketEngineerAgent
+2025-10-20 19:31:56,127 | ERROR | ❌ Erro ao carregar 059-dotnet_framework_4.8_expert_agent.py: invalid decimal literal (059-dotnet_framework_4.8_expert_agent.py, line 86)
+2025-10-20 19:31:56,127 | INFO | 📥 [210/222] Carregando: 118-observability_engineer_agent.py
+2025-10-20 19:31:56,128 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,128 | INFO | ✅ Carregado: ObservabilityEngineerAgent
+2025-10-20 19:31:56,128 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,129 | INFO | ✅ Carregado: FrontendSecurityCoderAgent
+2025-10-20 19:31:56,129 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,129 | INFO | ✅ Carregado: QuantAnalystAgent
+2025-10-20 19:31:56,130 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,130 | INFO | ✅ Carregado: GraphqlArchitectAgent
+2025-10-20 19:31:56,131 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,131 | INFO | ✅ Carregado: CompetitiveAnalystAgent
+2025-10-20 19:31:56,132 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,132 | INFO | ✅ Carregado: DependencyManagerAgent
+2025-10-20 19:31:56,133 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,133 | INFO | ✅ Carregado: BrandGuardianAgent
+2025-10-20 19:31:56,134 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,134 | INFO | ✅ Carregado: DatabaseAdminAgent
+2025-10-20 19:31:56,135 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,135 | INFO | ✅ Carregado: AppStoreOptimizerAgent
+2025-10-20 19:31:56,135 | ERROR | ❌ Erro ao carregar 054-django_pro_agent.py: unterminated string literal (detected at line 263) (054-django_pro_agent.py, line 263)
+2025-10-20 19:31:56,135 | INFO | 📥 [220/222] Carregando: 052-django_developer_agent.py
+2025-10-20 19:31:56,136 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,136 | INFO | ✅ Carregado: DjangoDeveloperAgent
+2025-10-20 19:31:56,137 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,137 | INFO | ✅ Carregado: ScrumMasterAgent
+2025-10-20 19:31:56,137 | INFO | 📥 [222/222] Carregando: 175-spec_developer_agent.py
+2025-10-20 19:31:56,138 | INFO | 🔑 Using local API key rotation (index: 12)
+2025-10-20 19:31:56,138 | INFO | ✅ Carregado: SpecDeveloperAgent
+2025-10-20 19:31:56,138 | INFO | ✅ Carregados 198 agentes com sucesso
+2025-10-20 19:31:56,138 | WARNING | ⚠️  24 agentes falharam ao carregar
+2025-10-20 19:31:56,138 | INFO | 👥 Criando Team 'AgentMaker Team - 198 Agentes' com 198 agentes
+2025-10-20 19:31:56,139 | INFO | ✅ Team criado com sucesso
+2025-10-20 19:31:56,139 | INFO | 🏗️  Criando Agent OS com Team: AgentMaker Team - 198 Agentes
+2025-10-20 19:31:57,013 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 19:31:57,013 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 19:31:57,013 | INFO | 🌐 Iniciando servidor Agent OS na porta 8000...
+2025-10-20 19:31:57,013 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 19:31:57,013 | INFO | 📚 Documentação: http://localhost:8000/docs
+2025-10-20 19:31:57,014 | INFO | 👥 Teams: http://localhost:8000/teams
+2025-10-20 19:31:57,014 | INFO | 🤖 Agentes: http://localhost:8000/agents
+2025-10-20 19:31:57,014 | INFO | 🔧 Configuração: http://localhost:8000/config
+2025-10-20 19:31:57,014 | INFO | 🛑 Use Ctrl+C para parar

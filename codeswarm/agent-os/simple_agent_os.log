@@ -1,0 +1,57 @@
+2025-10-20 17:20:46,275 | INFO | 🚀 Criando Agent OS simples...
+2025-10-20 17:20:46,275 | INFO | 📝 Criando agentes...
+2025-10-20 17:20:46,275 | INFO | ✅ Agentes criados com sucesso
+2025-10-20 17:20:46,275 | INFO | 🏗️  Criando Agent OS...
+2025-10-20 17:20:46,880 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 17:20:46,881 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 17:20:47,113 | INFO | 📋 App FastAPI: <fastapi.applications.FastAPI object at 0x7bc9234b9550>
+2025-10-20 17:20:47,113 | INFO | 📋 Rotas: 52
+2025-10-20 17:20:47,113 | INFO |   1. {'GET', 'HEAD'} /openapi.json
+2025-10-20 17:20:47,113 | INFO |   2. {'GET', 'HEAD'} /docs
+2025-10-20 17:20:47,113 | INFO |   3. {'GET', 'HEAD'} /docs/oauth2-redirect
+2025-10-20 17:20:47,113 | INFO |   4. {'GET', 'HEAD'} /redoc
+2025-10-20 17:20:47,113 | INFO |   5. {'GET'} /config
+2025-10-20 17:20:47,113 | INFO |   6. {'GET'} /models
+2025-10-20 17:20:47,113 | INFO |   7. {'POST'} /agents/{agent_id}/runs
+2025-10-20 17:20:47,113 | INFO |   8. {'POST'} /agents/{agent_id}/runs/{run_id}/cancel
+2025-10-20 17:20:47,113 | INFO |   9. {'POST'} /agents/{agent_id}/runs/{run_id}/continue
+2025-10-20 17:20:47,113 | INFO |   10. {'GET'} /agents
+2025-10-20 17:20:47,113 | INFO | 🌐 Iniciando servidor na porta 8000...
+2025-10-20 17:20:47,113 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 17:20:47,113 | INFO | 📚 Documentação: http://localhost:8000/docs
+2025-10-20 17:20:47,114 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 17:20:47,117 | ERROR | ❌ Erro: asyncio.run() cannot be called from a running event loop
+2025-10-20 17:20:47,124 | ERROR | Traceback (most recent call last):
+  File "/home/suportesaude/YUICHI/00-agentmaker/simple_agent_os.py", line 108, in main
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+  File "/home/suportesaude/anaconda3/envs/12/lib/python3.12/site-packages/uvicorn/main.py", line 580, in run
+    server.run()
+  File "/home/suportesaude/anaconda3/envs/12/lib/python3.12/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suportesaude/anaconda3/envs/12/lib/python3.12/asyncio/runners.py", line 190, in run
+    raise RuntimeError(
+RuntimeError: asyncio.run() cannot be called from a running event loop
+
+2025-10-20 17:21:04,314 | INFO | 🚀 Criando Agent OS simples...
+2025-10-20 17:21:04,314 | INFO | 📝 Criando agentes...
+2025-10-20 17:21:04,314 | INFO | ✅ Agentes criados com sucesso
+2025-10-20 17:21:04,315 | INFO | 🏗️  Criando Agent OS...
+2025-10-20 17:21:04,900 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 17:21:04,901 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 17:21:05,129 | INFO | 📋 App FastAPI: <fastapi.applications.FastAPI object at 0x760575548a10>
+2025-10-20 17:21:05,129 | INFO | 📋 Rotas: 52
+2025-10-20 17:21:05,129 | INFO |   1. {'GET', 'HEAD'} /openapi.json
+2025-10-20 17:21:05,129 | INFO |   2. {'GET', 'HEAD'} /docs
+2025-10-20 17:21:05,129 | INFO |   3. {'GET', 'HEAD'} /docs/oauth2-redirect
+2025-10-20 17:21:05,129 | INFO |   4. {'GET', 'HEAD'} /redoc
+2025-10-20 17:21:05,130 | INFO |   5. {'GET'} /config
+2025-10-20 17:21:05,130 | INFO |   6. {'GET'} /models
+2025-10-20 17:21:05,130 | INFO |   7. {'POST'} /agents/{agent_id}/runs
+2025-10-20 17:21:05,130 | INFO |   8. {'POST'} /agents/{agent_id}/runs/{run_id}/cancel
+2025-10-20 17:21:05,130 | INFO |   9. {'POST'} /agents/{agent_id}/runs/{run_id}/continue
+2025-10-20 17:21:05,130 | INFO |   10. {'GET'} /agents
+2025-10-20 17:21:05,130 | INFO | 🌐 Iniciando servidor na porta 8000...
+2025-10-20 17:21:05,130 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 17:21:05,130 | INFO | 📚 Documentação: http://localhost:8000/docs
+2025-10-20 17:21:05,130 | INFO | 🛑 Use Ctrl+C para parar

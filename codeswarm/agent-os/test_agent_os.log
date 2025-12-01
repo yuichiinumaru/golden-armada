@@ -1,0 +1,2434 @@
+2025-10-20 16:59:22,069 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 16:59:22,069 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 16:59:22,070 | INFO | 🧪 Modo de teste: interactive
+2025-10-20 16:59:22,070 | ERROR | ❌ GOOGLE_API_KEY não configurada
+2025-10-20 17:04:47,753 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:04:47,753 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:04:47,753 | INFO | 🧪 Modo de teste: interactive
+2025-10-20 17:04:47,753 | ERROR | ❌ GOOGLE_API_KEY não configurada
+2025-10-20 17:06:57,084 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:06:57,085 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:06:57,085 | INFO | 🧪 Modo de teste: basic
+2025-10-20 17:06:57,085 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:06:57,085 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:06:57,085 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 17:06:57,085 | INFO | 📥 Carregando agente 1/3: 197-test_results_analyzer_agent.py
+2025-10-20 17:06:58,066 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:06:58,066 | INFO | 📥 Carregando agente 2/3: 009-api_tester_agent.py
+2025-10-20 17:06:58,067 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:06:58,068 | INFO | 📥 Carregando agente 3/3: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:06:58,069 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:06:58,069 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 17:06:58,069 | INFO | 🏗️  Criando Agent OS com 3 agentes
+2025-10-20 17:06:58,069 | ERROR | ❌ Erro durante o teste: 'str' object has no attribute 'url'
+2025-10-20 17:06:58,071 | ERROR | Traceback (most recent call last):
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 312, in main
+    agent_os = create_agent_os(agents, db_config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 186, in create_agent_os
+    db = SqliteDb(db_path)
+         ^^^^^^^^^^^^^^^^^
+  File "/home/suportesaude/anaconda3/envs/12/lib/python3.12/site-packages/agno/db/sqlite/sqlite.py", line 73, in __init__
+    seed = db_url or db_file or str(db_engine.url) if db_engine else "sqlite:///agno.db"
+                                    ^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'url'
+
+2025-10-20 17:07:10,809 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:07:10,809 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:07:10,809 | INFO | 🧪 Modo de teste: basic
+2025-10-20 17:07:10,809 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:07:10,810 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:07:10,810 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 17:07:10,810 | INFO | 📥 Carregando agente 1/3: 197-test_results_analyzer_agent.py
+2025-10-20 17:07:11,650 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:07:11,650 | INFO | 📥 Carregando agente 2/3: 009-api_tester_agent.py
+2025-10-20 17:07:11,651 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:07:11,651 | INFO | 📥 Carregando agente 3/3: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:07:11,652 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:07:11,652 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 17:07:11,652 | INFO | 🏗️  Criando Agent OS com 3 agentes
+2025-10-20 17:07:11,652 | ERROR | ❌ Erro durante o teste: 'str' object has no attribute 'url'
+2025-10-20 17:07:11,652 | ERROR | Traceback (most recent call last):
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 312, in main
+    agent_os = create_agent_os(agents, db_config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 186, in create_agent_os
+    db = SqliteDb(f"sqlite:///{db_path}")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suportesaude/anaconda3/envs/12/lib/python3.12/site-packages/agno/db/sqlite/sqlite.py", line 73, in __init__
+    seed = db_url or db_file or str(db_engine.url) if db_engine else "sqlite:///agno.db"
+                                    ^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'url'
+
+2025-10-20 17:07:24,111 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:07:24,111 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:07:24,111 | INFO | 🧪 Modo de teste: basic
+2025-10-20 17:07:24,111 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:07:24,112 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:07:24,112 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 17:07:24,112 | INFO | 📥 Carregando agente 1/3: 197-test_results_analyzer_agent.py
+2025-10-20 17:07:24,983 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:07:24,984 | INFO | 📥 Carregando agente 2/3: 009-api_tester_agent.py
+2025-10-20 17:07:24,984 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:07:24,984 | INFO | 📥 Carregando agente 3/3: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:07:24,985 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:07:24,985 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 17:07:24,985 | INFO | 🏗️  Criando Agent OS com 3 agentes
+2025-10-20 17:07:24,987 | INFO | 💾 Configurado banco SQLite: agent_os_test.db
+2025-10-20 17:07:24,988 | ERROR | ❌ Erro durante o teste: AgentOS.__init__() got an unexpected keyword argument 'db'
+2025-10-20 17:07:24,988 | ERROR | Traceback (most recent call last):
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 312, in main
+    agent_os = create_agent_os(agents, db_config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 198, in create_agent_os
+    agent_os = AgentOS(
+               ^^^^^^^^
+TypeError: AgentOS.__init__() got an unexpected keyword argument 'db'
+
+2025-10-20 17:07:38,098 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:07:38,098 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:07:38,098 | INFO | 🧪 Modo de teste: basic
+2025-10-20 17:07:38,098 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:07:38,099 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:07:38,099 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 17:07:38,099 | INFO | 📥 Carregando agente 1/3: 197-test_results_analyzer_agent.py
+2025-10-20 17:07:38,947 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:07:38,948 | INFO | 📥 Carregando agente 2/3: 009-api_tester_agent.py
+2025-10-20 17:07:38,948 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:07:38,948 | INFO | 📥 Carregando agente 3/3: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:07:38,949 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:07:38,949 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 17:07:38,949 | INFO | 🏗️  Criando Agent OS com 3 agentes
+2025-10-20 17:07:38,951 | INFO | 💾 Configurado banco SQLite: agent_os_test.db
+2025-10-20 17:07:38,952 | ERROR | ❌ Erro durante o teste: 'TestResultsAnalyzerAgent' object has no attribute 'tools'
+2025-10-20 17:07:38,954 | ERROR | Traceback (most recent call last):
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 311, in main
+    agent_os = create_agent_os(agents, db_config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.py", line 198, in create_agent_os
+    agent_os = AgentOS(
+               ^^^^^^^^
+  File "/home/suportesaude/anaconda3/envs/12/lib/python3.12/site-packages/agno/os/app.py", line 162, in __init__
+    if agent.tools:
+       ^^^^^^^^^^^
+AttributeError: 'TestResultsAnalyzerAgent' object has no attribute 'tools'
+
+2025-10-20 17:08:03,703 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:08:03,703 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:08:03,703 | INFO | 🧪 Modo de teste: basic
+2025-10-20 17:08:03,703 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:08:03,704 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:08:03,704 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 17:08:03,704 | INFO | 📥 Carregando agente 1/3: 197-test_results_analyzer_agent.py
+2025-10-20 17:08:04,552 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:08:04,552 | INFO | 📥 Carregando agente 2/3: 009-api_tester_agent.py
+2025-10-20 17:08:04,553 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:08:04,553 | INFO | 📥 Carregando agente 3/3: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:08:04,553 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:08:04,553 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 17:08:04,553 | INFO | 🏗️  Criando Agent OS com 3 agentes
+2025-10-20 17:08:04,555 | INFO | 💾 Configurado banco SQLite: agent_os_test.db
+2025-10-20 17:08:04,661 | DEBUG | connect_tcp.started host='os-api.agno.com' port=443 local_address=None timeout=60 socket_options=None
+2025-10-20 17:08:05,556 | DEBUG | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x77b9d18e78f0>
+2025-10-20 17:08:05,556 | DEBUG | start_tls.started ssl_context=<ssl.SSLContext object at 0x77b9d1b2d950> server_hostname='os-api.agno.com' timeout=60
+2025-10-20 17:08:05,797 | DEBUG | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x77b9d984eb70>
+2025-10-20 17:08:05,797 | DEBUG | send_request_headers.started request=<Request [b'POST']>
+2025-10-20 17:08:05,797 | DEBUG | send_request_headers.complete
+2025-10-20 17:08:05,797 | DEBUG | send_request_body.started request=<Request [b'POST']>
+2025-10-20 17:08:05,798 | DEBUG | send_request_body.complete
+2025-10-20 17:08:05,798 | DEBUG | receive_response_headers.started request=<Request [b'POST']>
+2025-10-20 17:08:05,927 | DEBUG | receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Mon, 20 Oct 2025 20:07:53 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'93'), (b'Connection', b'keep-alive'), (b'server', b'uvicorn')])
+2025-10-20 17:08:05,928 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 17:08:05,928 | DEBUG | receive_response_body.started request=<Request [b'POST']>
+2025-10-20 17:08:05,928 | DEBUG | receive_response_body.complete
+2025-10-20 17:08:05,928 | DEBUG | response_closed.started
+2025-10-20 17:08:05,928 | DEBUG | response_closed.complete
+2025-10-20 17:08:05,928 | DEBUG | close.started
+2025-10-20 17:08:05,928 | DEBUG | close.complete
+2025-10-20 17:08:05,929 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 17:08:05,929 | INFO | 🧪 Iniciando testes em modo: basic
+2025-10-20 17:08:05,929 | INFO | ✅ Teste básico: Agent OS criado com sucesso
+2025-10-20 17:08:05,929 | INFO | 📊 Número de agentes: 3
+2025-10-20 17:08:05,929 | INFO | ✅ Teste concluído com sucesso!
+2025-10-20 17:08:12,129 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:08:12,129 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:08:12,129 | INFO | 🧪 Modo de teste: interactive
+2025-10-20 17:08:12,129 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:08:12,130 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:08:12,130 | INFO | 🔢 Limitando a 5 agentes para teste
+2025-10-20 17:08:12,130 | INFO | 📥 Carregando agente 1/5: 197-test_results_analyzer_agent.py
+2025-10-20 17:08:12,993 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:08:12,993 | INFO | 📥 Carregando agente 2/5: 009-api_tester_agent.py
+2025-10-20 17:08:12,993 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:08:12,993 | INFO | 📥 Carregando agente 3/5: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:08:12,994 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:08:12,994 | INFO | 📥 Carregando agente 4/5: 129-project_analyst_agent.py
+2025-10-20 17:08:12,996 | INFO | ✅ Carregado agente: ProjectAnalystAgent de 129-project_analyst_agent.py
+2025-10-20 17:08:12,996 | INFO | 📥 Carregando agente 5/5: 181-sprint_prioritizer_agent.py
+2025-10-20 17:08:12,997 | ERROR | ❌ Erro ao carregar 01-generated-agents/181-sprint_prioritizer_agent.py: invalid syntax. Perhaps you forgot a comma? (181-sprint_prioritizer_agent.py, line 69)
+2025-10-20 17:08:12,997 | INFO | ✅ Carregados 4 agentes com sucesso
+2025-10-20 17:08:12,997 | WARNING | ⚠️  1 agentes falharam ao carregar
+2025-10-20 17:08:12,997 | INFO | 🏗️  Criando Agent OS com 4 agentes
+2025-10-20 17:08:12,999 | INFO | 💾 Configurado banco SQLite: agent_os_test.db
+2025-10-20 17:08:13,108 | DEBUG | connect_tcp.started host='os-api.agno.com' port=443 local_address=None timeout=60 socket_options=None
+2025-10-20 17:08:13,229 | DEBUG | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7e005e4830e0>
+2025-10-20 17:08:13,229 | DEBUG | start_tls.started ssl_context=<ssl.SSLContext object at 0x7e00565b1950> server_hostname='os-api.agno.com' timeout=60
+2025-10-20 17:08:13,470 | DEBUG | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7e0056342b40>
+2025-10-20 17:08:13,471 | DEBUG | send_request_headers.started request=<Request [b'POST']>
+2025-10-20 17:08:13,471 | DEBUG | send_request_headers.complete
+2025-10-20 17:08:13,471 | DEBUG | send_request_body.started request=<Request [b'POST']>
+2025-10-20 17:08:13,471 | DEBUG | send_request_body.complete
+2025-10-20 17:08:13,471 | DEBUG | receive_response_headers.started request=<Request [b'POST']>
+2025-10-20 17:08:13,601 | DEBUG | receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Mon, 20 Oct 2025 20:08:01 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'93'), (b'Connection', b'keep-alive'), (b'server', b'uvicorn')])
+2025-10-20 17:08:13,601 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 17:08:13,601 | DEBUG | receive_response_body.started request=<Request [b'POST']>
+2025-10-20 17:08:13,601 | DEBUG | receive_response_body.complete
+2025-10-20 17:08:13,601 | DEBUG | response_closed.started
+2025-10-20 17:08:13,602 | DEBUG | response_closed.complete
+2025-10-20 17:08:13,602 | DEBUG | close.started
+2025-10-20 17:08:13,602 | DEBUG | close.complete
+2025-10-20 17:08:13,602 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 17:08:13,602 | INFO | 🧪 Iniciando testes em modo: interactive
+2025-10-20 17:08:13,602 | INFO | 🚀 Iniciando servidor Agent OS para teste interativo...
+2025-10-20 17:08:13,602 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 17:08:13,602 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 17:08:14,797 | DEBUG | 4 changes detected: {(<Change.added: 1>, '/home/suportesaude/YUICHI/00-agentmaker/__pycache__/test_agent_os.cpython-312.pyc'), (<Change.added: 1>, '/home/suportesaude/YUICHI/00-agentmaker/__pycache__'), (<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/__pycache__/test_agent_os.cpython-312.pyc.127747105938608'), (<Change.deleted: 3>, '/home/suportesaude/YUICHI/00-agentmaker/__pycache__/test_agent_os.cpython-312.pyc.127747105938608')}
+2025-10-20 17:08:15,148 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:15,499 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:15,849 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:16,200 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:16,550 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:16,901 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:17,252 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:17,602 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:17,953 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:18,303 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:18,654 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:19,004 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:08:19,305 | INFO | ✅ Teste concluído com sucesso!
+2025-10-20 17:09:59,987 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:09:59,987 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:09:59,987 | INFO | 🧪 Modo de teste: interactive
+2025-10-20 17:09:59,987 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:09:59,988 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:09:59,988 | INFO | 📥 Carregando agente 1/222: 197-test_results_analyzer_agent.py
+2025-10-20 17:10:00,825 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:10:00,825 | INFO | 📥 Carregando agente 2/222: 009-api_tester_agent.py
+2025-10-20 17:10:00,826 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:10:00,826 | INFO | 📥 Carregando agente 3/222: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:10:00,826 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:10:00,826 | INFO | 📥 Carregando agente 4/222: 129-project_analyst_agent.py
+2025-10-20 17:10:00,827 | INFO | ✅ Carregado agente: ProjectAnalystAgent de 129-project_analyst_agent.py
+2025-10-20 17:10:00,827 | INFO | 📥 Carregando agente 5/222: 181-sprint_prioritizer_agent.py
+2025-10-20 17:10:00,828 | ERROR | ❌ Erro ao carregar 01-generated-agents/181-sprint_prioritizer_agent.py: invalid syntax. Perhaps you forgot a comma? (181-sprint_prioritizer_agent.py, line 69)
+2025-10-20 17:10:00,828 | INFO | 📥 Carregando agente 6/222: 056-documentation_engineer_agent.py
+2025-10-20 17:10:00,829 | INFO | ✅ Carregado agente: DocumentationEngineerAgent de 056-documentation_engineer_agent.py
+2025-10-20 17:10:00,830 | INFO | 📥 Carregando agente 7/222: 165-seo_content_planner_agent.py
+2025-10-20 17:10:00,831 | INFO | ✅ Carregado agente: SeoContentPlannerAgent de 165-seo_content_planner_agent.py
+2025-10-20 17:10:00,831 | INFO | 📥 Carregando agente 8/222: 205-twitter_engager_agent.py
+2025-10-20 17:10:00,833 | INFO | ✅ Carregado agente: TwitterEngagerAgent de 205-twitter_engager_agent.py
+2025-10-20 17:10:00,833 | INFO | 📥 Carregando agente 9/222: 204-tutorial_engineer_agent.py
+2025-10-20 17:10:00,835 | INFO | ✅ Carregado agente: TutorialEngineerAgent de 204-tutorial_engineer_agent.py
+2025-10-20 17:10:00,835 | INFO | 📥 Carregando agente 10/222: 121-performance_benchmarker_agent.py
+2025-10-20 17:10:00,837 | INFO | ✅ Carregado agente: PerformanceBenchmarkerAgent de 121-performance_benchmarker_agent.py
+2025-10-20 17:10:00,837 | INFO | 📥 Carregando agente 11/222: 007-api_designer_agent.py
+2025-10-20 17:10:00,839 | INFO | ✅ Carregado agente: ApiDesignerAgent de 007-api_designer_agent.py
+2025-10-20 17:10:00,839 | INFO | 📥 Carregando agente 12/222: 190-tdd_orchestrator_agent.py
+2025-10-20 17:10:00,839 | ERROR | ❌ Erro ao carregar 01-generated-agents/190-tdd_orchestrator_agent.py: unterminated string literal (detected at line 236) (190-tdd_orchestrator_agent.py, line 236)
+2025-10-20 17:10:00,839 | INFO | 📥 Carregando agente 13/222: 086-iot_engineer_agent.py
+2025-10-20 17:10:00,842 | INFO | ✅ Carregado agente: IotEngineerAgent de 086-iot_engineer_agent.py
+2025-10-20 17:10:00,842 | INFO | 📥 Carregando agente 14/222: 034-customer_success_manager_agent.py
+2025-10-20 17:10:00,844 | INFO | ✅ Carregado agente: CustomerSuccessManagerAgent de 034-customer_success_manager_agent.py
+2025-10-20 17:10:00,844 | INFO | 📥 Carregando agente 15/222: 013-backend_architect_agent.py
+2025-10-20 17:10:00,845 | ERROR | ❌ Erro ao carregar 01-generated-agents/013-backend_architect_agent.py: unterminated string literal (detected at line 69) (013-backend_architect_agent.py, line 69)
+2025-10-20 17:10:00,845 | INFO | 📥 Carregando agente 16/222: 166-seo_content_refresher_agent.py
+2025-10-20 17:10:00,846 | INFO | ✅ Carregado agente: SeoContentRefresherAgent de 166-seo_content_refresher_agent.py
+2025-10-20 17:10:00,847 | INFO | 📥 Carregando agente 17/222: 036-data_analyst_agent.py
+2025-10-20 17:10:00,848 | INFO | ✅ Carregado agente: DataAnalystAgent de 036-data_analyst_agent.py
+2025-10-20 17:10:00,848 | INFO | 📥 Carregando agente 18/222: 069-finance_tracker_agent.py
+2025-10-20 17:10:00,850 | INFO | ✅ Carregado agente: FinanceTrackerAgent de 069-finance_tracker_agent.py
+2025-10-20 17:10:00,851 | INFO | 📥 Carregando agente 19/222: 023-cloud_architect_agent.py
+2025-10-20 17:10:00,853 | INFO | ✅ Carregado agente: CloudArchitectAgent de 023-cloud_architect_agent.py
+2025-10-20 17:10:00,853 | INFO | 📥 Carregando agente 20/222: 067-fastapi_pro_agent.py
+2025-10-20 17:10:00,853 | ERROR | ❌ Erro ao carregar 01-generated-agents/067-fastapi_pro_agent.py: unterminated string literal (detected at line 226) (067-fastapi_pro_agent.py, line 226)
+2025-10-20 17:10:00,853 | INFO | 📥 Carregando agente 21/222: 183-sre_engineer_agent.py
+2025-10-20 17:10:00,856 | INFO | ✅ Carregado agente: SreEngineerAgent de 183-sre_engineer_agent.py
+2025-10-20 17:10:00,856 | INFO | 📥 Carregando agente 22/222: 012-architect_reviewer_agent.py
+2025-10-20 17:10:00,858 | INFO | ✅ Carregado agente: ArchitectReviewerAgent de 012-architect_reviewer_agent.py
+2025-10-20 17:10:00,858 | INFO | 📥 Carregando agente 23/222: 001-accessibility_tester_agent.py
+2025-10-20 17:10:00,861 | INFO | ✅ Carregado agente: AccessibilityTesterAgent de 001-accessibility_tester_agent.py
+2025-10-20 17:10:00,861 | INFO | 📥 Carregando agente 24/222: 158-security_auditor_agent.py
+2025-10-20 17:10:00,863 | INFO | ✅ Carregado agente: SecurityAuditorAgent de 158-security_auditor_agent.py
+2025-10-20 17:10:00,863 | INFO | 📥 Carregando agente 25/222: 193-technical_writer_agent.py
+2025-10-20 17:10:00,865 | INFO | ✅ Carregado agente: TechnicalWriterAgent de 193-technical_writer_agent.py
+2025-10-20 17:10:00,865 | INFO | 📥 Carregando agente 26/222: 062-elixir_pro_agent.py
+2025-10-20 17:10:00,868 | INFO | ✅ Carregado agente: ElixirProAgent de 062-elixir_pro_agent.py
+2025-10-20 17:10:00,868 | INFO | 📥 Carregando agente 27/222: 114-multi_agent_coordinator_agent.py
+2025-10-20 17:10:00,870 | INFO | ✅ Carregado agente: MultiAgentCoordinatorAgent de 114-multi_agent_coordinator_agent.py
+2025-10-20 17:10:00,870 | INFO | 📥 Carregando agente 28/222: 188-tailwind_css_expert_agent.py
+2025-10-20 17:10:00,872 | INFO | ✅ Carregado agente: TailwindCssExpertAgent de 188-tailwind_css_expert_agent.py
+2025-10-20 17:10:00,872 | INFO | 📥 Carregando agente 29/222: 032-csharp_developer_agent.py
+2025-10-20 17:10:00,874 | INFO | ✅ Carregado agente: CsharpDeveloperAgent de 032-csharp_developer_agent.py
+2025-10-20 17:10:00,875 | INFO | 📥 Carregando agente 30/222: 214-vue_component_architect_agent.py
+2025-10-20 17:10:00,877 | INFO | ✅ Carregado agente: VueComponentArchitectAgent de 214-vue_component_architect_agent.py
+2025-10-20 17:10:00,877 | INFO | 📥 Carregando agente 31/222: 047-devops_engineer_agent.py
+2025-10-20 17:10:00,879 | INFO | ✅ Carregado agente: DevopsEngineerAgent de 047-devops_engineer_agent.py
+2025-10-20 17:10:00,879 | INFO | 📥 Carregando agente 32/222: 068-feedback_synthesizer_agent.py
+2025-10-20 17:10:00,881 | INFO | ✅ Carregado agente: FeedbackSynthesizerAgent de 068-feedback_synthesizer_agent.py
+2025-10-20 17:10:00,881 | INFO | 📥 Carregando agente 33/222: 124-performance_optimizer_agent.py
+2025-10-20 17:10:00,883 | INFO | ✅ Carregado agente: PerformanceOptimizerAgent de 124-performance_optimizer_agent.py
+2025-10-20 17:10:00,883 | INFO | 📥 Carregando agente 34/222: 109-mlops_engineer_agent.py
+2025-10-20 17:10:00,885 | INFO | ✅ Carregado agente: MlopsEngineerAgent de 109-mlops_engineer_agent.py
+2025-10-20 17:10:00,885 | INFO | 📥 Carregando agente 35/222: 151-rust_engineer_agent.py
+2025-10-20 17:10:00,886 | INFO | ✅ Carregado agente: RustEngineerAgent de 151-rust_engineer_agent.py
+2025-10-20 17:10:00,887 | INFO | 📥 Carregando agente 36/222: 213-visual_storyteller_agent.py
+2025-10-20 17:10:00,888 | INFO | ✅ Carregado agente: VisualStorytellerAgent de 213-visual_storyteller_agent.py
+2025-10-20 17:10:00,888 | INFO | 📥 Carregando agente 37/222: 144-reddit_community_builder_agent.py
+2025-10-20 17:10:00,890 | INFO | ✅ Carregado agente: RedditCommunityBuilderAgent de 144-reddit_community_builder_agent.py
+2025-10-20 17:10:00,890 | INFO | 📥 Carregando agente 38/222: 048-devops_incident_responder_agent.py
+2025-10-20 17:10:00,892 | INFO | ✅ Carregado agente: DevopsIncidentResponderAgent de 048-devops_incident_responder_agent.py
+2025-10-20 17:10:00,892 | INFO | 📥 Carregando agente 39/222: 180-spring_boot_engineer_agent.py
+2025-10-20 17:10:00,894 | INFO | ✅ Carregado agente: SpringBootEngineerAgent de 180-spring_boot_engineer_agent.py
+2025-10-20 17:10:00,894 | INFO | 📥 Carregando agente 40/222: 058-dotnet_core_expert_agent.py
+2025-10-20 17:10:00,895 | INFO | ✅ Carregado agente: DotnetCoreExpertAgent de 058-dotnet_core_expert_agent.py
+2025-10-20 17:10:00,895 | INFO | 📥 Carregando agente 41/222: 182-sql_pro_agent.py
+2025-10-20 17:10:00,897 | INFO | ✅ Carregado agente: SqlProAgent de 182-sql_pro_agent.py
+2025-10-20 17:10:00,897 | INFO | 📥 Carregando agente 42/222: 065-error_detective_agent.py
+2025-10-20 17:10:00,899 | INFO | ✅ Carregado agente: ErrorDetectiveAgent de 065-error_detective_agent.py
+2025-10-20 17:10:00,899 | INFO | 📥 Carregando agente 43/222: 003-ai_engineer_agent.py
+2025-10-20 17:10:00,901 | INFO | ✅ Carregado agente: AiEngineerAgent de 003-ai_engineer_agent.py
+2025-10-20 17:10:00,901 | INFO | 📥 Carregando agente 44/222: 016-blockchain_developer_agent.py
+2025-10-20 17:10:00,903 | INFO | ✅ Carregado agente: BlockchainDeveloperAgent de 016-blockchain_developer_agent.py
+2025-10-20 17:10:00,903 | INFO | 📥 Carregando agente 45/222: 029-content_marketer_agent.py
+2025-10-20 17:10:00,905 | INFO | ✅ Carregado agente: ContentMarketerAgent de 029-content_marketer_agent.py
+2025-10-20 17:10:00,905 | INFO | 📥 Carregando agente 46/222: 163-seo_cannibalization_detector_agent.py
+2025-10-20 17:10:00,907 | INFO | ✅ Carregado agente: SeoCannibalizationDetectorAgent de 163-seo_cannibalization_detector_agent.py
+2025-10-20 17:10:00,907 | INFO | 📥 Carregando agente 47/222: 102-machine_learning_engineer_agent.py
+2025-10-20 17:10:00,909 | INFO | ✅ Carregado agente: MachineLearningEngineerAgent de 102-machine_learning_engineer_agent.py
+2025-10-20 17:10:00,909 | INFO | 📥 Carregando agente 48/222: 075-game_developer_agent.py
+2025-10-20 17:10:00,910 | INFO | ✅ Carregado agente: GameDeveloperAgent de 075-game_developer_agent.py
+2025-10-20 17:10:00,911 | INFO | 📥 Carregando agente 49/222: 110-mobile_app_builder_agent.py
+2025-10-20 17:10:00,911 | ERROR | ❌ Erro ao carregar 01-generated-agents/110-mobile_app_builder_agent.py: unterminated string literal (detected at line 69) (110-mobile_app_builder_agent.py, line 69)
+2025-10-20 17:10:00,911 | INFO | 📥 Carregando agente 50/222: 167-seo_content_writer_agent.py
+2025-10-20 17:10:00,913 | INFO | ✅ Carregado agente: SeoContentWriterAgent de 167-seo_content_writer_agent.py
+2025-10-20 17:10:00,913 | INFO | 📥 Carregando agente 51/222: 005-angular_architect_agent.py
+2025-10-20 17:10:00,914 | INFO | ✅ Carregado agente: AngularArchitectAgent de 005-angular_architect_agent.py
+2025-10-20 17:10:00,915 | INFO | 📥 Carregando agente 52/222: 024-code_archaeologist_agent.py
+2025-10-20 17:10:00,916 | INFO | ✅ Carregado agente: CodeArchaeologistAgent de 024-code_archaeologist_agent.py
+2025-10-20 17:10:00,916 | INFO | 📥 Carregando agente 53/222: 002-agent_organizer_agent.py
+2025-10-20 17:10:00,917 | INFO | ✅ Carregado agente: AgentOrganizerAgent de 002-agent_organizer_agent.py
+2025-10-20 17:10:00,918 | INFO | 📥 Carregando agente 54/222: 186-support_responder_agent.py
+2025-10-20 17:10:00,919 | INFO | ✅ Carregado agente: SupportResponderAgent de 186-support_responder_agent.py
+2025-10-20 17:10:00,919 | INFO | 📥 Carregando agente 55/222: 063-embedded_systems_agent.py
+2025-10-20 17:10:00,921 | INFO | ✅ Carregado agente: EmbeddedSystemsAgent de 063-embedded_systems_agent.py
+2025-10-20 17:10:00,921 | INFO | 📥 Carregando agente 56/222: 071-flutter_expert_agent.py
+2025-10-20 17:10:00,922 | INFO | ✅ Carregado agente: FlutterExpertAgent de 071-flutter_expert_agent.py
+2025-10-20 17:10:00,922 | INFO | 📥 Carregando agente 57/222: 208-ui_ux_designer_agent.py
+2025-10-20 17:10:00,924 | INFO | ✅ Carregado agente: UiUxDesignerAgent de 208-ui_ux_designer_agent.py
+2025-10-20 17:10:00,924 | INFO | 📥 Carregando agente 58/222: 161-senior_frontend_architect_agent.py
+2025-10-20 17:10:00,925 | INFO | ✅ Carregado agente: SeniorFrontendArchitectAgent de 161-senior_frontend_architect_agent.py
+2025-10-20 17:10:00,925 | INFO | 📥 Carregando agente 59/222: 098-legacy_modernizer_agent.py
+2025-10-20 17:10:00,927 | INFO | ✅ Carregado agente: LegacyModernizerAgent de 098-legacy_modernizer_agent.py
+2025-10-20 17:10:00,927 | INFO | 📥 Carregando agente 60/222: 064-error_coordinator_agent.py
+2025-10-20 17:10:00,929 | INFO | ✅ Carregado agente: ErrorCoordinatorAgent de 064-error_coordinator_agent.py
+2025-10-20 17:10:00,929 | INFO | 📥 Carregando agente 61/222: 108-ml_engineer_agent.py
+2025-10-20 17:10:00,931 | INFO | ✅ Carregado agente: MlEngineerAgent de 108-ml_engineer_agent.py
+2025-10-20 17:10:00,931 | INFO | 📥 Carregando agente 62/222: 194-terraform_engineer_agent.py
+2025-10-20 17:10:00,932 | INFO | ✅ Carregado agente: TerraformEngineerAgent de 194-terraform_engineer_agent.py
+2025-10-20 17:10:00,932 | INFO | 📥 Carregando agente 63/222: 195-terraform_specialist_agent.py
+2025-10-20 17:10:00,934 | INFO | ✅ Carregado agente: TerraformSpecialistAgent de 195-terraform_specialist_agent.py
+2025-10-20 17:10:00,934 | INFO | 📥 Carregando agente 64/222: 038-data_researcher_agent.py
+2025-10-20 17:10:00,936 | INFO | ✅ Carregado agente: DataResearcherAgent de 038-data_researcher_agent.py
+2025-10-20 17:10:00,936 | INFO | 📥 Carregando agente 65/222: 170-seo_snippet_hunter_agent.py
+2025-10-20 17:10:00,937 | INFO | ✅ Carregado agente: SeoSnippetHunterAgent de 170-seo_snippet_hunter_agent.py
+2025-10-20 17:10:00,938 | INFO | 📥 Carregando agente 66/222: 092-kotlin_specialist_agent.py
+2025-10-20 17:10:00,939 | INFO | ✅ Carregado agente: KotlinSpecialistAgent de 092-kotlin_specialist_agent.py
+2025-10-20 17:10:00,939 | INFO | 📥 Carregando agente 67/222: 088-java_pro_agent.py
+2025-10-20 17:10:00,940 | ERROR | ❌ Erro ao carregar 01-generated-agents/088-java_pro_agent.py: unterminated string literal (detected at line 226) (088-java_pro_agent.py, line 226)
+2025-10-20 17:10:00,940 | INFO | 📥 Carregando agente 68/222: 015-backend_security_coder_agent.py
+2025-10-20 17:10:00,941 | INFO | ✅ Carregado agente: BackendSecurityCoderAgent de 015-backend_security_coder_agent.py
+2025-10-20 17:10:00,942 | INFO | 📥 Carregando agente 69/222: 123-performance_monitor_agent.py
+2025-10-20 17:10:00,943 | INFO | ✅ Carregado agente: PerformanceMonitorAgent de 123-performance_monitor_agent.py
+2025-10-20 17:10:00,943 | INFO | 📥 Carregando agente 70/222: 103-market_researcher_agent.py
+2025-10-20 17:10:00,946 | INFO | ✅ Carregado agente: MarketResearcherAgent de 103-market_researcher_agent.py
+2025-10-20 17:10:00,946 | INFO | 📥 Carregando agente 71/222: 157-search_specialist_agent.py
+2025-10-20 17:10:00,948 | INFO | ✅ Carregado agente: SearchSpecialistAgent de 157-search_specialist_agent.py
+2025-10-20 17:10:00,949 | INFO | 📥 Carregando agente 72/222: 030-context_manager_agent.py
+2025-10-20 17:10:00,951 | INFO | ✅ Carregado agente: ContextManagerAgent de 030-context_manager_agent.py
+2025-10-20 17:10:00,951 | INFO | 📥 Carregando agente 73/222: 127-postgres_pro_agent.py
+2025-10-20 17:10:00,953 | INFO | ✅ Carregado agente: PostgresProAgent de 127-postgres_pro_agent.py
+2025-10-20 17:10:00,954 | INFO | 📥 Carregando agente 74/222: 199-tiktok_strategist_agent.py
+2025-10-20 17:10:00,955 | ERROR | ❌ Erro ao carregar 01-generated-agents/199-tiktok_strategist_agent.py: '(' was never closed (199-tiktok_strategist_agent.py, line 65)
+2025-10-20 17:10:00,955 | INFO | 📥 Carregando agente 75/222: 111-mobile_app_developer_agent.py
+2025-10-20 17:10:00,957 | INFO | ✅ Carregado agente: MobileAppDeveloperAgent de 111-mobile_app_developer_agent.py
+2025-10-20 17:10:00,957 | INFO | 📥 Carregando agente 76/222: 217-vue_state_manager_agent.py
+2025-10-20 17:10:00,960 | INFO | ✅ Carregado agente: VueStateManagerAgent de 217-vue_state_manager_agent.py
+2025-10-20 17:10:00,960 | INFO | 📥 Carregando agente 77/222: 113-mobile_security_coder_agent.py
+2025-10-20 17:10:00,962 | INFO | ✅ Carregado agente: MobileSecurityCoderAgent de 113-mobile_security_coder_agent.py
+2025-10-20 17:10:00,962 | INFO | 📥 Carregando agente 78/222: 019-business_analyst_agent.py
+2025-10-20 17:10:00,965 | INFO | ✅ Carregado agente: BusinessAnalystAgent de 019-business_analyst_agent.py
+2025-10-20 17:10:00,965 | INFO | 📥 Carregando agente 79/222: 045-deployment_engineer_agent.py
+2025-10-20 17:10:00,967 | INFO | ✅ Carregado agente: DeploymentEngineerAgent de 045-deployment_engineer_agent.py
+2025-10-20 17:10:00,967 | INFO | 📥 Carregando agente 80/222: 041-database_administrator_agent.py
+2025-10-20 17:10:00,970 | INFO | ✅ Carregado agente: DatabaseAdministratorAgent de 041-database_administrator_agent.py
+2025-10-20 17:10:00,970 | INFO | 📥 Carregando agente 81/222: 145-refactor_agent_agent.py
+2025-10-20 17:10:00,971 | ERROR | ❌ Erro ao carregar 01-generated-agents/145-refactor_agent_agent.py: unterminated string literal (detected at line 69) (145-refactor_agent_agent.py, line 69)
+2025-10-20 17:10:00,971 | INFO | 📥 Carregando agente 82/222: 133-python_pro_agent.py
+2025-10-20 17:10:00,973 | INFO | ✅ Carregado agente: PythonProAgent de 133-python_pro_agent.py
+2025-10-20 17:10:00,973 | INFO | 📥 Carregando agente 83/222: 160-senior_backend_architect_agent.py
+2025-10-20 17:10:00,976 | INFO | ✅ Carregado agente: SeniorBackendArchitectAgent de 160-senior_backend_architect_agent.py
+2025-10-20 17:10:00,976 | INFO | 📥 Carregando agente 84/222: 072-frontend_developer_agent.py
+2025-10-20 17:10:00,978 | INFO | ✅ Carregado agente: FrontendDeveloperAgent de 072-frontend_developer_agent.py
+2025-10-20 17:10:00,978 | INFO | 📥 Carregando agente 85/222: 126-platform_engineer_agent.py
+2025-10-20 17:10:00,980 | INFO | ✅ Carregado agente: PlatformEngineerAgent de 126-platform_engineer_agent.py
+2025-10-20 17:10:00,980 | INFO | 📥 Carregando agente 86/222: 099-legal_advisor_agent.py
+2025-10-20 17:10:00,982 | INFO | ✅ Carregado agente: LegalAdvisorAgent de 099-legal_advisor_agent.py
+2025-10-20 17:10:00,982 | INFO | 📥 Carregando agente 87/222: 120-penetration_tester_agent.py
+2025-10-20 17:10:00,984 | INFO | ✅ Carregado agente: PenetrationTesterAgent de 120-penetration_tester_agent.py
+2025-10-20 17:10:00,984 | INFO | 📥 Carregando agente 88/222: 074-fullstack_developer_agent.py
+2025-10-20 17:10:00,985 | INFO | ✅ Carregado agente: FullstackDeveloperAgent de 074-fullstack_developer_agent.py
+2025-10-20 17:10:00,985 | INFO | 📥 Carregando agente 89/222: 105-mermaid_expert_agent.py
+2025-10-20 17:10:00,987 | INFO | ✅ Carregado agente: MermaidExpertAgent de 105-mermaid_expert_agent.py
+2025-10-20 17:10:00,987 | INFO | 📥 Carregando agente 90/222: 025-code_reviewer_agent.py
+2025-10-20 17:10:00,990 | INFO | ✅ Carregado agente: CodeReviewerAgent de 025-code_reviewer_agent.py
+2025-10-20 17:10:00,990 | INFO | 📥 Carregando agente 91/222: 192-tech_lead_orchestrator_agent.py
+2025-10-20 17:10:00,991 | INFO | ✅ Carregado agente: TechLeadOrchestratorAgent de 192-tech_lead_orchestrator_agent.py
+2025-10-20 17:10:00,992 | INFO | 📥 Carregando agente 92/222: 159-security_engineer_agent.py
+2025-10-20 17:10:00,994 | INFO | ✅ Carregado agente: SecurityEngineerAgent de 159-security_engineer_agent.py
+2025-10-20 17:10:00,994 | INFO | 📥 Carregando agente 93/222: 172-seo_structure_architect_agent.py
+2025-10-20 17:10:00,995 | INFO | ✅ Carregado agente: SeoStructureArchitectAgent de 172-seo_structure_architect_agent.py
+2025-10-20 17:10:00,995 | INFO | 📥 Carregando agente 94/222: 046-devops_automator_agent.py
+2025-10-20 17:10:00,996 | ERROR | ❌ Erro ao carregar 01-generated-agents/046-devops_automator_agent.py: unterminated string literal (detected at line 69) (046-devops_automator_agent.py, line 69)
+2025-10-20 17:10:00,996 | INFO | 📥 Carregando agente 95/222: 004-analytics_reporter_agent.py
+2025-10-20 17:10:00,997 | INFO | ✅ Carregado agente: AnalyticsReporterAgent de 004-analytics_reporter_agent.py
+2025-10-20 17:10:00,997 | INFO | 📥 Carregando agente 96/222: 125-php_pro_agent.py
+2025-10-20 17:10:00,999 | INFO | ✅ Carregado agente: PhpProAgent de 125-php_pro_agent.py
+2025-10-20 17:10:00,999 | INFO | 📥 Carregando agente 97/222: 155-scala_pro_agent.py
+2025-10-20 17:10:01,000 | INFO | ✅ Carregado agente: ScalaProAgent de 155-scala_pro_agent.py
+2025-10-20 17:10:01,001 | INFO | 📥 Carregando agente 98/222: 139-rails_expert_agent.py
+2025-10-20 17:10:01,002 | INFO | ✅ Carregado agente: RailsExpertAgent de 139-rails_expert_agent.py
+2025-10-20 17:10:01,002 | INFO | 📥 Carregando agente 99/222: 115-network_engineer_agent.py
+2025-10-20 17:10:01,004 | INFO | ✅ Carregado agente: NetworkEngineerAgent de 115-network_engineer_agent.py
+2025-10-20 17:10:01,004 | INFO | 📥 Carregando agente 100/222: 028-content_creator_agent.py
+2025-10-20 17:10:01,005 | INFO | ✅ Carregado agente: ContentCreatorAgent de 028-content_creator_agent.py
+2025-10-20 17:10:01,005 | INFO | 📥 Carregando agente 101/222: 081-hybrid_cloud_architect_agent.py
+2025-10-20 17:10:01,006 | ERROR | ❌ Erro ao carregar 01-generated-agents/081-hybrid_cloud_architect_agent.py: unterminated string literal (detected at line 215) (081-hybrid_cloud_architect_agent.py, line 215)
+2025-10-20 17:10:01,006 | INFO | 📥 Carregando agente 102/222: 168-seo_keyword_strategist_agent.py
+2025-10-20 17:10:01,008 | INFO | ✅ Carregado agente: SeoKeywordStrategistAgent de 168-seo_keyword_strategist_agent.py
+2025-10-20 17:10:01,008 | INFO | 📥 Carregando agente 103/222: 220-wordpress_master_agent.py
+2025-10-20 17:10:01,009 | INFO | ✅ Carregado agente: WordpressMasterAgent de 220-wordpress_master_agent.py
+2025-10-20 17:10:01,010 | INFO | 📥 Carregando agente 104/222: 191-team_configurator_agent.py
+2025-10-20 17:10:01,010 | ERROR | ❌ Erro ao carregar 01-generated-agents/191-team_configurator_agent.py: invalid syntax. Perhaps you forgot a comma? (191-team_configurator_agent.py, line 69)
+2025-10-20 17:10:01,010 | INFO | 📥 Carregando agente 105/222: 080-hr_pro_agent.py
+2025-10-20 17:10:01,012 | INFO | ✅ Carregado agente: HrProAgent de 080-hr_pro_agent.py
+2025-10-20 17:10:01,012 | INFO | 📥 Carregando agente 106/222: 169-seo_meta_optimizer_agent.py
+2025-10-20 17:10:01,013 | INFO | ✅ Carregado agente: SeoMetaOptimizerAgent de 169-seo_meta_optimizer_agent.py
+2025-10-20 17:10:01,013 | INFO | 📥 Carregando agente 107/222: 141-react_component_architect_agent.py
+2025-10-20 17:10:01,015 | INFO | ✅ Carregado agente: ReactComponentArchitectAgent de 141-react_component_architect_agent.py
+2025-10-20 17:10:01,015 | INFO | 📥 Carregando agente 108/222: 008-api_documenter_agent.py
+2025-10-20 17:10:01,016 | INFO | ✅ Carregado agente: ApiDocumenterAgent de 008-api_documenter_agent.py
+2025-10-20 17:10:01,016 | INFO | 📥 Carregando agente 109/222: 212-ux_researcher_agent.py
+2025-10-20 17:10:01,018 | INFO | ✅ Carregado agente: UxResearcherAgent de 212-ux_researcher_agent.py
+2025-10-20 17:10:01,018 | INFO | 📥 Carregando agente 110/222: 146-refactoring_specialist_agent.py
+2025-10-20 17:10:01,019 | INFO | ✅ Carregado agente: RefactoringSpecialistAgent de 146-refactoring_specialist_agent.py
+2025-10-20 17:10:01,019 | INFO | 📥 Carregando agente 111/222: 209-ui_ux_master_agent.py
+2025-10-20 17:10:01,021 | INFO | ✅ Carregado agente: UiUxMasterAgent de 209-ui_ux_master_agent.py
+2025-10-20 17:10:01,021 | INFO | 📥 Carregando agente 112/222: 006-api_architect_agent.py
+2025-10-20 17:10:01,023 | INFO | ✅ Carregado agente: ApiArchitectAgent de 006-api_architect_agent.py
+2025-10-20 17:10:01,023 | INFO | 📥 Carregando agente 113/222: 061-electron_pro_agent.py
+2025-10-20 17:10:01,025 | INFO | ✅ Carregado agente: ElectronProAgent de 061-electron_pro_agent.py
+2025-10-20 17:10:01,025 | INFO | 📥 Carregando agente 114/222: 119-payment_integration_agent.py
+2025-10-20 17:10:01,027 | INFO | ✅ Carregado agente: PaymentIntegrationAgent de 119-payment_integration_agent.py
+2025-10-20 17:10:01,027 | INFO | 📥 Carregando agente 115/222: 215-vue_expert_agent.py
+2025-10-20 17:10:01,028 | INFO | ✅ Carregado agente: VueExpertAgent de 215-vue_expert_agent.py
+2025-10-20 17:10:01,028 | INFO | 📥 Carregando agente 116/222: 200-tool_evaluator_agent.py
+2025-10-20 17:10:01,030 | INFO | ✅ Carregado agente: ToolEvaluatorAgent de 200-tool_evaluator_agent.py
+2025-10-20 17:10:01,030 | INFO | 📥 Carregando agente 117/222: 147-reference_builder_agent.py
+2025-10-20 17:10:01,031 | INFO | ✅ Carregado agente: ReferenceBuilderAgent de 147-reference_builder_agent.py
+2025-10-20 17:10:01,031 | INFO | 📥 Carregando agente 118/222: 152-rust_pro_agent.py
+2025-10-20 17:10:01,033 | INFO | ✅ Carregado agente: RustProAgent de 152-rust_pro_agent.py
+2025-10-20 17:10:01,033 | INFO | 📥 Carregando agente 119/222: 128-product_manager_agent.py
+2025-10-20 17:10:01,034 | INFO | ✅ Carregado agente: ProductManagerAgent de 128-product_manager_agent.py
+2025-10-20 17:10:01,034 | INFO | 📥 Carregando agente 120/222: 164-seo_content_auditor_agent.py
+2025-10-20 17:10:01,036 | INFO | ✅ Carregado agente: SeoContentAuditorAgent de 164-seo_content_auditor_agent.py
+2025-10-20 17:10:01,036 | INFO | 📥 Carregando agente 121/222: 189-task_distributor_agent.py
+2025-10-20 17:10:01,038 | INFO | ✅ Carregado agente: TaskDistributorAgent de 189-task_distributor_agent.py
+2025-10-20 17:10:01,038 | INFO | 📥 Carregando agente 122/222: 148-research_analyst_agent.py
+2025-10-20 17:10:01,039 | INFO | ✅ Carregado agente: ResearchAnalystAgent de 148-research_analyst_agent.py
+2025-10-20 17:10:01,040 | INFO | 📥 Carregando agente 123/222: 134-qa_expert_agent.py
+2025-10-20 17:10:01,041 | INFO | ✅ Carregado agente: QaExpertAgent de 134-qa_expert_agent.py
+2025-10-20 17:10:01,041 | INFO | 📥 Carregando agente 124/222: 131-project_shipper_agent.py
+2025-10-20 17:10:01,042 | ERROR | ❌ Erro ao carregar 01-generated-agents/131-project_shipper_agent.py: unterminated string literal (detected at line 69) (131-project_shipper_agent.py, line 69)
+2025-10-20 17:10:01,042 | INFO | 📥 Carregando agente 125/222: 066-experiment_tracker_agent.py
+2025-10-20 17:10:01,043 | ERROR | ❌ Erro ao carregar 01-generated-agents/066-experiment_tracker_agent.py: invalid syntax. Perhaps you forgot a comma? (066-experiment_tracker_agent.py, line 69)
+2025-10-20 17:10:01,043 | INFO | 📥 Carregando agente 126/222: 138-rails_backend_expert_agent.py
+2025-10-20 17:10:01,043 | ERROR | ❌ Erro ao carregar 01-generated-agents/138-rails_backend_expert_agent.py: invalid syntax. Perhaps you forgot a comma? (138-rails_backend_expert_agent.py, line 69)
+2025-10-20 17:10:01,044 | INFO | 📥 Carregando agente 127/222: 082-incident_responder_agent.py
+2025-10-20 17:10:01,045 | INFO | ✅ Carregado agente: IncidentResponderAgent de 082-incident_responder_agent.py
+2025-10-20 17:10:01,045 | INFO | 📥 Carregando agente 128/222: 112-mobile_developer_agent.py
+2025-10-20 17:10:01,047 | INFO | ✅ Carregado agente: MobileDeveloperAgent de 112-mobile_developer_agent.py
+2025-10-20 17:10:01,047 | INFO | 📥 Carregando agente 129/222: 014-backend_developer_agent.py
+2025-10-20 17:10:01,049 | INFO | ✅ Carregado agente: BackendDeveloperAgent de 014-backend_developer_agent.py
+2025-10-20 17:10:01,049 | INFO | 📥 Carregando agente 130/222: 051-django_backend_expert_agent.py
+2025-10-20 17:10:01,050 | INFO | ✅ Carregado agente: DjangoBackendExpertAgent de 051-django_backend_expert_agent.py
+2025-10-20 17:10:01,050 | INFO | 📥 Carregando agente 131/222: 093-kubernetes_architect_agent.py
+2025-10-20 17:10:01,051 | ERROR | ❌ Erro ao carregar 01-generated-agents/093-kubernetes_architect_agent.py: unterminated string literal (detected at line 209) (093-kubernetes_architect_agent.py, line 209)
+2025-10-20 17:10:01,051 | INFO | 📥 Carregando agente 132/222: 079-growth_hacker_agent.py
+2025-10-20 17:10:01,052 | INFO | ✅ Carregado agente: GrowthHackerAgent de 079-growth_hacker_agent.py
+2025-10-20 17:10:01,052 | INFO | 📥 Carregando agente 133/222: 027-compliance_auditor_agent.py
+2025-10-20 17:10:01,054 | INFO | ✅ Carregado agente: ComplianceAuditorAgent de 027-compliance_auditor_agent.py
+2025-10-20 17:10:01,054 | INFO | 📥 Carregando agente 134/222: 219-whimsy_injector_agent.py
+2025-10-20 17:10:01,054 | ERROR | ❌ Erro ao carregar 01-generated-agents/219-whimsy_injector_agent.py: unterminated string literal (detected at line 69) (219-whimsy_injector_agent.py, line 69)
+2025-10-20 17:10:01,055 | INFO | 📥 Carregando agente 135/222: 077-golang_pro_agent.py
+2025-10-20 17:10:01,056 | INFO | ✅ Carregado agente: GolangProAgent de 077-golang_pro_agent.py
+2025-10-20 17:10:01,056 | INFO | 📥 Carregando agente 136/222: 178-spec_tester_agent.py
+2025-10-20 17:10:01,058 | INFO | ✅ Carregado agente: SpecTesterAgent de 178-spec_tester_agent.py
+2025-10-20 17:10:01,058 | INFO | 📥 Carregando agente 137/222: 042-database_optimizer_agent.py
+2025-10-20 17:10:01,060 | INFO | ✅ Carregado agente: DatabaseOptimizerAgent de 042-database_optimizer_agent.py
+2025-10-20 17:10:01,060 | INFO | 📥 Carregando agente 138/222: 097-laravel_specialist_agent.py
+2025-10-20 17:10:01,062 | INFO | ✅ Carregado agente: LaravelSpecialistAgent de 097-laravel_specialist_agent.py
+2025-10-20 17:10:01,062 | INFO | 📥 Carregando agente 139/222: 037-data_engineer_agent.py
+2025-10-20 17:10:01,063 | INFO | ✅ Carregado agente: DataEngineerAgent de 037-data_engineer_agent.py
+2025-10-20 17:10:01,063 | INFO | 📥 Carregando agente 140/222: 060-dx_optimizer_agent.py
+2025-10-20 17:10:01,065 | INFO | ✅ Carregado agente: DxOptimizerAgent de 060-dx_optimizer_agent.py
+2025-10-20 17:10:01,065 | INFO | 📥 Carregando agente 141/222: 179-spec_validator_agent.py
+2025-10-20 17:10:01,066 | INFO | ✅ Carregado agente: SpecValidatorAgent de 179-spec_validator_agent.py
+2025-10-20 17:10:01,066 | INFO | 📥 Carregando agente 142/222: 116-nextjs_developer_agent.py
+2025-10-20 17:10:01,068 | INFO | ✅ Carregado agente: NextjsDeveloperAgent de 116-nextjs_developer_agent.py
+2025-10-20 17:10:01,068 | INFO | 📥 Carregando agente 143/222: 033-csharp_pro_agent.py
+2025-10-20 17:10:01,069 | INFO | ✅ Carregado agente: CsharpProAgent de 033-csharp_pro_agent.py
+2025-10-20 17:10:01,069 | INFO | 📥 Carregando agente 144/222: 136-rails_activerecord_expert_agent.py
+2025-10-20 17:10:01,071 | INFO | ✅ Carregado agente: RailsActiverecordExpertAgent de 136-rails_activerecord_expert_agent.py
+2025-10-20 17:10:01,071 | INFO | 📥 Carregando agente 145/222: 153-sales_automator_agent.py
+2025-10-20 17:10:01,073 | INFO | ✅ Carregado agente: SalesAutomatorAgent de 153-sales_automator_agent.py
+2025-10-20 17:10:01,073 | INFO | 📥 Carregando agente 146/222: 085-ios_developer_agent.py
+2025-10-20 17:10:01,075 | INFO | ✅ Carregado agente: IosDeveloperAgent de 085-ios_developer_agent.py
+2025-10-20 17:10:01,075 | INFO | 📥 Carregando agente 147/222: 198-test_writer_fixer_agent.py
+2025-10-20 17:10:01,075 | ERROR | ❌ Erro ao carregar 01-generated-agents/198-test_writer_fixer_agent.py: invalid syntax. Perhaps you forgot a comma? (198-test_writer_fixer_agent.py, line 69)
+2025-10-20 17:10:01,076 | INFO | 📥 Carregando agente 148/222: 021-chaos_engineer_agent.py
+2025-10-20 17:10:01,077 | INFO | ✅ Carregado agente: ChaosEngineerAgent de 021-chaos_engineer_agent.py
+2025-10-20 17:10:01,077 | INFO | 📥 Carregando agente 149/222: 132-prompt_engineer_agent.py
+2025-10-20 17:10:01,079 | INFO | ✅ Carregado agente: PromptEngineerAgent de 132-prompt_engineer_agent.py
+2025-10-20 17:10:01,079 | INFO | 📥 Carregando agente 150/222: 149-risk_manager_agent.py
+2025-10-20 17:10:01,080 | INFO | ✅ Carregado agente: RiskManagerAgent de 149-risk_manager_agent.py
+2025-10-20 17:10:01,081 | INFO | 📥 Carregando agente 151/222: 011-architect_review_agent.py
+2025-10-20 17:10:01,082 | INFO | ✅ Carregado agente: ArchitectReviewAgent de 011-architect_review_agent.py
+2025-10-20 17:10:01,082 | INFO | 📥 Carregando agente 152/222: 031-cpp_pro_agent.py
+2025-10-20 17:10:01,084 | INFO | ✅ Carregado agente: CppProAgent de 031-cpp_pro_agent.py
+2025-10-20 17:10:01,084 | INFO | 📥 Carregando agente 153/222: 174-spec_architect_agent.py
+2025-10-20 17:10:01,085 | INFO | ✅ Carregado agente: SpecArchitectAgent de 174-spec_architect_agent.py
+2025-10-20 17:10:01,085 | INFO | 📥 Carregando agente 154/222: 216-vue_nuxt_expert_agent.py
+2025-10-20 17:10:01,087 | INFO | ✅ Carregado agente: VueNuxtExpertAgent de 216-vue_nuxt_expert_agent.py
+2025-10-20 17:10:01,087 | INFO | 📥 Carregando agente 155/222: 185-studio_producer_agent.py
+2025-10-20 17:10:01,088 | ERROR | ❌ Erro ao carregar 01-generated-agents/185-studio_producer_agent.py: unterminated string literal (detected at line 69) (185-studio_producer_agent.py, line 69)
+2025-10-20 17:10:01,088 | INFO | 📥 Carregando agente 156/222: 203-trend_researcher_agent.py
+2025-10-20 17:10:01,088 | ERROR | ❌ Erro ao carregar 01-generated-agents/203-trend_researcher_agent.py: '(' was never closed (203-trend_researcher_agent.py, line 65)
+2025-10-20 17:10:01,088 | INFO | 📥 Carregando agente 157/222: 184-studio_coach_agent.py
+2025-10-20 17:10:01,089 | ERROR | ❌ Erro ao carregar 01-generated-agents/184-studio_coach_agent.py: invalid syntax. Perhaps you forgot a comma? (184-studio_coach_agent.py, line 69)
+2025-10-20 17:10:01,089 | INFO | 📥 Carregando agente 158/222: 053-django_orm_expert_agent.py
+2025-10-20 17:10:01,091 | INFO | ✅ Carregado agente: DjangoOrmExpertAgent de 053-django_orm_expert_agent.py
+2025-10-20 17:10:01,091 | INFO | 📥 Carregando agente 159/222: 154-sales_engineer_agent.py
+2025-10-20 17:10:01,092 | INFO | ✅ Carregado agente: SalesEngineerAgent de 154-sales_engineer_agent.py
+2025-10-20 17:10:01,093 | INFO | 📥 Carregando agente 160/222: 100-legal_compliance_checker_agent.py
+2025-10-20 17:10:01,094 | INFO | ✅ Carregado agente: LegalComplianceCheckerAgent de 100-legal_compliance_checker_agent.py
+2025-10-20 17:10:01,094 | INFO | 📥 Carregando agente 161/222: 196-test_automator_agent.py
+2025-10-20 17:10:01,096 | INFO | ✅ Carregado agente: TestAutomatorAgent de 196-test_automator_agent.py
+2025-10-20 17:10:01,096 | INFO | 📥 Carregando agente 162/222: 096-laravel_eloquent_expert_agent.py
+2025-10-20 17:10:01,097 | INFO | ✅ Carregado agente: LaravelEloquentExpertAgent de 096-laravel_eloquent_expert_agent.py
+2025-10-20 17:10:01,097 | INFO | 📥 Carregando agente 163/222: 022-cli_developer_agent.py
+2025-10-20 17:10:01,099 | INFO | ✅ Carregado agente: CliDeveloperAgent de 022-cli_developer_agent.py
+2025-10-20 17:10:01,099 | INFO | 📥 Carregando agente 164/222: 143-react_specialist_agent.py
+2025-10-20 17:10:01,100 | INFO | ✅ Carregado agente: ReactSpecialistAgent de 143-react_specialist_agent.py
+2025-10-20 17:10:01,100 | INFO | 📥 Carregando agente 165/222: 130-project_manager_agent.py
+2025-10-20 17:10:01,101 | INFO | ✅ Carregado agente: ProjectManagerAgent de 130-project_manager_agent.py
+2025-10-20 17:10:01,101 | INFO | 📥 Carregando agente 166/222: 094-kubernetes_specialist_agent.py
+2025-10-20 17:10:01,103 | INFO | ✅ Carregado agente: KubernetesSpecialistAgent de 094-kubernetes_specialist_agent.py
+2025-10-20 17:10:01,103 | INFO | 📥 Carregando agente 167/222: 057-documentation_specialist_agent.py
+2025-10-20 17:10:01,105 | INFO | ✅ Carregado agente: DocumentationSpecialistAgent de 057-documentation_specialist_agent.py
+2025-10-20 17:10:01,106 | INFO | 📥 Carregando agente 168/222: 176-spec_orchestrator_agent.py
+2025-10-20 17:10:01,107 | INFO | ✅ Carregado agente: SpecOrchestratorAgent de 176-spec_orchestrator_agent.py
+2025-10-20 17:10:01,107 | INFO | 📥 Carregando agente 169/222: 162-seo_authority_builder_agent.py
+2025-10-20 17:10:01,109 | INFO | ✅ Carregado agente: SeoAuthorityBuilderAgent de 162-seo_authority_builder_agent.py
+2025-10-20 17:10:01,109 | INFO | 📥 Carregando agente 170/222: 101-llm_architect_agent.py
+2025-10-20 17:10:01,111 | INFO | ✅ Carregado agente: LlmArchitectAgent de 101-llm_architect_agent.py
+2025-10-20 17:10:01,111 | INFO | 📥 Carregando agente 171/222: 050-django_api_developer_agent.py
+2025-10-20 17:10:01,112 | INFO | ✅ Carregado agente: DjangoApiDeveloperAgent de 050-django_api_developer_agent.py
+2025-10-20 17:10:01,112 | INFO | 📥 Carregando agente 172/222: 171-seo_specialist_agent.py
+2025-10-20 17:10:01,114 | INFO | ✅ Carregado agente: SeoSpecialistAgent de 171-seo_specialist_agent.py
+2025-10-20 17:10:01,114 | INFO | 📥 Carregando agente 173/222: 095-laravel_backend_expert_agent.py
+2025-10-20 17:10:01,115 | INFO | ✅ Carregado agente: LaravelBackendExpertAgent de 095-laravel_backend_expert_agent.py
+2025-10-20 17:10:01,115 | INFO | 📥 Carregando agente 174/222: 202-trend_analyst_agent.py
+2025-10-20 17:10:01,117 | INFO | ✅ Carregado agente: TrendAnalystAgent de 202-trend_analyst_agent.py
+2025-10-20 17:10:01,117 | INFO | 📥 Carregando agente 175/222: 206-typescript_pro_agent.py
+2025-10-20 17:10:01,118 | INFO | ✅ Carregado agente: TypescriptProAgent de 206-typescript_pro_agent.py
+2025-10-20 17:10:01,118 | INFO | 📥 Carregando agente 176/222: 122-performance_engineer_agent.py
+2025-10-20 17:10:01,120 | INFO | ✅ Carregado agente: PerformanceEngineerAgent de 122-performance_engineer_agent.py
+2025-10-20 17:10:01,120 | INFO | 📥 Carregando agente 177/222: 055-docs_architect_agent.py
+2025-10-20 17:10:01,121 | INFO | ✅ Carregado agente: DocsArchitectAgent de 055-docs_architect_agent.py
+2025-10-20 17:10:01,121 | INFO | 📥 Carregando agente 178/222: 084-instagram_curator_agent.py
+2025-10-20 17:10:01,123 | INFO | ✅ Carregado agente: InstagramCuratorAgent de 084-instagram_curator_agent.py
+2025-10-20 17:10:01,123 | INFO | 📥 Carregando agente 179/222: 020-c_pro_agent.py
+2025-10-20 17:10:01,124 | INFO | ✅ Carregado agente: CProAgent de 020-c_pro_agent.py
+2025-10-20 17:10:01,124 | INFO | 📥 Carregando agente 180/222: 142-react_nextjs_expert_agent.py
+2025-10-20 17:10:01,126 | INFO | ✅ Carregado agente: ReactNextjsExpertAgent de 142-react_nextjs_expert_agent.py
+2025-10-20 17:10:01,126 | INFO | 📥 Carregando agente 181/222: 070-fintech_engineer_agent.py
+2025-10-20 17:10:01,128 | INFO | ✅ Carregado agente: FintechEngineerAgent de 070-fintech_engineer_agent.py
+2025-10-20 17:10:01,128 | INFO | 📥 Carregando agente 182/222: 117-nlp_engineer_agent.py
+2025-10-20 17:10:01,130 | INFO | ✅ Carregado agente: NlpEngineerAgent de 117-nlp_engineer_agent.py
+2025-10-20 17:10:01,130 | INFO | 📥 Carregando agente 183/222: 049-devops_troubleshooter_agent.py
+2025-10-20 17:10:01,131 | INFO | ✅ Carregado agente: DevopsTroubleshooterAgent de 049-devops_troubleshooter_agent.py
+2025-10-20 17:10:01,131 | INFO | 📥 Carregando agente 184/222: 104-mcp_developer_agent.py
+2025-10-20 17:10:01,133 | INFO | ✅ Carregado agente: McpDeveloperAgent de 104-mcp_developer_agent.py
+2025-10-20 17:10:01,133 | INFO | 📥 Carregando agente 185/222: 210-ui_visual_validator_agent.py
+2025-10-20 17:10:01,134 | INFO | ✅ Carregado agente: UiVisualValidatorAgent de 210-ui_visual_validator_agent.py
+2025-10-20 17:10:01,134 | INFO | 📥 Carregando agente 186/222: 222-workflow_orchestrator_agent.py
+2025-10-20 17:10:01,135 | INFO | ✅ Carregado agente: WorkflowOrchestratorAgent de 222-workflow_orchestrator_agent.py
+2025-10-20 17:10:01,135 | INFO | 📥 Carregando agente 187/222: 076-git_workflow_manager_agent.py
+2025-10-20 17:10:01,137 | INFO | ✅ Carregado agente: GitWorkflowManagerAgent de 076-git_workflow_manager_agent.py
+2025-10-20 17:10:01,137 | INFO | 📥 Carregando agente 188/222: 087-java_architect_agent.py
+2025-10-20 17:10:01,139 | INFO | ✅ Carregado agente: JavaArchitectAgent de 087-java_architect_agent.py
+2025-10-20 17:10:01,139 | INFO | 📥 Carregando agente 189/222: 043-debugger_agent.py
+2025-10-20 17:10:01,140 | INFO | ✅ Carregado agente: DebuggerAgent de 043-debugger_agent.py
+2025-10-20 17:10:01,140 | INFO | 📥 Carregando agente 190/222: 107-minecraft_bukkit_pro_agent.py
+2025-10-20 17:10:01,142 | INFO | ✅ Carregado agente: MinecraftBukkitProAgent de 107-minecraft_bukkit_pro_agent.py
+2025-10-20 17:10:01,142 | INFO | 📥 Carregando agente 191/222: 173-spec_analyst_agent.py
+2025-10-20 17:10:01,144 | INFO | ✅ Carregado agente: SpecAnalystAgent de 173-spec_analyst_agent.py
+2025-10-20 17:10:01,144 | INFO | 📥 Carregando agente 192/222: 035-customer_support_agent.py
+2025-10-20 17:10:01,145 | INFO | ✅ Carregado agente: CustomerSupportAgent de 035-customer_support_agent.py
+2025-10-20 17:10:01,145 | INFO | 📥 Carregando agente 193/222: 089-javascript_pro_agent.py
+2025-10-20 17:10:01,147 | INFO | ✅ Carregado agente: JavascriptProAgent de 089-javascript_pro_agent.py
+2025-10-20 17:10:01,147 | INFO | 📥 Carregando agente 194/222: 106-microservices_architect_agent.py
+2025-10-20 17:10:01,148 | INFO | ✅ Carregado agente: MicroservicesArchitectAgent de 106-microservices_architect_agent.py
+2025-10-20 17:10:01,148 | INFO | 📥 Carregando agente 195/222: 140-rapid_prototyper_agent.py
+2025-10-20 17:10:01,149 | ERROR | ❌ Erro ao carregar 01-generated-agents/140-rapid_prototyper_agent.py: unterminated string literal (detected at line 69) (140-rapid_prototyper_agent.py, line 69)
+2025-10-20 17:10:01,149 | INFO | 📥 Carregando agente 196/222: 083-infrastructure_maintainer_agent.py
+2025-10-20 17:10:01,150 | INFO | ✅ Carregado agente: InfrastructureMaintainerAgent de 083-infrastructure_maintainer_agent.py
+2025-10-20 17:10:01,150 | INFO | 📥 Carregando agente 197/222: 187-swift_expert_agent.py
+2025-10-20 17:10:01,152 | INFO | ✅ Carregado agente: SwiftExpertAgent de 187-swift_expert_agent.py
+2025-10-20 17:10:01,152 | INFO | 📥 Carregando agente 198/222: 090-joker_agent.py
+2025-10-20 17:10:01,152 | ERROR | ❌ Erro ao carregar 01-generated-agents/090-joker_agent.py: invalid syntax. Perhaps you forgot a comma? (090-joker_agent.py, line 69)
+2025-10-20 17:10:01,152 | INFO | 📥 Carregando agente 199/222: 177-spec_planner_agent.py
+2025-10-20 17:10:01,154 | INFO | ✅ Carregado agente: SpecPlannerAgent de 177-spec_planner_agent.py
+2025-10-20 17:10:01,154 | INFO | 📥 Carregando agente 200/222: 039-data_scientist_agent.py
+2025-10-20 17:10:01,156 | INFO | ✅ Carregado agente: DataScientistAgent de 039-data_scientist_agent.py
+2025-10-20 17:10:01,156 | INFO | 📥 Carregando agente 201/222: 201-tooling_engineer_agent.py
+2025-10-20 17:10:01,158 | INFO | ✅ Carregado agente: ToolingEngineerAgent de 201-tooling_engineer_agent.py
+2025-10-20 17:10:01,158 | INFO | 📥 Carregando agente 202/222: 221-workflow_optimizer_agent.py
+2025-10-20 17:10:01,159 | INFO | ✅ Carregado agente: WorkflowOptimizerAgent de 221-workflow_optimizer_agent.py
+2025-10-20 17:10:01,159 | INFO | 📥 Carregando agente 203/222: 211-unity_developer_agent.py
+2025-10-20 17:10:01,161 | INFO | ✅ Carregado agente: UnityDeveloperAgent de 211-unity_developer_agent.py
+2025-10-20 17:10:01,161 | INFO | 📥 Carregando agente 204/222: 207-ui_designer_agent.py
+2025-10-20 17:10:01,163 | INFO | ✅ Carregado agente: UiDesignerAgent de 207-ui_designer_agent.py
+2025-10-20 17:10:01,163 | INFO | 📥 Carregando agente 205/222: 137-rails_api_developer_agent.py
+2025-10-20 17:10:01,164 | INFO | ✅ Carregado agente: RailsApiDeveloperAgent de 137-rails_api_developer_agent.py
+2025-10-20 17:10:01,164 | INFO | 📥 Carregando agente 206/222: 150-ruby_pro_agent.py
+2025-10-20 17:10:01,166 | INFO | ✅ Carregado agente: RubyProAgent de 150-ruby_pro_agent.py
+2025-10-20 17:10:01,166 | INFO | 📥 Carregando agente 207/222: 018-build_engineer_agent.py
+2025-10-20 17:10:01,167 | INFO | ✅ Carregado agente: BuildEngineerAgent de 018-build_engineer_agent.py
+2025-10-20 17:10:01,167 | INFO | 📥 Carregando agente 208/222: 218-websocket_engineer_agent.py
+2025-10-20 17:10:01,169 | INFO | ✅ Carregado agente: WebsocketEngineerAgent de 218-websocket_engineer_agent.py
+2025-10-20 17:10:01,169 | INFO | 📥 Carregando agente 209/222: 059-dotnet_framework_4.8_expert_agent.py
+2025-10-20 17:10:01,169 | ERROR | ❌ Erro ao carregar 01-generated-agents/059-dotnet_framework_4.8_expert_agent.py: invalid decimal literal (059-dotnet_framework_4.8_expert_agent.py, line 40)
+2025-10-20 17:10:01,169 | INFO | 📥 Carregando agente 210/222: 118-observability_engineer_agent.py
+2025-10-20 17:10:01,171 | INFO | ✅ Carregado agente: ObservabilityEngineerAgent de 118-observability_engineer_agent.py
+2025-10-20 17:10:01,171 | INFO | 📥 Carregando agente 211/222: 073-frontend_security_coder_agent.py
+2025-10-20 17:10:01,172 | INFO | ✅ Carregado agente: FrontendSecurityCoderAgent de 073-frontend_security_coder_agent.py
+2025-10-20 17:10:01,173 | INFO | 📥 Carregando agente 212/222: 135-quant_analyst_agent.py
+2025-10-20 17:10:01,174 | INFO | ✅ Carregado agente: QuantAnalystAgent de 135-quant_analyst_agent.py
+2025-10-20 17:10:01,174 | INFO | 📥 Carregando agente 213/222: 078-graphql_architect_agent.py
+2025-10-20 17:10:01,176 | INFO | ✅ Carregado agente: GraphqlArchitectAgent de 078-graphql_architect_agent.py
+2025-10-20 17:10:01,176 | INFO | 📥 Carregando agente 214/222: 026-competitive_analyst_agent.py
+2025-10-20 17:10:01,178 | INFO | ✅ Carregado agente: CompetitiveAnalystAgent de 026-competitive_analyst_agent.py
+2025-10-20 17:10:01,178 | INFO | 📥 Carregando agente 215/222: 044-dependency_manager_agent.py
+2025-10-20 17:10:01,179 | INFO | ✅ Carregado agente: DependencyManagerAgent de 044-dependency_manager_agent.py
+2025-10-20 17:10:01,179 | INFO | 📥 Carregando agente 216/222: 017-brand_guardian_agent.py
+2025-10-20 17:10:01,181 | INFO | ✅ Carregado agente: BrandGuardianAgent de 017-brand_guardian_agent.py
+2025-10-20 17:10:01,181 | INFO | 📥 Carregando agente 217/222: 040-database_admin_agent.py
+2025-10-20 17:10:01,182 | INFO | ✅ Carregado agente: DatabaseAdminAgent de 040-database_admin_agent.py
+2025-10-20 17:10:01,182 | INFO | 📥 Carregando agente 218/222: 010-app_store_optimizer_agent.py
+2025-10-20 17:10:01,184 | INFO | ✅ Carregado agente: AppStoreOptimizerAgent de 010-app_store_optimizer_agent.py
+2025-10-20 17:10:01,184 | INFO | 📥 Carregando agente 219/222: 054-django_pro_agent.py
+2025-10-20 17:10:01,184 | ERROR | ❌ Erro ao carregar 01-generated-agents/054-django_pro_agent.py: unterminated string literal (detected at line 214) (054-django_pro_agent.py, line 214)
+2025-10-20 17:10:01,184 | INFO | 📥 Carregando agente 220/222: 052-django_developer_agent.py
+2025-10-20 17:10:01,185 | INFO | ✅ Carregado agente: DjangoDeveloperAgent de 052-django_developer_agent.py
+2025-10-20 17:10:01,185 | INFO | 📥 Carregando agente 221/222: 156-scrum_master_agent.py
+2025-10-20 17:10:01,187 | INFO | ✅ Carregado agente: ScrumMasterAgent de 156-scrum_master_agent.py
+2025-10-20 17:10:01,187 | INFO | 📥 Carregando agente 222/222: 175-spec_developer_agent.py
+2025-10-20 17:10:01,189 | INFO | ✅ Carregado agente: SpecDeveloperAgent de 175-spec_developer_agent.py
+2025-10-20 17:10:01,189 | INFO | ✅ Carregados 198 agentes com sucesso
+2025-10-20 17:10:01,189 | WARNING | ⚠️  24 agentes falharam ao carregar
+2025-10-20 17:10:01,189 | INFO | 🏗️  Criando Agent OS com 198 agentes
+2025-10-20 17:10:01,191 | INFO | 💾 Configurado banco SQLite: agent_os_test.db
+2025-10-20 17:10:01,990 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 17:10:01,990 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 17:10:01,990 | INFO | 🧪 Iniciando testes em modo: interactive
+2025-10-20 17:10:01,990 | INFO | 🚀 Iniciando servidor Agent OS para teste interativo...
+2025-10-20 17:10:01,991 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 17:10:01,991 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 17:10:03,066 | INFO | 3 changes detected
+2025-10-20 17:10:03,417 | INFO | 1 change detected
+2025-10-20 17:10:03,767 | INFO | 1 change detected
+2025-10-20 17:10:04,118 | INFO | 1 change detected
+2025-10-20 17:10:04,469 | INFO | 1 change detected
+2025-10-20 17:10:04,819 | INFO | 1 change detected
+2025-10-20 17:10:05,170 | INFO | 1 change detected
+2025-10-20 17:10:05,521 | INFO | 1 change detected
+2025-10-20 17:10:05,871 | INFO | 1 change detected
+2025-10-20 17:10:06,222 | INFO | 1 change detected
+2025-10-20 17:10:06,572 | INFO | 1 change detected
+2025-10-20 17:10:06,923 | INFO | 1 change detected
+2025-10-20 17:10:07,274 | INFO | 1 change detected
+2025-10-20 17:10:07,624 | INFO | 1 change detected
+2025-10-20 17:10:07,975 | INFO | 1 change detected
+2025-10-20 17:10:08,326 | INFO | 1 change detected
+2025-10-20 17:10:08,677 | INFO | 1 change detected
+2025-10-20 17:10:09,028 | INFO | 1 change detected
+2025-10-20 17:10:09,378 | INFO | 1 change detected
+2025-10-20 17:10:09,730 | INFO | 1 change detected
+2025-10-20 17:10:10,080 | INFO | 1 change detected
+2025-10-20 17:10:10,431 | INFO | 1 change detected
+2025-10-20 17:10:10,781 | INFO | 1 change detected
+2025-10-20 17:10:11,131 | INFO | 1 change detected
+2025-10-20 17:10:11,482 | INFO | 1 change detected
+2025-10-20 17:10:11,832 | INFO | 1 change detected
+2025-10-20 17:10:12,183 | INFO | 1 change detected
+2025-10-20 17:10:12,533 | INFO | 1 change detected
+2025-10-20 17:10:12,884 | INFO | 1 change detected
+2025-10-20 17:10:13,235 | INFO | 1 change detected
+2025-10-20 17:10:13,585 | INFO | 1 change detected
+2025-10-20 17:10:13,936 | INFO | 1 change detected
+2025-10-20 17:10:14,286 | INFO | 1 change detected
+2025-10-20 17:10:14,637 | INFO | 1 change detected
+2025-10-20 17:10:14,988 | INFO | 1 change detected
+2025-10-20 17:10:15,338 | INFO | 1 change detected
+2025-10-20 17:10:15,689 | INFO | 1 change detected
+2025-10-20 17:10:16,039 | INFO | 1 change detected
+2025-10-20 17:10:16,390 | INFO | 1 change detected
+2025-10-20 17:10:16,740 | INFO | 1 change detected
+2025-10-20 17:10:17,091 | INFO | 1 change detected
+2025-10-20 17:10:17,441 | INFO | 1 change detected
+2025-10-20 17:10:17,792 | INFO | 1 change detected
+2025-10-20 17:10:18,142 | INFO | 1 change detected
+2025-10-20 17:10:18,493 | INFO | 1 change detected
+2025-10-20 17:10:18,843 | INFO | 1 change detected
+2025-10-20 17:10:19,193 | INFO | 1 change detected
+2025-10-20 17:10:19,544 | INFO | 1 change detected
+2025-10-20 17:10:19,894 | INFO | 1 change detected
+2025-10-20 17:10:20,245 | INFO | 1 change detected
+2025-10-20 17:10:20,595 | INFO | 1 change detected
+2025-10-20 17:10:20,946 | INFO | 1 change detected
+2025-10-20 17:10:21,296 | INFO | 1 change detected
+2025-10-20 17:10:21,647 | INFO | 1 change detected
+2025-10-20 17:10:21,998 | INFO | 1 change detected
+2025-10-20 17:10:22,348 | INFO | 1 change detected
+2025-10-20 17:10:22,699 | INFO | 1 change detected
+2025-10-20 17:10:23,050 | INFO | 1 change detected
+2025-10-20 17:10:23,401 | INFO | 1 change detected
+2025-10-20 17:10:23,751 | INFO | 1 change detected
+2025-10-20 17:10:24,102 | INFO | 1 change detected
+2025-10-20 17:10:24,453 | INFO | 1 change detected
+2025-10-20 17:10:24,803 | INFO | 1 change detected
+2025-10-20 17:10:25,154 | INFO | 1 change detected
+2025-10-20 17:10:25,504 | INFO | 1 change detected
+2025-10-20 17:10:25,855 | INFO | 1 change detected
+2025-10-20 17:10:26,205 | INFO | 1 change detected
+2025-10-20 17:10:26,556 | INFO | 1 change detected
+2025-10-20 17:10:26,906 | INFO | 1 change detected
+2025-10-20 17:10:27,256 | INFO | 1 change detected
+2025-10-20 17:10:27,607 | INFO | 1 change detected
+2025-10-20 17:10:27,958 | INFO | 1 change detected
+2025-10-20 17:10:28,309 | INFO | 1 change detected
+2025-10-20 17:10:28,659 | INFO | 1 change detected
+2025-10-20 17:10:29,010 | INFO | 1 change detected
+2025-10-20 17:10:29,360 | INFO | 1 change detected
+2025-10-20 17:10:29,710 | INFO | 1 change detected
+2025-10-20 17:10:30,061 | INFO | 1 change detected
+2025-10-20 17:10:30,411 | INFO | 1 change detected
+2025-10-20 17:10:30,762 | INFO | 1 change detected
+2025-10-20 17:10:31,112 | INFO | 1 change detected
+2025-10-20 17:10:31,463 | INFO | 1 change detected
+2025-10-20 17:10:31,813 | INFO | 1 change detected
+2025-10-20 17:10:32,164 | INFO | 1 change detected
+2025-10-20 17:10:32,514 | INFO | 1 change detected
+2025-10-20 17:10:32,865 | INFO | 1 change detected
+2025-10-20 17:10:33,215 | INFO | 1 change detected
+2025-10-20 17:10:33,566 | INFO | 1 change detected
+2025-10-20 17:10:33,916 | INFO | 1 change detected
+2025-10-20 17:10:34,267 | INFO | 1 change detected
+2025-10-20 17:10:34,617 | INFO | 1 change detected
+2025-10-20 17:10:34,967 | INFO | 1 change detected
+2025-10-20 17:10:35,318 | INFO | 1 change detected
+2025-10-20 17:10:35,669 | INFO | 1 change detected
+2025-10-20 17:10:36,019 | INFO | 1 change detected
+2025-10-20 17:10:36,370 | INFO | 1 change detected
+2025-10-20 17:10:36,720 | INFO | 1 change detected
+2025-10-20 17:10:37,071 | INFO | 1 change detected
+2025-10-20 17:10:37,421 | INFO | 1 change detected
+2025-10-20 17:10:37,772 | INFO | 1 change detected
+2025-10-20 17:10:38,122 | INFO | 1 change detected
+2025-10-20 17:10:38,472 | INFO | 1 change detected
+2025-10-20 17:10:38,823 | INFO | 1 change detected
+2025-10-20 17:10:39,173 | INFO | 1 change detected
+2025-10-20 17:10:39,524 | INFO | 1 change detected
+2025-10-20 17:10:39,874 | INFO | 1 change detected
+2025-10-20 17:10:40,225 | INFO | 1 change detected
+2025-10-20 17:10:40,575 | INFO | 1 change detected
+2025-10-20 17:10:40,926 | INFO | 1 change detected
+2025-10-20 17:10:41,276 | INFO | 1 change detected
+2025-10-20 17:10:41,627 | INFO | 1 change detected
+2025-10-20 17:10:41,977 | INFO | 1 change detected
+2025-10-20 17:10:42,328 | INFO | 1 change detected
+2025-10-20 17:10:42,678 | INFO | 1 change detected
+2025-10-20 17:10:43,029 | INFO | 1 change detected
+2025-10-20 17:10:43,379 | INFO | 1 change detected
+2025-10-20 17:10:43,730 | INFO | 1 change detected
+2025-10-20 17:10:44,080 | INFO | 1 change detected
+2025-10-20 17:10:44,431 | INFO | 1 change detected
+2025-10-20 17:10:44,781 | INFO | 1 change detected
+2025-10-20 17:10:45,132 | INFO | 1 change detected
+2025-10-20 17:10:45,482 | INFO | 1 change detected
+2025-10-20 17:10:45,833 | INFO | 1 change detected
+2025-10-20 17:10:46,183 | INFO | 1 change detected
+2025-10-20 17:10:46,534 | INFO | 1 change detected
+2025-10-20 17:10:46,884 | INFO | 1 change detected
+2025-10-20 17:10:47,235 | INFO | 1 change detected
+2025-10-20 17:10:47,585 | INFO | 1 change detected
+2025-10-20 17:10:47,935 | INFO | 1 change detected
+2025-10-20 17:10:48,286 | INFO | 1 change detected
+2025-10-20 17:10:48,636 | INFO | 1 change detected
+2025-10-20 17:10:48,987 | INFO | 1 change detected
+2025-10-20 17:10:49,337 | INFO | 1 change detected
+2025-10-20 17:10:49,688 | INFO | 1 change detected
+2025-10-20 17:10:50,038 | INFO | 1 change detected
+2025-10-20 17:10:50,389 | INFO | 1 change detected
+2025-10-20 17:10:50,739 | INFO | 1 change detected
+2025-10-20 17:10:51,090 | INFO | 1 change detected
+2025-10-20 17:10:51,440 | INFO | 1 change detected
+2025-10-20 17:10:51,791 | INFO | 1 change detected
+2025-10-20 17:10:52,141 | INFO | 1 change detected
+2025-10-20 17:10:52,492 | INFO | 1 change detected
+2025-10-20 17:10:52,842 | INFO | 1 change detected
+2025-10-20 17:10:53,193 | INFO | 1 change detected
+2025-10-20 17:10:53,543 | INFO | 1 change detected
+2025-10-20 17:10:53,894 | INFO | 1 change detected
+2025-10-20 17:10:54,244 | INFO | 1 change detected
+2025-10-20 17:10:54,595 | INFO | 1 change detected
+2025-10-20 17:10:54,945 | INFO | 1 change detected
+2025-10-20 17:10:55,296 | INFO | 1 change detected
+2025-10-20 17:10:55,646 | INFO | 1 change detected
+2025-10-20 17:10:55,997 | INFO | 1 change detected
+2025-10-20 17:10:56,347 | INFO | 1 change detected
+2025-10-20 17:10:56,698 | INFO | 1 change detected
+2025-10-20 17:10:57,048 | INFO | 1 change detected
+2025-10-20 17:10:57,399 | INFO | 1 change detected
+2025-10-20 17:10:57,749 | INFO | 1 change detected
+2025-10-20 17:10:58,100 | INFO | 1 change detected
+2025-10-20 17:10:58,450 | INFO | 1 change detected
+2025-10-20 17:10:58,801 | INFO | 1 change detected
+2025-10-20 17:10:59,152 | INFO | 1 change detected
+2025-10-20 17:10:59,502 | INFO | 1 change detected
+2025-10-20 17:10:59,853 | INFO | 1 change detected
+2025-10-20 17:11:00,203 | INFO | 1 change detected
+2025-10-20 17:11:00,554 | INFO | 1 change detected
+2025-10-20 17:11:00,904 | INFO | 1 change detected
+2025-10-20 17:11:01,255 | INFO | 1 change detected
+2025-10-20 17:11:01,605 | INFO | 1 change detected
+2025-10-20 17:11:01,956 | INFO | 1 change detected
+2025-10-20 17:11:02,306 | INFO | 1 change detected
+2025-10-20 17:11:02,657 | INFO | 1 change detected
+2025-10-20 17:11:03,007 | INFO | 1 change detected
+2025-10-20 17:11:03,358 | INFO | 1 change detected
+2025-10-20 17:11:03,708 | INFO | 1 change detected
+2025-10-20 17:11:04,058 | INFO | 1 change detected
+2025-10-20 17:11:04,409 | INFO | 1 change detected
+2025-10-20 17:11:04,759 | INFO | 1 change detected
+2025-10-20 17:11:05,110 | INFO | 1 change detected
+2025-10-20 17:11:05,460 | INFO | 1 change detected
+2025-10-20 17:11:05,811 | INFO | 1 change detected
+2025-10-20 17:11:06,161 | INFO | 1 change detected
+2025-10-20 17:11:06,512 | INFO | 1 change detected
+2025-10-20 17:11:06,863 | INFO | 1 change detected
+2025-10-20 17:11:07,213 | INFO | 1 change detected
+2025-10-20 17:11:07,564 | INFO | 1 change detected
+2025-10-20 17:11:07,914 | INFO | 1 change detected
+2025-10-20 17:11:08,265 | INFO | 1 change detected
+2025-10-20 17:11:08,615 | INFO | 1 change detected
+2025-10-20 17:11:08,966 | INFO | 1 change detected
+2025-10-20 17:11:09,316 | INFO | 1 change detected
+2025-10-20 17:11:09,667 | INFO | 1 change detected
+2025-10-20 17:11:10,018 | INFO | 1 change detected
+2025-10-20 17:11:10,368 | INFO | 1 change detected
+2025-10-20 17:11:10,719 | INFO | 1 change detected
+2025-10-20 17:11:11,070 | INFO | 1 change detected
+2025-10-20 17:11:11,421 | INFO | 1 change detected
+2025-10-20 17:11:11,772 | INFO | 1 change detected
+2025-10-20 17:11:12,123 | INFO | 1 change detected
+2025-10-20 17:11:12,473 | INFO | 1 change detected
+2025-10-20 17:11:12,824 | INFO | 1 change detected
+2025-10-20 17:11:13,174 | INFO | 1 change detected
+2025-10-20 17:11:13,524 | INFO | 1 change detected
+2025-10-20 17:11:13,875 | INFO | 1 change detected
+2025-10-20 17:11:14,225 | INFO | 1 change detected
+2025-10-20 17:11:14,576 | INFO | 1 change detected
+2025-10-20 17:11:14,927 | INFO | 1 change detected
+2025-10-20 17:11:15,277 | INFO | 1 change detected
+2025-10-20 17:11:15,628 | INFO | 1 change detected
+2025-10-20 17:11:15,978 | INFO | 1 change detected
+2025-10-20 17:11:16,328 | INFO | 1 change detected
+2025-10-20 17:11:16,679 | INFO | 1 change detected
+2025-10-20 17:11:17,029 | INFO | 1 change detected
+2025-10-20 17:11:17,380 | INFO | 1 change detected
+2025-10-20 17:11:17,730 | INFO | 1 change detected
+2025-10-20 17:11:18,081 | INFO | 1 change detected
+2025-10-20 17:11:18,432 | INFO | 1 change detected
+2025-10-20 17:11:18,782 | INFO | 1 change detected
+2025-10-20 17:11:19,133 | INFO | 1 change detected
+2025-10-20 17:11:19,483 | INFO | 1 change detected
+2025-10-20 17:11:19,834 | INFO | 1 change detected
+2025-10-20 17:11:20,184 | INFO | 1 change detected
+2025-10-20 17:11:20,535 | INFO | 1 change detected
+2025-10-20 17:11:20,885 | INFO | 1 change detected
+2025-10-20 17:11:21,236 | INFO | 1 change detected
+2025-10-20 17:11:21,587 | INFO | 1 change detected
+2025-10-20 17:11:21,937 | INFO | 1 change detected
+2025-10-20 17:11:22,287 | INFO | 1 change detected
+2025-10-20 17:11:22,638 | INFO | 1 change detected
+2025-10-20 17:11:22,988 | INFO | 1 change detected
+2025-10-20 17:11:23,339 | INFO | 1 change detected
+2025-10-20 17:11:23,689 | INFO | 1 change detected
+2025-10-20 17:11:24,040 | INFO | 1 change detected
+2025-10-20 17:11:24,391 | INFO | 1 change detected
+2025-10-20 17:11:24,742 | INFO | 1 change detected
+2025-10-20 17:11:25,092 | INFO | 1 change detected
+2025-10-20 17:11:25,443 | INFO | 1 change detected
+2025-10-20 17:11:25,794 | INFO | 1 change detected
+2025-10-20 17:11:26,144 | INFO | 1 change detected
+2025-10-20 17:11:26,495 | INFO | 1 change detected
+2025-10-20 17:11:26,845 | INFO | 1 change detected
+2025-10-20 17:11:27,196 | INFO | 1 change detected
+2025-10-20 17:11:27,546 | INFO | 1 change detected
+2025-10-20 17:11:27,897 | INFO | 1 change detected
+2025-10-20 17:11:28,247 | INFO | 1 change detected
+2025-10-20 17:11:28,598 | INFO | 1 change detected
+2025-10-20 17:11:28,949 | INFO | 1 change detected
+2025-10-20 17:11:29,299 | INFO | 1 change detected
+2025-10-20 17:11:29,650 | INFO | 1 change detected
+2025-10-20 17:11:30,000 | INFO | 1 change detected
+2025-10-20 17:11:30,351 | INFO | 1 change detected
+2025-10-20 17:11:30,702 | INFO | 1 change detected
+2025-10-20 17:11:31,053 | INFO | 1 change detected
+2025-10-20 17:11:31,404 | INFO | 1 change detected
+2025-10-20 17:11:31,755 | INFO | 1 change detected
+2025-10-20 17:11:32,106 | INFO | 1 change detected
+2025-10-20 17:11:32,457 | INFO | 1 change detected
+2025-10-20 17:11:32,808 | INFO | 1 change detected
+2025-10-20 17:11:33,158 | INFO | 1 change detected
+2025-10-20 17:11:33,509 | INFO | 1 change detected
+2025-10-20 17:11:33,860 | INFO | 1 change detected
+2025-10-20 17:11:34,211 | INFO | 1 change detected
+2025-10-20 17:11:34,562 | INFO | 1 change detected
+2025-10-20 17:11:34,912 | INFO | 1 change detected
+2025-10-20 17:11:35,262 | INFO | 1 change detected
+2025-10-20 17:11:35,613 | INFO | 1 change detected
+2025-10-20 17:11:35,963 | INFO | 1 change detected
+2025-10-20 17:11:36,314 | INFO | 1 change detected
+2025-10-20 17:11:36,664 | INFO | 1 change detected
+2025-10-20 17:11:37,015 | INFO | 1 change detected
+2025-10-20 17:11:37,365 | INFO | 1 change detected
+2025-10-20 17:11:37,716 | INFO | 1 change detected
+2025-10-20 17:11:38,066 | INFO | 1 change detected
+2025-10-20 17:11:38,417 | INFO | 1 change detected
+2025-10-20 17:11:38,768 | INFO | 1 change detected
+2025-10-20 17:11:39,119 | INFO | 1 change detected
+2025-10-20 17:11:39,469 | INFO | 1 change detected
+2025-10-20 17:11:39,820 | INFO | 1 change detected
+2025-10-20 17:11:40,171 | INFO | 1 change detected
+2025-10-20 17:11:40,522 | INFO | 1 change detected
+2025-10-20 17:11:40,872 | INFO | 1 change detected
+2025-10-20 17:11:41,223 | INFO | 1 change detected
+2025-10-20 17:11:41,574 | INFO | 1 change detected
+2025-10-20 17:11:41,924 | INFO | 1 change detected
+2025-10-20 17:11:42,275 | INFO | 1 change detected
+2025-10-20 17:11:42,625 | INFO | 1 change detected
+2025-10-20 17:11:42,976 | INFO | 1 change detected
+2025-10-20 17:11:43,327 | INFO | 1 change detected
+2025-10-20 17:11:43,677 | INFO | 1 change detected
+2025-10-20 17:11:44,028 | INFO | 1 change detected
+2025-10-20 17:11:44,378 | INFO | 1 change detected
+2025-10-20 17:11:44,729 | INFO | 1 change detected
+2025-10-20 17:11:45,079 | INFO | 1 change detected
+2025-10-20 17:11:45,430 | INFO | 1 change detected
+2025-10-20 17:11:45,780 | INFO | 1 change detected
+2025-10-20 17:11:46,131 | INFO | 1 change detected
+2025-10-20 17:11:46,481 | INFO | 1 change detected
+2025-10-20 17:11:46,832 | INFO | 1 change detected
+2025-10-20 17:11:47,183 | INFO | 1 change detected
+2025-10-20 17:11:47,533 | INFO | 1 change detected
+2025-10-20 17:11:47,884 | INFO | 1 change detected
+2025-10-20 17:11:48,234 | INFO | 1 change detected
+2025-10-20 17:11:48,585 | INFO | 1 change detected
+2025-10-20 17:11:48,935 | INFO | 1 change detected
+2025-10-20 17:11:49,286 | INFO | 1 change detected
+2025-10-20 17:11:49,637 | INFO | 1 change detected
+2025-10-20 17:11:49,988 | INFO | 1 change detected
+2025-10-20 17:11:50,339 | INFO | 1 change detected
+2025-10-20 17:11:50,690 | INFO | 1 change detected
+2025-10-20 17:11:51,041 | INFO | 1 change detected
+2025-10-20 17:11:51,391 | INFO | 1 change detected
+2025-10-20 17:11:51,742 | INFO | 1 change detected
+2025-10-20 17:11:52,093 | INFO | 1 change detected
+2025-10-20 17:11:52,443 | INFO | 1 change detected
+2025-10-20 17:11:52,794 | INFO | 1 change detected
+2025-10-20 17:11:53,144 | INFO | 1 change detected
+2025-10-20 17:11:53,495 | INFO | 1 change detected
+2025-10-20 17:11:53,846 | INFO | 1 change detected
+2025-10-20 17:11:54,196 | INFO | 1 change detected
+2025-10-20 17:11:54,547 | INFO | 1 change detected
+2025-10-20 17:11:54,897 | INFO | 1 change detected
+2025-10-20 17:11:55,248 | INFO | 1 change detected
+2025-10-20 17:11:55,598 | INFO | 1 change detected
+2025-10-20 17:11:55,949 | INFO | 1 change detected
+2025-10-20 17:11:56,299 | INFO | 1 change detected
+2025-10-20 17:11:56,650 | INFO | 1 change detected
+2025-10-20 17:11:57,000 | INFO | 1 change detected
+2025-10-20 17:11:57,351 | INFO | 1 change detected
+2025-10-20 17:11:57,701 | INFO | 1 change detected
+2025-10-20 17:11:58,052 | INFO | 1 change detected
+2025-10-20 17:11:58,403 | INFO | 1 change detected
+2025-10-20 17:11:58,753 | INFO | 1 change detected
+2025-10-20 17:11:59,104 | INFO | 1 change detected
+2025-10-20 17:11:59,454 | INFO | 1 change detected
+2025-10-20 17:11:59,805 | INFO | 1 change detected
+2025-10-20 17:12:00,156 | INFO | 1 change detected
+2025-10-20 17:12:00,506 | INFO | 1 change detected
+2025-10-20 17:12:00,857 | INFO | 1 change detected
+2025-10-20 17:12:01,208 | INFO | 1 change detected
+2025-10-20 17:12:01,559 | INFO | 1 change detected
+2025-10-20 17:12:01,910 | INFO | 1 change detected
+2025-10-20 17:12:02,261 | INFO | 1 change detected
+2025-10-20 17:12:02,612 | INFO | 1 change detected
+2025-10-20 17:12:02,962 | INFO | 1 change detected
+2025-10-20 17:12:03,313 | INFO | 1 change detected
+2025-10-20 17:12:03,664 | INFO | 1 change detected
+2025-10-20 17:12:04,015 | INFO | 1 change detected
+2025-10-20 17:12:04,365 | INFO | 1 change detected
+2025-10-20 17:12:04,716 | INFO | 1 change detected
+2025-10-20 17:12:05,066 | INFO | 1 change detected
+2025-10-20 17:12:05,416 | INFO | 1 change detected
+2025-10-20 17:12:05,767 | INFO | 1 change detected
+2025-10-20 17:12:06,117 | INFO | 1 change detected
+2025-10-20 17:12:06,468 | INFO | 1 change detected
+2025-10-20 17:12:06,819 | INFO | 1 change detected
+2025-10-20 17:12:07,170 | INFO | 1 change detected
+2025-10-20 17:12:07,521 | INFO | 1 change detected
+2025-10-20 17:12:07,871 | INFO | 1 change detected
+2025-10-20 17:12:08,222 | INFO | 1 change detected
+2025-10-20 17:12:08,572 | INFO | 1 change detected
+2025-10-20 17:12:08,923 | INFO | 1 change detected
+2025-10-20 17:12:09,273 | INFO | 1 change detected
+2025-10-20 17:12:09,624 | INFO | 1 change detected
+2025-10-20 17:12:09,974 | INFO | 1 change detected
+2025-10-20 17:12:10,325 | INFO | 1 change detected
+2025-10-20 17:12:10,675 | INFO | 1 change detected
+2025-10-20 17:12:11,026 | INFO | 1 change detected
+2025-10-20 17:12:11,376 | INFO | 1 change detected
+2025-10-20 17:12:11,727 | INFO | 1 change detected
+2025-10-20 17:12:12,078 | INFO | 1 change detected
+2025-10-20 17:12:12,428 | INFO | 1 change detected
+2025-10-20 17:12:12,779 | INFO | 1 change detected
+2025-10-20 17:12:13,129 | INFO | 1 change detected
+2025-10-20 17:12:13,480 | INFO | 1 change detected
+2025-10-20 17:12:13,831 | INFO | 1 change detected
+2025-10-20 17:12:14,181 | INFO | 1 change detected
+2025-10-20 17:12:14,532 | INFO | 1 change detected
+2025-10-20 17:12:14,882 | INFO | 1 change detected
+2025-10-20 17:12:15,233 | INFO | 1 change detected
+2025-10-20 17:12:15,583 | INFO | 1 change detected
+2025-10-20 17:12:15,934 | INFO | 1 change detected
+2025-10-20 17:12:16,284 | INFO | 1 change detected
+2025-10-20 17:12:16,635 | INFO | 1 change detected
+2025-10-20 17:12:16,985 | INFO | 1 change detected
+2025-10-20 17:12:17,337 | INFO | 1 change detected
+2025-10-20 17:12:17,687 | INFO | 1 change detected
+2025-10-20 17:12:18,039 | INFO | 1 change detected
+2025-10-20 17:12:18,389 | INFO | 1 change detected
+2025-10-20 17:12:18,740 | INFO | 1 change detected
+2025-10-20 17:12:19,091 | INFO | 1 change detected
+2025-10-20 17:12:19,441 | INFO | 1 change detected
+2025-10-20 17:12:19,792 | INFO | 1 change detected
+2025-10-20 17:12:20,143 | INFO | 1 change detected
+2025-10-20 17:12:20,493 | INFO | 1 change detected
+2025-10-20 17:12:20,844 | INFO | 1 change detected
+2025-10-20 17:12:21,194 | INFO | 1 change detected
+2025-10-20 17:12:21,545 | INFO | 1 change detected
+2025-10-20 17:12:21,895 | INFO | 1 change detected
+2025-10-20 17:12:22,246 | INFO | 1 change detected
+2025-10-20 17:12:22,596 | INFO | 1 change detected
+2025-10-20 17:12:22,947 | INFO | 1 change detected
+2025-10-20 17:12:23,297 | INFO | 1 change detected
+2025-10-20 17:12:23,647 | INFO | 1 change detected
+2025-10-20 17:12:23,998 | INFO | 1 change detected
+2025-10-20 17:12:24,348 | INFO | 1 change detected
+2025-10-20 17:12:24,699 | INFO | 1 change detected
+2025-10-20 17:12:25,049 | INFO | 1 change detected
+2025-10-20 17:12:25,400 | INFO | 1 change detected
+2025-10-20 17:12:25,750 | INFO | 1 change detected
+2025-10-20 17:12:26,101 | INFO | 1 change detected
+2025-10-20 17:12:26,452 | INFO | 1 change detected
+2025-10-20 17:12:26,802 | INFO | 1 change detected
+2025-10-20 17:12:27,153 | INFO | 1 change detected
+2025-10-20 17:12:27,503 | INFO | 1 change detected
+2025-10-20 17:12:27,854 | INFO | 1 change detected
+2025-10-20 17:12:28,205 | INFO | 1 change detected
+2025-10-20 17:12:28,556 | INFO | 1 change detected
+2025-10-20 17:12:28,906 | INFO | 1 change detected
+2025-10-20 17:12:29,257 | INFO | 1 change detected
+2025-10-20 17:12:29,607 | INFO | 1 change detected
+2025-10-20 17:12:29,958 | INFO | 1 change detected
+2025-10-20 17:12:30,308 | INFO | 1 change detected
+2025-10-20 17:12:30,659 | INFO | 1 change detected
+2025-10-20 17:12:31,010 | INFO | 1 change detected
+2025-10-20 17:12:31,361 | INFO | 1 change detected
+2025-10-20 17:12:31,712 | INFO | 1 change detected
+2025-10-20 17:12:32,062 | INFO | 1 change detected
+2025-10-20 17:12:32,413 | INFO | 1 change detected
+2025-10-20 17:12:32,764 | INFO | 1 change detected
+2025-10-20 17:12:33,114 | INFO | 1 change detected
+2025-10-20 17:12:33,465 | INFO | 1 change detected
+2025-10-20 17:12:33,815 | INFO | 1 change detected
+2025-10-20 17:12:34,166 | INFO | 1 change detected
+2025-10-20 17:12:34,516 | INFO | 1 change detected
+2025-10-20 17:12:34,867 | INFO | 1 change detected
+2025-10-20 17:12:35,217 | INFO | 1 change detected
+2025-10-20 17:12:35,568 | INFO | 1 change detected
+2025-10-20 17:12:35,919 | INFO | 1 change detected
+2025-10-20 17:12:36,270 | INFO | 1 change detected
+2025-10-20 17:12:36,621 | INFO | 1 change detected
+2025-10-20 17:12:36,971 | INFO | 1 change detected
+2025-10-20 17:12:37,322 | INFO | 1 change detected
+2025-10-20 17:12:37,673 | INFO | 1 change detected
+2025-10-20 17:12:38,023 | INFO | 1 change detected
+2025-10-20 17:12:38,373 | INFO | 1 change detected
+2025-10-20 17:12:38,724 | INFO | 1 change detected
+2025-10-20 17:12:39,074 | INFO | 1 change detected
+2025-10-20 17:12:39,425 | INFO | 1 change detected
+2025-10-20 17:12:39,775 | INFO | 1 change detected
+2025-10-20 17:12:40,126 | INFO | 1 change detected
+2025-10-20 17:12:40,476 | INFO | 1 change detected
+2025-10-20 17:12:40,827 | INFO | 1 change detected
+2025-10-20 17:12:41,177 | INFO | 1 change detected
+2025-10-20 17:12:41,528 | INFO | 1 change detected
+2025-10-20 17:12:41,878 | INFO | 1 change detected
+2025-10-20 17:12:42,228 | INFO | 1 change detected
+2025-10-20 17:12:42,579 | INFO | 1 change detected
+2025-10-20 17:12:42,930 | INFO | 1 change detected
+2025-10-20 17:12:43,280 | INFO | 1 change detected
+2025-10-20 17:12:43,631 | INFO | 1 change detected
+2025-10-20 17:12:43,981 | INFO | 1 change detected
+2025-10-20 17:12:44,331 | INFO | 1 change detected
+2025-10-20 17:12:44,682 | INFO | 1 change detected
+2025-10-20 17:12:45,032 | INFO | 1 change detected
+2025-10-20 17:12:45,383 | INFO | 1 change detected
+2025-10-20 17:12:45,733 | INFO | 1 change detected
+2025-10-20 17:12:46,084 | INFO | 1 change detected
+2025-10-20 17:12:46,434 | INFO | 1 change detected
+2025-10-20 17:12:46,785 | INFO | 1 change detected
+2025-10-20 17:12:47,135 | INFO | 1 change detected
+2025-10-20 17:12:47,486 | INFO | 1 change detected
+2025-10-20 17:12:47,836 | INFO | 1 change detected
+2025-10-20 17:12:48,187 | INFO | 1 change detected
+2025-10-20 17:12:48,538 | INFO | 1 change detected
+2025-10-20 17:12:48,888 | INFO | 1 change detected
+2025-10-20 17:12:49,239 | INFO | 1 change detected
+2025-10-20 17:12:49,590 | INFO | 1 change detected
+2025-10-20 17:12:49,940 | INFO | 1 change detected
+2025-10-20 17:12:50,291 | INFO | 1 change detected
+2025-10-20 17:12:50,641 | INFO | 1 change detected
+2025-10-20 17:12:50,992 | INFO | 1 change detected
+2025-10-20 17:12:51,342 | INFO | 1 change detected
+2025-10-20 17:12:51,693 | INFO | 1 change detected
+2025-10-20 17:12:52,044 | INFO | 1 change detected
+2025-10-20 17:12:52,394 | INFO | 1 change detected
+2025-10-20 17:12:52,745 | INFO | 1 change detected
+2025-10-20 17:12:53,096 | INFO | 1 change detected
+2025-10-20 17:12:53,447 | INFO | 1 change detected
+2025-10-20 17:12:53,798 | INFO | 1 change detected
+2025-10-20 17:12:54,148 | INFO | 1 change detected
+2025-10-20 17:12:54,499 | INFO | 1 change detected
+2025-10-20 17:12:54,849 | INFO | 1 change detected
+2025-10-20 17:12:55,200 | INFO | 1 change detected
+2025-10-20 17:12:55,550 | INFO | 1 change detected
+2025-10-20 17:12:55,901 | INFO | 1 change detected
+2025-10-20 17:12:56,251 | INFO | 1 change detected
+2025-10-20 17:12:56,602 | INFO | 1 change detected
+2025-10-20 17:12:56,952 | INFO | 1 change detected
+2025-10-20 17:12:57,303 | INFO | 1 change detected
+2025-10-20 17:12:57,653 | INFO | 1 change detected
+2025-10-20 17:12:58,003 | INFO | 1 change detected
+2025-10-20 17:12:58,354 | INFO | 1 change detected
+2025-10-20 17:12:58,705 | INFO | 1 change detected
+2025-10-20 17:12:59,055 | INFO | 1 change detected
+2025-10-20 17:12:59,406 | INFO | 1 change detected
+2025-10-20 17:12:59,756 | INFO | 1 change detected
+2025-10-20 17:13:00,106 | INFO | 1 change detected
+2025-10-20 17:13:00,457 | INFO | 1 change detected
+2025-10-20 17:13:00,808 | INFO | 1 change detected
+2025-10-20 17:13:01,158 | INFO | 1 change detected
+2025-10-20 17:13:01,508 | INFO | 1 change detected
+2025-10-20 17:13:01,859 | INFO | 1 change detected
+2025-10-20 17:13:02,209 | INFO | 1 change detected
+2025-10-20 17:13:02,560 | INFO | 1 change detected
+2025-10-20 17:13:02,910 | INFO | 1 change detected
+2025-10-20 17:13:03,262 | INFO | 1 change detected
+2025-10-20 17:13:03,613 | INFO | 1 change detected
+2025-10-20 17:13:03,963 | INFO | 1 change detected
+2025-10-20 17:13:04,314 | INFO | 1 change detected
+2025-10-20 17:13:04,664 | INFO | 1 change detected
+2025-10-20 17:13:05,015 | INFO | 1 change detected
+2025-10-20 17:13:05,365 | INFO | 1 change detected
+2025-10-20 17:13:05,715 | INFO | 1 change detected
+2025-10-20 17:13:06,066 | INFO | 1 change detected
+2025-10-20 17:13:06,416 | INFO | 1 change detected
+2025-10-20 17:13:06,767 | INFO | 1 change detected
+2025-10-20 17:13:07,117 | INFO | 1 change detected
+2025-10-20 17:13:07,467 | INFO | 1 change detected
+2025-10-20 17:13:07,818 | INFO | 1 change detected
+2025-10-20 17:13:08,168 | INFO | 1 change detected
+2025-10-20 17:13:08,519 | INFO | 1 change detected
+2025-10-20 17:13:08,869 | INFO | 1 change detected
+2025-10-20 17:13:09,220 | INFO | 1 change detected
+2025-10-20 17:13:09,570 | INFO | 1 change detected
+2025-10-20 17:13:09,921 | INFO | 1 change detected
+2025-10-20 17:13:10,272 | INFO | 1 change detected
+2025-10-20 17:13:10,623 | INFO | 1 change detected
+2025-10-20 17:13:10,974 | INFO | 1 change detected
+2025-10-20 17:13:11,324 | INFO | 1 change detected
+2025-10-20 17:13:11,675 | INFO | 1 change detected
+2025-10-20 17:13:12,026 | INFO | 1 change detected
+2025-10-20 17:13:12,377 | INFO | 1 change detected
+2025-10-20 17:13:12,727 | INFO | 1 change detected
+2025-10-20 17:13:13,078 | INFO | 1 change detected
+2025-10-20 17:13:13,428 | INFO | 1 change detected
+2025-10-20 17:13:13,779 | INFO | 1 change detected
+2025-10-20 17:13:14,129 | INFO | 1 change detected
+2025-10-20 17:13:14,480 | INFO | 1 change detected
+2025-10-20 17:13:14,830 | INFO | 1 change detected
+2025-10-20 17:13:15,181 | INFO | 1 change detected
+2025-10-20 17:13:15,531 | INFO | 1 change detected
+2025-10-20 17:13:15,882 | INFO | 1 change detected
+2025-10-20 17:13:16,232 | INFO | 1 change detected
+2025-10-20 17:13:16,582 | INFO | 1 change detected
+2025-10-20 17:13:16,952 | INFO | 1 change detected
+2025-10-20 17:13:17,302 | INFO | 1 change detected
+2025-10-20 17:13:17,653 | INFO | 1 change detected
+2025-10-20 17:13:18,003 | INFO | 1 change detected
+2025-10-20 17:13:18,354 | INFO | 1 change detected
+2025-10-20 17:13:18,704 | INFO | 1 change detected
+2025-10-20 17:13:19,054 | INFO | 1 change detected
+2025-10-20 17:13:19,405 | INFO | 1 change detected
+2025-10-20 17:13:19,755 | INFO | 1 change detected
+2025-10-20 17:13:20,106 | INFO | 1 change detected
+2025-10-20 17:13:20,456 | INFO | 1 change detected
+2025-10-20 17:13:20,807 | INFO | 1 change detected
+2025-10-20 17:13:21,157 | INFO | 1 change detected
+2025-10-20 17:13:21,508 | INFO | 1 change detected
+2025-10-20 17:13:21,858 | INFO | 1 change detected
+2025-10-20 17:13:22,209 | INFO | 1 change detected
+2025-10-20 17:13:22,559 | INFO | 1 change detected
+2025-10-20 17:13:22,910 | INFO | 1 change detected
+2025-10-20 17:13:23,260 | INFO | 1 change detected
+2025-10-20 17:13:23,611 | INFO | 1 change detected
+2025-10-20 17:13:23,961 | INFO | 1 change detected
+2025-10-20 17:13:24,312 | INFO | 1 change detected
+2025-10-20 17:13:24,663 | INFO | 1 change detected
+2025-10-20 17:13:25,013 | INFO | 1 change detected
+2025-10-20 17:13:25,364 | INFO | 1 change detected
+2025-10-20 17:13:25,715 | INFO | 1 change detected
+2025-10-20 17:13:26,065 | INFO | 1 change detected
+2025-10-20 17:13:26,416 | INFO | 1 change detected
+2025-10-20 17:13:26,767 | INFO | 1 change detected
+2025-10-20 17:13:27,117 | INFO | 1 change detected
+2025-10-20 17:13:27,468 | INFO | 1 change detected
+2025-10-20 17:13:27,818 | INFO | 1 change detected
+2025-10-20 17:13:28,169 | INFO | 1 change detected
+2025-10-20 17:13:28,520 | INFO | 1 change detected
+2025-10-20 17:13:28,870 | INFO | 1 change detected
+2025-10-20 17:13:29,221 | INFO | 1 change detected
+2025-10-20 17:13:29,571 | INFO | 1 change detected
+2025-10-20 17:13:29,922 | INFO | 1 change detected
+2025-10-20 17:13:30,273 | INFO | 1 change detected
+2025-10-20 17:13:30,624 | INFO | 1 change detected
+2025-10-20 17:13:30,975 | INFO | 1 change detected
+2025-10-20 17:13:31,326 | INFO | 1 change detected
+2025-10-20 17:13:31,677 | INFO | 1 change detected
+2025-10-20 17:13:32,028 | INFO | 1 change detected
+2025-10-20 17:13:32,379 | INFO | 1 change detected
+2025-10-20 17:13:32,730 | INFO | 1 change detected
+2025-10-20 17:13:33,081 | INFO | 1 change detected
+2025-10-20 17:13:33,431 | INFO | 1 change detected
+2025-10-20 17:13:33,782 | INFO | 1 change detected
+2025-10-20 17:13:34,133 | INFO | 1 change detected
+2025-10-20 17:13:34,484 | INFO | 1 change detected
+2025-10-20 17:13:34,834 | INFO | 1 change detected
+2025-10-20 17:13:35,185 | INFO | 1 change detected
+2025-10-20 17:13:35,535 | INFO | 1 change detected
+2025-10-20 17:13:35,886 | INFO | 1 change detected
+2025-10-20 17:13:36,237 | INFO | 1 change detected
+2025-10-20 17:13:36,587 | INFO | 1 change detected
+2025-10-20 17:13:36,938 | INFO | 1 change detected
+2025-10-20 17:13:37,289 | INFO | 1 change detected
+2025-10-20 17:13:37,640 | INFO | 1 change detected
+2025-10-20 17:13:37,991 | INFO | 1 change detected
+2025-10-20 17:13:38,342 | INFO | 1 change detected
+2025-10-20 17:13:38,693 | INFO | 1 change detected
+2025-10-20 17:13:39,044 | INFO | 1 change detected
+2025-10-20 17:13:39,394 | INFO | 1 change detected
+2025-10-20 17:13:39,745 | INFO | 1 change detected
+2025-10-20 17:13:40,095 | INFO | 1 change detected
+2025-10-20 17:13:40,446 | INFO | 1 change detected
+2025-10-20 17:13:40,796 | INFO | 1 change detected
+2025-10-20 17:13:41,147 | INFO | 1 change detected
+2025-10-20 17:13:41,497 | INFO | 1 change detected
+2025-10-20 17:13:41,848 | INFO | 1 change detected
+2025-10-20 17:13:42,198 | INFO | 1 change detected
+2025-10-20 17:13:42,549 | INFO | 1 change detected
+2025-10-20 17:13:42,899 | INFO | 1 change detected
+2025-10-20 17:13:43,250 | INFO | 1 change detected
+2025-10-20 17:13:43,600 | INFO | 1 change detected
+2025-10-20 17:13:43,951 | INFO | 1 change detected
+2025-10-20 17:13:44,301 | INFO | 1 change detected
+2025-10-20 17:13:44,652 | INFO | 1 change detected
+2025-10-20 17:13:45,002 | INFO | 1 change detected
+2025-10-20 17:13:45,352 | INFO | 1 change detected
+2025-10-20 17:13:45,703 | INFO | 1 change detected
+2025-10-20 17:13:46,053 | INFO | 1 change detected
+2025-10-20 17:13:46,404 | INFO | 1 change detected
+2025-10-20 17:13:46,754 | INFO | 1 change detected
+2025-10-20 17:13:47,105 | INFO | 1 change detected
+2025-10-20 17:13:47,455 | INFO | 1 change detected
+2025-10-20 17:13:47,806 | INFO | 1 change detected
+2025-10-20 17:13:48,156 | INFO | 1 change detected
+2025-10-20 17:13:48,507 | INFO | 1 change detected
+2025-10-20 17:13:48,857 | INFO | 1 change detected
+2025-10-20 17:13:49,208 | INFO | 1 change detected
+2025-10-20 17:13:49,558 | INFO | 1 change detected
+2025-10-20 17:13:49,908 | INFO | 1 change detected
+2025-10-20 17:13:50,259 | INFO | 1 change detected
+2025-10-20 17:13:50,609 | INFO | 1 change detected
+2025-10-20 17:13:50,960 | INFO | 1 change detected
+2025-10-20 17:13:51,310 | INFO | 1 change detected
+2025-10-20 17:13:51,661 | INFO | 1 change detected
+2025-10-20 17:13:52,011 | INFO | 1 change detected
+2025-10-20 17:13:52,362 | INFO | 1 change detected
+2025-10-20 17:13:52,712 | INFO | 1 change detected
+2025-10-20 17:13:53,063 | INFO | 1 change detected
+2025-10-20 17:13:53,413 | INFO | 1 change detected
+2025-10-20 17:13:53,763 | INFO | 1 change detected
+2025-10-20 17:13:54,114 | INFO | 1 change detected
+2025-10-20 17:13:54,464 | INFO | 1 change detected
+2025-10-20 17:13:54,815 | INFO | 1 change detected
+2025-10-20 17:13:55,165 | INFO | 1 change detected
+2025-10-20 17:13:55,516 | INFO | 1 change detected
+2025-10-20 17:13:55,866 | INFO | 1 change detected
+2025-10-20 17:13:56,217 | INFO | 1 change detected
+2025-10-20 17:13:56,567 | INFO | 1 change detected
+2025-10-20 17:13:56,917 | INFO | 1 change detected
+2025-10-20 17:13:57,268 | INFO | 1 change detected
+2025-10-20 17:13:57,618 | INFO | 1 change detected
+2025-10-20 17:13:57,969 | INFO | 1 change detected
+2025-10-20 17:13:58,319 | INFO | 1 change detected
+2025-10-20 17:13:58,670 | INFO | 1 change detected
+2025-10-20 17:13:59,020 | INFO | 1 change detected
+2025-10-20 17:13:59,371 | INFO | 1 change detected
+2025-10-20 17:13:59,721 | INFO | 1 change detected
+2025-10-20 17:14:00,072 | INFO | 1 change detected
+2025-10-20 17:14:00,422 | INFO | 1 change detected
+2025-10-20 17:14:00,773 | INFO | 1 change detected
+2025-10-20 17:14:01,123 | INFO | 1 change detected
+2025-10-20 17:14:01,474 | INFO | 1 change detected
+2025-10-20 17:14:01,824 | INFO | 1 change detected
+2025-10-20 17:14:02,174 | INFO | 1 change detected
+2025-10-20 17:14:02,525 | INFO | 1 change detected
+2025-10-20 17:14:02,875 | INFO | 1 change detected
+2025-10-20 17:14:03,226 | INFO | 1 change detected
+2025-10-20 17:14:03,576 | INFO | 1 change detected
+2025-10-20 17:14:03,927 | INFO | 1 change detected
+2025-10-20 17:14:04,277 | INFO | 1 change detected
+2025-10-20 17:14:04,628 | INFO | 1 change detected
+2025-10-20 17:14:04,978 | INFO | 1 change detected
+2025-10-20 17:14:05,329 | INFO | 1 change detected
+2025-10-20 17:14:05,679 | INFO | 1 change detected
+2025-10-20 17:14:06,030 | INFO | 1 change detected
+2025-10-20 17:14:06,380 | INFO | 1 change detected
+2025-10-20 17:14:06,731 | INFO | 1 change detected
+2025-10-20 17:14:07,081 | INFO | 1 change detected
+2025-10-20 17:14:07,431 | INFO | 1 change detected
+2025-10-20 17:14:07,782 | INFO | 1 change detected
+2025-10-20 17:14:08,132 | INFO | 1 change detected
+2025-10-20 17:14:08,483 | INFO | 1 change detected
+2025-10-20 17:14:08,833 | INFO | 1 change detected
+2025-10-20 17:14:09,184 | INFO | 1 change detected
+2025-10-20 17:14:09,534 | INFO | 1 change detected
+2025-10-20 17:14:09,885 | INFO | 1 change detected
+2025-10-20 17:14:10,235 | INFO | 1 change detected
+2025-10-20 17:14:10,586 | INFO | 1 change detected
+2025-10-20 17:14:10,937 | INFO | 1 change detected
+2025-10-20 17:14:11,287 | INFO | 1 change detected
+2025-10-20 17:14:11,638 | INFO | 1 change detected
+2025-10-20 17:14:11,988 | INFO | 1 change detected
+2025-10-20 17:14:12,339 | INFO | 1 change detected
+2025-10-20 17:14:12,689 | INFO | 1 change detected
+2025-10-20 17:14:13,040 | INFO | 1 change detected
+2025-10-20 17:14:13,390 | INFO | 1 change detected
+2025-10-20 17:14:13,741 | INFO | 1 change detected
+2025-10-20 17:14:14,091 | INFO | 1 change detected
+2025-10-20 17:14:14,442 | INFO | 1 change detected
+2025-10-20 17:14:14,792 | INFO | 1 change detected
+2025-10-20 17:14:15,142 | INFO | 1 change detected
+2025-10-20 17:14:15,493 | INFO | 1 change detected
+2025-10-20 17:14:15,843 | INFO | 1 change detected
+2025-10-20 17:14:16,194 | INFO | 1 change detected
+2025-10-20 17:14:16,544 | INFO | 1 change detected
+2025-10-20 17:14:16,895 | INFO | 1 change detected
+2025-10-20 17:14:17,246 | INFO | 1 change detected
+2025-10-20 17:14:17,596 | INFO | 1 change detected
+2025-10-20 17:14:17,946 | INFO | 1 change detected
+2025-10-20 17:14:18,297 | INFO | 1 change detected
+2025-10-20 17:14:18,647 | INFO | 1 change detected
+2025-10-20 17:14:18,998 | INFO | 1 change detected
+2025-10-20 17:14:19,348 | INFO | 1 change detected
+2025-10-20 17:14:19,698 | INFO | 1 change detected
+2025-10-20 17:14:20,049 | INFO | 1 change detected
+2025-10-20 17:14:20,399 | INFO | 1 change detected
+2025-10-20 17:14:20,750 | INFO | 1 change detected
+2025-10-20 17:14:21,100 | INFO | 1 change detected
+2025-10-20 17:14:21,451 | INFO | 1 change detected
+2025-10-20 17:14:21,801 | INFO | 1 change detected
+2025-10-20 17:14:22,152 | INFO | 1 change detected
+2025-10-20 17:14:22,502 | INFO | 1 change detected
+2025-10-20 17:14:22,853 | INFO | 1 change detected
+2025-10-20 17:14:23,203 | INFO | 1 change detected
+2025-10-20 17:14:23,554 | INFO | 1 change detected
+2025-10-20 17:14:23,904 | INFO | 1 change detected
+2025-10-20 17:14:24,255 | INFO | 1 change detected
+2025-10-20 17:14:24,606 | INFO | 1 change detected
+2025-10-20 17:14:24,957 | INFO | 1 change detected
+2025-10-20 17:14:25,307 | INFO | 1 change detected
+2025-10-20 17:14:25,658 | INFO | 1 change detected
+2025-10-20 17:14:26,008 | INFO | 1 change detected
+2025-10-20 17:14:26,359 | INFO | 1 change detected
+2025-10-20 17:14:26,709 | INFO | 1 change detected
+2025-10-20 17:14:27,060 | INFO | 1 change detected
+2025-10-20 17:14:27,410 | INFO | 1 change detected
+2025-10-20 17:14:27,761 | INFO | 1 change detected
+2025-10-20 17:14:28,111 | INFO | 1 change detected
+2025-10-20 17:14:28,462 | INFO | 1 change detected
+2025-10-20 17:14:28,812 | INFO | 1 change detected
+2025-10-20 17:14:29,163 | INFO | 1 change detected
+2025-10-20 17:14:29,513 | INFO | 1 change detected
+2025-10-20 17:14:29,864 | INFO | 1 change detected
+2025-10-20 17:14:30,214 | INFO | 1 change detected
+2025-10-20 17:14:30,565 | INFO | 1 change detected
+2025-10-20 17:14:30,915 | INFO | 1 change detected
+2025-10-20 17:14:31,266 | INFO | 1 change detected
+2025-10-20 17:14:31,616 | INFO | 1 change detected
+2025-10-20 17:14:31,967 | INFO | 1 change detected
+2025-10-20 17:14:32,317 | INFO | 1 change detected
+2025-10-20 17:14:32,668 | INFO | 1 change detected
+2025-10-20 17:14:33,018 | INFO | 1 change detected
+2025-10-20 17:14:33,369 | INFO | 1 change detected
+2025-10-20 17:14:33,719 | INFO | 1 change detected
+2025-10-20 17:14:34,070 | INFO | 1 change detected
+2025-10-20 17:14:34,420 | INFO | 1 change detected
+2025-10-20 17:14:34,771 | INFO | 1 change detected
+2025-10-20 17:14:35,121 | INFO | 1 change detected
+2025-10-20 17:14:35,472 | INFO | 1 change detected
+2025-10-20 17:14:35,822 | INFO | 1 change detected
+2025-10-20 17:14:36,173 | INFO | 1 change detected
+2025-10-20 17:14:36,523 | INFO | 1 change detected
+2025-10-20 17:14:36,874 | INFO | 1 change detected
+2025-10-20 17:14:37,224 | INFO | 1 change detected
+2025-10-20 17:14:37,575 | INFO | 1 change detected
+2025-10-20 17:14:37,926 | INFO | 1 change detected
+2025-10-20 17:14:38,277 | INFO | 1 change detected
+2025-10-20 17:14:38,628 | INFO | 1 change detected
+2025-10-20 17:14:38,978 | INFO | 1 change detected
+2025-10-20 17:14:39,329 | INFO | 1 change detected
+2025-10-20 17:14:39,679 | INFO | 1 change detected
+2025-10-20 17:14:40,030 | INFO | 1 change detected
+2025-10-20 17:14:40,380 | INFO | 1 change detected
+2025-10-20 17:14:40,731 | INFO | 1 change detected
+2025-10-20 17:14:41,081 | INFO | 1 change detected
+2025-10-20 17:14:41,432 | INFO | 1 change detected
+2025-10-20 17:14:41,782 | INFO | 1 change detected
+2025-10-20 17:14:42,133 | INFO | 1 change detected
+2025-10-20 17:14:42,483 | INFO | 1 change detected
+2025-10-20 17:14:42,834 | INFO | 1 change detected
+2025-10-20 17:14:43,184 | INFO | 1 change detected
+2025-10-20 17:14:43,535 | INFO | 1 change detected
+2025-10-20 17:14:43,885 | INFO | 1 change detected
+2025-10-20 17:14:44,236 | INFO | 1 change detected
+2025-10-20 17:14:44,587 | INFO | 1 change detected
+2025-10-20 17:14:44,937 | INFO | 1 change detected
+2025-10-20 17:14:45,288 | INFO | 1 change detected
+2025-10-20 17:14:45,638 | INFO | 1 change detected
+2025-10-20 17:14:45,989 | INFO | 1 change detected
+2025-10-20 17:14:46,339 | INFO | 1 change detected
+2025-10-20 17:14:46,690 | INFO | 1 change detected
+2025-10-20 17:14:47,040 | INFO | 1 change detected
+2025-10-20 17:14:47,391 | INFO | 1 change detected
+2025-10-20 17:14:47,741 | INFO | 1 change detected
+2025-10-20 17:14:48,092 | INFO | 1 change detected
+2025-10-20 17:14:48,442 | INFO | 1 change detected
+2025-10-20 17:14:48,792 | INFO | 1 change detected
+2025-10-20 17:14:49,143 | INFO | 1 change detected
+2025-10-20 17:14:49,494 | INFO | 1 change detected
+2025-10-20 17:14:49,844 | INFO | 1 change detected
+2025-10-20 17:14:50,195 | INFO | 1 change detected
+2025-10-20 17:14:50,546 | INFO | 1 change detected
+2025-10-20 17:14:50,897 | INFO | 1 change detected
+2025-10-20 17:14:51,247 | INFO | 1 change detected
+2025-10-20 17:14:51,598 | INFO | 1 change detected
+2025-10-20 17:14:51,948 | INFO | 1 change detected
+2025-10-20 17:14:52,299 | INFO | 1 change detected
+2025-10-20 17:14:52,649 | INFO | 1 change detected
+2025-10-20 17:14:53,000 | INFO | 1 change detected
+2025-10-20 17:14:53,351 | INFO | 1 change detected
+2025-10-20 17:14:53,702 | INFO | 1 change detected
+2025-10-20 17:14:54,053 | INFO | 1 change detected
+2025-10-20 17:14:54,404 | INFO | 1 change detected
+2025-10-20 17:14:54,755 | INFO | 1 change detected
+2025-10-20 17:14:55,105 | INFO | 1 change detected
+2025-10-20 17:14:55,456 | INFO | 1 change detected
+2025-10-20 17:14:55,807 | INFO | 1 change detected
+2025-10-20 17:14:56,157 | INFO | 1 change detected
+2025-10-20 17:14:56,508 | INFO | 1 change detected
+2025-10-20 17:14:56,859 | INFO | 1 change detected
+2025-10-20 17:14:57,210 | INFO | 1 change detected
+2025-10-20 17:14:57,560 | INFO | 1 change detected
+2025-10-20 17:14:57,911 | INFO | 1 change detected
+2025-10-20 17:14:58,262 | INFO | 1 change detected
+2025-10-20 17:14:58,612 | INFO | 1 change detected
+2025-10-20 17:14:58,963 | INFO | 1 change detected
+2025-10-20 17:14:59,314 | INFO | 1 change detected
+2025-10-20 17:14:59,665 | INFO | 1 change detected
+2025-10-20 17:15:00,016 | INFO | 1 change detected
+2025-10-20 17:15:00,367 | INFO | 1 change detected
+2025-10-20 17:15:00,718 | INFO | 1 change detected
+2025-10-20 17:15:01,068 | INFO | 1 change detected
+2025-10-20 17:15:01,419 | INFO | 1 change detected
+2025-10-20 17:15:01,770 | INFO | 1 change detected
+2025-10-20 17:15:02,121 | INFO | 1 change detected
+2025-10-20 17:15:02,472 | INFO | 1 change detected
+2025-10-20 17:15:02,823 | INFO | 1 change detected
+2025-10-20 17:15:03,174 | INFO | 1 change detected
+2025-10-20 17:15:03,526 | INFO | 1 change detected
+2025-10-20 17:15:03,876 | INFO | 1 change detected
+2025-10-20 17:15:04,227 | INFO | 1 change detected
+2025-10-20 17:15:04,578 | INFO | 1 change detected
+2025-10-20 17:15:04,928 | INFO | 1 change detected
+2025-10-20 17:15:05,279 | INFO | 1 change detected
+2025-10-20 17:15:05,630 | INFO | 1 change detected
+2025-10-20 17:15:05,981 | INFO | 1 change detected
+2025-10-20 17:15:06,331 | INFO | 1 change detected
+2025-10-20 17:15:06,682 | INFO | 1 change detected
+2025-10-20 17:15:07,032 | INFO | 1 change detected
+2025-10-20 17:15:07,383 | INFO | 1 change detected
+2025-10-20 17:15:07,733 | INFO | 1 change detected
+2025-10-20 17:15:08,084 | INFO | 1 change detected
+2025-10-20 17:15:08,434 | INFO | 1 change detected
+2025-10-20 17:15:08,785 | INFO | 1 change detected
+2025-10-20 17:15:09,135 | INFO | 1 change detected
+2025-10-20 17:15:09,485 | INFO | 1 change detected
+2025-10-20 17:15:09,836 | INFO | 1 change detected
+2025-10-20 17:15:10,187 | INFO | 1 change detected
+2025-10-20 17:15:10,538 | INFO | 1 change detected
+2025-10-20 17:15:10,889 | INFO | 1 change detected
+2025-10-20 17:15:11,239 | INFO | 1 change detected
+2025-10-20 17:15:11,590 | INFO | 1 change detected
+2025-10-20 17:15:11,941 | INFO | 1 change detected
+2025-10-20 17:15:12,292 | INFO | 1 change detected
+2025-10-20 17:15:12,642 | INFO | 1 change detected
+2025-10-20 17:15:12,993 | INFO | 1 change detected
+2025-10-20 17:15:13,344 | INFO | 1 change detected
+2025-10-20 17:15:13,694 | INFO | 1 change detected
+2025-10-20 17:15:14,045 | INFO | 1 change detected
+2025-10-20 17:15:14,396 | INFO | 1 change detected
+2025-10-20 17:15:14,747 | INFO | 1 change detected
+2025-10-20 17:15:15,097 | INFO | 1 change detected
+2025-10-20 17:15:15,449 | INFO | 1 change detected
+2025-10-20 17:15:15,799 | INFO | 1 change detected
+2025-10-20 17:15:16,150 | INFO | 1 change detected
+2025-10-20 17:15:16,501 | INFO | 1 change detected
+2025-10-20 17:15:16,852 | INFO | 1 change detected
+2025-10-20 17:15:17,203 | INFO | 1 change detected
+2025-10-20 17:15:17,553 | INFO | 1 change detected
+2025-10-20 17:15:17,904 | INFO | 1 change detected
+2025-10-20 17:15:18,255 | INFO | 1 change detected
+2025-10-20 17:15:18,605 | INFO | 1 change detected
+2025-10-20 17:15:18,956 | INFO | 1 change detected
+2025-10-20 17:15:19,306 | INFO | 1 change detected
+2025-10-20 17:15:19,657 | INFO | 1 change detected
+2025-10-20 17:15:20,007 | INFO | 1 change detected
+2025-10-20 17:15:20,358 | INFO | 1 change detected
+2025-10-20 17:15:20,709 | INFO | 1 change detected
+2025-10-20 17:15:21,059 | INFO | 1 change detected
+2025-10-20 17:15:21,409 | INFO | 1 change detected
+2025-10-20 17:15:21,760 | INFO | 1 change detected
+2025-10-20 17:15:22,111 | INFO | 1 change detected
+2025-10-20 17:15:22,461 | INFO | 1 change detected
+2025-10-20 17:15:22,812 | INFO | 1 change detected
+2025-10-20 17:15:23,162 | INFO | 1 change detected
+2025-10-20 17:15:23,513 | INFO | 1 change detected
+2025-10-20 17:15:23,863 | INFO | 1 change detected
+2025-10-20 17:15:24,214 | INFO | 1 change detected
+2025-10-20 17:15:24,564 | INFO | 1 change detected
+2025-10-20 17:15:24,914 | INFO | 1 change detected
+2025-10-20 17:15:25,265 | INFO | 1 change detected
+2025-10-20 17:15:25,616 | INFO | 1 change detected
+2025-10-20 17:15:25,967 | INFO | 1 change detected
+2025-10-20 17:15:26,318 | INFO | 1 change detected
+2025-10-20 17:15:26,669 | INFO | 1 change detected
+2025-10-20 17:15:27,020 | INFO | 1 change detected
+2025-10-20 17:15:27,370 | INFO | 1 change detected
+2025-10-20 17:15:27,721 | INFO | 1 change detected
+2025-10-20 17:15:28,072 | INFO | 1 change detected
+2025-10-20 17:15:28,422 | INFO | 1 change detected
+2025-10-20 17:15:28,774 | INFO | 1 change detected
+2025-10-20 17:15:29,125 | INFO | 1 change detected
+2025-10-20 17:15:29,476 | INFO | 1 change detected
+2025-10-20 17:15:29,827 | INFO | 1 change detected
+2025-10-20 17:15:30,177 | INFO | 1 change detected
+2025-10-20 17:15:30,528 | INFO | 1 change detected
+2025-10-20 17:15:30,878 | INFO | 1 change detected
+2025-10-20 17:15:31,229 | INFO | 1 change detected
+2025-10-20 17:15:31,579 | INFO | 1 change detected
+2025-10-20 17:15:31,931 | INFO | 1 change detected
+2025-10-20 17:15:32,282 | INFO | 1 change detected
+2025-10-20 17:15:32,633 | INFO | 1 change detected
+2025-10-20 17:15:32,985 | INFO | 1 change detected
+2025-10-20 17:15:33,335 | INFO | 1 change detected
+2025-10-20 17:15:33,686 | INFO | 1 change detected
+2025-10-20 17:15:34,037 | INFO | 1 change detected
+2025-10-20 17:15:34,388 | INFO | 1 change detected
+2025-10-20 17:15:34,738 | INFO | 1 change detected
+2025-10-20 17:15:35,089 | INFO | 1 change detected
+2025-10-20 17:15:35,439 | INFO | 1 change detected
+2025-10-20 17:15:35,790 | INFO | 1 change detected
+2025-10-20 17:15:36,140 | INFO | 1 change detected
+2025-10-20 17:15:36,491 | INFO | 1 change detected
+2025-10-20 17:15:36,841 | INFO | 1 change detected
+2025-10-20 17:15:37,192 | INFO | 1 change detected
+2025-10-20 17:15:37,542 | INFO | 1 change detected
+2025-10-20 17:15:37,893 | INFO | 1 change detected
+2025-10-20 17:15:38,243 | INFO | 1 change detected
+2025-10-20 17:15:38,594 | INFO | 1 change detected
+2025-10-20 17:15:38,944 | INFO | 1 change detected
+2025-10-20 17:15:39,295 | INFO | 1 change detected
+2025-10-20 17:15:39,645 | INFO | 1 change detected
+2025-10-20 17:15:39,995 | INFO | 1 change detected
+2025-10-20 17:15:40,346 | INFO | 1 change detected
+2025-10-20 17:15:40,696 | INFO | 1 change detected
+2025-10-20 17:15:41,047 | INFO | 1 change detected
+2025-10-20 17:15:41,397 | INFO | 1 change detected
+2025-10-20 17:15:41,748 | INFO | 1 change detected
+2025-10-20 17:15:42,098 | INFO | 1 change detected
+2025-10-20 17:15:42,449 | INFO | 1 change detected
+2025-10-20 17:15:42,799 | INFO | 1 change detected
+2025-10-20 17:15:43,150 | INFO | 1 change detected
+2025-10-20 17:15:43,500 | INFO | 1 change detected
+2025-10-20 17:15:43,851 | INFO | 1 change detected
+2025-10-20 17:15:44,201 | INFO | 1 change detected
+2025-10-20 17:15:44,551 | INFO | 1 change detected
+2025-10-20 17:15:44,902 | INFO | 1 change detected
+2025-10-20 17:15:45,252 | INFO | 1 change detected
+2025-10-20 17:15:45,603 | INFO | 1 change detected
+2025-10-20 17:15:45,953 | INFO | 1 change detected
+2025-10-20 17:15:46,304 | INFO | 1 change detected
+2025-10-20 17:15:46,654 | INFO | 1 change detected
+2025-10-20 17:15:47,004 | INFO | 1 change detected
+2025-10-20 17:15:47,355 | INFO | 1 change detected
+2025-10-20 17:15:47,705 | INFO | 1 change detected
+2025-10-20 17:15:48,056 | INFO | 1 change detected
+2025-10-20 17:15:48,406 | INFO | 1 change detected
+2025-10-20 17:15:48,757 | INFO | 1 change detected
+2025-10-20 17:15:49,107 | INFO | 1 change detected
+2025-10-20 17:15:49,458 | INFO | 1 change detected
+2025-10-20 17:15:49,808 | INFO | 1 change detected
+2025-10-20 17:15:50,159 | INFO | 1 change detected
+2025-10-20 17:15:50,509 | INFO | 1 change detected
+2025-10-20 17:15:50,860 | INFO | 1 change detected
+2025-10-20 17:15:51,210 | INFO | 1 change detected
+2025-10-20 17:15:51,561 | INFO | 1 change detected
+2025-10-20 17:15:51,911 | INFO | 1 change detected
+2025-10-20 17:15:52,262 | INFO | 1 change detected
+2025-10-20 17:15:52,612 | INFO | 1 change detected
+2025-10-20 17:15:52,963 | INFO | 1 change detected
+2025-10-20 17:15:53,314 | INFO | 1 change detected
+2025-10-20 17:15:53,664 | INFO | 1 change detected
+2025-10-20 17:15:54,015 | INFO | 1 change detected
+2025-10-20 17:15:54,365 | INFO | 1 change detected
+2025-10-20 17:15:54,717 | INFO | 1 change detected
+2025-10-20 17:15:55,067 | INFO | 1 change detected
+2025-10-20 17:15:55,419 | INFO | 1 change detected
+2025-10-20 17:15:55,769 | INFO | 1 change detected
+2025-10-20 17:15:56,121 | INFO | 1 change detected
+2025-10-20 17:15:56,472 | INFO | 1 change detected
+2025-10-20 17:15:56,823 | INFO | 1 change detected
+2025-10-20 17:15:57,174 | INFO | 1 change detected
+2025-10-20 17:15:57,525 | INFO | 1 change detected
+2025-10-20 17:15:57,875 | INFO | 1 change detected
+2025-10-20 17:15:58,226 | INFO | 1 change detected
+2025-10-20 17:15:58,576 | INFO | 1 change detected
+2025-10-20 17:15:58,927 | INFO | 1 change detected
+2025-10-20 17:15:59,277 | INFO | 1 change detected
+2025-10-20 17:15:59,628 | INFO | 1 change detected
+2025-10-20 17:15:59,979 | INFO | 1 change detected
+2025-10-20 17:16:00,329 | INFO | 1 change detected
+2025-10-20 17:16:00,680 | INFO | 1 change detected
+2025-10-20 17:16:01,030 | INFO | 1 change detected
+2025-10-20 17:16:01,381 | INFO | 1 change detected
+2025-10-20 17:16:01,732 | INFO | 1 change detected
+2025-10-20 17:16:02,083 | INFO | 1 change detected
+2025-10-20 17:16:02,433 | INFO | 1 change detected
+2025-10-20 17:16:02,784 | INFO | 1 change detected
+2025-10-20 17:16:03,135 | INFO | 1 change detected
+2025-10-20 17:16:03,485 | INFO | 1 change detected
+2025-10-20 17:16:03,835 | INFO | 1 change detected
+2025-10-20 17:16:04,186 | INFO | 1 change detected
+2025-10-20 17:16:04,536 | INFO | 1 change detected
+2025-10-20 17:16:04,887 | INFO | 1 change detected
+2025-10-20 17:16:05,238 | INFO | 1 change detected
+2025-10-20 17:16:05,589 | INFO | 1 change detected
+2025-10-20 17:16:05,940 | INFO | 1 change detected
+2025-10-20 17:16:06,290 | INFO | 1 change detected
+2025-10-20 17:16:06,641 | INFO | 1 change detected
+2025-10-20 17:16:06,991 | INFO | 1 change detected
+2025-10-20 17:16:07,342 | INFO | 1 change detected
+2025-10-20 17:16:07,693 | INFO | 1 change detected
+2025-10-20 17:16:08,043 | INFO | 1 change detected
+2025-10-20 17:16:08,394 | INFO | 1 change detected
+2025-10-20 17:16:08,744 | INFO | 1 change detected
+2025-10-20 17:16:09,095 | INFO | 1 change detected
+2025-10-20 17:16:09,445 | INFO | 1 change detected
+2025-10-20 17:16:09,796 | INFO | 1 change detected
+2025-10-20 17:16:10,147 | INFO | 1 change detected
+2025-10-20 17:16:10,497 | INFO | 1 change detected
+2025-10-20 17:16:10,848 | INFO | 1 change detected
+2025-10-20 17:16:11,200 | INFO | 1 change detected
+2025-10-20 17:16:11,550 | INFO | 1 change detected
+2025-10-20 17:16:11,901 | INFO | 1 change detected
+2025-10-20 17:16:12,252 | INFO | 1 change detected
+2025-10-20 17:16:12,602 | INFO | 1 change detected
+2025-10-20 17:16:12,953 | INFO | 1 change detected
+2025-10-20 17:16:13,304 | INFO | 1 change detected
+2025-10-20 17:16:13,655 | INFO | 1 change detected
+2025-10-20 17:16:14,005 | INFO | 1 change detected
+2025-10-20 17:16:14,356 | INFO | 1 change detected
+2025-10-20 17:16:14,707 | INFO | 1 change detected
+2025-10-20 17:16:15,058 | INFO | 1 change detected
+2025-10-20 17:16:15,408 | INFO | 1 change detected
+2025-10-20 17:16:15,759 | INFO | 1 change detected
+2025-10-20 17:16:16,109 | INFO | 1 change detected
+2025-10-20 17:16:16,460 | INFO | 1 change detected
+2025-10-20 17:16:16,810 | INFO | 1 change detected
+2025-10-20 17:16:17,161 | INFO | 1 change detected
+2025-10-20 17:16:17,512 | INFO | 1 change detected
+2025-10-20 17:16:17,863 | INFO | 1 change detected
+2025-10-20 17:16:18,213 | INFO | 1 change detected
+2025-10-20 17:16:18,564 | INFO | 1 change detected
+2025-10-20 17:16:18,914 | INFO | 1 change detected
+2025-10-20 17:16:19,264 | INFO | 1 change detected
+2025-10-20 17:16:19,615 | INFO | 1 change detected
+2025-10-20 17:16:19,965 | INFO | 1 change detected
+2025-10-20 17:16:20,317 | INFO | 1 change detected
+2025-10-20 17:16:20,667 | INFO | 1 change detected
+2025-10-20 17:16:21,018 | INFO | 1 change detected
+2025-10-20 17:16:21,369 | INFO | 1 change detected
+2025-10-20 17:16:21,720 | INFO | 1 change detected
+2025-10-20 17:16:22,070 | INFO | 1 change detected
+2025-10-20 17:16:22,421 | INFO | 1 change detected
+2025-10-20 17:16:22,772 | INFO | 1 change detected
+2025-10-20 17:16:23,123 | INFO | 1 change detected
+2025-10-20 17:16:23,473 | INFO | 1 change detected
+2025-10-20 17:16:23,824 | INFO | 1 change detected
+2025-10-20 17:16:24,174 | INFO | 1 change detected
+2025-10-20 17:16:24,525 | INFO | 1 change detected
+2025-10-20 17:16:24,875 | INFO | 1 change detected
+2025-10-20 17:16:25,226 | INFO | 1 change detected
+2025-10-20 17:16:25,577 | INFO | 1 change detected
+2025-10-20 17:16:25,927 | INFO | 1 change detected
+2025-10-20 17:16:26,278 | INFO | 1 change detected
+2025-10-20 17:16:26,629 | INFO | 1 change detected
+2025-10-20 17:16:26,980 | INFO | 1 change detected
+2025-10-20 17:16:27,330 | INFO | 1 change detected
+2025-10-20 17:16:27,681 | INFO | 1 change detected
+2025-10-20 17:16:28,031 | INFO | 1 change detected
+2025-10-20 17:16:28,381 | INFO | 1 change detected
+2025-10-20 17:16:28,732 | INFO | 1 change detected
+2025-10-20 17:16:29,082 | INFO | 1 change detected
+2025-10-20 17:16:29,433 | INFO | 1 change detected
+2025-10-20 17:16:29,783 | INFO | 1 change detected
+2025-10-20 17:16:30,134 | INFO | 1 change detected
+2025-10-20 17:16:30,485 | INFO | 1 change detected
+2025-10-20 17:16:30,836 | INFO | 1 change detected
+2025-10-20 17:16:31,186 | INFO | 1 change detected
+2025-10-20 17:16:31,537 | INFO | 1 change detected
+2025-10-20 17:16:31,888 | INFO | 1 change detected
+2025-10-20 17:16:32,238 | INFO | 1 change detected
+2025-10-20 17:16:32,588 | INFO | 1 change detected
+2025-10-20 17:16:32,939 | INFO | 1 change detected
+2025-10-20 17:16:33,289 | INFO | 1 change detected
+2025-10-20 17:16:33,640 | INFO | 1 change detected
+2025-10-20 17:16:33,991 | INFO | 1 change detected
+2025-10-20 17:16:34,341 | INFO | 1 change detected
+2025-10-20 17:16:34,692 | INFO | 1 change detected
+2025-10-20 17:16:35,042 | INFO | 1 change detected
+2025-10-20 17:16:35,393 | INFO | 1 change detected
+2025-10-20 17:16:35,744 | INFO | 1 change detected
+2025-10-20 17:16:36,094 | INFO | 1 change detected
+2025-10-20 17:16:36,445 | INFO | 1 change detected
+2025-10-20 17:16:36,796 | INFO | 1 change detected
+2025-10-20 17:16:37,146 | INFO | 1 change detected
+2025-10-20 17:16:37,498 | INFO | 1 change detected
+2025-10-20 17:16:37,848 | INFO | 1 change detected
+2025-10-20 17:16:38,199 | INFO | 1 change detected
+2025-10-20 17:16:38,549 | INFO | 1 change detected
+2025-10-20 17:16:38,899 | INFO | 1 change detected
+2025-10-20 17:16:39,250 | INFO | 1 change detected
+2025-10-20 17:16:39,600 | INFO | 1 change detected
+2025-10-20 17:16:39,951 | INFO | 1 change detected
+2025-10-20 17:16:40,302 | INFO | 1 change detected
+2025-10-20 17:16:40,653 | INFO | 1 change detected
+2025-10-20 17:16:41,004 | INFO | 1 change detected
+2025-10-20 17:16:41,354 | INFO | 1 change detected
+2025-10-20 17:16:41,705 | INFO | 1 change detected
+2025-10-20 17:16:42,055 | INFO | 1 change detected
+2025-10-20 17:16:42,406 | INFO | 1 change detected
+2025-10-20 17:16:42,756 | INFO | 1 change detected
+2025-10-20 17:16:43,107 | INFO | 1 change detected
+2025-10-20 17:16:43,457 | INFO | 1 change detected
+2025-10-20 17:16:43,808 | INFO | 1 change detected
+2025-10-20 17:16:44,158 | INFO | 1 change detected
+2025-10-20 17:16:44,509 | INFO | 1 change detected
+2025-10-20 17:16:44,859 | INFO | 1 change detected
+2025-10-20 17:16:45,210 | INFO | 1 change detected
+2025-10-20 17:16:45,560 | INFO | 1 change detected
+2025-10-20 17:16:45,911 | INFO | 1 change detected
+2025-10-20 17:16:46,262 | INFO | 1 change detected
+2025-10-20 17:16:46,613 | INFO | 1 change detected
+2025-10-20 17:16:46,963 | INFO | 1 change detected
+2025-10-20 17:16:47,314 | INFO | 1 change detected
+2025-10-20 17:16:47,664 | INFO | 1 change detected
+2025-10-20 17:16:48,015 | INFO | 35 changes detected
+2025-10-20 17:16:48,416 | INFO | 4 changes detected
+2025-10-20 17:16:48,767 | INFO | 199 changes detected
+2025-10-20 17:16:49,120 | INFO | 1 change detected
+2025-10-20 17:16:49,471 | INFO | 1 change detected
+2025-10-20 17:16:49,822 | INFO | 1 change detected
+2025-10-20 17:16:50,172 | INFO | 1 change detected
+2025-10-20 17:16:50,523 | INFO | 1 change detected
+2025-10-20 17:16:50,874 | INFO | 1 change detected
+2025-10-20 17:16:51,224 | INFO | 1 change detected
+2025-10-20 17:16:51,575 | INFO | 1 change detected
+2025-10-20 17:16:51,925 | INFO | 1 change detected
+2025-10-20 17:16:52,276 | INFO | 1 change detected
+2025-10-20 17:16:52,626 | INFO | 1 change detected
+2025-10-20 17:16:52,977 | INFO | 1 change detected
+2025-10-20 17:16:53,327 | INFO | 1 change detected
+2025-10-20 17:16:53,678 | INFO | 1 change detected
+2025-10-20 17:16:54,028 | INFO | 1 change detected
+2025-10-20 17:16:54,379 | INFO | 1 change detected
+2025-10-20 17:16:54,729 | INFO | 1 change detected
+2025-10-20 17:16:55,080 | INFO | 1 change detected
+2025-10-20 17:16:55,431 | INFO | 1 change detected
+2025-10-20 17:16:55,781 | INFO | 1 change detected
+2025-10-20 17:16:56,132 | INFO | 1 change detected
+2025-10-20 17:16:56,482 | INFO | 1 change detected
+2025-10-20 17:16:56,832 | INFO | 1 change detected
+2025-10-20 17:16:57,183 | INFO | 1 change detected
+2025-10-20 17:16:57,534 | INFO | 1 change detected
+2025-10-20 17:16:57,885 | INFO | 1 change detected
+2025-10-20 17:16:58,235 | INFO | 1 change detected
+2025-10-20 17:16:58,586 | INFO | 1 change detected
+2025-10-20 17:16:58,936 | INFO | 1 change detected
+2025-10-20 17:16:59,287 | INFO | 1 change detected
+2025-10-20 17:16:59,638 | INFO | 1 change detected
+2025-10-20 17:16:59,988 | INFO | 1 change detected
+2025-10-20 17:17:00,339 | INFO | 1 change detected
+2025-10-20 17:17:00,689 | INFO | 1 change detected
+2025-10-20 17:17:01,040 | INFO | 1 change detected
+2025-10-20 17:17:01,390 | INFO | 1 change detected
+2025-10-20 17:17:01,741 | INFO | 1 change detected
+2025-10-20 17:17:02,091 | INFO | 1 change detected
+2025-10-20 17:17:02,442 | INFO | 1 change detected
+2025-10-20 17:17:02,793 | INFO | 1 change detected
+2025-10-20 17:17:03,143 | INFO | 1 change detected
+2025-10-20 17:17:03,494 | INFO | 1 change detected
+2025-10-20 17:17:03,844 | INFO | 1 change detected
+2025-10-20 17:17:04,194 | INFO | 1 change detected
+2025-10-20 17:17:04,545 | INFO | 1 change detected
+2025-10-20 17:17:04,895 | INFO | 1 change detected
+2025-10-20 17:17:05,246 | INFO | 1 change detected
+2025-10-20 17:17:05,596 | INFO | 1 change detected
+2025-10-20 17:17:05,947 | INFO | 1 change detected
+2025-10-20 17:17:06,297 | INFO | 1 change detected
+2025-10-20 17:17:06,648 | INFO | 1 change detected
+2025-10-20 17:17:06,998 | INFO | 1 change detected
+2025-10-20 17:17:07,349 | INFO | 1 change detected
+2025-10-20 17:17:07,699 | INFO | 1 change detected
+2025-10-20 17:17:08,050 | INFO | 1 change detected
+2025-10-20 17:17:08,400 | INFO | 1 change detected
+2025-10-20 17:17:08,751 | INFO | 1 change detected
+2025-10-20 17:17:09,101 | INFO | 1 change detected
+2025-10-20 17:17:09,452 | INFO | 1 change detected
+2025-10-20 17:17:09,802 | INFO | 1 change detected
+2025-10-20 17:17:10,153 | INFO | 1 change detected
+2025-10-20 17:17:10,503 | INFO | 1 change detected
+2025-10-20 17:17:10,854 | INFO | 1 change detected
+2025-10-20 17:17:11,204 | INFO | 1 change detected
+2025-10-20 17:17:11,556 | INFO | 1 change detected
+2025-10-20 17:17:11,906 | INFO | 1 change detected
+2025-10-20 17:17:12,257 | INFO | 1 change detected
+2025-10-20 17:17:12,607 | INFO | 1 change detected
+2025-10-20 17:17:12,958 | INFO | 1 change detected
+2025-10-20 17:17:13,308 | INFO | 1 change detected
+2025-10-20 17:17:13,659 | INFO | 1 change detected
+2025-10-20 17:17:14,009 | INFO | 1 change detected
+2025-10-20 17:17:14,360 | INFO | 1 change detected
+2025-10-20 17:17:14,710 | INFO | 1 change detected
+2025-10-20 17:17:15,061 | INFO | 1 change detected
+2025-10-20 17:17:15,411 | INFO | 1 change detected
+2025-10-20 17:17:15,762 | INFO | 1 change detected
+2025-10-20 17:17:16,112 | INFO | 1 change detected
+2025-10-20 17:17:16,463 | INFO | 1 change detected
+2025-10-20 17:17:16,814 | INFO | 1 change detected
+2025-10-20 17:17:17,164 | INFO | 1 change detected
+2025-10-20 17:17:17,515 | INFO | 1 change detected
+2025-10-20 17:17:17,866 | INFO | 583 changes detected
+2025-10-20 17:17:18,226 | INFO | 1 change detected
+2025-10-20 17:17:20,142 | INFO | 11492 changes detected
+2025-10-20 17:17:20,786 | INFO | 2564 changes detected
+2025-10-20 17:17:22,759 | INFO | 9032 changes detected
+2025-10-20 17:17:24,138 | INFO | 5328 changes detected
+2025-10-20 17:17:24,627 | INFO | 3 changes detected
+2025-10-20 17:17:24,978 | INFO | 1 change detected
+2025-10-20 17:17:25,328 | INFO | 1 change detected
+2025-10-20 17:17:25,679 | INFO | 1 change detected
+2025-10-20 17:17:26,031 | INFO | 1 change detected
+2025-10-20 17:17:26,381 | INFO | 1 change detected
+2025-10-20 17:17:26,732 | INFO | 1 change detected
+2025-10-20 17:17:27,082 | INFO | 1 change detected
+2025-10-20 17:17:27,432 | INFO | 1 change detected
+2025-10-20 17:17:27,783 | INFO | 1 change detected
+2025-10-20 17:17:28,134 | INFO | 1 change detected
+2025-10-20 17:17:28,485 | INFO | 1 change detected
+2025-10-20 17:17:28,836 | INFO | 1 change detected
+2025-10-20 17:17:29,186 | INFO | 1 change detected
+2025-10-20 17:17:29,538 | INFO | 1 change detected
+2025-10-20 17:17:29,888 | INFO | 1 change detected
+2025-10-20 17:17:30,239 | INFO | 1 change detected
+2025-10-20 17:17:30,589 | INFO | 1 change detected
+2025-10-20 17:17:30,939 | INFO | 1 change detected
+2025-10-20 17:17:31,290 | INFO | 1 change detected
+2025-10-20 17:17:31,641 | INFO | 1 change detected
+2025-10-20 17:17:31,992 | INFO | 1 change detected
+2025-10-20 17:17:32,342 | INFO | 1 change detected
+2025-10-20 17:17:32,693 | INFO | 1 change detected
+2025-10-20 17:17:33,044 | INFO | 1 change detected
+2025-10-20 17:17:33,394 | INFO | 1 change detected
+2025-10-20 17:17:33,745 | INFO | 1 change detected
+2025-10-20 17:17:34,096 | INFO | 1 change detected
+2025-10-20 17:17:34,447 | INFO | 1 change detected
+2025-10-20 17:17:34,797 | INFO | 1 change detected
+2025-10-20 17:17:35,148 | INFO | 1 change detected
+2025-10-20 17:17:35,498 | INFO | 1 change detected
+2025-10-20 17:17:35,849 | INFO | 1 change detected
+2025-10-20 17:17:36,200 | INFO | 1 change detected
+2025-10-20 17:17:36,551 | INFO | 1 change detected
+2025-10-20 17:17:36,902 | INFO | 1 change detected
+2025-10-20 17:17:37,253 | INFO | 1 change detected
+2025-10-20 17:17:37,603 | INFO | 1 change detected
+2025-10-20 17:17:37,954 | INFO | 1 change detected
+2025-10-20 17:17:38,304 | INFO | 1 change detected
+2025-10-20 17:17:38,655 | INFO | 5 changes detected
+2025-10-20 17:17:39,055 | INFO | 3 changes detected
+2025-10-20 17:17:39,406 | INFO | 25 changes detected
+2025-10-20 17:17:39,757 | INFO | 19 changes detected
+2025-10-20 17:17:40,108 | INFO | 1 change detected
+2025-10-20 17:17:40,459 | INFO | 1 change detected
+2025-10-20 17:17:40,809 | INFO | 8 changes detected
+2025-10-20 17:17:41,160 | INFO | 1 change detected
+2025-10-20 17:17:41,511 | INFO | 1 change detected
+2025-10-20 17:17:41,861 | INFO | 1 change detected
+2025-10-20 17:17:42,213 | INFO | 1 change detected
+2025-10-20 17:17:42,563 | INFO | 1 change detected
+2025-10-20 17:17:42,914 | INFO | 2 changes detected
+2025-10-20 17:17:43,264 | INFO | 2 changes detected
+2025-10-20 17:17:43,615 | INFO | 1 change detected
+2025-10-20 17:17:43,965 | INFO | 1 change detected
+2025-10-20 17:17:44,316 | INFO | 2 changes detected
+2025-10-20 17:17:44,666 | INFO | 2 changes detected
+2025-10-20 17:17:45,017 | INFO | 2 changes detected
+2025-10-20 17:17:45,367 | INFO | 2 changes detected
+2025-10-20 17:17:45,717 | INFO | 2 changes detected
+2025-10-20 17:17:46,068 | INFO | 2 changes detected
+2025-10-20 17:17:46,418 | INFO | 2 changes detected
+2025-10-20 17:17:46,769 | INFO | 2 changes detected
+2025-10-20 17:17:47,119 | INFO | 1 change detected
+2025-10-20 17:17:47,470 | INFO | 130 changes detected
+2025-10-20 17:17:47,823 | INFO | 2 changes detected
+2025-10-20 17:17:48,223 | INFO | 2 changes detected
+2025-10-20 17:17:48,574 | INFO | 2 changes detected
+2025-10-20 17:17:48,924 | INFO | 2 changes detected
+2025-10-20 17:17:49,275 | INFO | 2 changes detected
+2025-10-20 17:17:49,625 | INFO | 2 changes detected
+2025-10-20 17:17:49,976 | INFO | 2 changes detected
+2025-10-20 17:17:50,326 | INFO | 2 changes detected
+2025-10-20 17:17:50,777 | INFO | 29 changes detected
+2025-10-20 17:17:51,128 | INFO | 1 change detected
+2025-10-20 17:17:51,478 | INFO | 2 changes detected
+2025-10-20 17:17:51,829 | INFO | 1 change detected
+2025-10-20 17:17:52,229 | INFO | 20 changes detected
+2025-10-20 17:17:52,580 | INFO | 2 changes detected
+2025-10-20 17:17:52,931 | INFO | 2 changes detected
+2025-10-20 17:17:53,281 | INFO | 6 changes detected
+2025-10-20 17:17:53,632 | INFO | 1 change detected
+2025-10-20 17:17:53,982 | INFO | 3 changes detected
+2025-10-20 17:17:54,333 | INFO | 2 changes detected
+2025-10-20 17:17:54,683 | INFO | 8 changes detected
+2025-10-20 17:17:55,034 | INFO | 1 change detected
+2025-10-20 17:17:55,384 | INFO | 1 change detected
+2025-10-20 17:17:55,735 | INFO | 1 change detected
+2025-10-20 17:17:56,085 | INFO | 1 change detected
+2025-10-20 17:17:56,436 | INFO | 1 change detected
+2025-10-20 17:17:56,786 | INFO | 1 change detected
+2025-10-20 17:17:57,137 | INFO | 1 change detected
+2025-10-20 17:17:57,487 | INFO | 1 change detected
+2025-10-20 17:17:57,838 | INFO | 1 change detected
+2025-10-20 17:17:58,188 | INFO | 1 change detected
+2025-10-20 17:17:58,539 | INFO | 1 change detected
+2025-10-20 17:17:58,889 | INFO | 1 change detected
+2025-10-20 17:17:59,239 | INFO | 1 change detected
+2025-10-20 17:17:59,590 | INFO | 1 change detected
+2025-10-20 17:17:59,940 | INFO | 1 change detected
+2025-10-20 17:18:00,291 | INFO | 1 change detected
+2025-10-20 17:18:00,641 | INFO | 1 change detected
+2025-10-20 17:18:00,992 | INFO | 1 change detected
+2025-10-20 17:18:01,342 | INFO | 1 change detected
+2025-10-20 17:18:01,693 | INFO | 1 change detected
+2025-10-20 17:18:02,043 | INFO | 1 change detected
+2025-10-20 17:18:02,394 | INFO | 1 change detected
+2025-10-20 17:18:02,744 | INFO | 1 change detected
+2025-10-20 17:18:03,094 | INFO | 1 change detected
+2025-10-20 17:18:03,445 | INFO | 1 change detected
+2025-10-20 17:18:03,795 | INFO | 1 change detected
+2025-10-20 17:18:04,146 | INFO | 1 change detected
+2025-10-20 17:18:04,496 | INFO | 1 change detected
+2025-10-20 17:18:04,847 | INFO | 1 change detected
+2025-10-20 17:18:05,197 | INFO | 1 change detected
+2025-10-20 17:18:05,548 | INFO | 1 change detected
+2025-10-20 17:18:05,898 | INFO | 1 change detected
+2025-10-20 17:18:06,248 | INFO | 1 change detected
+2025-10-20 17:18:06,599 | INFO | 1 change detected
+2025-10-20 17:18:06,949 | INFO | 1 change detected
+2025-10-20 17:18:07,300 | INFO | 1 change detected
+2025-10-20 17:18:07,650 | INFO | 1 change detected
+2025-10-20 17:18:08,001 | INFO | 1 change detected
+2025-10-20 17:18:08,351 | INFO | 1 change detected
+2025-10-20 17:18:08,702 | INFO | 1 change detected
+2025-10-20 17:18:09,052 | INFO | 1 change detected
+2025-10-20 17:18:09,403 | INFO | 1 change detected
+2025-10-20 17:18:09,753 | INFO | 1 change detected
+2025-10-20 17:18:10,104 | INFO | 1 change detected
+2025-10-20 17:18:10,454 | INFO | 1 change detected
+2025-10-20 17:18:10,804 | INFO | 1 change detected
+2025-10-20 17:18:11,155 | INFO | 1 change detected
+2025-10-20 17:18:11,505 | INFO | 1 change detected
+2025-10-20 17:18:11,856 | INFO | 1 change detected
+2025-10-20 17:18:12,206 | INFO | 1 change detected
+2025-10-20 17:18:12,557 | INFO | 1 change detected
+2025-10-20 17:18:12,907 | INFO | 1 change detected
+2025-10-20 17:18:13,257 | INFO | 1 change detected
+2025-10-20 17:18:13,608 | INFO | 1 change detected
+2025-10-20 17:18:13,958 | INFO | 1 change detected
+2025-10-20 17:18:14,309 | INFO | 1 change detected
+2025-10-20 17:18:14,659 | INFO | 1 change detected
+2025-10-20 17:18:15,010 | INFO | 1 change detected
+2025-10-20 17:18:15,360 | INFO | 1 change detected
+2025-10-20 17:18:15,711 | INFO | 1 change detected
+2025-10-20 17:18:16,061 | INFO | 1 change detected
+2025-10-20 17:18:16,411 | INFO | 1 change detected
+2025-10-20 17:18:16,762 | INFO | 1 change detected
+2025-10-20 17:18:17,112 | INFO | 1 change detected
+2025-10-20 17:18:17,463 | INFO | 1 change detected
+2025-10-20 17:18:17,813 | INFO | 1 change detected
+2025-10-20 17:18:18,163 | INFO | 1 change detected
+2025-10-20 17:18:18,514 | INFO | 1 change detected
+2025-10-20 17:18:18,864 | INFO | 1 change detected
+2025-10-20 17:18:19,215 | INFO | 1 change detected
+2025-10-20 17:18:19,565 | INFO | 1 change detected
+2025-10-20 17:18:19,916 | INFO | 1 change detected
+2025-10-20 17:18:20,266 | INFO | 1 change detected
+2025-10-20 17:18:20,617 | INFO | 1 change detected
+2025-10-20 17:18:20,967 | INFO | 1 change detected
+2025-10-20 17:18:21,318 | INFO | 1 change detected
+2025-10-20 17:18:21,668 | INFO | 1 change detected
+2025-10-20 17:18:22,019 | INFO | 1 change detected
+2025-10-20 17:18:22,369 | INFO | 1 change detected
+2025-10-20 17:18:22,719 | INFO | 1 change detected
+2025-10-20 17:18:23,070 | INFO | 1 change detected
+2025-10-20 17:18:23,420 | INFO | 1 change detected
+2025-10-20 17:18:23,771 | INFO | 1 change detected
+2025-10-20 17:18:24,121 | INFO | 1 change detected
+2025-10-20 17:18:24,472 | INFO | 1 change detected
+2025-10-20 17:18:24,822 | INFO | 1 change detected
+2025-10-20 17:18:25,173 | INFO | 1 change detected
+2025-10-20 17:18:25,523 | INFO | 1 change detected
+2025-10-20 17:18:25,874 | INFO | 1 change detected
+2025-10-20 17:18:26,224 | INFO | 1 change detected
+2025-10-20 17:18:26,574 | INFO | 1 change detected
+2025-10-20 17:18:26,925 | INFO | 1 change detected
+2025-10-20 17:18:27,275 | INFO | 1 change detected
+2025-10-20 17:18:27,626 | INFO | 1 change detected
+2025-10-20 17:18:27,976 | INFO | 1 change detected
+2025-10-20 17:18:28,327 | INFO | 1 change detected
+2025-10-20 17:18:28,677 | INFO | 1 change detected
+2025-10-20 17:18:29,027 | INFO | 1 change detected
+2025-10-20 17:18:29,378 | INFO | 1 change detected
+2025-10-20 17:18:29,728 | INFO | 1 change detected
+2025-10-20 17:18:30,079 | INFO | 1 change detected
+2025-10-20 17:18:30,429 | INFO | 1 change detected
+2025-10-20 17:18:30,780 | INFO | 1 change detected
+2025-10-20 17:18:31,130 | INFO | 1 change detected
+2025-10-20 17:18:31,481 | INFO | 1 change detected
+2025-10-20 17:18:31,831 | INFO | 1 change detected
+2025-10-20 17:18:32,181 | INFO | 1 change detected
+2025-10-20 17:18:32,532 | INFO | 1 change detected
+2025-10-20 17:18:32,882 | INFO | 1 change detected
+2025-10-20 17:18:33,233 | INFO | 1 change detected
+2025-10-20 17:18:33,583 | INFO | 1 change detected
+2025-10-20 17:18:33,934 | INFO | 1 change detected
+2025-10-20 17:18:34,284 | INFO | 1 change detected
+2025-10-20 17:18:34,635 | INFO | 1 change detected
+2025-10-20 17:18:34,985 | INFO | 1 change detected
+2025-10-20 17:18:35,335 | INFO | 1 change detected
+2025-10-20 17:18:35,686 | INFO | 1 change detected
+2025-10-20 17:18:36,036 | INFO | 1 change detected
+2025-10-20 17:18:36,387 | INFO | 1 change detected
+2025-10-20 17:18:36,738 | INFO | 1 change detected
+2025-10-20 17:18:37,088 | INFO | 1 change detected
+2025-10-20 17:18:37,439 | INFO | 1 change detected
+2025-10-20 17:18:37,789 | INFO | 1 change detected
+2025-10-20 17:18:38,139 | INFO | 1 change detected
+2025-10-20 17:18:38,490 | INFO | 1 change detected
+2025-10-20 17:18:38,840 | INFO | 1 change detected
+2025-10-20 17:18:39,191 | INFO | 1 change detected
+2025-10-20 17:18:39,541 | INFO | 1 change detected
+2025-10-20 17:18:39,892 | INFO | 1 change detected
+2025-10-20 17:18:40,242 | INFO | 1 change detected
+2025-10-20 17:18:40,592 | INFO | 1 change detected
+2025-10-20 17:18:40,943 | INFO | 1 change detected
+2025-10-20 17:18:41,293 | INFO | 1 change detected
+2025-10-20 17:18:41,644 | INFO | 1 change detected
+2025-10-20 17:18:41,994 | INFO | 1 change detected
+2025-10-20 17:18:42,345 | INFO | 1 change detected
+2025-10-20 17:18:42,695 | INFO | 1 change detected
+2025-10-20 17:18:43,046 | INFO | 1 change detected
+2025-10-20 17:18:43,396 | INFO | 1 change detected
+2025-10-20 17:18:43,747 | INFO | 1 change detected
+2025-10-20 17:18:44,097 | INFO | 1 change detected
+2025-10-20 17:18:44,447 | INFO | 1 change detected
+2025-10-20 17:18:44,798 | INFO | 1 change detected
+2025-10-20 17:18:45,148 | INFO | 1 change detected
+2025-10-20 17:18:45,499 | INFO | 1 change detected
+2025-10-20 17:18:45,849 | INFO | 1 change detected
+2025-10-20 17:18:46,200 | INFO | 1 change detected
+2025-10-20 17:18:46,550 | INFO | 1 change detected
+2025-10-20 17:18:46,901 | INFO | 1 change detected
+2025-10-20 17:18:47,251 | INFO | 1 change detected
+2025-10-20 17:18:47,602 | INFO | 1 change detected
+2025-10-20 17:18:47,952 | INFO | 1 change detected
+2025-10-20 17:18:48,302 | INFO | 1 change detected
+2025-10-20 17:18:48,653 | INFO | 1 change detected
+2025-10-20 17:18:49,003 | INFO | 1 change detected
+2025-10-20 17:18:49,354 | INFO | 1 change detected
+2025-10-20 17:18:49,704 | INFO | 1 change detected
+2025-10-20 17:18:50,055 | INFO | 1 change detected
+2025-10-20 17:18:50,405 | INFO | 1 change detected
+2025-10-20 17:18:50,756 | INFO | 1 change detected
+2025-10-20 17:18:51,106 | INFO | 1 change detected
+2025-10-20 17:18:51,456 | INFO | 1 change detected
+2025-10-20 17:18:51,807 | INFO | 1 change detected
+2025-10-20 17:18:52,157 | INFO | 1 change detected
+2025-10-20 17:18:52,508 | INFO | 1 change detected
+2025-10-20 17:18:52,858 | INFO | 1 change detected
+2025-10-20 17:18:53,209 | INFO | 1 change detected
+2025-10-20 17:18:53,559 | INFO | 1 change detected
+2025-10-20 17:18:53,909 | INFO | 1 change detected
+2025-10-20 17:18:54,260 | INFO | 1 change detected
+2025-10-20 17:18:54,610 | INFO | 1 change detected
+2025-10-20 17:18:54,961 | INFO | 1 change detected
+2025-10-20 17:18:55,311 | INFO | 1 change detected
+2025-10-20 17:18:55,662 | INFO | 1 change detected
+2025-10-20 17:18:56,012 | INFO | 1 change detected
+2025-10-20 17:18:56,362 | INFO | 1 change detected
+2025-10-20 17:18:56,713 | INFO | 1 change detected
+2025-10-20 17:18:57,063 | INFO | 1 change detected
+2025-10-20 17:18:57,414 | INFO | 1 change detected
+2025-10-20 17:18:57,764 | INFO | 1 change detected
+2025-10-20 17:18:58,115 | INFO | 1 change detected
+2025-10-20 17:18:58,465 | INFO | 1 change detected
+2025-10-20 17:18:58,816 | INFO | 1 change detected
+2025-10-20 17:18:59,166 | INFO | 1 change detected
+2025-10-20 17:18:59,517 | INFO | 1 change detected
+2025-10-20 17:18:59,867 | INFO | 1 change detected
+2025-10-20 17:19:00,218 | INFO | 1 change detected
+2025-10-20 17:19:00,568 | INFO | 1 change detected
+2025-10-20 17:19:00,918 | INFO | 1 change detected
+2025-10-20 17:19:01,269 | INFO | 1 change detected
+2025-10-20 17:19:01,619 | INFO | 1 change detected
+2025-10-20 17:19:01,970 | INFO | 1 change detected
+2025-10-20 17:19:02,320 | INFO | 1 change detected
+2025-10-20 17:19:02,671 | INFO | 1 change detected
+2025-10-20 17:19:03,021 | INFO | 1 change detected
+2025-10-20 17:19:03,372 | INFO | 1 change detected
+2025-10-20 17:19:03,722 | INFO | 1 change detected
+2025-10-20 17:19:04,073 | INFO | 1 change detected
+2025-10-20 17:19:04,423 | INFO | 1 change detected
+2025-10-20 17:19:04,773 | INFO | 1 change detected
+2025-10-20 17:19:05,124 | INFO | 1 change detected
+2025-10-20 17:19:05,474 | INFO | 1 change detected
+2025-10-20 17:19:05,825 | INFO | 1 change detected
+2025-10-20 17:19:06,175 | INFO | 1 change detected
+2025-10-20 17:19:06,526 | INFO | 1 change detected
+2025-10-20 17:19:06,876 | INFO | 1 change detected
+2025-10-20 17:19:07,227 | INFO | 1 change detected
+2025-10-20 17:19:07,577 | INFO | 1 change detected
+2025-10-20 17:19:07,927 | INFO | 1 change detected
+2025-10-20 17:19:08,278 | INFO | 1 change detected
+2025-10-20 17:19:08,628 | INFO | 1 change detected
+2025-10-20 17:19:08,979 | INFO | 1 change detected
+2025-10-20 17:19:09,329 | INFO | 1 change detected
+2025-10-20 17:19:09,680 | INFO | 1 change detected
+2025-10-20 17:19:10,030 | INFO | 1 change detected
+2025-10-20 17:19:10,381 | INFO | 1 change detected
+2025-10-20 17:19:10,731 | INFO | 1 change detected
+2025-10-20 17:19:11,082 | INFO | 1 change detected
+2025-10-20 17:19:11,432 | INFO | 1 change detected
+2025-10-20 17:19:11,783 | INFO | 1 change detected
+2025-10-20 17:19:12,133 | INFO | 1 change detected
+2025-10-20 17:19:12,484 | INFO | 1 change detected
+2025-10-20 17:19:12,834 | INFO | 1 change detected
+2025-10-20 17:19:13,184 | INFO | 1 change detected
+2025-10-20 17:19:13,535 | INFO | 1 change detected
+2025-10-20 17:19:13,885 | INFO | 1 change detected
+2025-10-20 17:19:14,236 | INFO | 1 change detected
+2025-10-20 17:19:14,586 | INFO | 1 change detected
+2025-10-20 17:19:14,937 | INFO | 1 change detected
+2025-10-20 17:19:15,287 | INFO | 1 change detected
+2025-10-20 17:19:15,638 | INFO | 1 change detected
+2025-10-20 17:19:15,988 | INFO | 1 change detected
+2025-10-20 17:19:16,339 | INFO | 1 change detected
+2025-10-20 17:19:16,689 | INFO | 1 change detected
+2025-10-20 17:19:17,040 | INFO | 1 change detected
+2025-10-20 17:19:17,390 | INFO | 1 change detected
+2025-10-20 17:19:17,741 | INFO | 1 change detected
+2025-10-20 17:19:18,091 | INFO | 1 change detected
+2025-10-20 17:19:18,442 | INFO | 1 change detected
+2025-10-20 17:19:18,792 | INFO | 1 change detected
+2025-10-20 17:19:19,142 | INFO | 1 change detected
+2025-10-20 17:19:19,493 | INFO | 1 change detected
+2025-10-20 17:19:19,843 | INFO | 1 change detected
+2025-10-20 17:19:20,194 | INFO | 1 change detected
+2025-10-20 17:19:20,544 | INFO | 1 change detected
+2025-10-20 17:19:20,895 | INFO | 1 change detected
+2025-10-20 17:19:21,245 | INFO | 1 change detected
+2025-10-20 17:19:21,596 | INFO | 1 change detected
+2025-10-20 17:19:21,946 | INFO | 1 change detected
+2025-10-20 17:19:22,297 | INFO | 1 change detected
+2025-10-20 17:19:22,647 | INFO | 1 change detected
+2025-10-20 17:19:22,998 | INFO | 1 change detected
+2025-10-20 17:19:23,348 | INFO | 1 change detected
+2025-10-20 17:19:23,699 | INFO | 1 change detected
+2025-10-20 17:19:24,049 | INFO | 1 change detected
+2025-10-20 17:19:24,399 | INFO | 1 change detected
+2025-10-20 17:19:24,750 | INFO | 1 change detected
+2025-10-20 17:19:25,100 | INFO | 1 change detected
+2025-10-20 17:19:25,451 | INFO | 1 change detected
+2025-10-20 17:19:25,801 | INFO | 1 change detected
+2025-10-20 17:19:26,152 | INFO | 1 change detected
+2025-10-20 17:19:26,502 | INFO | 1 change detected
+2025-10-20 17:19:26,853 | INFO | 1 change detected
+2025-10-20 17:19:27,203 | INFO | 1 change detected
+2025-10-20 17:19:27,554 | INFO | 1 change detected
+2025-10-20 17:19:27,904 | INFO | 1 change detected
+2025-10-20 17:19:28,255 | INFO | 1 change detected
+2025-10-20 17:19:28,605 | INFO | 1 change detected
+2025-10-20 17:19:28,955 | INFO | 1 change detected
+2025-10-20 17:19:29,306 | INFO | 1 change detected
+2025-10-20 17:19:29,656 | INFO | 1 change detected
+2025-10-20 17:19:30,007 | INFO | 1 change detected
+2025-10-20 17:19:30,357 | INFO | 1 change detected
+2025-10-20 17:19:30,708 | INFO | 1 change detected
+2025-10-20 17:19:31,058 | INFO | 1 change detected
+2025-10-20 17:19:31,409 | INFO | 1 change detected
+2025-10-20 17:19:31,759 | INFO | 1 change detected
+2025-10-20 17:19:32,110 | INFO | 1 change detected
+2025-10-20 17:19:32,460 | INFO | 1 change detected
+2025-10-20 17:19:32,811 | INFO | 1 change detected
+2025-10-20 17:19:33,161 | INFO | 1 change detected
+2025-10-20 17:19:33,511 | INFO | 1 change detected
+2025-10-20 17:19:33,862 | INFO | 1 change detected
+2025-10-20 17:19:34,212 | INFO | 1 change detected
+2025-10-20 17:19:34,563 | INFO | 1 change detected
+2025-10-20 17:19:34,913 | INFO | 1 change detected
+2025-10-20 17:19:35,264 | INFO | 1 change detected
+2025-10-20 17:19:35,614 | INFO | 1 change detected
+2025-10-20 17:19:35,965 | INFO | 1 change detected
+2025-10-20 17:19:36,315 | INFO | 1 change detected
+2025-10-20 17:19:36,665 | INFO | 1 change detected
+2025-10-20 17:19:37,016 | INFO | 1 change detected
+2025-10-20 17:19:37,366 | INFO | 1 change detected
+2025-10-20 17:19:37,717 | INFO | 1 change detected
+2025-10-20 17:19:38,067 | INFO | 1 change detected
+2025-10-20 17:19:38,418 | INFO | 1 change detected
+2025-10-20 17:19:38,768 | INFO | 1 change detected
+2025-10-20 17:19:39,119 | INFO | 1 change detected
+2025-10-20 17:19:39,469 | INFO | 1 change detected
+2025-10-20 17:19:39,820 | INFO | 1 change detected
+2025-10-20 17:19:40,170 | INFO | 1 change detected
+2025-10-20 17:19:40,520 | INFO | 1 change detected
+2025-10-20 17:19:40,871 | INFO | 1 change detected
+2025-10-20 17:19:41,221 | INFO | 1 change detected
+2025-10-20 17:19:41,572 | INFO | 1 change detected
+2025-10-20 17:19:41,922 | INFO | 1 change detected
+2025-10-20 17:19:42,273 | INFO | 1 change detected
+2025-10-20 17:19:42,623 | INFO | 1 change detected
+2025-10-20 17:19:42,974 | INFO | 1 change detected
+2025-10-20 17:19:43,324 | INFO | 1 change detected
+2025-10-20 17:19:43,674 | INFO | 1 change detected
+2025-10-20 17:19:44,025 | INFO | 1 change detected
+2025-10-20 17:19:44,375 | INFO | 1 change detected
+2025-10-20 17:19:44,726 | INFO | 1 change detected
+2025-10-20 17:19:45,076 | INFO | 1 change detected
+2025-10-20 17:19:45,427 | INFO | 1 change detected
+2025-10-20 17:19:45,777 | INFO | 1 change detected
+2025-10-20 17:19:46,128 | INFO | 1 change detected
+2025-10-20 17:19:46,478 | INFO | 1 change detected
+2025-10-20 17:19:46,828 | INFO | 1 change detected
+2025-10-20 17:19:47,179 | INFO | 1 change detected
+2025-10-20 17:19:47,529 | INFO | 1 change detected
+2025-10-20 17:19:47,880 | INFO | 1 change detected
+2025-10-20 17:19:48,230 | INFO | 1 change detected
+2025-10-20 17:19:48,581 | INFO | 1 change detected
+2025-10-20 17:19:48,931 | INFO | 1 change detected
+2025-10-20 17:19:49,281 | INFO | 1 change detected
+2025-10-20 17:19:49,632 | INFO | 1 change detected
+2025-10-20 17:19:49,982 | INFO | 1 change detected
+2025-10-20 17:19:50,333 | INFO | 1 change detected
+2025-10-20 17:19:50,683 | INFO | 1 change detected
+2025-10-20 17:19:51,034 | INFO | 1 change detected
+2025-10-20 17:19:51,384 | INFO | 1 change detected
+2025-10-20 17:19:51,735 | INFO | 1 change detected
+2025-10-20 17:19:52,085 | INFO | 1 change detected
+2025-10-20 17:19:52,435 | INFO | 1 change detected
+2025-10-20 17:19:52,786 | INFO | 1 change detected
+2025-10-20 17:19:53,136 | INFO | 1 change detected
+2025-10-20 17:19:53,487 | INFO | 1 change detected
+2025-10-20 17:19:53,837 | INFO | 1 change detected
+2025-10-20 17:19:54,188 | INFO | 1 change detected
+2025-10-20 17:19:54,538 | INFO | 1 change detected
+2025-10-20 17:19:54,889 | INFO | 1 change detected
+2025-10-20 17:19:55,239 | INFO | 1 change detected
+2025-10-20 17:19:55,590 | INFO | 1 change detected
+2025-10-20 17:19:55,940 | INFO | 1 change detected
+2025-10-20 17:19:56,144 | INFO | ✅ Teste concluído com sucesso!
+2025-10-20 17:20:11,518 | INFO | 🚀 Iniciando teste do Agent OS
+2025-10-20 17:20:11,518 | INFO | 📁 Diretório de agentes: ./01-generated-agents
+2025-10-20 17:20:11,518 | INFO | 🧪 Modo de teste: interactive
+2025-10-20 17:20:11,518 | INFO | 🔍 Procurando agentes em: 01-generated-agents
+2025-10-20 17:20:11,519 | INFO | 📁 Encontrados 222 arquivos de agentes
+2025-10-20 17:20:11,519 | INFO | 🔢 Limitando a 3 agentes para teste
+2025-10-20 17:20:11,519 | INFO | 📥 Carregando agente 1/3: 197-test_results_analyzer_agent.py
+2025-10-20 17:20:12,353 | INFO | ✅ Carregado agente: TestResultsAnalyzerAgent de 197-test_results_analyzer_agent.py
+2025-10-20 17:20:12,353 | INFO | 📥 Carregando agente 2/3: 009-api_tester_agent.py
+2025-10-20 17:20:12,354 | INFO | ✅ Carregado agente: ApiTesterAgent de 009-api_tester_agent.py
+2025-10-20 17:20:12,354 | INFO | 📥 Carregando agente 3/3: 091-knowledge_synthesizer_agent.py
+2025-10-20 17:20:12,355 | INFO | ✅ Carregado agente: KnowledgeSynthesizerAgent de 091-knowledge_synthesizer_agent.py
+2025-10-20 17:20:12,355 | INFO | ✅ Carregados 3 agentes com sucesso
+2025-10-20 17:20:12,355 | INFO | 🏗️  Criando Agent OS com 3 agentes
+2025-10-20 17:20:12,357 | INFO | 💾 Configurado banco SQLite: agent_os_test.db
+2025-10-20 17:20:12,464 | DEBUG | connect_tcp.started host='os-api.agno.com' port=443 local_address=None timeout=60 socket_options=None
+2025-10-20 17:20:12,596 | DEBUG | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x79ab5da73b00>
+2025-10-20 17:20:12,596 | DEBUG | start_tls.started ssl_context=<ssl.SSLContext object at 0x79ab55ce9950> server_hostname='os-api.agno.com' timeout=60
+2025-10-20 17:20:12,847 | DEBUG | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x79ab5da73a40>
+2025-10-20 17:20:12,848 | DEBUG | send_request_headers.started request=<Request [b'POST']>
+2025-10-20 17:20:12,848 | DEBUG | send_request_headers.complete
+2025-10-20 17:20:12,848 | DEBUG | send_request_body.started request=<Request [b'POST']>
+2025-10-20 17:20:12,848 | DEBUG | send_request_body.complete
+2025-10-20 17:20:12,848 | DEBUG | receive_response_headers.started request=<Request [b'POST']>
+2025-10-20 17:20:12,977 | DEBUG | receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Mon, 20 Oct 2025 20:20:00 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'93'), (b'Connection', b'keep-alive'), (b'server', b'uvicorn')])
+2025-10-20 17:20:12,977 | INFO | HTTP Request: POST https://os-api.agno.com/telemetry/os "HTTP/1.1 201 Created"
+2025-10-20 17:20:12,977 | DEBUG | receive_response_body.started request=<Request [b'POST']>
+2025-10-20 17:20:12,978 | DEBUG | receive_response_body.complete
+2025-10-20 17:20:12,978 | DEBUG | response_closed.started
+2025-10-20 17:20:12,978 | DEBUG | response_closed.complete
+2025-10-20 17:20:12,978 | DEBUG | close.started
+2025-10-20 17:20:12,978 | DEBUG | close.complete
+2025-10-20 17:20:12,978 | INFO | ✅ Agent OS criado com sucesso
+2025-10-20 17:20:12,978 | INFO | 🧪 Iniciando testes em modo: interactive
+2025-10-20 17:20:12,978 | INFO | 🚀 Iniciando servidor Agent OS para teste interativo...
+2025-10-20 17:20:12,978 | INFO | 📡 Acesse: http://localhost:8000
+2025-10-20 17:20:12,978 | INFO | 🛑 Use Ctrl+C para parar
+2025-10-20 17:20:13,159 | INFO | 📋 App FastAPI criada: <fastapi.applications.FastAPI object at 0x79ab562c4a70>
+2025-10-20 17:20:13,159 | INFO | 📋 Rotas disponíveis: 52
+2025-10-20 17:20:13,159 | INFO |   1. {'GET', 'HEAD'} /openapi.json
+2025-10-20 17:20:13,159 | INFO |   2. {'GET', 'HEAD'} /docs
+2025-10-20 17:20:13,159 | INFO |   3. {'GET', 'HEAD'} /docs/oauth2-redirect
+2025-10-20 17:20:13,159 | INFO |   4. {'GET', 'HEAD'} /redoc
+2025-10-20 17:20:13,159 | INFO |   5. {'GET'} /config
+2025-10-20 17:20:13,159 | INFO | 🌐 Iniciando servidor na porta 8000...
+2025-10-20 17:20:14,077 | DEBUG | 3 changes detected: {(<Change.added: 1>, '/home/suportesaude/YUICHI/00-agentmaker/__pycache__/test_agent_os.cpython-312.pyc'), (<Change.deleted: 3>, '/home/suportesaude/YUICHI/00-agentmaker/__pycache__/test_agent_os.cpython-312.pyc.140590546918576'), (<Change.added: 1>, '/home/suportesaude/YUICHI/00-agentmaker/__pycache__/test_agent_os.cpython-312.pyc.140590546918576')}
+2025-10-20 17:20:14,428 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:14,778 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:15,129 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:15,479 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:15,830 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:16,180 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:16,531 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:16,881 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:17,232 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:17,582 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:17,933 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:18,283 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:18,634 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:18,984 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:19,334 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:19,685 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:20,035 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:20,386 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:20,736 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:21,087 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:21,437 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:21,788 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:22,138 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:22,488 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:22,839 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:23,189 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:23,540 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:23,890 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:24,241 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:24,591 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:24,942 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:25,292 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:25,643 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:25,993 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:26,344 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:26,694 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:27,044 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:27,395 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:27,745 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:28,096 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:28,446 | DEBUG | 1 change detected: {(<Change.modified: 2>, '/home/suportesaude/YUICHI/00-agentmaker/test_agent_os.log')}
+2025-10-20 17:20:28,490 | INFO | ✅ Teste concluído com sucesso!
