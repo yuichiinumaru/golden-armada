@@ -7,7 +7,7 @@ from . import config
 from . import tools
 from .models import AdminTaskOutput, AdminLogUpdateOutput, DevAgentOutput, RevisorAgentOutput
 
-PROMPT_DIR = Path(__file__).parent.parent / "codeswarm" / "prompts"
+PROMPT_DIR = Path(__file__).parent / "prompts"
 
 def load_prompt(filename: str) -> dict:
     with open(PROMPT_DIR / filename, "r", encoding="utf-8") as f:
