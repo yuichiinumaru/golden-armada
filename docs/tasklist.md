@@ -18,17 +18,20 @@
     - [ ] Review `codeswarm/agno-agents/` and integrate useful agents if needed.
     - [ ] Ensure `requirements.txt` is up-to-date in root.
 
-### Phase 1.5: Fixes & Critical Improvements (New)
-*Goal: Address immediate issues identified in `docs/report.md`.*
+### Phase 1.5: Fixes & Critical Improvements (From Comprehensive Report)
+*Goal: Address immediate issues identified in `docs/comprehensive_report.md`.*
 
 - [ ] **1. Agent Capabilities:**
-    - [ ] Add `execute_python_code` and `execute_shell_command` to DevAgent tools in `codeswarm/agents.py`.
-    - [ ] Update DevAgent prompt to encourage self-testing.
+    - [ ] **Enable Code Execution:** Add `execute_python_code` to `DevAgent` tools in `codeswarm/agents.py` and update `dev_prompt.json`.
+    - [ ] **Security:** Implement path validation in `write_file` to restrict writes to `target_project_path`.
 - [ ] **2. Orchestration Logic:**
-    - [ ] Implement Dev-Revisor feedback loop in `agent_os.py` (allow Dev to fix rejected code in same round).
-    - [ ] Implement state persistence (`codeswarm_state.json`).
+    - [ ] **Feedback Loop:** Implement a retry mechanism in `_run_single_task` (Dev fixes rejected code immediately).
+    - [ ] **State Persistence:** Implement `save_state` and `load_state` in `AgentOS`.
+    - [ ] **Logging:** Replace `print` with proper thread-safe `logging`.
 - [ ] **3. Knowledge Base Integration:**
-    - [ ] Load and inject KB JSONs from `codeswarm/prompts/kb/` into agent instructions.
+    - [ ] **Inject KB:** Load and inject relevant KB JSONs (e.g., `Reasoning Knowledge Base.json`) into agent instructions.
+- [ ] **4. Testing:**
+    - [ ] **Fix Tool Tests:** Update `tests/test_tool_logic.py` to match current codebase.
 
 ### Phase 2: Advanced Research & Foundation Building (Continuing)
 *(Previously Phase 1)*
