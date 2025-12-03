@@ -1,14 +1,14 @@
 import unittest
 from unittest.mock import MagicMock, patch
 import json
-from codeswarm_agno.agent_os import AgentOS
-from codeswarm_agno.models import TaskAssignment, AdminTaskOutput, DevAgentOutput, RevisorAgentOutput
+from codeswarm.agent_os import AgentOS
+from codeswarm.models import TaskAssignment, AdminTaskOutput, DevAgentOutput, RevisorAgentOutput
 
 class TestAgentOS(unittest.TestCase):
-    @patch('codeswarm_agno.agents.get_admin_agent')
-    @patch('codeswarm_agno.agents.get_admin_logger_agent')
-    @patch('codeswarm_agno.agents.get_dev_agent')
-    @patch('codeswarm_agno.agents.get_revisor_agent')
+    @patch('codeswarm.agents.get_admin_agent')
+    @patch('codeswarm.agents.get_admin_logger_agent')
+    @patch('codeswarm.agents.get_dev_agent')
+    @patch('codeswarm.agents.get_revisor_agent')
     def test_run_workflow(self, mock_get_revisor, mock_get_dev, mock_get_logger, mock_get_admin):
         # Mock Admin Agent
         mock_admin = MagicMock()
