@@ -89,7 +89,7 @@ def get_dev_agent(dev_id: int, model_id: str = config.DEV_MODEL_STR) -> Agent:
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
         tools=[tools.read_file, tools.write_file, tools.list_folder_contents,
-               tools.search_files_content, tools.chunk_file],
+               tools.search_files_content, tools.chunk_file, tools.execute_python_code],
         output_schema=DevAgentOutput,
         structured_outputs=True,
     )

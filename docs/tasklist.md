@@ -12,7 +12,7 @@
 - [ ] **2. Functional Verification:**
     - [x] Verify orchestration logic (Admin -> Dev -> Revisor flow) using mocks.
     - [ ] Verify execution with live Gemini API (Requires valid API Key).
-    - [ ] Test all tools (file I/O, web fetch, execution) within Agno agents.
+    - [x] Test all tools (file I/O, web fetch, execution) within Agno agents.
 - [ ] **3. Codebase Refinement:**
     - [ ] Clean up imports and structure in `codeswarm/`.
     - [ ] Review `codeswarm/agno-agents/` and integrate useful agents if needed.
@@ -22,8 +22,8 @@
 *Goal: Address immediate issues identified in `docs/comprehensive_report.md`.*
 
 - [ ] **1. Agent Capabilities:**
-    - [ ] **Enable Code Execution:** Add `execute_python_code` to `DevAgent` tools in `codeswarm/agents.py` and update `dev_prompt.json`.
-    - [ ] **Security:** Implement path validation in `write_file` to restrict writes to `target_project_path`.
+    - [x] **Enable Code Execution:** Add `execute_python_code` to `DevAgent` tools in `codeswarm/agents.py` and update `dev_prompt.json`.
+    - [x] **Security:** Implement path validation in `write_file` to restrict writes to `target_project_path`.
 - [ ] **2. Orchestration Logic:**
     - [ ] **Feedback Loop:** Implement a retry mechanism in `_run_single_task` (Dev fixes rejected code immediately).
     - [ ] **State Persistence:** Implement `save_state` and `load_state` in `AgentOS`.
@@ -31,7 +31,7 @@
 - [ ] **3. Knowledge Base Integration:**
     - [ ] **Inject KB:** Load and inject relevant KB JSONs (e.g., `Reasoning Knowledge Base.json`) into agent instructions.
 - [ ] **4. Testing:**
-    - [ ] **Fix Tool Tests:** Update `tests/test_tool_logic.py` to match current codebase.
+    - [x] **Fix Tool Tests:** Update `tests/test_tool_logic.py` to match current codebase.
 
 ### Phase 2: Advanced Research & Foundation Building (Continuing)
 *(Previously Phase 1)*

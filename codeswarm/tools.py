@@ -3,6 +3,16 @@ import subprocess
 import requests
 from bs4 import BeautifulSoup
 from typing import List
+from . import config
+
+def _is_safe_path(file_path: str) -> bool:
+    """Validates that the file path is within the allowed project directory."""
+    try:
+        target_path = os.path.abspath(config.DEFAULT_PROJECT_PATH)
+        requested_path = os.path.abspath(file_path)
+        return os.path.commonpath([target_path, requested_path]) == target_path
+    except Exception:
+        return False
 
 def create_file(file_path: str, content: str) -> dict:
     """Creates a file with the given content.
@@ -14,6 +24,8 @@ def create_file(file_path: str, content: str) -> dict:
     Returns:
         dict: {'status': 'success', 'result': str} or {'status': 'error', 'message': str}
     """
+    if not _is_safe_path(file_path):
+        return {'status': 'error', 'message': f"Access denied: {file_path} is outside the project directory."}
     try:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -31,6 +43,8 @@ def read_file(file_path: str) -> dict:
     Returns:
         dict: {'status': 'success', 'content': str} or {'status': 'error', 'message': str}
     """
+    if not _is_safe_path(file_path):
+        return {'status': 'error', 'message': f"Access denied: {file_path} is outside the project directory."}
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -48,6 +62,8 @@ def update_file(file_path: str, new_content: str) -> dict:
     Returns:
         dict: {'status': 'success', 'result': str} or {'status': 'error', 'message': str}
     """
+    if not _is_safe_path(file_path):
+        return {'status': 'error', 'message': f"Access denied: {file_path} is outside the project directory."}
     try:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(new_content)
@@ -64,6 +80,8 @@ def delete_file(file_path: str) -> dict:
     Returns:
         dict: {'status': 'success', 'result': str} or {'status': 'error', 'message': str}
     """
+    if not _is_safe_path(file_path):
+        return {'status': 'error', 'message': f"Access denied: {file_path} is outside the project directory."}
     try:
         os.remove(file_path)
         return {'status': 'success', 'result': f"File '{file_path}' deleted successfully."}
@@ -110,6 +128,8 @@ def write_file(file_path: str, content: str) -> dict:
     Returns:
         dict: {'status': 'success', 'result': str} on success, or {'status': 'error', 'message': str} on failure.
     """
+    if not _is_safe_path(file_path):
+        return {'status': 'error', 'message': f"Access denied: {file_path} is outside the project directory."}
     try:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -127,6 +147,8 @@ def list_folder_contents(folder_path: str) -> dict:
     Returns:
         dict: {'status': 'success', 'content': List[str]} on success, or {'status': 'error', 'message': str} on failure.
     """
+    if not _is_safe_path(folder_path):
+        return {'status': 'error', 'message': f"Access denied: {folder_path} is outside the project directory."}
     try:
         items = os.listdir(folder_path)
         return {"status": "success", "content": items}
@@ -143,6 +165,8 @@ def search_files_content(folder_path: str, search_query: str) -> dict:
     Returns:
         dict: {'status': 'success', 'content': List[str]} (list of file paths containing the query), or {'status': 'error', 'message': str}.
     """
+    if not _is_safe_path(folder_path):
+        return {'status': 'error', 'message': f"Access denied: {folder_path} is outside the project directory."}
     if not os.path.isdir(folder_path):
         return {"status": "error", "message": f"Directory not found: {folder_path}"}
 
@@ -189,6 +213,8 @@ def chunk_file(file_path: str, max_chunk_size: int = 4000) -> dict:
     Returns:
         dict: {'status': 'success', 'content': List[str]} on success, or {'status': 'error', 'message': str}.
     """
+    if not _is_safe_path(file_path):
+        return {'status': 'error', 'message': f"Access denied: {file_path} is outside the project directory."}
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
