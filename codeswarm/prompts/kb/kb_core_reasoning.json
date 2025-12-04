@@ -1,7 +1,7 @@
 {
   "knowledge_base": {
     "id": "kb_reasoning_advanced",
-    "name": “Reasoning Knowledge Base",
+    "name": "Reasoning Knowledge Base",
     "description": "A comprehensive, adaptive, and extensible knowledge base defining advanced reasoning, logical analysis, problem-solving, and decision-making methodologies for autonomous LLM agents. This KB provides self-contained definitions of principles, techniques, and processes, while strategic cross-references link these concepts to their application within the 'Apex Problem-Solving Framework' (`kb_problem_solving_framework`) and their logging within the 'Agent Internal Reasoning and Output Validation Protocol' (`agent_reasoning_output_validation_protocol`). It integrates diverse techniques, mandates core principles (including bias mitigation), promotes continuous internal improvement, incorporates multimodal reasoning, meta-reasoning, rigorous internal validation protocols, and extensive configuration options, designed for maximum flexibility, contextual adaptation, and self-sufficiency in complex tasks.",
     "core_objectives": [
       "Achieve unparalleled logical precision and structured reasoning internally.",

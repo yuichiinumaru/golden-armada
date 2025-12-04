@@ -18,6 +18,8 @@ CodeSwarm is a multi-agent coding system orchestrated by the [Agno](https://agno
 -   `codeswarm/tools.py`: Tool definitions.
 -   `codeswarm/models.py`: Pydantic models for structured output.
 -   `codeswarm/config.py`: Configuration loading.
+-   `codeswarm/prompts/`: Agent prompts and Knowledge Base (KB).
+-   `AGENTS.md`: Operational rules and guidelines for agents.
 
 ## Running
 
@@ -36,3 +38,10 @@ This project has been migrated from Google ADK to Agno. The legacy ADK code can 
 -   Tools are defined as standalone functions and passed to Agno agents.
 -   Prompts are loaded from `codeswarm/prompts/` and formatted for Agno.
 -   Structured Output is handled using Pydantic models via `output_schema`.
+
+## Current Status & Known Issues
+See `docs/report.md` for a detailed analysis of the current state and identified issues.
+Major pending tasks:
+- Enable code execution for DevAgent.
+- Implement feedback loop between Dev and Revisor.
+- Integrate Knowledge Base files.
