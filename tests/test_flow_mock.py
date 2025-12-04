@@ -47,12 +47,20 @@ def mock_logger_run(*args, **kwargs):
     )
     return MockResponse(output)
 
+def mock_planner_run(*args, **kwargs):
+    return MockResponse("Strategic Plan: Build hello world.")
+
+def mock_knowledge_run(*args, **kwargs):
+    return MockResponse("Context: Use python print function.")
+
 class TestAgentOS(unittest.TestCase):
     @patch('codeswarm.agents.get_admin_agent')
     @patch('codeswarm.agents.get_dev_agent')
     @patch('codeswarm.agents.get_revisor_agent')
     @patch('codeswarm.agents.get_admin_logger_agent')
-    def test_run_flow(self, mock_get_logger, mock_get_revisor, mock_get_dev, mock_get_admin):
+    @patch('codeswarm.agents.get_planner_agent')
+    @patch('codeswarm.agents.get_knowledge_agent')
+    def test_run_flow(self, mock_get_knowledge, mock_get_planner, mock_get_logger, mock_get_revisor, mock_get_dev, mock_get_admin):
         # Setup mocks
         admin_agent = MagicMock()
         admin_agent.run.side_effect = mock_admin_run
@@ -70,16 +78,31 @@ class TestAgentOS(unittest.TestCase):
         logger_agent.run.side_effect = mock_logger_run
         mock_get_logger.return_value = logger_agent
 
-        # Run AgentOS
-        # We need to ensure the project path exists or is mocked, mostly handled by OS
-        agent_os = AgentOS(
-            goal="Test Goal",
-            project_path="test_project_output",
-            pairs=1,
-            rounds=1
-        )
+        planner_agent = MagicMock()
+        planner_agent.run.side_effect = mock_planner_run
+        mock_get_planner.return_value = planner_agent
 
-        agent_os.run()
+        knowledge_agent = MagicMock()
+        knowledge_agent.run.side_effect = mock_knowledge_run
+        mock_get_knowledge.return_value = knowledge_agent
+
+        # Create a temp dir for project path to ensure state saving works
+        import tempfile
+        import shutil
+        test_dir = tempfile.mkdtemp(prefix="codeswarm_flow_test_")
+
+        try:
+            # Run AgentOS
+            agent_os = AgentOS(
+                goal="Test Goal",
+                project_path=test_dir,
+                pairs=1,
+                rounds=1
+            )
+
+            agent_os.run()
+        finally:
+            shutil.rmtree(test_dir)
 
         # Assertions
         # Admin called once per round (1 round)

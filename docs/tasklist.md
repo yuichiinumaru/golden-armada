@@ -62,6 +62,13 @@ This phase focuses on systematically researching external systems and refining t
 - [x] **2. Integrate KnowledgeAgent:** Update `_run_single_task` to query knowledge context before Dev execution.
 - [x] **3. Update Documentation:** Reflect the 5-agent architecture in `project.md`.
 
+### Phase 5: Robustness & Testing Expansion (New)
+*Goal: Ensure long-term stability and verification of new features.*
+
+- [x] **1. Expand Test Suite:** Add unit tests for `PlannerAgent` and `KnowledgeAgent`.
+- [x] **2. Fix Test Persistence:** Ensure mock tests handle file state/persistence correctly.
+- [x] **3. Enhance MCP Prototype:** Implement `LocalFileSystemMcpClient` and verify with tests.
+
 ---
 ## Archived Phases (Legacy ADK)
 
