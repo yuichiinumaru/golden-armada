@@ -70,6 +70,7 @@ def format_instructions(prompt_data: dict, kb_files: list = None) -> str:
 def get_admin_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
     prompt_data = load_prompt("admin_prompt.json")
     # Admin uses Problem Solving Framework and core reasoning
+    kb_files = ["kb_framework_problem_solving.json", "kb_core_reasoning.json"]
     kb_files = ["Problem Solving Framework.json", "Reasoning Knowledge Base.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
@@ -102,7 +103,7 @@ def get_admin_logger_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
 def get_dev_agent(dev_id: int, model_id: str = config.DEV_MODEL_STR) -> Agent:
     prompt_data = load_prompt("dev_prompt.json")
     # Dev uses Software Engineer operational KBs
-    kb_files = ["Agent Synergy Software Engineer.json", "kb_synergy_software_engineer_operational.json"]
+    kb_files = ["kb_role_software_engineer.json", "kb_synergy_software_engineer_operational.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
     return Agent(
@@ -118,7 +119,7 @@ def get_dev_agent(dev_id: int, model_id: str = config.DEV_MODEL_STR) -> Agent:
 def get_revisor_agent(revisor_id: int, model_id: str = config.REVISOR_MODEL_STR) -> Agent:
     prompt_data = load_prompt("revisor_prompt.json")
     # Revisor uses Reasoning validation and software engineer synergy
-    kb_files = ["Agent Reasoning Validation.json", "Agent Synergy Software Engineer.json"]
+    kb_files = ["kb_validation_reasoning.json", "kb_role_software_engineer.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
     return Agent(
