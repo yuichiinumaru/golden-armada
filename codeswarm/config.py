@@ -17,9 +17,9 @@ else:
 
 
 # Model and API key configuration
-ADMIN_MODEL_STR = os.getenv("ADMIN_MODEL_TYPE", "gemini-2.0-flash")
-DEV_MODEL_STR = os.getenv("DEV_MODEL_TYPE", "gemini-2.0-flash")
-REVISOR_MODEL_STR = os.getenv("REVISOR_MODEL_TYPE", "gemini-2.0-flash")
+ADMIN_MODEL_STR = os.getenv("ADMIN_MODEL_TYPE", "gemini-2.5-flash")
+DEV_MODEL_STR = os.getenv("DEV_MODEL_TYPE", "gemini-2.5-flash")
+REVISOR_MODEL_STR = os.getenv("REVISOR_MODEL_TYPE", "gemini-2.5-flash")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Model temperature settings
