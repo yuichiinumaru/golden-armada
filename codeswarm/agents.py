@@ -24,6 +24,7 @@ def load_kb_content(kb_files: list) -> str:
                 content.append(json.dumps(kb_data, indent=2))
                 content.append("--- End Module ---")
         except FileNotFoundError:
+            pass # Or use logger if we import it here, but pass is fine for now to avoid circular import if logger imports config
             print(f"Warning: KB file not found: {kb_file}")
     return "\n".join(content)
 

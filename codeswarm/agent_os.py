@@ -6,6 +6,7 @@ from datetime import datetime
 
 from . import config
 from . import agents
+from .logger import logger
 from .structures import TaskTree, TaskNode, TaskStatus
 from .models import TaskAssignment
 
@@ -40,6 +41,9 @@ class AgentOS:
             }
             with open(self.state_file_path, "w", encoding="utf-8") as f:
                 json.dump(state_data, f, indent=2, default=str)
+            logger.info(f"AgentOS: State saved to {self.state_file_path}")
+        except Exception as e:
+            logger.error(f"AgentOS: Error saving state: {e}")
             print(f"AgentOS: State saved to {self.state_file_path}")
         except Exception as e:
             print(f"AgentOS: Error saving state: {e}")
@@ -50,6 +54,34 @@ class AgentOS:
             try:
                 with open(self.state_file_path, "r", encoding="utf-8") as f:
                     state_data = json.load(f)
+
+                # Restore session state
+                if "session_state" in state_data:
+                    self.session_state = state_data["session_state"]
+
+                # Restore Task Tree
+                # Since TaskTree is a Pydantic model, we can reconstruct it
+                if "task_tree" in state_data:
+                    self.tree = TaskTree.model_validate(state_data["task_tree"])
+
+                logger.info(f"AgentOS: State loaded from {self.state_file_path}")
+            except Exception as e:
+                logger.error(f"AgentOS: Error loading state: {e}")
+
+    def run(self):
+        logger.info(f"AgentOS: Starting CodeSwarm for goal: {self.goal}")
+
+        start_round = self.session_state.get("round", 0) + 1
+        # If we loaded a completed state, start_round might be rounds + 1
+        if start_round > self.rounds:
+             logger.info(f"AgentOS: Workflow already completed up to round {self.rounds}. Continuing if you want more rounds or start new.")
+             # For now, we just respect the requested rounds if they are greater than current
+             if start_round > self.rounds:
+                 logger.info("AgentOS: Requested rounds completed.")
+                 return
+
+        for r in range(start_round, self.rounds + 1):
+            logger.info(f"=== Round {r} ===")
 
                 # Restore session state
                 if "session_state" in state_data:
@@ -92,10 +124,10 @@ class AgentOS:
             self._logging_phase(r)
             self.save_state()
 
-        print("\nAgentOS: Workflow Finished.")
+        logger.info("AgentOS: Workflow Finished.")
 
     def _planning_phase(self, round_num: int):
-        print("AgentOS: Planning Phase...")
+        logger.info("AgentOS: Planning Phase...")
         self.session_state["current_phase"] = "task_assignment"
 
         # Admin Agent decides what tasks are needed based on current state
@@ -108,10 +140,10 @@ class AgentOS:
             new_tasks: List[TaskAssignment] = tasks_output.tasks
 
             if not new_tasks:
-                print("AgentOS: No new tasks generated.")
+                logger.info("AgentOS: No new tasks generated.")
                 return
 
-            print(f"AgentOS: Generated {len(new_tasks)} new tasks.")
+            logger.info(f"AgentOS: Generated {len(new_tasks)} new tasks.")
 
             # Add these tasks as children of the root (flattened list of active tasks for this round)
             # In a true recursive tree, Admin might target specific existing nodes to expand.
@@ -163,10 +195,10 @@ class AgentOS:
                 self.round_nodes_map[i].metadata = {"revisor_focus_areas": task.revisor_focus_areas}
 
         except Exception as e:
-            print(f"AgentOS: Error in planning phase: {e}")
+            logger.error(f"AgentOS: Error in planning phase: {e}")
 
     def _execution_phase(self, round_num: int):
-        print("AgentOS: Execution Phase...")
+        logger.info("AgentOS: Execution Phase...")
         if not hasattr(self, 'current_round_tasks') or not self.current_round_tasks:
             return
 
@@ -198,7 +230,7 @@ class AgentOS:
                         node.status = TaskStatus.REJECTED # or COMPLETED but needs work
 
                 except Exception as e:
-                    print(f"AgentOS: Error executing task {i}: {e}")
+                    logger.error(f"AgentOS: Error executing task {i}: {e}")
                     node.status = TaskStatus.FAILED
 
         # Store results for logging phase
@@ -234,17 +266,22 @@ class AgentOS:
 
         while attempt < max_retries and not approved:
             attempt += 1
+            logger.info(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create} (Attempt {attempt}/{max_retries})...")
             print(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create} (Attempt {attempt}/{max_retries})...")
 
             dev_response = dev_agent.run(json.dumps(dev_input))
             dev_output = dev_response.content
 
+            logger.info(f"  [Revisor {task.revisor_id}] Reviewing (Attempt {attempt}/{max_retries})...")
             print(f"  [Revisor {task.revisor_id}] Reviewing (Attempt {attempt}/{max_retries})...")
             revisor_response = revisor_agent.run(json.dumps(revisor_input))
             revisor_output = revisor_response.content
 
             if revisor_output.approved:
                 approved = True
+                logger.info(f"  [Revisor {task.revisor_id}] Approved!")
+            else:
+                logger.info(f"  [Revisor {task.revisor_id}] Rejected. Feedback: {revisor_output.review_comments}")
                 print(f"  [Revisor {task.revisor_id}] Approved!")
             else:
                 print(f"  [Revisor {task.revisor_id}] Rejected. Feedback: {revisor_output.review_comments}")
@@ -258,7 +295,7 @@ class AgentOS:
         }
 
     def _logging_phase(self, round_num: int):
-        print("AgentOS: Logging Phase...")
+        logger.info("AgentOS: Logging Phase...")
         if not hasattr(self, 'last_round_results') or not self.last_round_results:
             return
 
@@ -269,9 +306,9 @@ class AgentOS:
         try:
             logger_response = self.logger_agent.run(json.dumps(self.session_state))
             logger_output = logger_response.content
-            print(f"AgentOS: Logger Status: {logger_output.status}. Message: {logger_output.message}")
+            logger.info(f"AgentOS: Logger Status: {logger_output.status}. Message: {logger_output.message}")
         except Exception as e:
-            print(f"AgentOS: Logger Error: {e}")
+            logger.error(f"AgentOS: Logger Error: {e}")
 
         # Summary for memory
         summary = f"Round {round_num} completed. {len(self.last_round_results)} tasks executed."
