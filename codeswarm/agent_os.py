@@ -27,21 +27,70 @@ class AgentOS:
             "previous_summaries": []
         }
 
+        # Load state if exists
+        self.state_file_path = os.path.join(project_path, "codeswarm_state.json")
+        self.load_state()
+
+    def save_state(self):
+        """Saves the current state (TaskTree and session_state) to a JSON file."""
+        try:
+            state_data = {
+                "session_state": self.session_state,
+                "task_tree": self.tree.model_dump()
+            }
+            with open(self.state_file_path, "w", encoding="utf-8") as f:
+                json.dump(state_data, f, indent=2, default=str)
+            print(f"AgentOS: State saved to {self.state_file_path}")
+        except Exception as e:
+            print(f"AgentOS: Error saving state: {e}")
+
+    def load_state(self):
+        """Loads state from a JSON file if it exists."""
+        if os.path.exists(self.state_file_path):
+            try:
+                with open(self.state_file_path, "r", encoding="utf-8") as f:
+                    state_data = json.load(f)
+
+                # Restore session state
+                if "session_state" in state_data:
+                    self.session_state = state_data["session_state"]
+
+                # Restore Task Tree
+                # Since TaskTree is a Pydantic model, we can reconstruct it
+                if "task_tree" in state_data:
+                    self.tree = TaskTree.model_validate(state_data["task_tree"])
+
+                print(f"AgentOS: State loaded from {self.state_file_path}")
+            except Exception as e:
+                print(f"AgentOS: Error loading state: {e}")
+
     def run(self):
         print(f"AgentOS: Starting CodeSwarm for goal: {self.goal}")
 
-        for r in range(1, self.rounds + 1):
+        start_round = self.session_state.get("round", 0) + 1
+        # If we loaded a completed state, start_round might be rounds + 1
+        if start_round > self.rounds:
+             print(f"AgentOS: Workflow already completed up to round {self.rounds}. Continuing if you want more rounds or start new.")
+             # For now, we just respect the requested rounds if they are greater than current
+             if start_round > self.rounds:
+                 print("AgentOS: Requested rounds completed.")
+                 return
+
+        for r in range(start_round, self.rounds + 1):
             print(f"\n=== Round {r} ===")
             self.session_state["round"] = r
 
             # 1. Planning Phase (Admin expands the tree)
             self._planning_phase(r)
+            self.save_state()
 
             # 2. Execution Phase (Dev/Revisor work on leaves)
             self._execution_phase(r)
+            self.save_state()
 
             # 3. Logging Phase
             self._logging_phase(r)
+            self.save_state()
 
         print("\nAgentOS: Workflow Finished.")
 
@@ -156,11 +205,11 @@ class AgentOS:
         self.last_round_results = round_results
 
     def _run_single_task(self, task: TaskAssignment, round_num: int):
-        """Runs the Dev -> Revisor cycle for a task."""
-        # This logic is moved from main.py's run_dev_revisor_pair
+        """Runs the Dev -> Revisor cycle for a task with retry loop."""
 
-        # Dev Agent
         dev_agent = agents.get_dev_agent(task.dev_id)
+        revisor_agent = agents.get_revisor_agent(task.revisor_id)
+
         dev_input = {
             "dev_task_description": task.dev_task_description,
             "file_to_edit_or_create": task.file_to_edit_or_create,
@@ -168,12 +217,6 @@ class AgentOS:
             "round": round_num
         }
 
-        print(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create}...")
-        dev_response = dev_agent.run(json.dumps(dev_input))
-        dev_output = dev_response.content
-
-        # Revisor Agent
-        revisor_agent = agents.get_revisor_agent(task.revisor_id)
         revisor_input = {
             "file_to_edit_or_create": task.file_to_edit_or_create,
             "dev_task_description": task.dev_task_description,
@@ -182,14 +225,36 @@ class AgentOS:
             "round": round_num
         }
 
-        print(f"  [Revisor {task.revisor_id}] Reviewing...")
-        revisor_response = revisor_agent.run(json.dumps(revisor_input))
-        revisor_output = revisor_response.content
+        max_retries = 3
+        attempt = 0
+        approved = False
+
+        dev_output = None
+        revisor_output = None
+
+        while attempt < max_retries and not approved:
+            attempt += 1
+            print(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create} (Attempt {attempt}/{max_retries})...")
+
+            dev_response = dev_agent.run(json.dumps(dev_input))
+            dev_output = dev_response.content
+
+            print(f"  [Revisor {task.revisor_id}] Reviewing (Attempt {attempt}/{max_retries})...")
+            revisor_response = revisor_agent.run(json.dumps(revisor_input))
+            revisor_output = revisor_response.content
+
+            if revisor_output.approved:
+                approved = True
+                print(f"  [Revisor {task.revisor_id}] Approved!")
+            else:
+                print(f"  [Revisor {task.revisor_id}] Rejected. Feedback: {revisor_output.review_comments}")
+                # Feedback loop: Update dev input with rejection feedback
+                dev_input["previous_feedback"] = f"Attempt {attempt} rejected. Revisor feedback: {revisor_output.review_comments}. Please fix."
 
         return {
             "task": task.model_dump(),
-            "dev_output": dev_output.model_dump(),
-            "revisor_output": revisor_output.model_dump()
+            "dev_output": dev_output.model_dump() if dev_output else None,
+            "revisor_output": revisor_output.model_dump() if revisor_output else None
         }
 
     def _logging_phase(self, round_num: int):

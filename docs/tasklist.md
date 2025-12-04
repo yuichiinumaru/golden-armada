@@ -21,16 +21,16 @@
 ### Phase 1.5: Fixes & Critical Improvements (From Comprehensive Report)
 *Goal: Address immediate issues identified in `docs/comprehensive_report.md`.*
 
-- [ ] **1. Agent Capabilities:**
+- [x] **1. Agent Capabilities:**
     - [x] **Enable Code Execution:** Add `execute_python_code` to `DevAgent` tools in `codeswarm/agents.py` and update `dev_prompt.json`.
     - [x] **Security:** Implement path validation in `write_file` to restrict writes to `target_project_path`.
-- [ ] **2. Orchestration Logic:**
-    - [ ] **Feedback Loop:** Implement a retry mechanism in `_run_single_task` (Dev fixes rejected code immediately).
-    - [ ] **State Persistence:** Implement `save_state` and `load_state` in `AgentOS`.
+- [x] **2. Orchestration Logic:**
+    - [x] **Feedback Loop:** Implement a retry mechanism in `_run_single_task` (Dev fixes rejected code immediately).
+    - [x] **State Persistence:** Implement `save_state` and `load_state` in `AgentOS`.
     - [ ] **Logging:** Replace `print` with proper thread-safe `logging`.
-- [ ] **3. Knowledge Base Integration:**
-    - [ ] **Inject KB:** Load and inject relevant KB JSONs (e.g., `Reasoning Knowledge Base.json`) into agent instructions.
-- [ ] **4. Testing:**
+- [x] **3. Knowledge Base Integration:**
+    - [x] **Inject KB:** Load and inject relevant KB JSONs (e.g., `Reasoning Knowledge Base.json`) into agent instructions.
+- [x] **4. Testing:**
     - [x] **Fix Tool Tests:** Update `tests/test_tool_logic.py` to match current codebase.
 
 ### Phase 2: Advanced Research & Foundation Building (Continuing)
