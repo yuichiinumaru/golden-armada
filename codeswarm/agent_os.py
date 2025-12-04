@@ -84,6 +84,10 @@ class AgentOS:
             logger.info(f"=== Round {r} ===")
             self.session_state["round"] = r
 
+            # 0. Strategic Planning (Planner updates todo.md and session_state)
+            self._strategic_planning_phase(r)
+            self.save_state()
+
             # 1. Planning Phase (Admin expands the tree)
             self._planning_phase(r)
             self.save_state()
@@ -97,6 +101,28 @@ class AgentOS:
             self.save_state()
 
         logger.info("AgentOS: Workflow Finished.")
+
+    def _strategic_planning_phase(self, round_num: int):
+        logger.info("AgentOS: Strategic Planning Phase...")
+        self.session_state["current_phase"] = "strategic_planning"
+
+        try:
+            # Planner Agent analyzes state and updates todo.md / session_state
+            # We pass the full session state. Planner output is text (markdown plan).
+            planner_response = self.planner_agent.run(json.dumps(self.session_state))
+            strategic_plan = planner_response.content
+
+            logger.info("AgentOS: Planner generated strategic update.")
+            event_logger.log_event("planning", "PlannerAgent", {"plan": strategic_plan})
+
+            # Store the plan in session state for Admin to see
+            self.session_state["strategic_plan"] = strategic_plan
+
+            # Optionally write to todo.md (Planner might do this via tool, but we can enforce it here if content is the plan)
+            # For now, we assume Planner uses its tools (read_file, write_file) to update 'todo.md' directly.
+
+        except Exception as e:
+            logger.error(f"AgentOS: Error in strategic planning phase: {e}")
 
     def _planning_phase(self, round_num: int):
         logger.info("AgentOS: Planning Phase...")
@@ -228,6 +254,19 @@ class AgentOS:
             "revisor_id": task.revisor_id,
             "round": round_num
         }
+
+        # Knowledge Retrieval Phase
+        try:
+            logger.info(f"  [Knowledge] Retrieving context for: {task.dev_task_description[:50]}...")
+            knowledge_query = f"Task: {task.dev_task_description}\nFile: {task.file_to_edit_or_create}\nFind relevant code patterns, imports, or existing functions."
+            knowledge_response = self.knowledge_agent.run(knowledge_query)
+            context_snippet = knowledge_response.content
+
+            # Inject context into Dev input
+            dev_input["context_from_knowledge_agent"] = context_snippet
+            event_logger.log_event("knowledge_retrieval", "KnowledgeAgent", {"query": knowledge_query, "context": context_snippet})
+        except Exception as e:
+            logger.error(f"  [Knowledge] Error retrieving context: {e}")
 
         max_retries = 3
         attempt = 0

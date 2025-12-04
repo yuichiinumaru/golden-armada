@@ -5,32 +5,42 @@ To implement a multi-agent coding system ("CodeSwarm") focusing on collaborative
 
 ## 2. Architectural Choices (Agno-based)
 CodeSwarm leverages the Agno framework to achieve:
-*   **Agent Orchestration:** Flexible management of Admin, Developer, and Revisor agents.
+*   **Agent Orchestration:** Flexible management of Planner, Admin, Knowledge, Developer, and Revisor agents.
 *   **Structured Outputs:** Uses Pydantic models for reliable communication between agents and the system.
-*   **Tool Integration:** Python function-based tools for file operations, web access, and code execution.
+*   **Tool Integration:** Python function-based tools for file operations, web access, code execution, and MCP communication.
 
 ## 3. Core System Components
 
 ### 3.1. Agent Roles and Responsibilities
 
-*   **AdminAgent (Project Manager):**
-    *   **Responsibilities:** Defines project scope, breaks down goals into tasks, and manages the project log.
+*   **PlannerAgent (Strategic Planner):**
+    *   **Responsibilities:** Analyzes the overall project goal and state to produce a high-level strategy and roadmap (updates `todo.md`).
+    *   **Role:** The "Brain" ensuring long-term coherence.
+*   **AdminAgent (Task Manager):**
+    *   **Responsibilities:** Translates the strategic plan into specific, atomic `TaskAssignment`s for the current round.
     *   **Output:** Structured JSON via `AdminTaskOutput`.
+*   **KnowledgeAgent (Context Provider):**
+    *   **Responsibilities:** Performs RAG (Retrieval-Augmented Generation) style searches over the codebase to provide relevant context (patterns, imports) to the DevAgent before execution.
 *   **DevAgent (Software Developer):**
-    *   **Responsibilities:** Executes coding tasks, creates/edits files.
+    *   **Responsibilities:** Executes coding tasks, creates/edits files, and self-verifies code using execution tools.
     *   **Output:** Structured JSON via `DevAgentOutput`.
-*   **RevisorAgent (Code Reviewer):**
-    *   **Responsibilities:** Reviews code against requirements and best practices.
+*   **RevisorAgent (QA & Code Reviewer):**
+    *   **Responsibilities:** rigorous critique of code against requirements. Provides actionable feedback for the feedback loop.
     *   **Output:** Structured JSON via `RevisorAgentOutput`.
 *   **AdminLoggerAgent:**
     *   **Responsibilities:** Updates `docs/changelog.log` and `docs/tasklist.md`.
 
 ### 3.2. Orchestration Logic (`codeswarm/agent_os.py`)
 
-*   The `AgentOS` class orchestrates the workflow:
-    1.  **Planning Phase:** AdminAgent generates tasks based on the goal and current state.
-    2.  **Execution Phase:** Dev/Revisor pairs execute the tasks in parallel (using `concurrent.futures`).
-    3.  **Logging Phase:** AdminLoggerAgent updates project documentation.
+The `AgentOS` follows a dynamic "OODA" style loop:
+1.  **Strategic Planning Phase:** `PlannerAgent` assesses the state and updates the strategic plan.
+2.  **Task Assignment Phase:** `AdminAgent` generates atomic tasks based on the strategy.
+3.  **Execution Phase:**
+    *   **Knowledge Retrieval:** `KnowledgeAgent` fetches context for each task.
+    *   **Dev/Revisor Loop:** Tasks are executed in parallel. Each task undergoes an iterative feedback loop (Dev -> Revisor -> Feedback -> Dev) until approved or max retries reached.
+    *   **Event Logging:** All actions are logged structurally to `codeswarm_events.jsonl`.
+4.  **Logging Phase:** `AdminLoggerAgent` updates documentation.
+5.  **State Persistence:** Session state and TaskTree are saved to `codeswarm_state.json` after each phase for resilience.
 
 ### 3.3. Tool Abstractions (`codeswarm/tools.py`)
 *   Tools are defined as standalone Python functions (e.g., `read_file`, `write_file`, `execute_python_code`) and passed to Agno agents.

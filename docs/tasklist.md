@@ -55,6 +55,13 @@ This phase focuses on systematically researching external systems and refining t
 - [x] **3. Develop Granular State Management & Logging**
     - [x] Implement `EventLogger` for structured event recording (`codeswarm_events.jsonl`).
 
+### Phase 4: Workflow Integration & Resilience (New)
+*Goal: Wire up specialized agents and ensure robustness.*
+
+- [x] **1. Integrate PlannerAgent:** Update `AgentOS` to run a `_strategic_planning_phase` before detailed task assignment.
+- [x] **2. Integrate KnowledgeAgent:** Update `_run_single_task` to query knowledge context before Dev execution.
+- [x] **3. Update Documentation:** Reflect the 5-agent architecture in `project.md`.
+
 ---
 ## Archived Phases (Legacy ADK)
 
