@@ -6,6 +6,8 @@ from datetime import datetime
 
 from . import config
 from . import agents
+from .logger import logger
+from .event_logger import event_logger
 from .structures import TaskTree, TaskNode, TaskStatus
 from .models import TaskAssignment
 
@@ -18,6 +20,8 @@ class AgentOS:
 
         self.admin_agent = agents.get_admin_agent()
         self.logger_agent = agents.get_admin_logger_agent()
+        self.planner_agent = agents.get_planner_agent()
+        self.knowledge_agent = agents.get_knowledge_agent()
 
         # Initialize the tree with the root goal
         self.tree = TaskTree(root=TaskNode(description=goal, status=TaskStatus.IN_PROGRESS))
@@ -27,26 +31,75 @@ class AgentOS:
             "previous_summaries": []
         }
 
-    def run(self):
-        print(f"AgentOS: Starting CodeSwarm for goal: {self.goal}")
+        # Load state if exists
+        self.state_file_path = os.path.join(project_path, "codeswarm_state.json")
+        self.load_state()
 
-        for r in range(1, self.rounds + 1):
-            print(f"\n=== Round {r} ===")
+    def save_state(self):
+        """Saves the current state (TaskTree and session_state) to a JSON file."""
+        try:
+            state_data = {
+                "session_state": self.session_state,
+                "task_tree": self.tree.model_dump()
+            }
+            with open(self.state_file_path, "w", encoding="utf-8") as f:
+                json.dump(state_data, f, indent=2, default=str)
+            logger.info(f"AgentOS: State saved to {self.state_file_path}")
+        except Exception as e:
+            logger.error(f"AgentOS: Error saving state: {e}")
+
+    def load_state(self):
+        """Loads state from a JSON file if it exists."""
+        if os.path.exists(self.state_file_path):
+            try:
+                with open(self.state_file_path, "r", encoding="utf-8") as f:
+                    state_data = json.load(f)
+
+                # Restore session state
+                if "session_state" in state_data:
+                    self.session_state = state_data["session_state"]
+
+                # Restore Task Tree
+                # Since TaskTree is a Pydantic model, we can reconstruct it
+                if "task_tree" in state_data:
+                    self.tree = TaskTree.model_validate(state_data["task_tree"])
+
+                logger.info(f"AgentOS: State loaded from {self.state_file_path}")
+            except Exception as e:
+                logger.error(f"AgentOS: Error loading state: {e}")
+
+    def run(self):
+        logger.info(f"AgentOS: Starting CodeSwarm for goal: {self.goal}")
+
+        start_round = self.session_state.get("round", 0) + 1
+        # If we loaded a completed state, start_round might be rounds + 1
+        if start_round > self.rounds:
+             logger.info(f"AgentOS: Workflow already completed up to round {self.rounds}. Continuing if you want more rounds or start new.")
+             # For now, we just respect the requested rounds if they are greater than current
+             if start_round > self.rounds:
+                 logger.info("AgentOS: Requested rounds completed.")
+                 return
+
+        for r in range(start_round, self.rounds + 1):
+            logger.info(f"=== Round {r} ===")
             self.session_state["round"] = r
 
             # 1. Planning Phase (Admin expands the tree)
             self._planning_phase(r)
+            self.save_state()
 
             # 2. Execution Phase (Dev/Revisor work on leaves)
             self._execution_phase(r)
+            self.save_state()
 
             # 3. Logging Phase
             self._logging_phase(r)
+            self.save_state()
 
-        print("\nAgentOS: Workflow Finished.")
+        logger.info("AgentOS: Workflow Finished.")
 
     def _planning_phase(self, round_num: int):
-        print("AgentOS: Planning Phase...")
+        logger.info("AgentOS: Planning Phase...")
         self.session_state["current_phase"] = "task_assignment"
 
         # Admin Agent decides what tasks are needed based on current state
@@ -59,10 +112,10 @@ class AgentOS:
             new_tasks: List[TaskAssignment] = tasks_output.tasks
 
             if not new_tasks:
-                print("AgentOS: No new tasks generated.")
+                logger.info("AgentOS: No new tasks generated.")
                 return
 
-            print(f"AgentOS: Generated {len(new_tasks)} new tasks.")
+            logger.info(f"AgentOS: Generated {len(new_tasks)} new tasks.")
 
             # Add these tasks as children of the root (flattened list of active tasks for this round)
             # In a true recursive tree, Admin might target specific existing nodes to expand.
@@ -114,10 +167,10 @@ class AgentOS:
                 self.round_nodes_map[i].metadata = {"revisor_focus_areas": task.revisor_focus_areas}
 
         except Exception as e:
-            print(f"AgentOS: Error in planning phase: {e}")
+            logger.error(f"AgentOS: Error in planning phase: {e}")
 
     def _execution_phase(self, round_num: int):
-        print("AgentOS: Execution Phase...")
+        logger.info("AgentOS: Execution Phase...")
         if not hasattr(self, 'current_round_tasks') or not self.current_round_tasks:
             return
 
@@ -149,18 +202,18 @@ class AgentOS:
                         node.status = TaskStatus.REJECTED # or COMPLETED but needs work
 
                 except Exception as e:
-                    print(f"AgentOS: Error executing task {i}: {e}")
+                    logger.error(f"AgentOS: Error executing task {i}: {e}")
                     node.status = TaskStatus.FAILED
 
         # Store results for logging phase
         self.last_round_results = round_results
 
     def _run_single_task(self, task: TaskAssignment, round_num: int):
-        """Runs the Dev -> Revisor cycle for a task."""
-        # This logic is moved from main.py's run_dev_revisor_pair
+        """Runs the Dev -> Revisor cycle for a task with retry loop."""
 
-        # Dev Agent
         dev_agent = agents.get_dev_agent(task.dev_id)
+        revisor_agent = agents.get_revisor_agent(task.revisor_id)
+
         dev_input = {
             "dev_task_description": task.dev_task_description,
             "file_to_edit_or_create": task.file_to_edit_or_create,
@@ -168,12 +221,6 @@ class AgentOS:
             "round": round_num
         }
 
-        print(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create}...")
-        dev_response = dev_agent.run(json.dumps(dev_input))
-        dev_output = dev_response.content
-
-        # Revisor Agent
-        revisor_agent = agents.get_revisor_agent(task.revisor_id)
         revisor_input = {
             "file_to_edit_or_create": task.file_to_edit_or_create,
             "dev_task_description": task.dev_task_description,
@@ -182,18 +229,45 @@ class AgentOS:
             "round": round_num
         }
 
-        print(f"  [Revisor {task.revisor_id}] Reviewing...")
-        revisor_response = revisor_agent.run(json.dumps(revisor_input))
-        revisor_output = revisor_response.content
+        max_retries = 3
+        attempt = 0
+        approved = False
+
+        dev_output = None
+        revisor_output = None
+
+        while attempt < max_retries and not approved:
+            attempt += 1
+            logger.info(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create} (Attempt {attempt}/{max_retries})...")
+            event_logger.log_event("action_start", f"DevAgent_{task.dev_id}", {"attempt": attempt, "input": dev_input})
+
+            dev_response = dev_agent.run(json.dumps(dev_input))
+            dev_output = dev_response.content
+            event_logger.log_event("action_complete", f"DevAgent_{task.dev_id}", {"output": dev_output.model_dump()})
+
+            logger.info(f"  [Revisor {task.revisor_id}] Reviewing (Attempt {attempt}/{max_retries})...")
+            event_logger.log_event("action_start", f"RevisorAgent_{task.revisor_id}", {"attempt": attempt, "input": revisor_input})
+
+            revisor_response = revisor_agent.run(json.dumps(revisor_input))
+            revisor_output = revisor_response.content
+            event_logger.log_event("action_complete", f"RevisorAgent_{task.revisor_id}", {"output": revisor_output.model_dump()})
+
+            if revisor_output.approved:
+                approved = True
+                logger.info(f"  [Revisor {task.revisor_id}] Approved!")
+            else:
+                logger.info(f"  [Revisor {task.revisor_id}] Rejected. Feedback: {revisor_output.review_comments}")
+                # Feedback loop: Update dev input with rejection feedback
+                dev_input["previous_feedback"] = f"Attempt {attempt} rejected. Revisor feedback: {revisor_output.review_comments}. Please fix."
 
         return {
             "task": task.model_dump(),
-            "dev_output": dev_output.model_dump(),
-            "revisor_output": revisor_output.model_dump()
+            "dev_output": dev_output.model_dump() if dev_output else None,
+            "revisor_output": revisor_output.model_dump() if revisor_output else None
         }
 
     def _logging_phase(self, round_num: int):
-        print("AgentOS: Logging Phase...")
+        logger.info("AgentOS: Logging Phase...")
         if not hasattr(self, 'last_round_results') or not self.last_round_results:
             return
 
@@ -204,9 +278,9 @@ class AgentOS:
         try:
             logger_response = self.logger_agent.run(json.dumps(self.session_state))
             logger_output = logger_response.content
-            print(f"AgentOS: Logger Status: {logger_output.status}. Message: {logger_output.message}")
+            logger.info(f"AgentOS: Logger Status: {logger_output.status}. Message: {logger_output.message}")
         except Exception as e:
-            print(f"AgentOS: Logger Error: {e}")
+            logger.error(f"AgentOS: Logger Error: {e}")
 
         # Summary for memory
         summary = f"Round {round_num} completed. {len(self.last_round_results)} tasks executed."
