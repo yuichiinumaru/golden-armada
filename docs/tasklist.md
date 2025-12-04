@@ -47,9 +47,13 @@ This phase focuses on systematically researching external systems and refining t
 ### Phase 3: MCP Integration & Specialized Agents
 *(Previously Phase 2)*
 
-- [ ] **Evaluate & Prototype MCP Integrations**
-- [ ] **Design & Implement Specialized Support Agents**
-- [ ] **Develop Granular State Management & Logging**
+- [x] **1. Evaluate & Prototype MCP Integrations**
+    - [x] Prototype `codeswarm/mcp_tools.py` and `call_mcp_tool`.
+- [x] **2. Design & Implement Specialized Support Agents**
+    - [x] Implement `PlannerAgent` and `KnowledgeAgent`.
+    - [x] Create corresponding prompts.
+- [x] **3. Develop Granular State Management & Logging**
+    - [x] Implement `EventLogger` for structured event recording (`codeswarm_events.jsonl`).
 
 ---
 ## Archived Phases (Legacy ADK)

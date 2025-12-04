@@ -71,7 +71,6 @@ def get_admin_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
     prompt_data = load_prompt("admin_prompt.json")
     # Admin uses Problem Solving Framework and core reasoning
     kb_files = ["kb_framework_problem_solving.json", "kb_core_reasoning.json"]
-    kb_files = ["Problem Solving Framework.json", "Reasoning Knowledge Base.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
     return Agent(
@@ -131,4 +130,32 @@ def get_revisor_agent(revisor_id: int, model_id: str = config.REVISOR_MODEL_STR)
                tools.summarize_chunks],
         output_schema=RevisorAgentOutput,
         structured_outputs=True,
+    )
+
+def get_planner_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
+    prompt_data = load_prompt("planner_prompt.json")
+    # Planner uses high-level frameworks
+    kb_files = ["kb_framework_problem_solving.json", "kb_strategy_topdown.json"]
+    instructions = format_instructions(prompt_data, kb_files=kb_files)
+
+    return Agent(
+        name="PlannerAgent",
+        model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
+        instructions=instructions,
+        tools=[tools.read_file, tools.write_file],
+        markdown=True,
+    )
+
+def get_knowledge_agent(model_id: str = config.DEV_MODEL_STR) -> Agent:
+    prompt_data = load_prompt("knowledge_prompt.json")
+    # Knowledge agent focuses on extraction and reasoning
+    kb_files = ["kb_synergy_files_extractor.json"]
+    instructions = format_instructions(prompt_data, kb_files=kb_files)
+
+    return Agent(
+        name="KnowledgeAgent",
+        model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
+        instructions=instructions,
+        tools=[tools.search_files_content, tools.read_file, tools.list_folder_contents],
+        markdown=True,
     )

@@ -2,8 +2,9 @@ import os
 import subprocess
 import requests
 from bs4 import BeautifulSoup
-from typing import List
+from typing import List, Dict, Any
 from . import config
+from . import mcp_tools
 
 def _is_safe_path(file_path: str) -> bool:
     """Validates that the file path is within the allowed project directory."""
@@ -236,3 +237,25 @@ def summarize_chunks(chunks: List[str]) -> dict:
     if not isinstance(chunks, list):
           return {"status": "error", "message": "Input 'chunks' must be a list."}
     return {"status": "success", "prepared_chunks": chunks}
+
+def call_mcp_tool(server_name: str, tool_name: str, arguments: Dict[str, Any]) -> dict:
+    """
+    Calls a tool on a specified MCP server.
+
+    Args:
+        server_name (str): The name/identifier of the MCP server.
+        tool_name (str): The name of the tool to call.
+        arguments (dict): The arguments for the tool.
+
+    Returns:
+        dict: The result of the tool call.
+    """
+    # For prototype, we map names to dummy URLs or config
+    # In production, this would look up from config
+    server_url = f"mock://{server_name}"
+
+    try:
+        client = mcp_tools.get_mcp_client(server_name, server_url)
+        return client.call_tool(tool_name, arguments)
+    except Exception as e:
+        return {"status": "error", "message": str(e)}

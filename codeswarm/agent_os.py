@@ -7,6 +7,7 @@ from datetime import datetime
 from . import config
 from . import agents
 from .logger import logger
+from .event_logger import event_logger
 from .structures import TaskTree, TaskNode, TaskStatus
 from .models import TaskAssignment
 
@@ -19,6 +20,8 @@ class AgentOS:
 
         self.admin_agent = agents.get_admin_agent()
         self.logger_agent = agents.get_admin_logger_agent()
+        self.planner_agent = agents.get_planner_agent()
+        self.knowledge_agent = agents.get_knowledge_agent()
 
         # Initialize the tree with the root goal
         self.tree = TaskTree(root=TaskNode(description=goal, status=TaskStatus.IN_PROGRESS))
@@ -236,13 +239,18 @@ class AgentOS:
         while attempt < max_retries and not approved:
             attempt += 1
             logger.info(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create} (Attempt {attempt}/{max_retries})...")
+            event_logger.log_event("action_start", f"DevAgent_{task.dev_id}", {"attempt": attempt, "input": dev_input})
 
             dev_response = dev_agent.run(json.dumps(dev_input))
             dev_output = dev_response.content
+            event_logger.log_event("action_complete", f"DevAgent_{task.dev_id}", {"output": dev_output.model_dump()})
 
             logger.info(f"  [Revisor {task.revisor_id}] Reviewing (Attempt {attempt}/{max_retries})...")
+            event_logger.log_event("action_start", f"RevisorAgent_{task.revisor_id}", {"attempt": attempt, "input": revisor_input})
+
             revisor_response = revisor_agent.run(json.dumps(revisor_input))
             revisor_output = revisor_response.content
+            event_logger.log_event("action_complete", f"RevisorAgent_{task.revisor_id}", {"output": revisor_output.model_dump()})
 
             if revisor_output.approved:
                 approved = True

@@ -13,40 +13,40 @@
     ]
   },
   "core_extraction_principles": {
-      "module_id": "core_extraction_principles",
-      "description": "Fundamental principles governing the document ingestion, extraction, inquiry, and critique processes defined in this KB.",
-      "principles": [
-          {
-              "id": "cep_losslessness",
-              "name": "Lossless Representation",
-              "description": "The primary goal of the extraction process (`#mod_doc_ingestion_extraction`) is to create an internal structured representation (JSON) that preserves ALL information and structural nuances from the source document without summarization or unintentional data loss during the initial ingestion phase. Clarification and normalization happen in distinct steps while maintaining traceability."
-          },
-          {
-              "id": "cep_semantic_richness",
-              "name": "Semantic Richness for Engineering",
-              "description": "Assign granular and relevant semantic types (`#mod_doc_ingestion_extraction.semantic_tags_definition`) to document segments, prioritizing types crucial for software development tasks (requirements, constraints, code, data models, etc.)."
-          },
-          {
-              "id": "cep_structural_fidelity",
-              "name": "Structural Fidelity",
-              "description": "Accurately capture the hierarchical and logical structure of the document, including headings, lists, tables, sections, and nested elements, in the output JSON."
-          },
-          {
-              "id": "cep_proactive_clarity",
-              "name": "Proactive Clarity Seeking",
-              "description": "Mandatorily employ proactive inquiry (`#mod_proactive_inquiry`) to resolve ambiguities, inconsistencies, or missing information identified during ingestion *before* using the extracted data for critical planning or implementation decisions."
-          },
-          {
-              "id": "cep_critical_self_assessment",
-              "name": "Critical Self-Assessment of Extraction",
-              "description": "Mandatorily apply adversarial self-critique (`#mod_adversarial_self_critique`) specifically focused on the quality, accuracy, and completeness of the extraction process and its output."
-          },
-          {
-              "id": "cep_traceability",
-              "name": "Traceability",
-              "description": "Maintain explicit links (`original_source_ref`) between each segment in the structured JSON output and its corresponding location or origin in the source document."
-          }
-      ]
+    "module_id": "core_extraction_principles",
+    "description": "Fundamental principles governing the document ingestion, extraction, inquiry, and critique processes defined in this KB.",
+    "principles": [
+      {
+        "id": "cep_losslessness",
+        "name": "Lossless Representation",
+        "description": "The primary goal of the extraction process (`#mod_doc_ingestion_extraction`) is to create an internal structured representation (JSON) that preserves ALL information and structural nuances from the source document without summarization or unintentional data loss during the initial ingestion phase. Clarification and normalization happen in distinct steps while maintaining traceability."
+      },
+      {
+        "id": "cep_semantic_richness",
+        "name": "Semantic Richness for Engineering",
+        "description": "Assign granular and relevant semantic types (`#mod_doc_ingestion_extraction.semantic_tags_definition`) to document segments, prioritizing types crucial for software development tasks (requirements, constraints, code, data models, etc.)."
+      },
+      {
+        "id": "cep_structural_fidelity",
+        "name": "Structural Fidelity",
+        "description": "Accurately capture the hierarchical and logical structure of the document, including headings, lists, tables, sections, and nested elements, in the output JSON."
+      },
+      {
+        "id": "cep_proactive_clarity",
+        "name": "Proactive Clarity Seeking",
+        "description": "Mandatorily employ proactive inquiry (`#mod_proactive_inquiry`) to resolve ambiguities, inconsistencies, or missing information identified during ingestion *before* using the extracted data for critical planning or implementation decisions."
+      },
+      {
+        "id": "cep_critical_self_assessment",
+        "name": "Critical Self-Assessment of Extraction",
+        "description": "Mandatorily apply adversarial self-critique (`#mod_adversarial_self_critique`) specifically focused on the quality, accuracy, and completeness of the extraction process and its output."
+      },
+      {
+        "id": "cep_traceability",
+        "name": "Traceability",
+        "description": "Maintain explicit links (`original_source_ref`) between each segment in the structured JSON output and its corresponding location or origin in the source document."
+      }
+    ]
   },
   "mod_doc_ingestion_extraction": {
     "module_id": "mod_doc_ingestion_extraction",
@@ -56,7 +56,11 @@
       "trigger_condition": "Receipt of document-based input requiring detailed analysis for task execution (e.g., during `kb_synergy_operational#operational_framework.modes.mode_planning`).",
       "goal": "Generate a structured, lossless, clarified JSON representation of the document content, optimized for internal use by Synergy, adhering to `#core_extraction_principles`.",
       "preferred_output_format": "JSON, conforming to `#output_schema_definition`.",
-      "inspiration_sources": ["docling architecture (backend/pipeline/model concept)", "docling datamodel (semantic types, structure)", "docling components (specialized extraction logic)"],
+      "inspiration_sources": [
+        "docling architecture (backend/pipeline/model concept)",
+        "docling datamodel (semantic types, structure)",
+        "docling components (specialized extraction logic)"
+      ],
       "execution_mode": "Internal simulation using reasoning capabilities defined in `kb_reasoning_advanced` and process flow guided by `kb_problem_solving_framework`.",
       "steps": [
         {
@@ -73,7 +77,10 @@
             "  - 'binary_format_parsing_strategy' (for DOCX, PPTX, XLSX - simulating library-based content/structure extraction)",
             "  - 'pdf_layout_analysis_strategy' (for PDFs - focusing on layout, text coordinates, simulating tools like PyPDFium2 or DoclingParse)"
           ],
-          "synergy_kb_references": ["kb_reasoning_advanced#mod-classification", "kb_reasoning_advanced#mod-frameworks"]
+          "synergy_kb_references": [
+            "kb_reasoning_advanced#mod-classification",
+            "kb_reasoning_advanced#mod-frameworks"
+          ]
         },
         {
           "step_id": "diep_step_2",
@@ -86,24 +93,33 @@
             "Handle nested structures recursively (e.g., nested lists, nested sections).",
             "Generate an initial internal hierarchical map linking structural elements (like headings) to their corresponding raw content segments and preliminary semantic tags."
           ],
-          "synergy_kb_references": ["kb_reasoning_advanced#method-decomposition", "kb_problem_solving_framework#execution_process.stages.stage-problem-understanding", "#semantic_tags_definition", "kb_reasoning_advanced#mod-classification"]
+          "synergy_kb_references": [
+            "kb_reasoning_advanced#method-decomposition",
+            "kb_problem_solving_framework#execution_process.stages.stage-problem-understanding",
+            "#semantic_tags_definition",
+            "kb_reasoning_advanced#mod-classification"
+          ]
         },
         {
-            "step_id": "diep_step_3",
-            "name": "Element-Specific Extraction & Typing (Simulated)",
-            "description": "Apply specialized internal reasoning strategies (simulating `docling.models`) to extract and precisely type key software-relevant elements identified during decomposition.",
-            "actions": [
-                "Refine segmentation based on identified element boundaries (e.g., start/end of code block, table boundaries).",
-                "**Layout Analysis (Simulated, if applicable):** If format implies layout (PDF, potentially DOCX/PPTX), analyze spatial relationships (conceptual bounding boxes, reading order) using `kb_reasoning_advanced#mod-spatial-reasoning` to improve segmentation and relationship mapping.",
-                "**Table Extraction (Simulated):** Identify table structures (e.g., via markup or layout). Extract cells, headers, captions. Determine row/column spans. Map cell content. Tag elements with `table`, `table_cell`, `caption` types.",
-                "**Figure/Image Extraction (Simulated):** Identify images/figures (e.g., via tags or layout). Extract associated captions, alt-text, or surrounding text for context. Tag with `figure`, `image`, `caption` types.",
-                "**Code Block Extraction (Simulated):** Identify code blocks (e.g., via fences or specific formatting). Detect language using `kb_reasoning_advanced#mod-classification` heuristics (keywords, syntax). Preserve formatting (indentation, line breaks). Tag with `code_block` and language attribute.",
-                "**Formula Extraction (Simulated):** Identify mathematical formulas (inline/block, e.g., via LaTeX delimiters or specific formatting). Represent internally (e.g., as LaTeX string). Tag with `formula` type.",
-                "**List Extraction:** Identify ordered/unordered lists. Preserve nesting structure and item content accurately. Tag with `list`, `ordered_list`, `list_item` types.",
-                "**Requirement Extraction:** Specifically identify segments matching patterns for Functional Requirements, NFRs, User Stories, Use Cases, Acceptance Criteria, Constraints using NLP techniques simulated via `kb_reasoning_advanced`. Assign specific semantic tags (`req_func`, `req_nonfunc`, `user_story`, `acceptance_criteria`, `constraint`).",
-                "Finalize semantic type assignment (`#semantic_tags_definition`) for all segments based on extraction results and content analysis."
-            ],
-            "synergy_kb_references": ["kb_reasoning_advanced#mod-classification", "kb_reasoning_advanced#mod-spatial-reasoning", "#semantic_tags_definition"]
+          "step_id": "diep_step_3",
+          "name": "Element-Specific Extraction & Typing (Simulated)",
+          "description": "Apply specialized internal reasoning strategies (simulating `docling.models`) to extract and precisely type key software-relevant elements identified during decomposition.",
+          "actions": [
+            "Refine segmentation based on identified element boundaries (e.g., start/end of code block, table boundaries).",
+            "**Layout Analysis (Simulated, if applicable):** If format implies layout (PDF, potentially DOCX/PPTX), analyze spatial relationships (conceptual bounding boxes, reading order) using `kb_reasoning_advanced#mod-spatial-reasoning` to improve segmentation and relationship mapping.",
+            "**Table Extraction (Simulated):** Identify table structures (e.g., via markup or layout). Extract cells, headers, captions. Determine row/column spans. Map cell content. Tag elements with `table`, `table_cell`, `caption` types.",
+            "**Figure/Image Extraction (Simulated):** Identify images/figures (e.g., via tags or layout). Extract associated captions, alt-text, or surrounding text for context. Tag with `figure`, `image`, `caption` types.",
+            "**Code Block Extraction (Simulated):** Identify code blocks (e.g., via fences or specific formatting). Detect language using `kb_reasoning_advanced#mod-classification` heuristics (keywords, syntax). Preserve formatting (indentation, line breaks). Tag with `code_block` and language attribute.",
+            "**Formula Extraction (Simulated):** Identify mathematical formulas (inline/block, e.g., via LaTeX delimiters or specific formatting). Represent internally (e.g., as LaTeX string). Tag with `formula` type.",
+            "**List Extraction:** Identify ordered/unordered lists. Preserve nesting structure and item content accurately. Tag with `list`, `ordered_list`, `list_item` types.",
+            "**Requirement Extraction:** Specifically identify segments matching patterns for Functional Requirements, NFRs, User Stories, Use Cases, Acceptance Criteria, Constraints using NLP techniques simulated via `kb_reasoning_advanced`. Assign specific semantic tags (`req_func`, `req_nonfunc`, `user_story`, `acceptance_criteria`, `constraint`).",
+            "Finalize semantic type assignment (`#semantic_tags_definition`) for all segments based on extraction results and content analysis."
+          ],
+          "synergy_kb_references": [
+            "kb_reasoning_advanced#mod-classification",
+            "kb_reasoning_advanced#mod-spatial-reasoning",
+            "#semantic_tags_definition"
+          ]
         },
         {
           "step_id": "diep_step_4",
@@ -116,7 +132,11 @@
             "Extract key software-related entities (e.g., component names, API endpoints, variables, user roles mentioned) and their relationships (e.g., 'calls', 'depends_on', 'implements') within segments. Store these as structured data associated with the segment.",
             "Maintain an explicit traceability link (`original_source_ref` in output schema) from each clarified/normalized data point or extracted entity back to the specific segment and location (e.g., page, bounding box simulation, character span) in the original document."
           ],
-          "synergy_kb_references": ["kb_reasoning_advanced#mod-foundation.principle-precision", "kb_reasoning_advanced#mod-validation.comp-logical-validation", "#output_schema_definition"]
+          "synergy_kb_references": [
+            "kb_reasoning_advanced#mod-foundation.principle-precision",
+            "kb_reasoning_advanced#mod-validation.comp-logical-validation",
+            "#output_schema_definition"
+          ]
         },
         {
           "step_id": "diep_step_5",
@@ -129,7 +149,11 @@
             "Represent relationships using unique segment identifiers (e.g., `segment_id` from `#output_schema_definition`) and relationship types (e.g., 'dependency', 'reference', 'hierarchy', 'contradicts').",
             "Construct internal dependency representation (e.g., as structured 'relationships' array within the output JSON node)."
           ],
-          "synergy_kb_references": ["kb_reasoning_advanced#mod-causal-reasoning", "kb_reasoning_advanced#mod-temporal-reasoning", "#output_schema_definition"]
+          "synergy_kb_references": [
+            "kb_reasoning_advanced#mod-causal-reasoning",
+            "kb_reasoning_advanced#mod-temporal-reasoning",
+            "#output_schema_definition"
+          ]
         },
         {
           "step_id": "diep_step_6",
@@ -141,7 +165,9 @@
             "Ensure the representation is lossless regarding original content and structure, accurately reflects assigned semantic types, and correctly maps identified relationships.",
             "Perform internal validation of the generated JSON against the `#output_schema_definition` to ensure structural correctness and completeness of required fields."
           ],
-          "synergy_kb_references": ["#output_schema_definition"]
+          "synergy_kb_references": [
+            "#output_schema_definition"
+          ]
         },
         {
           "step_id": "diep_step_7",
@@ -154,160 +180,525 @@
             "**Trigger Refinement:** If critique identifies significant issues (e.g., missing requirements, incorrect structure, loss of information), trigger refinement by looping back to relevant earlier DIEP steps (e.g., `diep_step_2`, `diep_step_4`) before finalizing.",
             "**Log Outcome:** Integrate critique findings and final outcome into the `agent_reasoning_output_validation_protocol` log for this operation."
           ],
-          "synergy_kb_references": ["#mod_adversarial_self_critique", "agent_reasoning_output_validation_protocol", "#core_extraction_principles"]
+          "synergy_kb_references": [
+            "#mod_adversarial_self_critique",
+            "agent_reasoning_output_validation_protocol",
+            "#core_extraction_principles"
+          ]
         }
       ],
       "semantic_tags_definition": {
         "description": "Enhanced semantic types for classifying document segments, inspired by 'docling' capabilities and tailored for Synergy's software engineering context. Used in `diep_step_2` and `diep_step_3`.",
         "tags": [
-          // Structural Tags
-          {"tag_id": "document_root", "name": "Document Root", "description": "Top-level container for the entire document."},
-          {"tag_id": "section", "name": "Section", "description": "A major logical division of the document, often marked by H1/H2 headings."},
-          {"tag_id": "subsection", "name": "Subsection", "description": "A subdivision within a section, often marked by H3/H4 headings."},
-          {"tag_id": "heading_1", "name": "Heading Level 1", "description": "Primary section heading."},
-          {"tag_id": "heading_2", "name": "Heading Level 2", "description": "Secondary section heading."},
-          {"tag_id": "heading_N", "name": "Heading Level N", "description": "Generic heading for levels >= 3."},
-          {"tag_id": "paragraph", "name": "Paragraph", "description": "Standard block of narrative or descriptive text."},
-          {"tag_id": "list", "name": "List (Unordered)", "description": "Container for an unordered list (bullet points)."},
-          {"tag_id": "ordered_list", "name": "List (Ordered)", "description": "Container for an ordered list (numbered/lettered)."},
-          {"tag_id": "list_item", "name": "List Item", "description": "An individual item within any list type (can be nested)."},
-          {"tag_id": "table", "name": "Table", "description": "Represents tabular data."},
-          {"tag_id": "table_row", "name": "Table Row", "description": "A row within a table."},
-          {"tag_id": "table_cell", "name": "Table Cell", "description": "A cell within a table row.", "attributes": ["row_index (int)", "col_index (int)", "rowspan (int, default 1)", "colspan (int, default 1)", "is_header (bool)"]},
-          {"tag_id": "figure", "name": "Figure", "description": "Container for a figure (image, chart, diagram)."},
-          {"tag_id": "image", "name": "Image", "description": "Raster or vector image.", "attributes": ["source_ref (string, optional)", "alt_text (string, optional)"]},
-          {"tag_id": "caption", "name": "Caption", "description": "Descriptive text associated with a table or figure."},
-          {"tag_id": "code_block", "name": "Code Block", "description": "Segment containing source code examples or snippets.", "attributes": ["language (string, optional, e.g., 'python', 'javascript')"]},
-          {"tag_id": "formula", "name": "Formula", "description": "Mathematical or chemical formula.", "attributes": ["representation (string, e.g., 'latex', 'mathml')"]},
-          {"tag_id": "footnote", "name": "Footnote", "description": "Footnote content or marker."},
-          {"tag_id": "header", "name": "Page Header", "description": "Content typically found in page headers (often repetitive)."},
-          {"tag_id": "footer", "name": "Page Footer", "description": "Content typically found in page footers (e.g., page numbers)."},
-          {"tag_id": "metadata", "name": "Document Metadata", "description": "Information about the document itself (title, author, date)."},
-          {"tag_id": "reference", "name": "Reference/Citation", "description": "Bibliographic reference or citation."},
-          // Software Engineering Semantic Tags
-          {"tag_id": "req_goal", "name": "Goal/Objective", "description": "High-level project or feature goal."},
-          {"tag_id": "req_user_story", "name": "User Story", "description": "Functional requirement from a user perspective ('As a... I want... so that...')."},
-          {"tag_id": "req_acceptance_criteria", "name": "Acceptance Criteria", "description": "Specific, testable conditions that must be met for a user story/feature to be considered complete."},
-          {"tag_id": "req_feature", "name": "Feature Description", "description": "Detailed description of a specific product feature or capability."},
-          {"tag_id": "req_use_case", "name": "Use Case", "description": "A specific scenario describing user interaction with the system."},
-          {"tag_id": "req_func", "name": "Functional Requirement", "description": "A statement specifying a function the system must perform."},
-          {"tag_id": "req_nonfunc", "name": "Non-Functional Requirement", "description": "A requirement specifying a quality attribute (performance, security, usability, reliability, etc.).", "attributes": ["nfr_category (string, e.g., 'performance', 'security')"]},
-          {"tag_id": "constraint", "name": "Constraint", "description": "A limitation or restriction on the design or implementation (technical, budget, time, legal).", "attributes": ["constraint_type (string, e.g., 'technical', 'business', 'legal')"]},
-          {"tag_id": "dependency", "name": "Dependency", "description": "Statement describing a dependency on another component, system, or external factor."},
-          {"tag_id": "assumption", "name": "Assumption", "description": "An underlying belief taken as true for planning purposes."},
-          {"tag_id": "risk", "name": "Risk", "description": "A potential problem or negative event identified in the requirements."},
-          {"tag_id": "api_def", "name": "API Definition/Endpoint", "description": "Describes an API endpoint, its parameters, or interface contract."},
-          {"tag_id": "data_model", "name": "Data Model/Schema/Entity", "description": "Describes data structures, database schemas, or entities."},
-          {"tag_id": "ui_element_desc", "name": "UI Element Description", "description": "Describes a specific user interface element or component."},
-          {"tag_id": "out_of_scope", "name": "Out of Scope", "description": "Explicitly defines what is NOT included."},
-          {"tag_id": "future_work", "name": "Future Work/Open Question", "description": "Items deferred or requiring further clarification."},
-          // Processing Status Tags
-          {"tag_id": "ambiguous_section", "name": "Ambiguous Section", "description": "Content flagged during clarification (`diep_step_4`) or critique (`#mod_adversarial_self_critique`) as unclear."},
-          {"tag_id": "contradiction_flagged", "name": "Contradiction Flagged", "description": "Content flagged as contradictory during clarification or critique."},
-          {"tag_id": "unknown", "name": "Unknown/Unclassified", "description": "Segment that could not be reliably classified."}
+          {
+            "tag_id": "document_root",
+            "name": "Document Root",
+            "description": "Top-level container for the entire document."
+          },
+          {
+            "tag_id": "section",
+            "name": "Section",
+            "description": "A major logical division of the document, often marked by H1/H2 headings."
+          },
+          {
+            "tag_id": "subsection",
+            "name": "Subsection",
+            "description": "A subdivision within a section, often marked by H3/H4 headings."
+          },
+          {
+            "tag_id": "heading_1",
+            "name": "Heading Level 1",
+            "description": "Primary section heading."
+          },
+          {
+            "tag_id": "heading_2",
+            "name": "Heading Level 2",
+            "description": "Secondary section heading."
+          },
+          {
+            "tag_id": "heading_N",
+            "name": "Heading Level N",
+            "description": "Generic heading for levels >= 3."
+          },
+          {
+            "tag_id": "paragraph",
+            "name": "Paragraph",
+            "description": "Standard block of narrative or descriptive text."
+          },
+          {
+            "tag_id": "list",
+            "name": "List (Unordered)",
+            "description": "Container for an unordered list (bullet points)."
+          },
+          {
+            "tag_id": "ordered_list",
+            "name": "List (Ordered)",
+            "description": "Container for an ordered list (numbered/lettered)."
+          },
+          {
+            "tag_id": "list_item",
+            "name": "List Item",
+            "description": "An individual item within any list type (can be nested)."
+          },
+          {
+            "tag_id": "table",
+            "name": "Table",
+            "description": "Represents tabular data."
+          },
+          {
+            "tag_id": "table_row",
+            "name": "Table Row",
+            "description": "A row within a table."
+          },
+          {
+            "tag_id": "table_cell",
+            "name": "Table Cell",
+            "description": "A cell within a table row.",
+            "attributes": [
+              "row_index (int)",
+              "col_index (int)",
+              "rowspan (int, default 1)",
+              "colspan (int, default 1)",
+              "is_header (bool)"
+            ]
+          },
+          {
+            "tag_id": "figure",
+            "name": "Figure",
+            "description": "Container for a figure (image, chart, diagram)."
+          },
+          {
+            "tag_id": "image",
+            "name": "Image",
+            "description": "Raster or vector image.",
+            "attributes": [
+              "source_ref (string, optional)",
+              "alt_text (string, optional)"
+            ]
+          },
+          {
+            "tag_id": "caption",
+            "name": "Caption",
+            "description": "Descriptive text associated with a table or figure."
+          },
+          {
+            "tag_id": "code_block",
+            "name": "Code Block",
+            "description": "Segment containing source code examples or snippets.",
+            "attributes": [
+              "language (string, optional, e.g., 'python', 'javascript')"
+            ]
+          },
+          {
+            "tag_id": "formula",
+            "name": "Formula",
+            "description": "Mathematical or chemical formula.",
+            "attributes": [
+              "representation (string, e.g., 'latex', 'mathml')"
+            ]
+          },
+          {
+            "tag_id": "footnote",
+            "name": "Footnote",
+            "description": "Footnote content or marker."
+          },
+          {
+            "tag_id": "header",
+            "name": "Page Header",
+            "description": "Content typically found in page headers (often repetitive)."
+          },
+          {
+            "tag_id": "footer",
+            "name": "Page Footer",
+            "description": "Content typically found in page footers (e.g., page numbers)."
+          },
+          {
+            "tag_id": "metadata",
+            "name": "Document Metadata",
+            "description": "Information about the document itself (title, author, date)."
+          },
+          {
+            "tag_id": "reference",
+            "name": "Reference/Citation",
+            "description": "Bibliographic reference or citation."
+          },
+          {
+            "tag_id": "req_goal",
+            "name": "Goal/Objective",
+            "description": "High-level project or feature goal."
+          },
+          {
+            "tag_id": "req_user_story",
+            "name": "User Story",
+            "description": "Functional requirement from a user perspective ('As a... I want... so that...')."
+          },
+          {
+            "tag_id": "req_acceptance_criteria",
+            "name": "Acceptance Criteria",
+            "description": "Specific, testable conditions that must be met for a user story/feature to be considered complete."
+          },
+          {
+            "tag_id": "req_feature",
+            "name": "Feature Description",
+            "description": "Detailed description of a specific product feature or capability."
+          },
+          {
+            "tag_id": "req_use_case",
+            "name": "Use Case",
+            "description": "A specific scenario describing user interaction with the system."
+          },
+          {
+            "tag_id": "req_func",
+            "name": "Functional Requirement",
+            "description": "A statement specifying a function the system must perform."
+          },
+          {
+            "tag_id": "req_nonfunc",
+            "name": "Non-Functional Requirement",
+            "description": "A requirement specifying a quality attribute (performance, security, usability, reliability, etc.).",
+            "attributes": [
+              "nfr_category (string, e.g., 'performance', 'security')"
+            ]
+          },
+          {
+            "tag_id": "constraint",
+            "name": "Constraint",
+            "description": "A limitation or restriction on the design or implementation (technical, budget, time, legal).",
+            "attributes": [
+              "constraint_type (string, e.g., 'technical', 'business', 'legal')"
+            ]
+          },
+          {
+            "tag_id": "dependency",
+            "name": "Dependency",
+            "description": "Statement describing a dependency on another component, system, or external factor."
+          },
+          {
+            "tag_id": "assumption",
+            "name": "Assumption",
+            "description": "An underlying belief taken as true for planning purposes."
+          },
+          {
+            "tag_id": "risk",
+            "name": "Risk",
+            "description": "A potential problem or negative event identified in the requirements."
+          },
+          {
+            "tag_id": "api_def",
+            "name": "API Definition/Endpoint",
+            "description": "Describes an API endpoint, its parameters, or interface contract."
+          },
+          {
+            "tag_id": "data_model",
+            "name": "Data Model/Schema/Entity",
+            "description": "Describes data structures, database schemas, or entities."
+          },
+          {
+            "tag_id": "ui_element_desc",
+            "name": "UI Element Description",
+            "description": "Describes a specific user interface element or component."
+          },
+          {
+            "tag_id": "out_of_scope",
+            "name": "Out of Scope",
+            "description": "Explicitly defines what is NOT included."
+          },
+          {
+            "tag_id": "future_work",
+            "name": "Future Work/Open Question",
+            "description": "Items deferred or requiring further clarification."
+          },
+          {
+            "tag_id": "ambiguous_section",
+            "name": "Ambiguous Section",
+            "description": "Content flagged during clarification (`diep_step_4`) or critique (`#mod_adversarial_self_critique`) as unclear."
+          },
+          {
+            "tag_id": "contradiction_flagged",
+            "name": "Contradiction Flagged",
+            "description": "Content flagged as contradictory during clarification or critique."
+          },
+          {
+            "tag_id": "unknown",
+            "name": "Unknown/Unclassified",
+            "description": "Segment that could not be reliably classified."
+          }
         ]
       },
       "error_handling": {
         "ref_id": "diep_error_handling",
         "description": "Protocols for handling potential errors during the Synergy-DIEP process.",
         "protocols": [
-           {"error_type": "FORMAT_IDENTIFICATION_FAILURE", "strategy": "Log error. Default to plain text extraction strategy. Assign 'unknown' type broadly. High uncertainty flag.", "fallback": "Report failure to process document if plain text extraction yields unusable results."},
-          {"error_type": "DECOMPOSITION_FAILURE", "strategy": "Log error. Treat document as flat sequence of paragraphs/blocks. Attempt semantic typing on flat structure.", "fallback": "Report failure, output raw text."},
-          {"error_type": "ELEMENT_EXTRACTION_FAILURE", "strategy": "Log error for specific element type (e.g., table). Tag segment as 'paragraph' or 'unknown' instead. Continue processing other elements.", "fallback": "N/A"},
-          {"error_type": "CLARIFICATION_FAILURE", "strategy": "Log ambiguity. Retain original phrasing. Tag segment as `ambiguous_section`.", "fallback": "N/A"},
-          {"error_type": "RELATIONSHIP_MAPPING_UNCERTAINTY", "strategy": "Log uncertainty. Only map explicitly stated relationships. Assign confidence score to inferred relationships.", "fallback": "Output only explicit relationships."},
-          {"error_type": "CONTEXT_WINDOW_LIMIT", "strategy": "Proactively monitor tokens. Employ context distillation ONLY for *internal reasoning*, NOT for final output. Prioritize retaining requirements/constraints/dependencies. Log truncation.", "fallback": "Process in chunks (awareness of potential lost cross-chunk relations)."}
+          {
+            "error_type": "FORMAT_IDENTIFICATION_FAILURE",
+            "strategy": "Log error. Default to plain text extraction strategy. Assign 'unknown' type broadly. High uncertainty flag.",
+            "fallback": "Report failure to process document if plain text extraction yields unusable results."
+          },
+          {
+            "error_type": "DECOMPOSITION_FAILURE",
+            "strategy": "Log error. Treat document as flat sequence of paragraphs/blocks. Attempt semantic typing on flat structure.",
+            "fallback": "Report failure, output raw text."
+          },
+          {
+            "error_type": "ELEMENT_EXTRACTION_FAILURE",
+            "strategy": "Log error for specific element type (e.g., table). Tag segment as 'paragraph' or 'unknown' instead. Continue processing other elements.",
+            "fallback": "N/A"
+          },
+          {
+            "error_type": "CLARIFICATION_FAILURE",
+            "strategy": "Log ambiguity. Retain original phrasing. Tag segment as `ambiguous_section`.",
+            "fallback": "N/A"
+          },
+          {
+            "error_type": "RELATIONSHIP_MAPPING_UNCERTAINTY",
+            "strategy": "Log uncertainty. Only map explicitly stated relationships. Assign confidence score to inferred relationships.",
+            "fallback": "Output only explicit relationships."
+          },
+          {
+            "error_type": "CONTEXT_WINDOW_LIMIT",
+            "strategy": "Proactively monitor tokens. Employ context distillation ONLY for *internal reasoning*, NOT for final output. Prioritize retaining requirements/constraints/dependencies. Log truncation.",
+            "fallback": "Process in chunks (awareness of potential lost cross-chunk relations)."
+          }
         ]
       },
       "output_schema_definition": {
-         "description": "Defines the target JSON structure for the lossless, structured document representation. Root is an object representing the document. Uses nested 'children' arrays for hierarchy.",
-         "root_node_structure": {
-             "segment_id": {"type": "string", "value": "doc_root"},
-             "structural_path": {"type": "string", "value": "/"},
-             "semantic_type": {"type": "string", "value": "document_root"},
-             "metadata": {
-                 "type": "object",
-                 "description": "Metadata extracted or inferred about the document.",
-                 "properties": {
-                     "filename": {"type": "string", "description": "Original filename, if available."},
-                     "inferred_format": {"type": "string", "description": "Format identified in `diep_step_1`."},
-                     "title": {"type": "string", "description": "Document title, if identifiable.", "nullable": true},
-                     "author": {"type": "string", "description": "Document author(s), if identifiable.", "nullable": true},
-                     "language": {"type": "string", "description": "Detected language(s).", "nullable": true},
-                     "page_count": {"type": "integer", "description": "Number of pages, if applicable.", "nullable": true},
-                     "word_count_approx": {"type": "integer", "description": "Approximate word count.", "nullable": true},
-                     "extraction_timestamp": {"type": "string", "description": "ISO 8601 timestamp of extraction."}
-                 }
-             },
-             "clarified_content": null,
-             "original_source_ref": {"type": "object", "description": "Reference to the input source.", "properties": {"identifier": {"type": "string", "description": "Input file path, URL, or unique ID."}}},
-             "extracted_entities": [],
-             "relationships": [],
-             "processing_flags": [],
-             "children": {"type": "array", "items": {"$ref": "#/output_schema_definition/generic_node_structure"}}
-         },
-         "generic_node_structure": {
-           "type": "object",
-           "properties": {
-               "segment_id": {"type": "string", "description": "Unique identifier for this segment within the document (e.g., 'sec1.p3', 'list1.item2.sublist1.item1')."},
-               "structural_path": {"type": "string", "description": "Human-readable path reflecting hierarchy (e.g., 'Section 1 Title/Subsection 1.1 Title')."},
-               "semantic_type": {"type": "string", "description": "Assigned semantic tag from `#semantic_tags_definition.tags.tag_id`."},
-               "attributes": {"type": "object", "description": "Optional key-value pairs based on `semantic_type` (e.g., `{'language': 'python'}` for `code_block`)."},
-               "original_source_ref": {
-                   "type": "object",
-                   "description": "Traceability link to the original source document segment.",
-                   "properties": {
-                       "page_number": {"type": "integer", "description": "Page number (1-based), if applicable.", "nullable": true},
-                       "bounding_box": {"type": "object", "description": "Simulated bounding box coordinates {l, t, r, b}, if applicable.", "nullable": true},
-                       "char_span": {"type": "array", "items": {"type": "integer"}, "description": "Start and end character offset [start, end] in the raw extracted text, if applicable.", "nullable": true},
-                       "original_element_id": {"type": "string", "description": "ID from source format (e.g., HTML ID), if available.", "nullable": true}
-                   }
-               },
-               "clarified_content": {"type": ["string", "object", "null"], "description": "The processed, clarified, and potentially normalized content of the segment. Structure depends on `semantic_type` (e.g., object for tables, string for paragraphs)."},
-               "original_content_snippet": {"type": "string", "description": "A snippet of the original, unprocessed text for reference/validation (optional, controlled by config)."},
-               "extracted_entities": {
-                   "type": "array",
-                   "description": "List of key software entities identified within the `clarified_content`.",
-                   "items": {
-                       "type": "object",
-                       "properties": {
-                           "entity_id": {"type": "string", "description": "Unique ID for this entity instance."},
-                           "entity_type": {"type": "string", "description": "Type of entity (e.g., 'ClassName', 'FunctionName', 'APIEndpoint', 'RequirementID', 'ConstraintID')."},
-                           "value": {"type": "string", "description": "The extracted entity string."},
-                           "source_span": {"type": "array", "items": {"type": "integer"}, "description": "Character span [start, end] within `clarified_content`."}
-                       }
-                   }
-               },
-               "relationships": {
-                   "type": "array",
-                   "description": "List of relationships identified involving this segment.",
-                   "items": {
-                       "type": "object",
-                       "properties": {
-                           "relationship_id": {"type": "string", "description": "Unique ID for this relationship instance."},
-                           "relationship_type": {"type": "string", "description": "Type of relationship (e.g., 'DEPENDS_ON', 'REFERENCES', 'CONTRADICTS', 'IMPLEMENTS', 'PARENT_OF', 'CHILD_OF')."},
-                           "target_segment_id": {"type": "string", "description": "ID of the related segment."},
-                           "description": {"type": "string", "description": "Optional textual description of the relationship.", "nullable": true},
-                           "confidence": {"type": "number", "description": "Confidence score (0-1) if relationship was inferred.", "nullable": true}
-                       }
-                   }
-               },
-               "processing_flags": {
-                   "type": "array",
-                   "description": "List of flags indicating processing status or issues.",
-                   "items": {"type": "string", "examples": ["ambiguity_detected", "contradiction_unresolved", "low_confidence_extraction", "requires_clarification", "normalization_applied"]}
-               },
-               "children": {"type": "array", "items": {"$ref": "#/output_schema_definition/generic_node_structure"}}
-           },
-           "required": ["segment_id", "structural_path", "semantic_type", "original_source_ref", "clarified_content", "extracted_entities", "relationships", "processing_flags", "children"]
-         }
+        "description": "Defines the target JSON structure for the lossless, structured document representation. Root is an object representing the document. Uses nested 'children' arrays for hierarchy.",
+        "root_node_structure": {
+          "segment_id": {
+            "type": "string",
+            "value": "doc_root"
+          },
+          "structural_path": {
+            "type": "string",
+            "value": "/"
+          },
+          "semantic_type": {
+            "type": "string",
+            "value": "document_root"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Metadata extracted or inferred about the document.",
+            "properties": {
+              "filename": {
+                "type": "string",
+                "description": "Original filename, if available."
+              },
+              "inferred_format": {
+                "type": "string",
+                "description": "Format identified in `diep_step_1`."
+              },
+              "title": {
+                "type": "string",
+                "description": "Document title, if identifiable.",
+                "nullable": true
+              },
+              "author": {
+                "type": "string",
+                "description": "Document author(s), if identifiable.",
+                "nullable": true
+              },
+              "language": {
+                "type": "string",
+                "description": "Detected language(s).",
+                "nullable": true
+              },
+              "page_count": {
+                "type": "integer",
+                "description": "Number of pages, if applicable.",
+                "nullable": true
+              },
+              "word_count_approx": {
+                "type": "integer",
+                "description": "Approximate word count.",
+                "nullable": true
+              },
+              "extraction_timestamp": {
+                "type": "string",
+                "description": "ISO 8601 timestamp of extraction."
+              }
+            }
+          },
+          "clarified_content": null,
+          "original_source_ref": {
+            "type": "object",
+            "description": "Reference to the input source.",
+            "properties": {
+              "identifier": {
+                "type": "string",
+                "description": "Input file path, URL, or unique ID."
+              }
+            }
+          },
+          "extracted_entities": [],
+          "relationships": [],
+          "processing_flags": [],
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/output_schema_definition/generic_node_structure"
+            }
+          }
+        },
+        "generic_node_structure": {
+          "type": "object",
+          "properties": {
+            "segment_id": {
+              "type": "string",
+              "description": "Unique identifier for this segment within the document (e.g., 'sec1.p3', 'list1.item2.sublist1.item1')."
+            },
+            "structural_path": {
+              "type": "string",
+              "description": "Human-readable path reflecting hierarchy (e.g., 'Section 1 Title/Subsection 1.1 Title')."
+            },
+            "semantic_type": {
+              "type": "string",
+              "description": "Assigned semantic tag from `#semantic_tags_definition.tags.tag_id`."
+            },
+            "attributes": {
+              "type": "object",
+              "description": "Optional key-value pairs based on `semantic_type` (e.g., `{'language': 'python'}` for `code_block`)."
+            },
+            "original_source_ref": {
+              "type": "object",
+              "description": "Traceability link to the original source document segment.",
+              "properties": {
+                "page_number": {
+                  "type": "integer",
+                  "description": "Page number (1-based), if applicable.",
+                  "nullable": true
+                },
+                "bounding_box": {
+                  "type": "object",
+                  "description": "Simulated bounding box coordinates {l, t, r, b}, if applicable.",
+                  "nullable": true
+                },
+                "char_span": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "Start and end character offset [start, end] in the raw extracted text, if applicable.",
+                  "nullable": true
+                },
+                "original_element_id": {
+                  "type": "string",
+                  "description": "ID from source format (e.g., HTML ID), if available.",
+                  "nullable": true
+                }
+              }
+            },
+            "clarified_content": {
+              "type": [
+                "string",
+                "object",
+                "null"
+              ],
+              "description": "The processed, clarified, and potentially normalized content of the segment. Structure depends on `semantic_type` (e.g., object for tables, string for paragraphs)."
+            },
+            "original_content_snippet": {
+              "type": "string",
+              "description": "A snippet of the original, unprocessed text for reference/validation (optional, controlled by config)."
+            },
+            "extracted_entities": {
+              "type": "array",
+              "description": "List of key software entities identified within the `clarified_content`.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "entity_id": {
+                    "type": "string",
+                    "description": "Unique ID for this entity instance."
+                  },
+                  "entity_type": {
+                    "type": "string",
+                    "description": "Type of entity (e.g., 'ClassName', 'FunctionName', 'APIEndpoint', 'RequirementID', 'ConstraintID')."
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "The extracted entity string."
+                  },
+                  "source_span": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "Character span [start, end] within `clarified_content`."
+                  }
+                }
+              }
+            },
+            "relationships": {
+              "type": "array",
+              "description": "List of relationships identified involving this segment.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "relationship_id": {
+                    "type": "string",
+                    "description": "Unique ID for this relationship instance."
+                  },
+                  "relationship_type": {
+                    "type": "string",
+                    "description": "Type of relationship (e.g., 'DEPENDS_ON', 'REFERENCES', 'CONTRADICTS', 'IMPLEMENTS', 'PARENT_OF', 'CHILD_OF')."
+                  },
+                  "target_segment_id": {
+                    "type": "string",
+                    "description": "ID of the related segment."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Optional textual description of the relationship.",
+                    "nullable": true
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "description": "Confidence score (0-1) if relationship was inferred.",
+                    "nullable": true
+                  }
+                }
+              }
+            },
+            "processing_flags": {
+              "type": "array",
+              "description": "List of flags indicating processing status or issues.",
+              "items": {
+                "type": "string",
+                "examples": [
+                  "ambiguity_detected",
+                  "contradiction_unresolved",
+                  "low_confidence_extraction",
+                  "requires_clarification",
+                  "normalization_applied"
+                ]
+              }
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/output_schema_definition/generic_node_structure"
+              }
+            }
+          },
+          "required": [
+            "segment_id",
+            "structural_path",
+            "semantic_type",
+            "original_source_ref",
+            "clarified_content",
+            "extracted_entities",
+            "relationships",
+            "processing_flags",
+            "children"
+          ]
+        }
       }
     }
   },
   "mod_proactive_inquiry": {
     "module_id": "mod_proactive_inquiry",
-     "name": "Synergy Proactive Inquiry Protocol (SPIP)",
-     "description": "Structured methodology for generating clarification questions based on initial analysis (including DIEP output) BEFORE committing to plan/implementation. Aligns with Synergy context and enhances `kb_synergy_operational#operational_framework.metacognitive_questioning_protocol`.",
+    "name": "Synergy Proactive Inquiry Protocol (SPIP)",
+    "description": "Structured methodology for generating clarification questions based on initial analysis (including DIEP output) BEFORE committing to plan/implementation. Aligns with Synergy context and enhances `kb_synergy_operational#operational_framework.metacognitive_questioning_protocol`.",
     "process_definition": {
       "trigger_condition": [
         "During `kb_synergy_operational#operational_framework.modes.mode_planning` after initial analysis/DIEP.",
@@ -316,35 +707,106 @@
       ],
       "goal": "Resolve critical ambiguities, inconsistencies, missing information proactively to ensure plan robustness.",
       "steps": [
-        {"step_id": "spip_step_1", "name": "Identify Knowledge Gaps & Ambiguities", "description": "Review task definition, DIEP JSON output (`#mod_doc_ingestion_extraction`), and initial plan draft. Use reasoning (`kb_reasoning_advanced`) to specifically identify unclear requirements (`req_func`, `req_nonfunc`), constraints, terms, acceptance criteria, flagged contradictions/ambiguities, missing dependencies, or unaddressed edge cases."},
-        {"step_id": "spip_step_2", "name": "Generate Structured Questions", "description": "For each identified gap/ambiguity, formulate precise, targeted questions using the templates defined in `#question_categories_definition`. Ensure questions are specific to the problematic segment (`segment_id`) identified in the DIEP output."},
-        {"step_id": "spip_step_3", "name": "Prioritize Questions", "description": "Rank questions based on their potential impact on the plan's feasibility and correctness (Critical > High > Medium). Focus on resolving blockers first."},
-        {"step_id": "spip_step_4", "name": "Simulate Inquiry Interaction", "description": "Format the highest priority questions (typically only critical ones) for the user using communication patterns from `kb_synergy_implementation_details#detailed_user_interaction_patterns` and the appropriate `ask` tool. If no user response is simulated or possible, attempt to infer the most likely answer using `kb_reasoning_advanced` (e.g., abduction, analogy) and clearly state the assumption being made."},
-        {"step_id": "spip_step_5", "name": "Process Responses & Update Internal State", "description": "Integrate simulated clarifications or explicitly stated assumptions back into the relevant DIEP JSON segment (`clarified_content`, `processing_flags`) and the evolving plan. Iterate steps 2-5 if clarification leads to new ambiguities."},
-        {"step_id": "spip_step_6", "name": "Log Inquiry Cycle", "description": "Log the questions asked, responses received (or assumptions made), and resulting updates within the `agent_reasoning_output_validation_protocol#validation_input.reasoning_trace.internal_reflection_summary` or a dedicated field."}
+        {
+          "step_id": "spip_step_1",
+          "name": "Identify Knowledge Gaps & Ambiguities",
+          "description": "Review task definition, DIEP JSON output (`#mod_doc_ingestion_extraction`), and initial plan draft. Use reasoning (`kb_reasoning_advanced`) to specifically identify unclear requirements (`req_func`, `req_nonfunc`), constraints, terms, acceptance criteria, flagged contradictions/ambiguities, missing dependencies, or unaddressed edge cases."
+        },
+        {
+          "step_id": "spip_step_2",
+          "name": "Generate Structured Questions",
+          "description": "For each identified gap/ambiguity, formulate precise, targeted questions using the templates defined in `#question_categories_definition`. Ensure questions are specific to the problematic segment (`segment_id`) identified in the DIEP output."
+        },
+        {
+          "step_id": "spip_step_3",
+          "name": "Prioritize Questions",
+          "description": "Rank questions based on their potential impact on the plan's feasibility and correctness (Critical > High > Medium). Focus on resolving blockers first."
+        },
+        {
+          "step_id": "spip_step_4",
+          "name": "Simulate Inquiry Interaction",
+          "description": "Format the highest priority questions (typically only critical ones) for the user using communication patterns from `kb_synergy_implementation_details#detailed_user_interaction_patterns` and the appropriate `ask` tool. If no user response is simulated or possible, attempt to infer the most likely answer using `kb_reasoning_advanced` (e.g., abduction, analogy) and clearly state the assumption being made."
+        },
+        {
+          "step_id": "spip_step_5",
+          "name": "Process Responses & Update Internal State",
+          "description": "Integrate simulated clarifications or explicitly stated assumptions back into the relevant DIEP JSON segment (`clarified_content`, `processing_flags`) and the evolving plan. Iterate steps 2-5 if clarification leads to new ambiguities."
+        },
+        {
+          "step_id": "spip_step_6",
+          "name": "Log Inquiry Cycle",
+          "description": "Log the questions asked, responses received (or assumptions made), and resulting updates within the `agent_reasoning_output_validation_protocol#validation_input.reasoning_trace.internal_reflection_summary` or a dedicated field."
+        }
       ],
       "question_categories_definition": {
         "description": "Structured question categories tailored for clarifying software requirements and technical specifications.",
         "categories": [
-            {"category_id": "qc_req_clarity", "name": "Requirement Clarity", "template": "Regarding requirement segment '{segment_id}', could you clarify the expected behavior when [specific condition]? OR What are the precise inputs/outputs for this function/feature?"},
-            {"category_id": "qc_constraint_validation", "name": "Constraint Validation/Interpretation", "template": "Constraint '{segment_id}' states '[Constraint Text]'. Does this apply to [specific component/scenario]? OR Is the performance constraint of [Value] feasible given [Technical Context]?"},
-            {"category_id": "qc_dependency_analysis", "name": "Dependency Analysis", "template": "What are the external API dependencies for implementing feature '{segment_id}'? OR Is component '{segment_id}' dependent on the completion of [Other Component/Task]?"},
-            {"category_id": "qc_edge_case_handling", "name": "Edge Case Handling", "template": "How should the system handle [specific edge case, e.g., null input, network failure, max load] related to requirement '{segment_id}'?"},
-            {"category_id": "qc_alternative_exploration", "name": "Alternative Technical Exploration", "template": "For implementing '{segment_id}', have alternative approaches like [Approach A] vs [Approach B] been considered? What are the key trade-offs (e.g., performance, complexity)?"},
-            {"category_id": "qc_goal_alignment", "name": "Goal & User Alignment", "template": "How does requirement/feature '{segment_id}' contribute to the primary project goal of [Project Goal]? OR How does this address the need of user persona [Persona Name]?"},
-            {"category_id": "qc_technical_feasibility", "name": "Technical Feasibility", "template": "What are the anticipated technical challenges or required technologies for implementing '{segment_id}'?"},
-            {"category_id": "qc_term_definition", "name": "Terminology Definition", "template": "Could you provide a precise definition for the term '[Ambiguous Term]' used in segment '{segment_id}'?"},
-            {"category_id": "qc_extraction_ambiguity", "name": "Extraction Ambiguity Resolution", "template": "The extraction process flagged segment '{segment_id}' as potentially ambiguous. Could you confirm if the interpretation '[Agent's Interpretation]' is correct?"},
-            {"category_id": "qc_acceptance_criteria", "name": "Acceptance Criteria Detail", "template": "The acceptance criteria for user story '{segment_id}' seem incomplete/untestable regarding [Specific Aspect]. Could you provide more specific, verifiable criteria?"}
+          {
+            "category_id": "qc_req_clarity",
+            "name": "Requirement Clarity",
+            "template": "Regarding requirement segment '{segment_id}', could you clarify the expected behavior when [specific condition]? OR What are the precise inputs/outputs for this function/feature?"
+          },
+          {
+            "category_id": "qc_constraint_validation",
+            "name": "Constraint Validation/Interpretation",
+            "template": "Constraint '{segment_id}' states '[Constraint Text]'. Does this apply to [specific component/scenario]? OR Is the performance constraint of [Value] feasible given [Technical Context]?"
+          },
+          {
+            "category_id": "qc_dependency_analysis",
+            "name": "Dependency Analysis",
+            "template": "What are the external API dependencies for implementing feature '{segment_id}'? OR Is component '{segment_id}' dependent on the completion of [Other Component/Task]?"
+          },
+          {
+            "category_id": "qc_edge_case_handling",
+            "name": "Edge Case Handling",
+            "template": "How should the system handle [specific edge case, e.g., null input, network failure, max load] related to requirement '{segment_id}'?"
+          },
+          {
+            "category_id": "qc_alternative_exploration",
+            "name": "Alternative Technical Exploration",
+            "template": "For implementing '{segment_id}', have alternative approaches like [Approach A] vs [Approach B] been considered? What are the key trade-offs (e.g., performance, complexity)?"
+          },
+          {
+            "category_id": "qc_goal_alignment",
+            "name": "Goal & User Alignment",
+            "template": "How does requirement/feature '{segment_id}' contribute to the primary project goal of [Project Goal]? OR How does this address the need of user persona [Persona Name]?"
+          },
+          {
+            "category_id": "qc_technical_feasibility",
+            "name": "Technical Feasibility",
+            "template": "What are the anticipated technical challenges or required technologies for implementing '{segment_id}'?"
+          },
+          {
+            "category_id": "qc_term_definition",
+            "name": "Terminology Definition",
+            "template": "Could you provide a precise definition for the term '[Ambiguous Term]' used in segment '{segment_id}'?"
+          },
+          {
+            "category_id": "qc_extraction_ambiguity",
+            "name": "Extraction Ambiguity Resolution",
+            "template": "The extraction process flagged segment '{segment_id}' as potentially ambiguous. Could you confirm if the interpretation '[Agent's Interpretation]' is correct?"
+          },
+          {
+            "category_id": "qc_acceptance_criteria",
+            "name": "Acceptance Criteria Detail",
+            "template": "The acceptance criteria for user story '{segment_id}' seem incomplete/untestable regarding [Specific Aspect]. Could you provide more specific, verifiable criteria?"
+          }
         ]
       },
-      "synergy_kb_references": ["kb_synergy_operational#operational_framework.modes.mode_planning", "kb_problem_solving_framework", "kb_reasoning_advanced", "kb_synergy_implementation_details#detailed_user_interaction_patterns", "agent_reasoning_output_validation_protocol", "#mod_doc_ingestion_extraction"]
+      "synergy_kb_references": [
+        "kb_synergy_operational#operational_framework.modes.mode_planning",
+        "kb_problem_solving_framework",
+        "kb_reasoning_advanced",
+        "kb_synergy_implementation_details#detailed_user_interaction_patterns",
+        "agent_reasoning_output_validation_protocol",
+        "#mod_doc_ingestion_extraction"
+      ]
     }
   },
   "mod_adversarial_self_critique": {
-     "module_id": "mod_adversarial_self_critique",
-     "name": "Synergy Adversarial Self-Critique Protocol (SASC)",
-     "description": "Structured internal critique of generated artifacts (plans, code, designs, documentation, extraction results) simulating a skeptical reviewer. Enhances `kb_synergy_operational#mandatory_internal_validation_protocol` and `kb_reasoning_advanced#mod-validation` by providing specific checklists and process.",
+    "module_id": "mod_adversarial_self_critique",
+    "name": "Synergy Adversarial Self-Critique Protocol (SASC)",
+    "description": "Structured internal critique of generated artifacts (plans, code, designs, documentation, extraction results) simulating a skeptical reviewer. Enhances `kb_synergy_operational#mandatory_internal_validation_protocol` and `kb_reasoning_advanced#mod-validation` by providing specific checklists and process.",
     "process_definition": {
       "trigger_condition": [
         "Mandatory component of `kb_synergy_operational#mandatory_internal_validation_protocol`.",
@@ -355,157 +817,294 @@
       ],
       "goal": "Systematically identify flaws, risks, requirement non-conformities, and quality deficits in internally generated artifacts (including extraction output) to ensure 10/10 quality before final validation or further use.",
       "steps": [
-        {"step_id": "sasc_step_1", "name": "Define Artifact & Context", "description": "Clearly identify the artifact under critique (e.g., DIEP JSON output, specific code function/module, architectural diagram description, test plan) and gather relevant context (requirements segments from DIEP output, NFRs, constraints, related code)."},
-        {"step_id": "sasc_step_2", "name": "Assume Skeptical Persona", "description": "Activate internal 'skeptical reviewer' mode via `<think>`. Frame analysis from a critical perspective (e.g., 'What could go wrong?', 'Is this truly complete?', 'Where are the hidden assumptions?')."},
-        {"step_id": "sasc_step_3", "name": "Select/Generate Critique Checklist", "description": "Select relevant categories from `#critique_checklist_definition` based on the artifact type. MANDATORILY include `cc_extraction_quality` when critiquing DIEP output. Use `kb_reasoning_advanced` to potentially generate more specific checklist items based on the artifact's content and context."},
-        {"step_id": "sasc_step_4", "name": "Execute Checklist Assessment", "description": "Systematically apply each selected checklist item to the artifact. Use `<think>` to document the check and the finding (Pass, Fail, N/A, Potential Issue + Specific Details). Leverage reasoning (`kb_reasoning_advanced`) and search tools (`kb_synergy_implementation_details#detailed_tool_protocols`) if necessary to verify claims or check external consistency (simulated)."},
-        {"step_id": "sasc_step_5", "name": "Synthesize Critique Findings", "description": "Compile a structured list of all identified issues ('Fail' or 'Potential Issue' findings). Rank issues by severity (Critical, High, Medium, Low) based on potential impact (e.g., security risk, unmet core requirement, performance degradation)."},
-        {"step_id": "sasc_step_6", "name": "Integrate with Validation Protocol Logging", "description": "Feed the synthesized findings (especially severity and description) into the relevant fields of the ongoing `agent_reasoning_output_validation_protocol` log, particularly `identified_issues_summary` and potentially `error_analysis_details` if immediate revision is triggered."},
-        {"step_id": "sasc_step_7", "name": "Trigger Refinement/Debugging (if needed)", "description": "If any 'High' or 'Critical' severity issues are found (or 'Medium' if below quality threshold), determine the appropriate next step: initiate self-correction using `kb_reasoning_advanced#tech-iterative-critique-refinement` or transition to Debugging Mode (`kb_synergy_operational#operational_framework.modes.mode_debugging`)."}
+        {
+          "step_id": "sasc_step_1",
+          "name": "Define Artifact & Context",
+          "description": "Clearly identify the artifact under critique (e.g., DIEP JSON output, specific code function/module, architectural diagram description, test plan) and gather relevant context (requirements segments from DIEP output, NFRs, constraints, related code)."
+        },
+        {
+          "step_id": "sasc_step_2",
+          "name": "Assume Skeptical Persona",
+          "description": "Activate internal 'skeptical reviewer' mode via `<think>`. Frame analysis from a critical perspective (e.g., 'What could go wrong?', 'Is this truly complete?', 'Where are the hidden assumptions?')."
+        },
+        {
+          "step_id": "sasc_step_3",
+          "name": "Select/Generate Critique Checklist",
+          "description": "Select relevant categories from `#critique_checklist_definition` based on the artifact type. MANDATORILY include `cc_extraction_quality` when critiquing DIEP output. Use `kb_reasoning_advanced` to potentially generate more specific checklist items based on the artifact's content and context."
+        },
+        {
+          "step_id": "sasc_step_4",
+          "name": "Execute Checklist Assessment",
+          "description": "Systematically apply each selected checklist item to the artifact. Use `<think>` to document the check and the finding (Pass, Fail, N/A, Potential Issue + Specific Details). Leverage reasoning (`kb_reasoning_advanced`) and search tools (`kb_synergy_implementation_details#detailed_tool_protocols`) if necessary to verify claims or check external consistency (simulated)."
+        },
+        {
+          "step_id": "sasc_step_5",
+          "name": "Synthesize Critique Findings",
+          "description": "Compile a structured list of all identified issues ('Fail' or 'Potential Issue' findings). Rank issues by severity (Critical, High, Medium, Low) based on potential impact (e.g., security risk, unmet core requirement, performance degradation)."
+        },
+        {
+          "step_id": "sasc_step_6",
+          "name": "Integrate with Validation Protocol Logging",
+          "description": "Feed the synthesized findings (especially severity and description) into the relevant fields of the ongoing `agent_reasoning_output_validation_protocol` log, particularly `identified_issues_summary` and potentially `error_analysis_details` if immediate revision is triggered."
+        },
+        {
+          "step_id": "sasc_step_7",
+          "name": "Trigger Refinement/Debugging (if needed)",
+          "description": "If any 'High' or 'Critical' severity issues are found (or 'Medium' if below quality threshold), determine the appropriate next step: initiate self-correction using `kb_reasoning_advanced#tech-iterative-critique-refinement` or transition to Debugging Mode (`kb_synergy_operational#operational_framework.modes.mode_debugging`)."
+        }
       ],
       "critique_checklist_definition": {
         "description": "Structured critique categories and example checklist items. Agent should select relevant categories and potentially generate more specific items.",
         "categories": [
-            {
-                "category_id": "cc_extraction_quality",
-                "name": "Extraction Quality (for DIEP output)",
-                "checklist_items_examples": [
-                    "**Losslessness:** Was any information from the source document summarized or omitted during extraction/clarification (Step DIEP 4)? Verify against original source reference.",
-                    "**Completeness:** Were all identifiable sections, tables, figures, lists, code blocks, requirements, constraints from the source captured in the JSON output?",
-                    "**Semantic Typing Accuracy:** Are the `semantic_type` tags assigned in Step DIEP 3 accurate based on content and context?",
-                    "**Structural Fidelity:** Does the nested JSON structure accurately reflect the document's hierarchy (headings, sections, lists)?",
-                    "**Relationship Accuracy:** Are dependencies and references mapped correctly in the `relationships` field (Step DIEP 5)?",
-                    "**Clarity & Normalization:** Is the `clarified_content` truly clearer and unambiguous while retaining original meaning (Step DIEP 4)?",
-                    "**Traceability:** Does each segment have a plausible `original_source_ref` linking back to the source?",
-                    "**Schema Compliance:** Does the final JSON strictly adhere to the `#mod_doc_ingestion_extraction.output_schema_definition`?",
-                    "**Flag Accuracy:** Are `processing_flags` (e.g., 'ambiguity_detected') correctly applied?"
-                ]
-            },
-            {
-                "category_id": "cc_logic_correctness",
-                "name": "Logical Correctness & Algorithm Accuracy",
-                "checklist_items_examples": [
-                    "Does the code/algorithm correctly implement the intended logic specified in requirements (DIEP output)?",
-                    "Are all state transitions handled correctly?",
-                    "Are calculations mathematically sound and precise?",
-                    "Are there potential race conditions or deadlocks (in concurrent scenarios)?",
-                    "Are there any off-by-one errors, incorrect boundary conditions, or infinite loops?"
-                ]
-            },
-            {
-                "category_id": "cc_req_adherence",
-                "name": "Requirement Adherence",
-                "checklist_items_examples": [
-                    "Does the artifact fully address all relevant functional requirements extracted during DIEP?",
-                    "Does it meet all specified, measurable Non-Functional Requirements (Performance, Security, Scalability, etc.)?",
-                    "Does the output format match the specification?",
-                    "Are all Acceptance Criteria for related User Stories met?"
-                ]
-            },
-            {
-                "category_id": "cc_code_quality",
-                "name": "Code Quality & Maintainability",
-                "checklist_items_examples": [
-                    "Does the code adhere to principles in `kb_synergy_implementation_details#advanced_coding_practices`?",
-                    "Is the code clear, readable, and self-explanatory?",
-                    "Is it modular? Are components/functions focused (Single Responsibility Principle)?",
-                    "Is there unnecessary code duplication (DRY principle)?",
-                    "Is the code reasonably testable (simulated unit/integration tests)?",
-                    "Does it follow inferred project conventions (naming, style)?"
-                ]
-            },
-            {
-                "category_id": "cc_performance",
-                "name": "Performance Efficiency",
-                "checklist_items_examples": [
-                    "What is the theoretical time/space complexity? Is it appropriate?",
-                    "Are there obvious bottlenecks (e.g., nested loops over large data, inefficient queries, excessive I/O)?",
-                    "Is resource usage (CPU, memory - conceptual) optimized?",
-                    "Does the design consider scalability based on NFRs?",
-                    "Are caching strategies employed where appropriate?"
-                ]
-            },
-            {
-                "category_id": "cc_security",
-                "name": "Security Vulnerabilities",
-                "checklist_items_examples": [
-                    "Is all external input validated/sanitized (`#advanced_coding_practices.topics.coding_security_patterns.sec_input_validation`)?",
-                    "Are parameterized queries used for DB interaction (`#advanced_coding_practices.topics.coding_security_patterns.sec_parameterized_queries`)?",
-                    "Is output encoding applied correctly to prevent XSS?",
-                    "Are authentication/authorization checks implemented correctly and enforced?",
-                    "Is sensitive data handled securely (encryption, minimal exposure)?",
-                    "Are dependencies checked for known vulnerabilities (simulated)?",
-                    "Does it adhere to the Principle of Least Privilege?"
-                ]
-            },
-            {
-                "category_id": "cc_error_handling",
-                "name": "Error Handling & Robustness",
-                "checklist_items_examples": [
-                    "Are potential errors (exceptions, invalid states, external failures) anticipated and handled?",
-                    "Is error handling specific (`#advanced_coding_practices.topics.coding_error_handling_patterns.ehp_specific_catch`)?",
-                    "Are resources consistently cleaned up (`#advanced_coding_practices.topics.coding_error_handling_patterns.ehp_finally_cleanup`)?",
-                    "Are error messages informative yet safe (not leaking internal details)?",
-                    "Does the system degrade gracefully under failure conditions?",
-                    "Are all identified edge cases from requirements/metaprompting handled?"
-                ]
-            },
-            {
-                "category_id": "cc_constraint_sat",
-                "name": "Constraint Satisfaction",
-                "checklist_items_examples": [
-                    "Does the artifact adhere to all technical constraints (language versions, library restrictions, resource limits)?",
-                    "Does it respect business rules or operational constraints defined in requirements?",
-                    "Does UI adhere to specified design guidelines or accessibility standards (WCAG)?"
-                ]
-            },
-            {
-                "category_id": "cc_architecture",
-                "name": "Architectural Soundness (for design plans)",
-                "checklist_items_examples": [
-                    "Does the design follow established architectural patterns (if applicable)?",
-                    "Are component responsibilities clear and well-defined?",
-                    "Are interfaces between components clean and minimal?",
-                    "Is the data flow logical and efficient?",
-                    "Does the architecture support required NFRs (scalability, maintainability, reliability)?"
-                ]
-            }
+          {
+            "category_id": "cc_extraction_quality",
+            "name": "Extraction Quality (for DIEP output)",
+            "checklist_items_examples": [
+              "**Losslessness:** Was any information from the source document summarized or omitted during extraction/clarification (Step DIEP 4)? Verify against original source reference.",
+              "**Completeness:** Were all identifiable sections, tables, figures, lists, code blocks, requirements, constraints from the source captured in the JSON output?",
+              "**Semantic Typing Accuracy:** Are the `semantic_type` tags assigned in Step DIEP 3 accurate based on content and context?",
+              "**Structural Fidelity:** Does the nested JSON structure accurately reflect the document's hierarchy (headings, sections, lists)?",
+              "**Relationship Accuracy:** Are dependencies and references mapped correctly in the `relationships` field (Step DIEP 5)?",
+              "**Clarity & Normalization:** Is the `clarified_content` truly clearer and unambiguous while retaining original meaning (Step DIEP 4)?",
+              "**Traceability:** Does each segment have a plausible `original_source_ref` linking back to the source?",
+              "**Schema Compliance:** Does the final JSON strictly adhere to the `#mod_doc_ingestion_extraction.output_schema_definition`?",
+              "**Flag Accuracy:** Are `processing_flags` (e.g., 'ambiguity_detected') correctly applied?"
+            ]
+          },
+          {
+            "category_id": "cc_logic_correctness",
+            "name": "Logical Correctness & Algorithm Accuracy",
+            "checklist_items_examples": [
+              "Does the code/algorithm correctly implement the intended logic specified in requirements (DIEP output)?",
+              "Are all state transitions handled correctly?",
+              "Are calculations mathematically sound and precise?",
+              "Are there potential race conditions or deadlocks (in concurrent scenarios)?",
+              "Are there any off-by-one errors, incorrect boundary conditions, or infinite loops?"
+            ]
+          },
+          {
+            "category_id": "cc_req_adherence",
+            "name": "Requirement Adherence",
+            "checklist_items_examples": [
+              "Does the artifact fully address all relevant functional requirements extracted during DIEP?",
+              "Does it meet all specified, measurable Non-Functional Requirements (Performance, Security, Scalability, etc.)?",
+              "Does the output format match the specification?",
+              "Are all Acceptance Criteria for related User Stories met?"
+            ]
+          },
+          {
+            "category_id": "cc_code_quality",
+            "name": "Code Quality & Maintainability",
+            "checklist_items_examples": [
+              "Does the code adhere to principles in `kb_synergy_implementation_details#advanced_coding_practices`?",
+              "Is the code clear, readable, and self-explanatory?",
+              "Is it modular? Are components/functions focused (Single Responsibility Principle)?",
+              "Is there unnecessary code duplication (DRY principle)?",
+              "Is the code reasonably testable (simulated unit/integration tests)?",
+              "Does it follow inferred project conventions (naming, style)?"
+            ]
+          },
+          {
+            "category_id": "cc_performance",
+            "name": "Performance Efficiency",
+            "checklist_items_examples": [
+              "What is the theoretical time/space complexity? Is it appropriate?",
+              "Are there obvious bottlenecks (e.g., nested loops over large data, inefficient queries, excessive I/O)?",
+              "Is resource usage (CPU, memory - conceptual) optimized?",
+              "Does the design consider scalability based on NFRs?",
+              "Are caching strategies employed where appropriate?"
+            ]
+          },
+          {
+            "category_id": "cc_security",
+            "name": "Security Vulnerabilities",
+            "checklist_items_examples": [
+              "Is all external input validated/sanitized (`#advanced_coding_practices.topics.coding_security_patterns.sec_input_validation`)?",
+              "Are parameterized queries used for DB interaction (`#advanced_coding_practices.topics.coding_security_patterns.sec_parameterized_queries`)?",
+              "Is output encoding applied correctly to prevent XSS?",
+              "Are authentication/authorization checks implemented correctly and enforced?",
+              "Is sensitive data handled securely (encryption, minimal exposure)?",
+              "Are dependencies checked for known vulnerabilities (simulated)?",
+              "Does it adhere to the Principle of Least Privilege?"
+            ]
+          },
+          {
+            "category_id": "cc_error_handling",
+            "name": "Error Handling & Robustness",
+            "checklist_items_examples": [
+              "Are potential errors (exceptions, invalid states, external failures) anticipated and handled?",
+              "Is error handling specific (`#advanced_coding_practices.topics.coding_error_handling_patterns.ehp_specific_catch`)?",
+              "Are resources consistently cleaned up (`#advanced_coding_practices.topics.coding_error_handling_patterns.ehp_finally_cleanup`)?",
+              "Are error messages informative yet safe (not leaking internal details)?",
+              "Does the system degrade gracefully under failure conditions?",
+              "Are all identified edge cases from requirements/metaprompting handled?"
+            ]
+          },
+          {
+            "category_id": "cc_constraint_sat",
+            "name": "Constraint Satisfaction",
+            "checklist_items_examples": [
+              "Does the artifact adhere to all technical constraints (language versions, library restrictions, resource limits)?",
+              "Does it respect business rules or operational constraints defined in requirements?",
+              "Does UI adhere to specified design guidelines or accessibility standards (WCAG)?"
+            ]
+          },
+          {
+            "category_id": "cc_architecture",
+            "name": "Architectural Soundness (for design plans)",
+            "checklist_items_examples": [
+              "Does the design follow established architectural patterns (if applicable)?",
+              "Are component responsibilities clear and well-defined?",
+              "Are interfaces between components clean and minimal?",
+              "Is the data flow logical and efficient?",
+              "Does the architecture support required NFRs (scalability, maintainability, reliability)?"
+            ]
+          }
         ]
       },
-      "synergy_kb_references": ["agent_reasoning_output_validation_protocol", "kb_reasoning_advanced#mod-validation", "kb_reasoning_advanced#tech-iterative-critique-refinement", "kb_synergy_implementation_details#advanced_coding_practices", "kb_synergy_operational#mandatory_internal_validation_protocol", "#mod_doc_ingestion_extraction"]
+      "synergy_kb_references": [
+        "agent_reasoning_output_validation_protocol",
+        "kb_reasoning_advanced#mod-validation",
+        "kb_reasoning_advanced#tech-iterative-critique-refinement",
+        "kb_synergy_implementation_details#advanced_coding_practices",
+        "kb_synergy_operational#mandatory_internal_validation_protocol",
+        "#mod_doc_ingestion_extraction"
+      ]
     }
   },
-   "mod_integration_orchestration": {
-     "module_id": "mod_integration_orchestration",
-     "name": "Synergy Cross-KB Integration & Orchestration",
-     "description": "Defines integration points for `kb_synergy_files_extractor` with the core 5 Synergy KBs.",
-     "integration_points": [
-       {"point_id": "io_diep_planning", "description": "Synergy-DIEP (`#mod_doc_ingestion_extraction`) invoked during `kb_synergy_operational#operational_framework.modes.mode_planning`. Its JSON output artifact becomes primary input for detailed plan formulation and subsequent steps.", "input": "Raw document/text", "output": "Structured JSON artifact"},
-       {"point_id": "io_spip_planning", "description": "SPIP (`#mod_proactive_inquiry`) invoked during `kb_synergy_operational#operational_framework.modes.mode_planning` using DIEP output; clarifications update the DIEP JSON artifact.", "input": "DIEP JSON output, Task Definition", "output": "Updated DIEP JSON artifact, Clarification Log"},
-       {"point_id": "io_sasc_validation", "description": "SASC (`#mod_adversarial_self_critique`) invoked during `kb_synergy_operational#operational_framework.modes.mode_execution` after artifact generation AND as part of the final `kb_synergy_operational#mandatory_internal_validation_protocol`. Applies critique (incl. `#critique_checklist_definition.cc_extraction_quality`) to relevant artifacts.", "input": "Generated Artifact (DIEP JSON, Code, Plan), Requirements Context", "output": "Critique Findings, Potentially Revised Artifact"},
-       {"point_id": "io_config_reasoning", "description": "`#mod_configuration_adaptability` parameters influence `kb_reasoning_advanced` techniques (e.g., depth of decomposition, strictness of validation) used within DIEP/SPIP/SASC.", "input": "Configuration Parameters", "output": "Adjusted reasoning behavior"},
-       {"point_id": "io_impl_details_ref", "description": "DIEP, SPIP, SASC protocols internally reference specific tool syntax, coding patterns, and interaction patterns from `kb_synergy_implementation_details` as needed for execution.", "input": "Protocol Step Requirement", "output": "Specific Tool Command / Code Pattern / Communication Pattern"}
+  "mod_integration_orchestration": {
+    "module_id": "mod_integration_orchestration",
+    "name": "Synergy Cross-KB Integration & Orchestration",
+    "description": "Defines integration points for `kb_synergy_files_extractor` with the core 5 Synergy KBs.",
+    "integration_points": [
+      {
+        "point_id": "io_diep_planning",
+        "description": "Synergy-DIEP (`#mod_doc_ingestion_extraction`) invoked during `kb_synergy_operational#operational_framework.modes.mode_planning`. Its JSON output artifact becomes primary input for detailed plan formulation and subsequent steps.",
+        "input": "Raw document/text",
+        "output": "Structured JSON artifact"
+      },
+      {
+        "point_id": "io_spip_planning",
+        "description": "SPIP (`#mod_proactive_inquiry`) invoked during `kb_synergy_operational#operational_framework.modes.mode_planning` using DIEP output; clarifications update the DIEP JSON artifact.",
+        "input": "DIEP JSON output, Task Definition",
+        "output": "Updated DIEP JSON artifact, Clarification Log"
+      },
+      {
+        "point_id": "io_sasc_validation",
+        "description": "SASC (`#mod_adversarial_self_critique`) invoked during `kb_synergy_operational#operational_framework.modes.mode_execution` after artifact generation AND as part of the final `kb_synergy_operational#mandatory_internal_validation_protocol`. Applies critique (incl. `#critique_checklist_definition.cc_extraction_quality`) to relevant artifacts.",
+        "input": "Generated Artifact (DIEP JSON, Code, Plan), Requirements Context",
+        "output": "Critique Findings, Potentially Revised Artifact"
+      },
+      {
+        "point_id": "io_config_reasoning",
+        "description": "`#mod_configuration_adaptability` parameters influence `kb_reasoning_advanced` techniques (e.g., depth of decomposition, strictness of validation) used within DIEP/SPIP/SASC.",
+        "input": "Configuration Parameters",
+        "output": "Adjusted reasoning behavior"
+      },
+      {
+        "point_id": "io_impl_details_ref",
+        "description": "DIEP, SPIP, SASC protocols internally reference specific tool syntax, coding patterns, and interaction patterns from `kb_synergy_implementation_details` as needed for execution.",
+        "input": "Protocol Step Requirement",
+        "output": "Specific Tool Command / Code Pattern / Communication Pattern"
+      }
     ],
-     "orchestration_logic": [
-       {"logic_id": "orch_priority", "description": "Protocols operate at defined phases within the `kb_synergy_operational#operational_framework`. Core principles (`kb_synergy_operational#core_principles`) are pervasive and apply continuously."},
-       {"logic_id": "orch_override", "description": "Synergy's meta-reasoning (`kb_reasoning_advanced#tech-meta-reasoning`) and intelligent autonomy principle (`kb_synergy_operational#core_principles.principle_intelligent_autonomy_guidance`) allow adaptation or override of specific protocol steps *with explicit justification* logged via `<think>` and `agent_reasoning_output_validation_protocol`."}
+    "orchestration_logic": [
+      {
+        "logic_id": "orch_priority",
+        "description": "Protocols operate at defined phases within the `kb_synergy_operational#operational_framework`. Core principles (`kb_synergy_operational#core_principles`) are pervasive and apply continuously."
+      },
+      {
+        "logic_id": "orch_override",
+        "description": "Synergy's meta-reasoning (`kb_reasoning_advanced#tech-meta-reasoning`) and intelligent autonomy principle (`kb_synergy_operational#core_principles.principle_intelligent_autonomy_guidance`) allow adaptation or override of specific protocol steps *with explicit justification* logged via `<think>` and `agent_reasoning_output_validation_protocol`."
+      }
     ],
-     "synergy_kb_references": ["kb_synergy_operational#knowledge_integration_framework", "kb_reasoning_advanced#tech-meta-reasoning", "kb_synergy_operational#principle_intelligent_autonomy_guidance"]
-   },
+    "synergy_kb_references": [
+      "kb_synergy_operational#knowledge_integration_framework",
+      "kb_reasoning_advanced#tech-meta-reasoning",
+      "kb_synergy_operational#principle_intelligent_autonomy_guidance"
+    ]
+  },
   "mod_configuration_adaptability": {
     "module_id": "mod_configuration_adaptability",
-     "name": "Configuration & Adaptability Parameters (Extractor KB)",
-     "description": "Tunable parameters specifically influencing the enhanced processes defined within this KB (`kb_synergy_files_extractor`). These complement general configurations in `kb_reasoning_advanced`.",
-     "parameters": [
-       {"param_id": "config_diep_depth_factor", "value": 1.0, "type": "float", "range": [0.5, 2.0], "description": "Multiplier for adjusting simulated analysis depth in Synergy-DIEP (`#mod_doc_ingestion_extraction`) based on document complexity. Higher values increase detail."},
-       {"param_id": "config_diep_structure_confidence_threshold", "value": 0.7, "type": "float", "range": [0.0, 1.0], "description": "Minimum confidence required for inferred document structure during DIEP (`#mod_doc_ingestion_extraction.steps.diep_step_2`) before flagging ambiguity ('ambiguity_detected' flag)."},
-        {"param_id": "config_diep_max_recursion_depth", "value": 10, "type": "integer", "range": [1, 30], "description": "Maximum recursion depth allowed during hierarchical decomposition in DIEP (`#mod_doc_ingestion_extraction.steps.diep_step_2`). Prevents excessive nesting."},
-        {"param_id": "config_spip_auto_trigger_confidence", "value": 0.9, "type": "float", "range": [0.0, 1.0], "description": "Internal confidence threshold below which the Proactive Inquiry Protocol (`#mod_proactive_inquiry`) is automatically triggered after initial analysis."},
-        {"param_id": "config_spip_max_user_questions_per_cycle", "value": 3, "type": "integer", "range": [0, 10], "description": "Maximum number of *critical* questions to formulate for the user in a single SPIP cycle (`#mod_proactive_inquiry.steps.spip_step_5`)."},
-        {"param_id": "config_sasc_revision_severity_threshold", "value": "High", "type": "enum", "options": ["Medium", "High", "Critical"], "description": "Minimum severity level of an issue identified during Adversarial Self-Critique (`#mod_adversarial_self_critique`) that MANDATES triggering a revision/debugging cycle."},
-        {"param_id": "config_sasc_checklist_mode", "value": "Standard", "type": "enum", "options": ["Basic", "Standard", "Exhaustive"], "description": "Controls the level of detail and number of items applied from the SASC checklists (`#mod_adversarial_self_critique.critique_checklist_definition`). 'Exhaustive' increases rigor but also cost."}
+    "name": "Configuration & Adaptability Parameters (Extractor KB)",
+    "description": "Tunable parameters specifically influencing the enhanced processes defined within this KB (`kb_synergy_files_extractor`). These complement general configurations in `kb_reasoning_advanced`.",
+    "parameters": [
+      {
+        "param_id": "config_diep_depth_factor",
+        "value": 1.0,
+        "type": "float",
+        "range": [
+          0.5,
+          2.0
+        ],
+        "description": "Multiplier for adjusting simulated analysis depth in Synergy-DIEP (`#mod_doc_ingestion_extraction`) based on document complexity. Higher values increase detail."
+      },
+      {
+        "param_id": "config_diep_structure_confidence_threshold",
+        "value": 0.7,
+        "type": "float",
+        "range": [
+          0.0,
+          1.0
+        ],
+        "description": "Minimum confidence required for inferred document structure during DIEP (`#mod_doc_ingestion_extraction.steps.diep_step_2`) before flagging ambiguity ('ambiguity_detected' flag)."
+      },
+      {
+        "param_id": "config_diep_max_recursion_depth",
+        "value": 10,
+        "type": "integer",
+        "range": [
+          1,
+          30
+        ],
+        "description": "Maximum recursion depth allowed during hierarchical decomposition in DIEP (`#mod_doc_ingestion_extraction.steps.diep_step_2`). Prevents excessive nesting."
+      },
+      {
+        "param_id": "config_spip_auto_trigger_confidence",
+        "value": 0.9,
+        "type": "float",
+        "range": [
+          0.0,
+          1.0
+        ],
+        "description": "Internal confidence threshold below which the Proactive Inquiry Protocol (`#mod_proactive_inquiry`) is automatically triggered after initial analysis."
+      },
+      {
+        "param_id": "config_spip_max_user_questions_per_cycle",
+        "value": 3,
+        "type": "integer",
+        "range": [
+          0,
+          10
+        ],
+        "description": "Maximum number of *critical* questions to formulate for the user in a single SPIP cycle (`#mod_proactive_inquiry.steps.spip_step_5`)."
+      },
+      {
+        "param_id": "config_sasc_revision_severity_threshold",
+        "value": "High",
+        "type": "enum",
+        "options": [
+          "Medium",
+          "High",
+          "Critical"
+        ],
+        "description": "Minimum severity level of an issue identified during Adversarial Self-Critique (`#mod_adversarial_self_critique`) that MANDATES triggering a revision/debugging cycle."
+      },
+      {
+        "param_id": "config_sasc_checklist_mode",
+        "value": "Standard",
+        "type": "enum",
+        "options": [
+          "Basic",
+          "Standard",
+          "Exhaustive"
+        ],
+        "description": "Controls the level of detail and number of items applied from the SASC checklists (`#mod_adversarial_self_critique.critique_checklist_definition`). 'Exhaustive' increases rigor but also cost."
+      }
     ],
-      "synergy_kb_references": ["kb_reasoning_advanced#mod-reasoning-behaviors", "kb_reasoning_advanced#mod-implementation.dynamic_adaptation"]
-   }
+    "synergy_kb_references": [
+      "kb_reasoning_advanced#mod-reasoning-behaviors",
+      "kb_reasoning_advanced#mod-implementation.dynamic_adaptation"
+    ]
+  }
 }
-
