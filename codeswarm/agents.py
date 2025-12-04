@@ -25,6 +25,7 @@ def load_kb_content(kb_files: list) -> str:
                 content.append("--- End Module ---")
         except FileNotFoundError:
             pass # Or use logger if we import it here, but pass is fine for now to avoid circular import if logger imports config
+            print(f"Warning: KB file not found: {kb_file}")
     return "\n".join(content)
 
 def format_instructions(prompt_data: dict, kb_files: list = None) -> str:
@@ -70,6 +71,7 @@ def get_admin_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
     prompt_data = load_prompt("admin_prompt.json")
     # Admin uses Problem Solving Framework and core reasoning
     kb_files = ["kb_framework_problem_solving.json", "kb_core_reasoning.json"]
+    kb_files = ["Problem Solving Framework.json", "Reasoning Knowledge Base.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
     return Agent(
