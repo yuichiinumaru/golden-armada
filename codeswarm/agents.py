@@ -8,13 +8,32 @@ from . import tools
 from .models import AdminTaskOutput, AdminLogUpdateOutput, DevAgentOutput, RevisorAgentOutput
 
 PROMPT_DIR = Path(__file__).parent / "prompts"
+KB_DIR = PROMPT_DIR / "kb"
 
 def load_prompt(filename: str) -> dict:
     with open(PROMPT_DIR / filename, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def format_instructions(prompt_data: dict) -> str:
+def load_kb_content(kb_files: list) -> str:
+    content = []
+    for kb_file in kb_files:
+        try:
+            with open(KB_DIR / kb_file, "r", encoding="utf-8") as f:
+                kb_data = json.load(f)
+                content.append(f"--- Knowledge Base Module: {kb_file} ---")
+                content.append(json.dumps(kb_data, indent=2))
+                content.append("--- End Module ---")
+        except FileNotFoundError:
+            pass # Or use logger if we import it here, but pass is fine for now to avoid circular import if logger imports config
+    return "\n".join(content)
+
+def format_instructions(prompt_data: dict, kb_files: list = None) -> str:
     instructions = []
+
+    if kb_files:
+        kb_content = load_kb_content(kb_files)
+        instructions.append("INTERNAL KNOWLEDGE BASE (Reference this for reasoning and methodologies):")
+        instructions.append(kb_content)
 
     if "explicit_processing_instruction" in prompt_data:
         instructions.append(prompt_data["explicit_processing_instruction"])
@@ -49,7 +68,9 @@ def format_instructions(prompt_data: dict) -> str:
 
 def get_admin_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
     prompt_data = load_prompt("admin_prompt.json")
-    instructions = format_instructions(prompt_data)
+    # Admin uses Problem Solving Framework and core reasoning
+    kb_files = ["kb_framework_problem_solving.json", "kb_core_reasoning.json"]
+    instructions = format_instructions(prompt_data, kb_files=kb_files)
 
     return Agent(
         name="AdminAgent",
@@ -79,24 +100,25 @@ def get_admin_logger_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
 
 def get_dev_agent(dev_id: int, model_id: str = config.DEV_MODEL_STR) -> Agent:
     prompt_data = load_prompt("dev_prompt.json")
-    instructions = format_instructions(prompt_data)
-
-    # Inject dev_id into instructions if needed, though the prompt says it's in input.
-    # The prompt says: "Your specific ID will be provided in the task input."
+    # Dev uses Software Engineer operational KBs
+    kb_files = ["kb_role_software_engineer.json", "kb_synergy_software_engineer_operational.json"]
+    instructions = format_instructions(prompt_data, kb_files=kb_files)
 
     return Agent(
         name=f"DevAgent_{dev_id}",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
         tools=[tools.read_file, tools.write_file, tools.list_folder_contents,
-               tools.search_files_content, tools.chunk_file],
+               tools.search_files_content, tools.chunk_file, tools.execute_python_code],
         output_schema=DevAgentOutput,
         structured_outputs=True,
     )
 
 def get_revisor_agent(revisor_id: int, model_id: str = config.REVISOR_MODEL_STR) -> Agent:
     prompt_data = load_prompt("revisor_prompt.json")
-    instructions = format_instructions(prompt_data)
+    # Revisor uses Reasoning validation and software engineer synergy
+    kb_files = ["kb_validation_reasoning.json", "kb_role_software_engineer.json"]
+    instructions = format_instructions(prompt_data, kb_files=kb_files)
 
     return Agent(
         name=f"RevisorAgent_{revisor_id}",
