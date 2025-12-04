@@ -44,6 +44,9 @@ class AgentOS:
             logger.info(f"AgentOS: State saved to {self.state_file_path}")
         except Exception as e:
             logger.error(f"AgentOS: Error saving state: {e}")
+            print(f"AgentOS: State saved to {self.state_file_path}")
+        except Exception as e:
+            print(f"AgentOS: Error saving state: {e}")
 
     def load_state(self):
         """Loads state from a JSON file if it exists."""
@@ -79,6 +82,34 @@ class AgentOS:
 
         for r in range(start_round, self.rounds + 1):
             logger.info(f"=== Round {r} ===")
+
+                # Restore session state
+                if "session_state" in state_data:
+                    self.session_state = state_data["session_state"]
+
+                # Restore Task Tree
+                # Since TaskTree is a Pydantic model, we can reconstruct it
+                if "task_tree" in state_data:
+                    self.tree = TaskTree.model_validate(state_data["task_tree"])
+
+                print(f"AgentOS: State loaded from {self.state_file_path}")
+            except Exception as e:
+                print(f"AgentOS: Error loading state: {e}")
+
+    def run(self):
+        print(f"AgentOS: Starting CodeSwarm for goal: {self.goal}")
+
+        start_round = self.session_state.get("round", 0) + 1
+        # If we loaded a completed state, start_round might be rounds + 1
+        if start_round > self.rounds:
+             print(f"AgentOS: Workflow already completed up to round {self.rounds}. Continuing if you want more rounds or start new.")
+             # For now, we just respect the requested rounds if they are greater than current
+             if start_round > self.rounds:
+                 print("AgentOS: Requested rounds completed.")
+                 return
+
+        for r in range(start_round, self.rounds + 1):
+            print(f"\n=== Round {r} ===")
             self.session_state["round"] = r
 
             # 1. Planning Phase (Admin expands the tree)
@@ -236,11 +267,13 @@ class AgentOS:
         while attempt < max_retries and not approved:
             attempt += 1
             logger.info(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create} (Attempt {attempt}/{max_retries})...")
+            print(f"  [Dev {task.dev_id}] {task.file_to_edit_or_create} (Attempt {attempt}/{max_retries})...")
 
             dev_response = dev_agent.run(json.dumps(dev_input))
             dev_output = dev_response.content
 
             logger.info(f"  [Revisor {task.revisor_id}] Reviewing (Attempt {attempt}/{max_retries})...")
+            print(f"  [Revisor {task.revisor_id}] Reviewing (Attempt {attempt}/{max_retries})...")
             revisor_response = revisor_agent.run(json.dumps(revisor_input))
             revisor_output = revisor_response.content
 
@@ -249,6 +282,9 @@ class AgentOS:
                 logger.info(f"  [Revisor {task.revisor_id}] Approved!")
             else:
                 logger.info(f"  [Revisor {task.revisor_id}] Rejected. Feedback: {revisor_output.review_comments}")
+                print(f"  [Revisor {task.revisor_id}] Approved!")
+            else:
+                print(f"  [Revisor {task.revisor_id}] Rejected. Feedback: {revisor_output.review_comments}")
                 # Feedback loop: Update dev input with rejection feedback
                 dev_input["previous_feedback"] = f"Attempt {attempt} rejected. Revisor feedback: {revisor_output.review_comments}. Please fix."
 
