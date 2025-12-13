@@ -28,9 +28,43 @@
     - Adapt `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` from DeepCode.
     - Focus on "Single function call per message" and "Build incrementally".
 
+## VulnerableCode Integration
+
+### Research & Analysis
+- [x] Analyze `nexB/vulnerablecode` repo.
+- [x] Generate Analysis Report (`docs/references/vulnerablecode_analysis.md`).
+
+### Porting: Security Utilities
+- [ ] **Task 6**: Port Version Comparison Logic.
+    - Add `univers` and `packageurl-python` to `requirements.txt`.
+    - Extract `resolve_version_range` from `references/vulnerablecode/vulnerabilities/utils.py`.
+    - Create `codeswarm/utils/security.py`.
+
+### Integration: RevisorAgent Upgrade
+- [ ] **Task 7**: Add `DependencyCheck` capability to `RevisorAgent`.
+    - When reviewing `requirements.txt` or `package.json`, parse dependencies using `packageurl`.
+    - (Optional) Check against a local list of known bad versions.
+
+## Context-Engineering Integration
+
+### Research & Analysis
+- [x] Analyze `davidkimai/Context-Engineering` repo.
+- [x] Generate Analysis Report (`docs/references/Context-Engineering_analysis.md`).
+
+### Porting: Prompts
+- [ ] **Task 9**: Create `codeswarm/prompts/verification_loop.md`.
+    - Adapt the template from `references/Context-Engineering/20_templates/PROMPTS/verification_loop.md`.
+- [ ] **Task 10**: Create `codeswarm/schemas/agent_protocol.json`.
+    - Adapt the schema from `references/Context-Engineering/20_templates/PROMPTS/protocol.agent.md`.
+
+### Integration: RevisorAgent Logic
+- [ ] **Task 11**: Update `RevisorAgent` logic.
+    - Before approving, inject the `verification_loop.md` content into the context.
+    - Require the LLM to output "Verification Process" steps.
+
 ### Verification
 - [ ] **Task 5**: End-to-End Test.
-    - Run CodeSwarm on a sample task (e.g., "Create a Snake game").
-    - Verify it generates a `plan.yaml`.
-    - Verify the file structure is created automatically.
-    - Verify `DevAgent` follows the new rigorous protocol.
+- [ ] **Task 8**: Security Test.
+- [ ] **Task 12**: Verification Loop Test.
+    - Give `RevisorAgent` a buggy code snippet.
+    - Verify it finds the bug using the structured loop.
