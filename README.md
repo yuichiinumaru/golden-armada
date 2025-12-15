@@ -1,6 +1,6 @@
 # CodeSwarm
 
-CodeSwarm is a multi-agent coding system orchestrated by the [Agno](https://agno.com) framework (formerly Phidata).
+CodeSwarm is a multi-agent coding system orchestrated by the [Agno](https://agno.com) framework.
 
 ## Prerequisites
 
