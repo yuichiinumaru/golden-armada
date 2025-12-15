@@ -29,16 +29,6 @@ Run the main module from the project root:
 python -m codeswarm.main --goal "Your project goal" --path "your_project_path" --rounds 1
 ```
 
-## Migration Notes
-
-This project has been migrated from Google ADK to Agno. The legacy ADK code can be found in `archive/codeswarm_legacy/`.
-
--   Replaced `google-adk` Agents with `agno.agent.Agent`.
--   Replaced ADK Workflow with a custom Python orchestration loop in `main.py`.
--   Tools are defined as standalone functions and passed to Agno agents.
--   Prompts are loaded from `codeswarm/prompts/` and formatted for Agno.
--   Structured Output is handled using Pydantic models via `output_schema`.
-
 ## Current Status & Known Issues
 See `docs/report.md` for a detailed analysis of the current state and identified issues.
 Major pending tasks:
