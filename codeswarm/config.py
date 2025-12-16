@@ -35,3 +35,9 @@ DEFAULT_GOAL = os.getenv("DEFAULT_GOAL", "Develop a simple Python script.")
 DEFAULT_PAIRS = os.getenv("DEFAULT_PAIRS", "1")
 DEFAULT_ROUNDS = os.getenv("DEFAULT_ROUNDS", "1")
 
+# Khala Memory Configuration
+SURREAL_URL = os.getenv("SURREAL_URL", "ws://localhost:8000/rpc")
+SURREAL_NS = os.getenv("SURREAL_NS", "test")
+SURREAL_DB = os.getenv("SURREAL_DB", "memory")
+SURREAL_USER = os.getenv("SURREAL_USER", "root")
+SURREAL_PASS = os.getenv("SURREAL_PASS", "memory")

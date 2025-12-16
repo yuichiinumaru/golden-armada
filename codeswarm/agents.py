@@ -66,95 +66,119 @@ def format_instructions(prompt_data: dict, kb_files: list = None) -> str:
 
     return "\n".join(instructions)
 
-def get_admin_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
+def get_admin_agent(model_id: str = config.ADMIN_MODEL_STR, extra_tools: list = None) -> Agent:
     prompt_data = load_prompt("admin_prompt.json")
     # Admin uses Problem Solving Framework and core reasoning
     kb_files = ["kb_framework_problem_solving.json", "kb_core_reasoning.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
+    tools_list = [tools.read_file, tools.write_file, tools.list_folder_contents,
+               tools.search_files_content, tools.fetch_web_page_text_content,
+               tools.chunk_file, tools.summarize_chunks]
+    if extra_tools:
+        tools_list.extend(extra_tools)
+
     return Agent(
         name="AdminAgent",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
-        tools=[tools.read_file, tools.write_file, tools.list_folder_contents,
-               tools.search_files_content, tools.fetch_web_page_text_content,
-               tools.chunk_file, tools.summarize_chunks],
+        tools=tools_list,
         output_schema=AdminTaskOutput,
         structured_outputs=True,
         markdown=False, # We want structured JSON output primarily
     )
 
-def get_admin_logger_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
+def get_admin_logger_agent(model_id: str = config.ADMIN_MODEL_STR, extra_tools: list = None) -> Agent:
     prompt_data = load_prompt("admin_prompt.json")
     instructions = format_instructions(prompt_data)
+
+    tools_list = [tools.read_file, tools.write_file, tools.list_folder_contents]
+    if extra_tools:
+        tools_list.extend(extra_tools)
 
     return Agent(
         name="AdminLoggerAgent",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
-        tools=[tools.read_file, tools.write_file, tools.list_folder_contents],
+        tools=tools_list,
         output_schema=AdminLogUpdateOutput,
         structured_outputs=True,
         markdown=False,
     )
 
-def get_dev_agent(dev_id: int, model_id: str = config.DEV_MODEL_STR) -> Agent:
+def get_dev_agent(dev_id: int, model_id: str = config.DEV_MODEL_STR, extra_tools: list = None) -> Agent:
     prompt_data = load_prompt("dev_prompt.json")
     # Dev uses Software Engineer operational KBs
     kb_files = ["kb_role_software_engineer.json", "kb_synergy_software_engineer_operational.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
+    tools_list = [tools.read_file, tools.write_file, tools.list_folder_contents,
+               tools.search_files_content, tools.chunk_file, tools.execute_python_code]
+    if extra_tools:
+        tools_list.extend(extra_tools)
+
     return Agent(
         name=f"DevAgent_{dev_id}",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
-        tools=[tools.read_file, tools.write_file, tools.list_folder_contents,
-               tools.search_files_content, tools.chunk_file, tools.execute_python_code],
+        tools=tools_list,
         output_schema=DevAgentOutput,
         structured_outputs=True,
     )
 
-def get_revisor_agent(revisor_id: int, model_id: str = config.REVISOR_MODEL_STR) -> Agent:
+def get_revisor_agent(revisor_id: int, model_id: str = config.REVISOR_MODEL_STR, extra_tools: list = None) -> Agent:
     prompt_data = load_prompt("revisor_prompt.json")
     # Revisor uses Reasoning validation and software engineer synergy
     kb_files = ["kb_validation_reasoning.json", "kb_role_software_engineer.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
+    tools_list = [tools.read_file, tools.list_folder_contents,
+               tools.fetch_web_page_text_content, tools.chunk_file,
+               tools.summarize_chunks]
+    if extra_tools:
+        tools_list.extend(extra_tools)
+
     return Agent(
         name=f"RevisorAgent_{revisor_id}",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
-        tools=[tools.read_file, tools.list_folder_contents,
-               tools.fetch_web_page_text_content, tools.chunk_file,
-               tools.summarize_chunks],
+        tools=tools_list,
         output_schema=RevisorAgentOutput,
         structured_outputs=True,
     )
 
-def get_planner_agent(model_id: str = config.ADMIN_MODEL_STR) -> Agent:
+def get_planner_agent(model_id: str = config.ADMIN_MODEL_STR, extra_tools: list = None) -> Agent:
     prompt_data = load_prompt("planner_prompt.json")
     # Planner uses high-level frameworks
     kb_files = ["kb_framework_problem_solving.json", "kb_strategy_topdown.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
+    tools_list = [tools.read_file, tools.write_file]
+    if extra_tools:
+        tools_list.extend(extra_tools)
+
     return Agent(
         name="PlannerAgent",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
-        tools=[tools.read_file, tools.write_file],
+        tools=tools_list,
         markdown=True,
     )
 
-def get_knowledge_agent(model_id: str = config.DEV_MODEL_STR) -> Agent:
+def get_knowledge_agent(model_id: str = config.DEV_MODEL_STR, extra_tools: list = None) -> Agent:
     prompt_data = load_prompt("knowledge_prompt.json")
     # Knowledge agent focuses on extraction and reasoning
     kb_files = ["kb_synergy_files_extractor.json"]
     instructions = format_instructions(prompt_data, kb_files=kb_files)
 
+    tools_list = [tools.search_files_content, tools.read_file, tools.list_folder_contents]
+    if extra_tools:
+        tools_list.extend(extra_tools)
+
     return Agent(
         name="KnowledgeAgent",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
         instructions=instructions,
-        tools=[tools.search_files_content, tools.read_file, tools.list_folder_contents],
+        tools=tools_list,
         markdown=True,
     )

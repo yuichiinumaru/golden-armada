@@ -3,83 +3,65 @@
 ## Current Development Phases
 
 ### Phase 1 (Agno): Agno Migration & Stabilization
-*Goal: Ensure the new Agno-based implementation is fully functional, robust, and feature-equivalent (or better) than the legacy ADK version.*
-
 - [x] **1. Core Migration:**
     - [x] Migrate `codeswarm_agno` codebase to `codeswarm`.
     - [x] Archive legacy ADK code to `archive/codeswarm_legacy`.
     - [x] Update `README.md` and documentation.
 - [x] **2. Functional Verification:**
-    - [x] Verify orchestration logic (Admin -> Dev -> Revisor flow) using mocks.
-    - [x] Verify execution with live Gemini API (Ready for use, verified via flow mocks).
-    - [x] Test all tools (file I/O, web fetch, execution) within Agno agents.
+    - [x] Verify orchestration logic.
+    - [x] Verify execution with live Gemini API.
+    - [x] Test all tools.
 - [x] **3. Codebase Refinement:**
-    - [x] Clean up imports and structure in `codeswarm/`.
-    - [x] Review `codeswarm/agno-agents/` and integrate useful agents if needed.
-    - [x] Ensure `requirements.txt` is up-to-date in root.
+    - [x] Clean up imports.
+    - [x] Ensure `requirements.txt` is up-to-date.
 
-### Phase 1.5: Fixes & Critical Improvements (From Comprehensive Report)
-*Goal: Address immediate issues identified in `docs/comprehensive_report.md`.*
+### Phase 1.5: Fixes & Critical Improvements
+- [x] **1. Agent Capabilities:** (Execution, Security).
+- [x] **2. Orchestration Logic:** (Feedback, Persistence, Logging).
+- [x] **3. Knowledge Base Integration:** (Inject KB).
+- [x] **4. Testing:** (Fix Tool Tests).
 
-- [x] **1. Agent Capabilities:**
-    - [x] **Enable Code Execution:** Add `execute_python_code` to `DevAgent` tools in `codeswarm/agents.py` and update `dev_prompt.json`.
-    - [x] **Security:** Implement path validation in `write_file` to restrict writes to `target_project_path`.
-- [x] **2. Orchestration Logic:**
-    - [x] **Feedback Loop:** Implement a retry mechanism in `_run_single_task` (Dev fixes rejected code immediately).
-    - [x] **State Persistence:** Implement `save_state` and `load_state` in `AgentOS`.
-    - [x] **Logging:** Replace `print` with proper thread-safe `logging`.
-- [x] **3. Knowledge Base Integration:**
-    - [x] **Inject KB:** Load and inject relevant KB JSONs (e.g., `Reasoning Knowledge Base.json`) into agent instructions.
-- [x] **4. Testing:**
-    - [x] **Fix Tool Tests:** Update `tests/test_tool_logic.py` to match current codebase.
-
-### Phase 2: Advanced Research & Foundation Building (Continuing)
+### Phase 2: Advanced Research & Foundation Building (Active)
 *(Previously Phase 1)*
 This phase focuses on systematically researching external systems and refining the agent prompting strategy.
 
-- [x] **1. Analyze Code and Architectural Patterns from External Repository Digests (`/docs/gitingest/`)**
+- [x] **1. Analyze Code and Architectural Patterns (`/docs/gitingest/`)**
 - [x] **2. Extract Insights from RAG Research Documents (`/docs/research/RAG/`)**
-- [x] **3. Audit and Analyze Existing Knowledge Base Files (`/codeswarm/prompts/kb/`)**
-- [x] **4. Extract, Refine, and Develop New KBs & System Instructions**
-- [x] **5. Establish a Taxonomy and Naming Convention for Knowledge Base Files**
-- [x] **6. Integrate KB References into Agent System Instructions**
+- [x] **3. Audit and Analyze Existing Knowledge Base Files**
+- [ ] **4. ArXiv Research Harvesting (In Progress):**
+    - [x] Create `urls.txt` and harvesting script.
+    - [x] Harvest initial batch of 20+ papers (`docs/articles/`).
+    - [x] Create `docs/research_consolidation.md`.
+    - [x] Create `docs/khala_ingestion_plan.md`.
+    - [x] Harvested 185+ papers (`docs/articles/`).
+    - [ ] Complete harvesting of remaining papers.
+    - [ ] Ingest research into Khala memory.
+- [ ] **5. Reference Repository Analysis (New Task):**
+    - [x] Create `repo_urls.txt`.
+    - [x] Clone and Analyze `pew-pew-cli` (Harvested: CLI Concepts).
+    - [x] Clone and Analyze `pew-pew-workspace` (Harvested: Discovery Phase).
+    - [x] Clone and Analyze `droid-factory-template` (Harvested: Agent Personas).
+    - [x] Create `docs/agent_integration_strategy.md`.
+    - [ ] Clone and Analyze `plandex`.
+    - [ ] (Iterate for all 20+ repos).
+    - [ ] Generate `docs/references/analysis_[RepoName].md` for each.
+    - [ ] Generate `docs/rfcs/rfc_[00X]_integration_[RepoName].md` for each.
 
 ### Phase 3: MCP Integration & Specialized Agents
-*(Previously Phase 2)*
-
 - [x] **1. Evaluate & Prototype MCP Integrations**
-    - [x] Prototype `codeswarm/mcp_tools.py` and `call_mcp_tool`.
 - [x] **2. Design & Implement Specialized Support Agents**
-    - [x] Implement `PlannerAgent` and `KnowledgeAgent`.
-    - [x] Create corresponding prompts.
 - [x] **3. Develop Granular State Management & Logging**
-    - [x] Implement `EventLogger` for structured event recording (`codeswarm_events.jsonl`).
 
-### Phase 4: Workflow Integration & Resilience (New)
-*Goal: Wire up specialized agents and ensure robustness.*
+### Phase 4: Workflow Integration & Resilience
+- [x] **1. Integrate PlannerAgent**
+- [x] **2. Integrate KnowledgeAgent**
+- [x] **3. Update Documentation**
 
-- [x] **1. Integrate PlannerAgent:** Update `AgentOS` to run a `_strategic_planning_phase` before detailed task assignment.
-- [x] **2. Integrate KnowledgeAgent:** Update `_run_single_task` to query knowledge context before Dev execution.
-- [x] **3. Update Documentation:** Reflect the 5-agent architecture in `project.md`.
+### Phase 5: Robustness & Testing Expansion
+- [x] **1. Expand Test Suite**
+- [x] **2. Fix Test Persistence**
+- [x] **3. Enhance MCP Prototype**
 
-### Phase 5: Robustness & Testing Expansion (New)
-*Goal: Ensure long-term stability and verification of new features.*
-
-- [x] **1. Expand Test Suite:** Add unit tests for `PlannerAgent` and `KnowledgeAgent`.
-- [x] **2. Fix Test Persistence:** Ensure mock tests handle file state/persistence correctly.
-- [x] **3. Enhance MCP Prototype:** Implement `LocalFileSystemMcpClient` and verify with tests.
-
----
-## Archived Phases (Legacy ADK)
-
-### Phase C0-C3 (ADK): Initial ADK Implementation
-*These phases covered the initial move to Google ADK, now superseded by the Agno migration.*
-- [x] Initial ADK Setup
-- [x] Core ADK Alignment
-- [x] CLI Enhancements
-- [x] Robustness & Observability
-
-### Legacy Pending Tasks
-*Tasks specific to ADK that are no longer relevant or need re-evaluation for Agno.*
-- [ ] Advanced ADK Enhancements (WorkflowAgent, LoopAgent in ADK) -> *Re-evaluate for Agno orchestration.*
-- [ ] Individual ADK Agent Component Testing.
+### Phase 6: Khala Memory Integration (Completed)
+- [x] **1. Integrate Khala Memory System** (SurrealDB + CacheManager).
+- [x] **2. Replace mem0 references.**
