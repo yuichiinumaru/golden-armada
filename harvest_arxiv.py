@@ -46,7 +46,7 @@ def main():
     print(f"Found {len(urls)} URLs.")
 
     success_count = 0
-    limit = 20 # Process 20 per run
+    limit = 100 # Process 100 per run
 
     for i, url in enumerate(urls):
         arxiv_id = url.split('/')[-1]

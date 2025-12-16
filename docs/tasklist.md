@@ -33,13 +33,15 @@ This phase focuses on systematically researching external systems and refining t
     - [x] Harvest initial batch of 20+ papers (`docs/articles/`).
     - [x] Create `docs/research_consolidation.md`.
     - [x] Create `docs/khala_ingestion_plan.md`.
-    - [ ] Complete harvesting of all 300+ papers.
+    - [x] Harvested 185+ papers (`docs/articles/`).
+    - [ ] Complete harvesting of remaining papers.
     - [ ] Ingest research into Khala memory.
 - [ ] **5. Reference Repository Analysis (New Task):**
     - [x] Create `repo_urls.txt`.
     - [x] Clone and Analyze `pew-pew-cli` (Harvested: CLI Concepts).
-    - [ ] Clone and Analyze `pew-pew-workspace`.
-    - [ ] Clone and Analyze `droid-factory-template`.
+    - [x] Clone and Analyze `pew-pew-workspace` (Harvested: Discovery Phase).
+    - [x] Clone and Analyze `droid-factory-template` (Harvested: Agent Personas).
+    - [x] Create `docs/agent_integration_strategy.md`.
     - [ ] Clone and Analyze `plandex`.
     - [ ] (Iterate for all 20+ repos).
     - [ ] Generate `docs/references/analysis_[RepoName].md` for each.
