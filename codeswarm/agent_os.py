@@ -6,6 +6,7 @@ from datetime import datetime
 
 from . import config
 from . import agents
+from . import khala_integration
 from .logger import logger
 from .event_logger import event_logger
 from .structures import TaskTree, TaskNode, TaskStatus
@@ -18,10 +19,13 @@ class AgentOS:
         self.pairs = pairs
         self.rounds = rounds
 
-        self.admin_agent = agents.get_admin_agent()
-        self.logger_agent = agents.get_admin_logger_agent()
-        self.planner_agent = agents.get_planner_agent()
-        self.knowledge_agent = agents.get_knowledge_agent()
+        # Initialize Khala tools
+        self.memory_tools = khala_integration.get_khala_tools()
+
+        self.admin_agent = agents.get_admin_agent(extra_tools=self.memory_tools)
+        self.logger_agent = agents.get_admin_logger_agent(extra_tools=self.memory_tools)
+        self.planner_agent = agents.get_planner_agent(extra_tools=self.memory_tools)
+        self.knowledge_agent = agents.get_knowledge_agent(extra_tools=self.memory_tools)
 
         # Initialize the tree with the root goal
         self.tree = TaskTree(root=TaskNode(description=goal, status=TaskStatus.IN_PROGRESS))
@@ -69,38 +73,45 @@ class AgentOS:
                 logger.error(f"AgentOS: Error loading state: {e}")
 
     def run(self):
-        logger.info(f"AgentOS: Starting CodeSwarm for goal: {self.goal}")
+        # Start Khala System in background
+        khala_integration.start_khala_background()
 
-        start_round = self.session_state.get("round", 0) + 1
-        # If we loaded a completed state, start_round might be rounds + 1
-        if start_round > self.rounds:
-             logger.info(f"AgentOS: Workflow already completed up to round {self.rounds}. Continuing if you want more rounds or start new.")
-             # For now, we just respect the requested rounds if they are greater than current
-             if start_round > self.rounds:
-                 logger.info("AgentOS: Requested rounds completed.")
-                 return
+        try:
+            logger.info(f"AgentOS: Starting CodeSwarm for goal: {self.goal}")
 
-        for r in range(start_round, self.rounds + 1):
-            logger.info(f"=== Round {r} ===")
-            self.session_state["round"] = r
+            start_round = self.session_state.get("round", 0) + 1
+            # If we loaded a completed state, start_round might be rounds + 1
+            if start_round > self.rounds:
+                 logger.info(f"AgentOS: Workflow already completed up to round {self.rounds}. Continuing if you want more rounds or start new.")
+                 # For now, we just respect the requested rounds if they are greater than current
+                 if start_round > self.rounds:
+                     logger.info("AgentOS: Requested rounds completed.")
+                     return
 
-            # 0. Strategic Planning (Planner updates todo.md and session_state)
-            self._strategic_planning_phase(r)
-            self.save_state()
+            for r in range(start_round, self.rounds + 1):
+                logger.info(f"=== Round {r} ===")
+                self.session_state["round"] = r
 
-            # 1. Planning Phase (Admin expands the tree)
-            self._planning_phase(r)
-            self.save_state()
+                # 0. Strategic Planning (Planner updates todo.md and session_state)
+                self._strategic_planning_phase(r)
+                self.save_state()
 
-            # 2. Execution Phase (Dev/Revisor work on leaves)
-            self._execution_phase(r)
-            self.save_state()
+                # 1. Planning Phase (Admin expands the tree)
+                self._planning_phase(r)
+                self.save_state()
 
-            # 3. Logging Phase
-            self._logging_phase(r)
-            self.save_state()
+                # 2. Execution Phase (Dev/Revisor work on leaves)
+                self._execution_phase(r)
+                self.save_state()
 
-        logger.info("AgentOS: Workflow Finished.")
+                # 3. Logging Phase
+                self._logging_phase(r)
+                self.save_state()
+
+        finally:
+            # Ensure Khala system is stopped
+            khala_integration.stop_khala_background()
+            logger.info("AgentOS: Workflow Finished.")
 
     def _strategic_planning_phase(self, round_num: int):
         logger.info("AgentOS: Strategic Planning Phase...")
@@ -153,23 +164,6 @@ class AgentOS:
                     assigned_revisor_id=task.revisor_id,
                     file_path=task.file_to_edit_or_create
                 )
-                # We attach the 'raw' task data for the execution phase to use easily
-                # Store extra context if needed, or rely on node fields.
-                # For the execution function, we need the specific Revisor instructions too.
-                # We'll attach them to the node or reconstruct them.
-                # Let's attach them to the node's 'revisor_output' temporarily or a custom field?
-                # TaskNode is Pydantic, so we can't easily add dynamic fields unless we allowed extra.
-                # But we have 'revisor_focus_areas' in TaskAssignment.
-                # Let's store the full TaskAssignment in the node's description or a separate lookup?
-                # Actually, let's just use the node fields we have.
-                # We might need to extend TaskNode or just pass the 'revisor_focus_areas' differently.
-                # Let's add 'metadata' to TaskNode? Or just keep it simple.
-
-                # I'll modify TaskNode to allow generic metadata if I could, but I already defined it.
-                # I'll just use the fact that I have the list of tasks here.
-                # Actually, I should probably add them to the tree, and then collect them for execution.
-                # But I need the 'revisor_focus_areas' which isn't in TaskNode fields explicitly.
-                # Let's assume description contains it or I'll just use a local mapping for execution this round.
 
                 self.tree.root.add_child(node)
 
@@ -237,8 +231,9 @@ class AgentOS:
     def _run_single_task(self, task: TaskAssignment, round_num: int):
         """Runs the Dev -> Revisor cycle for a task with retry loop."""
 
-        dev_agent = agents.get_dev_agent(task.dev_id)
-        revisor_agent = agents.get_revisor_agent(task.revisor_id)
+        # Use memory tools for Dev and Revisor
+        dev_agent = agents.get_dev_agent(task.dev_id, extra_tools=self.memory_tools)
+        revisor_agent = agents.get_revisor_agent(task.revisor_id, extra_tools=self.memory_tools)
 
         dev_input = {
             "dev_task_description": task.dev_task_description,
