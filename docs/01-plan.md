@@ -1,69 +1,42 @@
-# CodeSwarm Master Plan
+# Strategic Architecture: ARTEMIS Integration
 
-## Vision
-To build a robust, self-correcting multi-agent system capable of autonomous software development, leveraging state-of-the-art techniques from open-source research.
+## 1. Architecture Pattern
+We will adopt a **Hexagonal Architecture (Ports & Adapters)** approach to integrate ARTEMIS concepts into CodeSwarm's CFA.
 
-## Integration Strategy: DeepCode (HKUDS)
-We have analyzed `HKUDS/DeepCode` and identified key technologies to integrate.
+### Layers
+*   **Layer 1 (Domain):** `PromptBuilder`, `AgentRegistry`.
+*   **Layer 2 (Application):** `SpawnerService` (Orchestration).
+*   **Layer 3 (Infrastructure):** `ThreadPoolAdapter` (Current), `DockerAdapter` (Future), `JinjaPromptAdapter`.
 
-### 1. Robust Planning Protocol
-**Problem**: Agents often start coding without a coherent architectural vision, leading to "spaghetti code" or circular dependencies.
-**Solution**: Adopt DeepCode's "Plan-First" architecture.
-*   **Action**: Implement a strict `PlannerAgent` (or upgrade `AdminAgent`) that produces a comprehensive YAML plan.
-*   **Validation**: Port `_assess_output_completeness` to reject malformed or lazy plans.
+## 2. Domain Decomposition
 
-### 2. Structured Scaffolding
-**Problem**: File creation is often ad-hoc.
-**Solution**: Use the Plan to drive Scaffolding.
-*   **Action**: Port `extract_file_tree_from_plan` to parse the YAML plan and generate `mkdir`/`touch` commands automatically *before* any code is written.
+### Domain: DynamicPrompting
+*   **Responsibility:** Constructing the "perfect" system prompt for a specific task at runtime.
+*   **Entities:**
+    *   `PromptContext`: Data class holding current task, phase, and constraints.
+    *   `SkillModule`: A reusable prompt segment (e.g., "Python Expert", "Security Auditor").
+    *   `PromptBuilder`: Service that combines Modules + Context -> String.
 
-### 3. Context-Aware Reference Mining (Future)
-**Problem**: RAG is often too generic.
-**Solution**: Structure-Aware Indexing.
-*   **Action**: Implement `CodebaseIndexWorkflow` logic to map external references to our intended file structure.
+### Domain: AgentLifecycle (The Spawner)
+*   **Responsibility:** Managing the creation, execution, and teardown of agents.
+*   **Entities:**
+    *   `AgentSpec`: Configuration for an agent (Role, Tools, Memory access).
+    *   `AgentHandle`: A reference to a running/queued agent.
+    *   `Spawner`: Interface `spawn(spec) -> AgentHandle`.
 
-## Integration Strategy: VulnerableCode (nexB)
-We have analyzed `nexB/vulnerablecode` and identified key technologies to integrate.
+## 3. Technology Decisions (ADRs)
 
-### 1. Supply Chain Security
-**Problem**: Generated code may rely on outdated or vulnerable libraries.
-**Solution**: "Package-First" Vulnerability Scanning.
-*   **Action**: Integrate `univers` and `packageurl-python` libraries.
-*   **Implementation**: Create a `SecurityScanner` utility that can resolve version ranges and check `requirements.txt` against safety rules.
+### ADR 001: Spawner Abstraction
+*   **Decision:** We will create a `Spawner` abstract base class. The initial implementation `ThreadSpawner` will wrap the existing `ThreadPoolExecutor`.
+*   **Rationale:** This allows us to adopt the ARTEMIS "Spawner" pattern immediately without rewriting the entire async engine. It paves the way for a future `ProcessSpawner` or `RemoteSpawner` (Rust) without changing business logic.
 
-## Integration Strategy: Context-Engineering (DavidKimAI)
-We have analyzed `davidkimai/Context-Engineering` and identified key technologies to integrate.
+### ADR 002: Compositional Prompting
+*   **Decision:** We will strictly forbid hardcoded system prompts in `agents.py`. All prompts must be generated via `PromptBuilder`.
+*   **Rationale:** To achieve ARTEMIS-level adaptability. Hardcoded prompts are brittle and fail to adapt to changing "Rounds" or "Goals".
 
-### 1. Verification Loops
-**Problem**: Agents often hallucinate or make silly logic errors.
-**Solution**: Explicit Verification Steps.
-*   **Action**: Implement the `Verification Loop` prompt pattern for the `RevisorAgent`.
-*   **Effect**: Forces the agent to "Check assumptions" and "Test edge cases" before approving code.
-
-### 2. Rigorous Agent Schemas
-**Problem**: Agent definitions are often vague text.
-**Solution**: Protocol Schemas.
-*   **Action**: Adopt the `protocol.agent` JSON/YAML schema to define agent roles, inputs, and outputs in `AGENTS.md`.
-
-## Roadmap
-
-### Phase 1: The Planner Upgrade (DeepCode)
-- [ ] Create `PlannerAgent` (or Refactor `AdminAgent`).
-- [ ] Implement `_assess_output_completeness`.
-- [ ] Define the Standard Plan YAML Schema.
-
-### Phase 2: The Scaffolder (DeepCode)
-- [ ] Implement `PlanParser` (based on `extract_file_tree_from_plan`).
-- [ ] Create a `ScaffoldTool` that takes the plan and creates the directory tree.
-
-### Phase 3: The Guardian (VulnerableCode)
-- [ ] Integrate `univers` library.
-- [ ] Port `resolve_version_range` from VulnerableCode.
-- [ ] Create `DependencyCheck` tool for the `RevisorAgent`.
-
-### Phase 4: The Critic (Context-Engineering)
-- [ ] Add `verification_loop.md` to prompts.
-- [ ] Update `RevisorAgent` system prompt to enforce the loop.
-
-### Phase 5: The Execution
-- [ ] Update `DevAgent` to consume the Plan YAML instead of vague instructions.
+## 4. Data Flow (Spawner)
+1.  `AgentOS` (Orchestrator) determines need for a "Dev" task.
+2.  `AgentOS` creates `AgentSpec(role="Dev", capabilities=["Read", "Write"])`.
+3.  `AgentOS` calls `Spawner.spawn(spec)`.
+4.  `Spawner` (ThreadImpl) instantiates the Agent, injects the built Prompt, and submits to thread pool.
+5.  `Spawner` returns `AgentHandle` (Future wrapper).
