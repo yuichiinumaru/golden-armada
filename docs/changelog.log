@@ -3,6 +3,17 @@
 This file will be updated to reflect major changes, progress, and decisions throughout the project.
 
 ---
+## 2025-06-03 - DevAgent & Security Updates
+*   **DevAgent Prompt**: Updated `codeswarm/prompts/dev_prompt.json` with the `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` strategy from DeepCode.
+    *   Emphasis on single tool calls per message.
+    *   Incremental build strategy.
+    *   Strict adherence to requirements.
+*   **Security Utils**: Implemented `codeswarm/utils/security.py` for version comparison.
+    *   Added `univers` and `packageurl-python` dependencies.
+    *   Added `resolve_version_range` utility function.
+    *   Added unit tests for security utilities.
+*   **DeepCode Integration**: Previous updates (Planner, Utils) solidified.
+
 ## 2025-06-03 - DeepCode Integration
 *   **DeepCode Strategy**: Integrated "Plan-First" architecture from `HKUDS/DeepCode`.
 *   **Utils**: Created `codeswarm/deepcode_utils.py` containing:

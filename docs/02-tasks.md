@@ -23,9 +23,9 @@
     - Added `run_planner_agent` in `codeswarm/agents.py` with validation loop: If `_assess_output_completeness` < 0.8, reject and retry.
 
 ### Integration: DevAgent Prompt Upgrade
-- [ ] **Task 4**: Update `DevAgent` system prompt.
-    - Adapt `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` from DeepCode.
-    - Focus on "Single function call per message" and "Build incrementally".
+- [x] **Task 4**: Update `DevAgent` system prompt.
+    - Adapted `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` from DeepCode into `dev_prompt.json`.
+    - Focuses on "Single function call per message" and "Build incrementally".
 
 ## VulnerableCode Integration
 
@@ -34,10 +34,10 @@
 - [x] Generate Analysis Report (`docs/references/vulnerablecode_analysis.md`).
 
 ### Porting: Security Utilities
-- [ ] **Task 6**: Port Version Comparison Logic.
-    - Add `univers` and `packageurl-python` to `requirements.txt`.
-    - Extract `resolve_version_range` from `references/vulnerablecode/vulnerabilities/utils.py`.
-    - Create `codeswarm/utils/security.py`.
+- [x] **Task 6**: Port Version Comparison Logic.
+    - Added `univers` and `packageurl-python` to `requirements.txt`.
+    - Created `codeswarm/utils/security.py` using `univers` for version comparison.
+    - Added unit tests in `codeswarm/tests/test_security_utils.py`.
 
 ### Integration: RevisorAgent Upgrade
 - [ ] **Task 7**: Add `DependencyCheck` capability to `RevisorAgent`.
