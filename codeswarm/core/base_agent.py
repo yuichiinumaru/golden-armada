@@ -24,17 +24,18 @@ class SwarmAgent:
         role: str = "Assistant",
         model_id: str = "gemini-2.5-flash",
         tools: List[Any] = None,
-        instructions: str = "You are a helpful assistant."
+        instructions: str = "You are a helpful assistant.",
+        use_memory: bool = True
     ):
         self.user_id = user_id
         self.agent_name = agent_name
         self._khala = None
+        self.use_memory = use_memory
         self.tools = tools or []
         self.model_id = model_id
         self.system_prompt = instructions # Storing for potential lazy init or re-init
         self.instructions = instructions # Storing for potential lazy init or re-init
         self.role = role # Storing for potential lazy init or re-init
-        self.agent_name = agent_name # Storing for potential lazy init or re-init
         
         # Initialize Agno Agent
         # Note: We use instructions as the system prompt
@@ -53,16 +54,22 @@ class SwarmAgent:
     
     @property
     def khala(self) -> KhalaClient:
+        if not self.use_memory:
+            raise RuntimeError(f"Agent {self.agent_name} has memory disabled.")
         if self._khala is None:
             self._khala = KhalaClient()
         return self._khala
 
     async def setup_agent(self):
         """Initialize resources (Khala connection)."""
-        await self.khala.initialize()
+        if self.use_memory:
+            await self.khala.initialize()
 
     async def remember(self, content: str, importance: float = 0.5, tags: List[str] = None, user_id: str = None):
         """Store an interaction or insight in memory."""
+        if not self.use_memory:
+            return
+
         target_user = user_id or self.user_id
         try:
             await self.khala.create_memory(
@@ -77,6 +84,9 @@ class SwarmAgent:
 
     async def recall(self, query: str, top_k: int = 3, user_id: str = None) -> List[str]:
         """Retrieve relevant context from memory."""
+        if not self.use_memory:
+            return []
+
         target_user = user_id or self.user_id
         try:
             results = await self.khala.search_memories(
@@ -122,4 +132,5 @@ class SwarmAgent:
         return await self.chat(task_description)
 
     async def close(self):
-        await self.khala.close()
+        if self.use_memory and self._khala:
+            await self.khala.close()

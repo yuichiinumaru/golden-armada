@@ -11,3 +11,4 @@ docs/arxiv/*.pdf
 *.env
 .env
 .env*
+.pytest_cache/
