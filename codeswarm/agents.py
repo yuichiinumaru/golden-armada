@@ -157,6 +157,9 @@ def get_planner_agent(model_id: str = config.ADMIN_MODEL_STR, extra_tools: list 
     if extra_tools:
         tools_list.extend(extra_tools)
 
+    # Note: PlannerAgent relies on structured YAML output defined in the prompt.
+    # While it doesn't strictly enforce an output schema object here, the prompt
+    # demands a specific YAML format.
     return Agent(
         name="PlannerAgent",
         model=Gemini(id=model_id, api_key=config.GEMINI_API_KEY),
@@ -164,6 +167,46 @@ def get_planner_agent(model_id: str = config.ADMIN_MODEL_STR, extra_tools: list 
         tools=tools_list,
         markdown=True,
     )
+
+def run_planner_agent(agent: Agent, message: str, max_retries: int = 3) -> str:
+    """
+    Runs the PlannerAgent with self-correction based on output completeness.
+    """
+    from .deepcode_utils import assess_output_completeness
+
+    current_message = message
+    best_result = ""
+    best_score = 0.0
+
+    for i in range(max_retries):
+        result = agent.run(current_message)
+        content = result.content if hasattr(result, "content") else str(result)
+
+        score = assess_output_completeness(content)
+        if score > best_score:
+            best_score = score
+            best_result = content
+
+        if score >= 0.8:
+            return best_result
+
+        # If score is low, feedback into the next prompt
+        current_message = f"""
+The previous plan was incomplete (Completeness Score: {score:.2f}).
+Please ensure ALL 5 sections are present and complete:
+1. file_structure
+2. implementation_components
+3. validation_approach
+4. environment_setup
+5. implementation_strategy
+
+Previous Output (truncated):
+{content[:500]}...
+
+RETRYING... Please generate the FULL plan again.
+"""
+
+    return best_result
 
 def get_knowledge_agent(model_id: str = config.DEV_MODEL_STR, extra_tools: list = None) -> Agent:
     prompt_data = load_prompt("knowledge_prompt.json")
