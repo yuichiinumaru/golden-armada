@@ -7,26 +7,25 @@
 - [x] Generate Analysis Report (`docs/references/DeepCode_analysis.md`).
 
 ### Porting: Plan Validation
-- [ ] **Task 1**: Extract `_assess_output_completeness` from `references/DeepCode/workflows/agent_orchestration_engine.py`.
-    - Create `codeswarm/utils/plan_validator.py`.
-    - Adapt the function to work with CodeSwarm's logging/error handling.
-    - Add unit tests to verify it catches bad plans.
+- [x] **Task 1**: Extract `_assess_output_completeness` from `references/DeepCode/workflows/agent_orchestration_engine.py`.
+    - Create `codeswarm/deepcode_utils.py` (serving as validator and parser).
+    - Adapted the function to work with CodeSwarm's logging/error handling.
+    - Added unit tests to verify it catches bad plans.
 
 ### Porting: Plan Parsing
-- [ ] **Task 2**: Extract `extract_file_tree_from_plan` from `references/DeepCode/workflows/codebase_index_workflow.py`.
-    - Create `codeswarm/utils/plan_parser.py`.
-    - Ensure it can handle Markdown code blocks and raw text.
+- [x] **Task 2**: Extract `extract_file_tree_from_plan` from `references/DeepCode/workflows/codebase_index_workflow.py`.
+    - Integrated into `codeswarm/deepcode_utils.py`.
+    - Ensures it can handle Markdown code blocks and raw text.
 
 ### Integration: AdminAgent Upgrade
-- [ ] **Task 3**: Modify `AdminAgent` to use the new Validator and Parser.
-    - Update prompt to request YAML output (reference `CODE_PLANNING_PROMPT` from DeepCode).
-    - Add a validation loop: If `_assess_output_completeness` < 0.8, reject and retry.
-    - Add a scaffolding step: Parse plan -> Create files.
+- [x] **Task 3**: Modify `PlannerAgent` (as it handles planning) to use the new Validator and Parser.
+    - Updated `planner_prompt.json` to request YAML output (reference `CODE_PLANNING_PROMPT` from DeepCode).
+    - Added `run_planner_agent` in `codeswarm/agents.py` with validation loop: If `_assess_output_completeness` < 0.8, reject and retry.
 
 ### Integration: DevAgent Prompt Upgrade
-- [ ] **Task 4**: Update `DevAgent` system prompt.
-    - Adapt `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` from DeepCode.
-    - Focus on "Single function call per message" and "Build incrementally".
+- [x] **Task 4**: Update `DevAgent` system prompt.
+    - Adapted `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` from DeepCode into `dev_prompt.json`.
+    - Focuses on "Single function call per message" and "Build incrementally".
 
 ## VulnerableCode Integration
 
@@ -35,10 +34,10 @@
 - [x] Generate Analysis Report (`docs/references/vulnerablecode_analysis.md`).
 
 ### Porting: Security Utilities
-- [ ] **Task 6**: Port Version Comparison Logic.
-    - Add `univers` and `packageurl-python` to `requirements.txt`.
-    - Extract `resolve_version_range` from `references/vulnerablecode/vulnerabilities/utils.py`.
-    - Create `codeswarm/utils/security.py`.
+- [x] **Task 6**: Port Version Comparison Logic.
+    - Added `univers` and `packageurl-python` to `requirements.txt`.
+    - Created `codeswarm/utils/security.py` using `univers` for version comparison.
+    - Added unit tests in `codeswarm/tests/test_security_utils.py`.
 
 ### Integration: RevisorAgent Upgrade
 - [ ] **Task 7**: Add `DependencyCheck` capability to `RevisorAgent`.

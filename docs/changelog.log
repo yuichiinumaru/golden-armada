@@ -3,6 +3,27 @@
 This file will be updated to reflect major changes, progress, and decisions throughout the project.
 
 ---
+## 2025-06-03 - DevAgent & Security Updates
+*   **DevAgent Prompt**: Updated `codeswarm/prompts/dev_prompt.json` with the `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` strategy from DeepCode.
+    *   Emphasis on single tool calls per message.
+    *   Incremental build strategy.
+    *   Strict adherence to requirements.
+*   **Security Utils**: Implemented `codeswarm/utils/security.py` for version comparison.
+    *   Added `univers` and `packageurl-python` dependencies.
+    *   Added `resolve_version_range` utility function.
+    *   Added unit tests for security utilities.
+*   **DeepCode Integration**: Previous updates (Planner, Utils) solidified.
+
+## 2025-06-03 - DeepCode Integration
+*   **DeepCode Strategy**: Integrated "Plan-First" architecture from `HKUDS/DeepCode`.
+*   **Utils**: Created `codeswarm/deepcode_utils.py` containing:
+    *   `assess_output_completeness`: Validates implementation plans against DeepCode's 5-section standard.
+    *   `extract_file_tree_from_plan`: Parses file structures from plan documents.
+*   **Agents**: Enhanced `PlannerAgent` in `codeswarm/agents.py` with a self-correcting `run_planner_agent` function that loops until the plan meets completeness criteria.
+*   **Prompts**: Updated `codeswarm/prompts/planner_prompt.json` to enforce strict YAML output format (`complete_reproduction_plan`) required for downstream processing.
+*   **Tests**: Added unit tests in `codeswarm/tests/test_deepcode_utils.py` to verify validator and parser logic.
+
+---
 ## 2025-06-02 - Codebase Review and Tasklist Update
 *   Verified that DevAgent and RevisorAgent are already using Pydantic `output_model`s (`DevAgentOutput`, `RevisorAgentOutput`) for structured output, completing a pending task in `tasklist.md`.
 *   Verified that the AdminAgent logging mechanism for updating `changelog.log` and `tasklist.md` is implemented. Orchestrator, prompts, and tools are aligned for this functionality.
@@ -63,4 +84,4 @@ This file will be updated to reflect major changes, progress, and decisions thro
     - Refined "AdminAgent Task Management & Progress Logging" (Phase 3) to focus on file-based task lists for the phase, deferring MCP considerations.
 [RESOURCES] Added multiple `*.txt` files to `/docs/gitingest/` containing code digests from various relevant GitHub repositories for research purposes.
 [RESOURCES] Added multiple `*.txt` and `*.ipynb` files to `/docs/research/RAG/` containing research material on RAG techniques.
-[RESOURCES] Noted the existence and planned systematic integration of various JSON and text/markdown files in `/codeswarm/prompts/kb/` intended for knowledge base and prompt augmentation.
+[RESOURCES] Noted the existence and planned systematic integration of various JSON and text/markdown files in `/codeswarm/prompts/kb/` intended for knowledge base and prompt engineering refinement.
