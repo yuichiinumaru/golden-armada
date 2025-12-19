@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/home/suportesaude/YUICHI/00-agentmaker/agent-ui/src/app/layout\":[\"static/media/0e96d314a90a6138-s.p.woff2\",\"static/media/b5f102eba580efae-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"

@@ -5,7 +5,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 
 from . import config
-from . import agents
+from . import factory_agents
 from . import khala_integration
 from .logger import logger
 from .event_logger import event_logger
@@ -22,10 +22,10 @@ class AgentOS:
         # Initialize Khala tools
         self.memory_tools = khala_integration.get_khala_tools()
 
-        self.admin_agent = agents.get_admin_agent(extra_tools=self.memory_tools)
-        self.logger_agent = agents.get_admin_logger_agent(extra_tools=self.memory_tools)
-        self.planner_agent = agents.get_planner_agent(extra_tools=self.memory_tools)
-        self.knowledge_agent = agents.get_knowledge_agent(extra_tools=self.memory_tools)
+        self.admin_agent = factory_agents.get_admin_agent(extra_tools=self.memory_tools)
+        self.logger_agent = factory_agents.get_admin_logger_agent(extra_tools=self.memory_tools)
+        self.planner_agent = factory_agents.get_planner_agent(extra_tools=self.memory_tools)
+        self.knowledge_agent = factory_agents.get_knowledge_agent(extra_tools=self.memory_tools)
 
         # Initialize the tree with the root goal
         self.tree = TaskTree(root=TaskNode(description=goal, status=TaskStatus.IN_PROGRESS))
@@ -232,8 +232,8 @@ class AgentOS:
         """Runs the Dev -> Revisor cycle for a task with retry loop."""
 
         # Use memory tools for Dev and Revisor
-        dev_agent = agents.get_dev_agent(task.dev_id, extra_tools=self.memory_tools)
-        revisor_agent = agents.get_revisor_agent(task.revisor_id, extra_tools=self.memory_tools)
+        dev_agent = factory_agents.get_dev_agent(task.dev_id, extra_tools=self.memory_tools)
+        revisor_agent = factory_agents.get_revisor_agent(task.revisor_id, extra_tools=self.memory_tools)
 
         dev_input = {
             "dev_task_description": task.dev_task_description,

@@ -8,3 +8,6 @@ venv/
 docs/articles/
 references/
 docs/arxiv/*.pdf
+*.env
+.env
+.env*
