@@ -1,157 +1,100 @@
-# Reference Analysis: Bright Data MCP
+# Bright Data MCP: Real-Time Web Intelligence
 
 ## 1. Synthesis
 
-**Bright Data MCP** is an official Model Context Protocol (MCP) server provided by Bright Data, a leading web data platform. It exposes a suite of tools for **web scraping, browser automation, and data extraction** to LLM-based agents.
+**Repository:** `brightdata-com/brightdata-mcp`
+**Language:** JavaScript (Node.js)
+**Core Purpose:** An MCP server providing robust, real-time web scraping and browser automation capabilities, specifically designed to bypass anti-bot measures and geo-restrictions.
 
-### Core Value Proposition
-The primary value is **"Web Access for AI"**. LLMs have a knowledge cutoff and cannot natively browse the live web effectively due to anti-bot measures (CAPTCHAs, IP bans). Bright Data solves this by providing an API that handles the infrastructure of scraping (proxy rotation, unblocking, browser fingerprinting) and exposing it as simple function calls (`scrape_as_markdown`, `search_engine`).
+### Key Capabilities
+*   **Web Unlocker:** Tools (`scrape_as_markdown`, `scrape_as_html`) that transparently handle proxies, CAPTCHAs, and fingerprinting to fetch content from hard-to-scrape sites.
+*   **Scraping Browser:** A persistent remote browser session controlled via MCP tools (`navigate`, `click`, `type`, `screenshot`, `get_html`). This allows agents to interact with dynamic SPAs (Single Page Applications).
+*   **Structured Data APIs:** A massive suite of pre-built "Datasets" accessible as tools (e.g., `web_data_linkedin_profile`, `web_data_amazon_product`, `web_data_youtube_comments`). These return structured JSON instead of raw HTML.
+*   **Search Engine Scraping:** dedicated tool for extracting SERP data (Google, Bing, Yandex).
 
-### Key Features
-*   **Web Unlocker**: Automatically bypasses CAPTCHAs and bot detection systems.
-*   **Browser Automation**: Provides remote browser control (Playwright-compatible) via CDP (Chrome DevTools Protocol). Tools include `navigate`, `click`, `type`, `screenshot`, etc.
-*   **SERP Access**: Dedicated tool for search engine results (Google, Bing, Yandex) returned in Markdown.
-*   **Structured Data Datasets**: A massive library of pre-built "Dataset" tools (`web_data_amazon_product`, `web_data_linkedin_profile`, etc.) that return structured JSON for specific domains, avoiding the need for the LLM to parse HTML.
-*   **MCP Standard**: Built on the `FastMCP` framework, making it compatible with any MCP client (Claude Desktop, etc.).
-
-### Architectural Components
-The codebase is a Node.js application (`server.js`).
-*   **`server.js`**: The main entry point using `FastMCP`. It registers tools and handles the API token authentication.
-*   **`browser_session.js`**: Manages remote browser sessions via `playwright.chromium.connectOverCDP`. It handles connection resilience and domain-based session isolation.
-*   **`browser_tools.js`**: Wraps Playwright actions (click, type, navigate) into MCP tools.
-*   **Dataset Tools Generator**: A loop in `server.js` iterates over a list of dataset definitions and dynamically creates `web_data_*` tools. This is a smart way to expose hundreds of specific scraping capabilities without writing boilerplate for each.
+### Architectural Highlights
+*   **Session Management:** The `Browser_session` class maintains state (cookies, storage) across tool calls, enabling multi-step workflows (login -> navigate -> scrape).
+*   **Domain-Aware:** Intelligent session handling that groups browser contexts by domain to avoid cross-contamination or detection.
+*   **Polling Pattern:** The `web_data_*` tools use an async trigger-and-poll mechanism to handle long-running scraping jobs while keeping the MCP interface responsive.
 
 ---
 
-## 2. Strategic & Architectural Ideas for CodeSwarm
+## 2. Strategic Ideas for Golden Armada
 
-**CodeSwarm** (Agno + SurrealDB + Gemini 3) aims to be a comprehensive development system. Access to live web data is crucial for "Research" and "Documentation" agents.
+The Golden Armada's "Scout Squad" needs eyes on the web. Standard scraping (Requests/BeautifulSoup) fails on modern defensive sites. Bright Data offers a "Mercenary Scout" capability.
 
-### 2.1. The "Web Access" Pattern
-Currently, CodeSwarm agents might rely on the LLM's internal knowledge or simple search tools.
-*   **Idea**: Integrate a robust web scraping capability.
-*   **Application**: A `ResearcherAgent` needs to read the *latest* documentation for a library released last week. Standard `requests.get` will fail on Cloudflare-protected sites. A service like Bright Data (or a self-hosted alternative like `browserless`) is needed.
-*   **CodeSwarm Fit**: We should define a `WebScraperTool` in Agno that abstracts the provider.
+### A. The "Unblockable" Scout
+Agno agents often fail when a URL returns "403 Forbidden" (Cloudflare/Akamai).
+*   **Idea:** Implement a "Fallback Scout". If the lightweight internal scraper fails, the agent automatically switches to `scrape_as_markdown` via Bright Data.
+*   **Benefit:** Increases mission success rate from ~60% to ~99% for external research tasks.
 
-### 2.2. Dynamic Tool Generation (The "Dataset" Pattern)
-The way Bright Data generates `web_data_*` tools dynamically is excellent.
-*   **Idea**: CodeSwarm should have a `ToolRegistry` that can dynamically generate tools based on configuration (stored in SurrealDB).
-*   **Application**: Instead of writing a Python class for every single action, we can define "API Action Tools" in the DB (e.g., "GitHub Issue Search", "PyPI Package Info") and have an `AgentFactory` load them at runtime.
+### B. Structured "Dark Matter" Ingest
+Social media and e-commerce data are usually "dark" to standard crawlers.
+*   **Idea:** Use the specialized `web_data_*` tools to populate the Knowledge Graph (SurrealDB) with rich entities.
+*   **Example:** `web_data_linkedin_company_profile` -> Graph Node `Company` with fields `employees`, `revenue`, `locations`. This is far cleaner than parsing HTML manually.
 
-### 2.3. Browser Session Management
-The `Browser_session` class handles the complexity of keeping a browser open across multiple tool calls.
-*   **Idea**: Agents need "Stateful Tooling".
-*   **Application**: If an agent is navigating a documentation site, it shouldn't restart the browser for every page. Agno supports stateful agents; we need to ensure our tools leverage this (e.g., passing a `session_id` or holding a handle to a Playwright page).
-
-### 2.4. Structured Data over Raw HTML
-Bright Data emphasizes getting *structured* data (markdown or JSON) rather than raw HTML.
-*   **Strategic Requirement**: Never feed raw HTML to an LLM if possible (token waste).
-*   **CodeSwarm Standard**: All scraping tools must return either Markdown (for reading) or JSON (for data). We should use libraries like `trafilatura` or `beautifulsoup4` (or `jina.ai/reader` API) to convert HTML to LLM-friendly text.
+### C. Visual Verification Agent
+The `scraping_browser_screenshot` tool allows for visual ground truth.
+*   **Idea:** When an agent scrapes a controversial or critical piece of data (e.g., a stock price or news headline), it takes a screenshot and stores it in SurrealDB as an artifact.
+*   **Benefit:** Provides an audit trail. "Why did the agent think the price was $50?" -> "Here is the screenshot from 10:00 AM."
 
 ---
 
-## 3. Integration Plan: Agno + SurrealDB + Gemini 3
+## 3. Integration Plan (Agno + SurrealDB + Gemini 3)
 
-We will enhance CodeSwarm's ability to interact with the outside world.
+We will integrate Bright Data as a premium toolset for specific squads.
 
-### 3.1. Stack Mapping
+### Component: `ReconSquad`
 
-| Component | Bright Data MCP | CodeSwarm Target | Notes |
-| :--- | :--- | :--- | :--- |
-| **Provider** | Bright Data (Cloud) | **Firecrawl** / **Jina Reader** / **Playwright** | For a self-contained repo, we might prefer Playwright or a free scraping API (Jina) to avoid forcing paid sub on users. |
-| **Interface** | MCP | **Agno Toolkit** | `WebTools` class. |
-| **Browser** | Remote CDP | **Local/Docker Headless Chrome** | Run locally for cost/privacy. |
-| **Logic** | Node.js | **Python** | |
-
-### 3.2. Data Model (SurrealDB)
-
-Track what the agents have read from the web to avoid re-scraping.
-
-**Table: `web_cache`**
-```sql
-DEFINE TABLE web_cache SCHEMAFULL;
-DEFINE FIELD url ON web_cache TYPE string;
-DEFINE FIELD content_hash ON web_cache TYPE string;
-DEFINE FIELD markdown_content ON web_cache TYPE string;
-DEFINE FIELD metadata ON web_cache TYPE object;
-DEFINE FIELD fetched_at ON web_cache TYPE datetime DEFAULT time::now();
-DEFINE INDEX idx_url ON web_cache COLUMNS url UNIQUE;
-```
-
-### 3.3. Agno Agent Implementation
-
-We will create a `WebSurferToolkit`.
-
-#### Step 1: The Scraper Tool
-Using `crawl4ai` (a Python library popular with Agno) or simple `playwright`.
+#### 1. Integration with Agno
+We will register the Bright Data MCP server as a remote toolset.
 
 ```python
-from agno.tools import Toolkit
-from agno.utils.log import logger
-# hypothetical import, or we implement a wrapper around playwright
-from crawl4ai import AsyncWebCrawler
-
-class WebSurferToolkit(Toolkit):
-    def __init__(self):
-        super().__init__(name="web_surfer")
-
-    async def browse(self, url: str):
-        """Reads a webpage and returns markdown."""
-        async with AsyncWebCrawler() as crawler:
-            result = await crawler.arun(url=url)
-            return result.markdown
-
-    async def search_google(self, query: str):
-        """Searches Google and returns top 5 results with snippets."""
-        # Use DuckDuckGo (free) or SerpAPI
-        pass
-```
-
-#### Step 2: The Researcher Agent
-```python
+# Conceptual Agno Integration
 from agno.agent import Agent
-from codeswarm.tools.web_surfer import WebSurferToolkit
+from agno.tools.mcp import MCPTool
 
-researcher = Agent(
-    role="Tech Researcher",
-    tools=[WebSurferToolkit()],
-    instructions="""
-    1. Search for the topic.
-    2. Visit relevant documentation pages.
-    3. Synthesize the findings.
-    """
+recon_agent = Agent(
+    role="Reconnaissance Scout",
+    tools=[MCPTool(server_url="...", tools=["search_engine", "scrape_as_markdown", "web_data_linkedin_company_profile"])],
+    instructions="Find the CEO of Acme Corp and get their latest news."
 )
 ```
 
----
+#### 2. The `WebSource` Table (SurrealDB)
+We need to track where data comes from and how much it cost (Bright Data is paid).
 
-## 4. Specific Implementation Steps
+```sql
+DEFINE TABLE web_source SCHEMAFULL;
+DEFINE FIELD url ON TABLE web_source TYPE string;
+DEFINE FIELD method ON TABLE web_source TYPE string; -- 'standard' or 'brightdata'
+DEFINE FIELD cost_credits ON TABLE web_source TYPE number;
+DEFINE FIELD snapshot ON TABLE web_source TYPE string; -- Link to screenshot artifact
+DEFINE FIELD parsed_content ON TABLE web_source TYPE string;
+```
 
-### Phase 1: Basic Web Tools
-1.  **Dependency**: Add `duckduckgo-search` and `beautifulsoup4` to `requirements.txt`.
-2.  **Tool**: Create `codeswarm/tools/web_search.py`.
-    *   Implement `search_web(query)`.
-    *   Implement `read_url(url)` (using `requests` + `bs4` -> markdown).
+#### 3. The "Deep Browse" Flow
+For complex research tasks that require navigation (e.g., "Log into this portal and download the PDF").
 
-### Phase 2: Headless Browser (Advanced)
-3.  **Dependency**: Add `playwright`.
-4.  **Tool**: Update `read_url` to use Playwright if the page is dynamic (detects JS requirement).
-5.  **Schema**: Create `web_cache` table in SurrealDB to cache results (reduce latency).
+1.  **Agent:** Calls `scraping_browser_navigate(url)`.
+2.  **MCP:** Connects to remote CDP endpoint.
+3.  **Agent:** Calls `scraping_browser_screenshot()` to "see" the page.
+4.  **Gemini:** Analyzes the screenshot -> "I need to click the blue button".
+5.  **Agent:** Calls `scraping_browser_click(selector=".blue-btn")`.
+6.  **Loop:** Repeats until target data is found.
 
-### Phase 3: The "Deep Research" Integration
-6.  Connect this Web Toolkit to the `DeepResearchAgent` planned in the previous report (`local-deep-research`). The `DeepResearcher` needs these exact tools to function.
+### Implementation Steps
 
-## 5. Detailed Logic Breakdown (from Source)
+1.  **Environment Setup:** Add `BRIGHT_DATA_API_KEY` to the Armada's secure vault.
+2.  **Tool Wrapping:** Create a `WebScraper` class in the Agno codebase that abstracts the choice between "Cheap/Fast" (internal) and "Heavy/Sure" (Bright Data).
+3.  **Cost Guardrails:** Implement a budget manager in the `ReconSquad`. "If we have spent > $5 today, ask for user permission before using Bright Data."
 
-### 5.1. `browser_session.js` - Resilience
-*   **Reconnection**: The code handles `Browser connection lost... reconnecting...`.
-*   **Domain Isolation**: `_getDomainSession` creates separate browser contexts for different domains.
-    *   *Lesson*: In CodeSwarm, if we use Playwright, we should use a single `Browser` instance but create new `Contexts` for different tasks or agents to ensure cookies/state don't leak between tasks.
-
-### 5.2. `server.js` - Tool Definitions
-*   **Schema**: Uses `zod` for input validation. In Agno, we use Pydantic models or type hints.
-*   **Execution**: Simple wrapper around `axios` calls to Bright Data API.
-
-## 6. Conclusion
-
-Bright Data MCP demonstrates how to expose a **Data-as-a-Service** platform to AI agents. For CodeSwarm, we will emulate this by building a **Local Web Scraper Toolkit**. While we won't use Bright Data's paid API by default (to keep CodeSwarm open/free), we will adopt the **interface** (Markdown output, search + browse separation) and the **architecture** (resilient browser sessions) using open-source tools like Playwright and Crawl4AI.
+### Refined Workflow: "Entity Enrichment"
+1.  **User:** "Analyze competitor X."
+2.  **Orchestrator:** Checks SurrealDB. "Competitor X exists but data is stale."
+3.  **ReconAgent:**
+    *   Calls `search_engine(query="Competitor X LinkedIn")`.
+    *   Extracts URL.
+    *   Calls `web_data_linkedin_company_profile(url)`.
+    *   Calls `web_data_glassdoor_reviews(url)` (via generic scraper or custom dataset).
+4.  **Integration:** JSON results are mapped to the `Organization` graph schema and merged into SurrealDB.

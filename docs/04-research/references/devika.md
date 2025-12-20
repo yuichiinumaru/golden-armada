@@ -1,161 +1,100 @@
-# Reference Analysis: Devika (AI Software Engineer)
+# Devika: The Open-Source AI Software Engineer
 
-**Source:** `gitingest-stitionai-devika.txt`
-**Repo:** stitionai/devika
-**Date:** 2025-03-31
+## 1. Synthesis
 
----
+**Repository:** `stitionai/devika`
+**Language:** Python
+**Core Purpose:** An open-source alternative to "Devin", designed as an autonomous AI software engineer capable of understanding high-level instructions, planning, researching, coding, and fixing bugs.
 
-## 1. Synthesis: What is Devika?
+### Key Capabilities
+*   **Multi-Agent Architecture:** Decomposes software engineering into specialized roles:
+    *   `Planner`: Breaks tasks into steps.
+    *   `Researcher`: Searches the web for documentation/solutions.
+    *   `Coder`: Writes code in multiple languages.
+    *   `Runner`: Executes code in a sandboxed environment.
+    *   `Patcher`: Fixes bugs based on error output.
+    *   `Reporter`: Generates documentation.
+*   **Project Management:** Persistent state management (SQLModel/SQLite) allows pausing and resuming complex tasks.
+*   **Browser Interaction:** Uses Playwright to browse the web, extract content, and take screenshots for visual context.
+*   **Dynamic State Tracking:** Maintains a real-time "Monologue" and state stack, visible to the user via a UI.
 
-Devika is an open-source "Agentic AI Software Engineer" inspired by Devin. It is a sophisticated multi-agent system designed to take high-level objectives, break them down into plans, research technical details, and write code to implement them.
-
-### Core Architecture
-Devika uses a **centralized orchestration model** where a main `Agent` class coordinates specialized sub-agents.
-
-*   **Agent Core (`src/agents/agent.py`)**: The brain. It manages state, conversation history, and the execution loop.
-*   **Specialized Agents**:
-    *   `Planner`: Generates step-by-step plans.
-    *   `Researcher`: Search engine integration (Bing/Google) to find docs/solutions.
-    *   `Coder`: Writes code based on plans and research.
-    *   `Action`: Determines the next move (run, deploy, fix, report).
-    *   `Runner`: Executes code in a sandbox.
-    *   `Patcher`: Debugs errors.
-    *   `Reporter`: Generates PDF reports.
-*   **State Management (`src/state.py`)**: Uses SQLModel (SQLite) to persist the "Agent State" (monologue, current step, browser session).
-*   **Browser Interaction (`src/browser/`)**: Uses Playwright to read documentation and extract text.
-
-### Key Workflows
-1.  **Planning**: `Planner` breaks prompt into steps.
-2.  **Research**: `Researcher` generates search queries -> `Browser` visits pages -> `Formatter` extracts content.
-3.  **Coding**: `Coder` takes plan + research context -> Outputs file operations.
-4.  **Execution**: `Runner` executes the project (e.g., `npm start`, `python main.py`).
-5.  **Feedback**: `Patcher` reads error logs and attempts fixes.
+### Architectural Highlights
+*   **Jinja2 Prompts:** extensively uses Jinja2 templates for structured prompting of LLMs.
+*   **Event-Driven:** Uses Socket.IO to stream agent thoughts, code generation, and terminal output to the frontend in real-time.
+*   **Modularity:** Each agent (`Coder`, `Planner`) is a standalone class with a standardized `execute()` method and specific prompt templates.
 
 ---
 
-## 2. Strategic Ideas for CodeSwarm (Golden Armada)
+## 2. Strategic Ideas for Golden Armada
 
-Devika is highly relevant to CodeSwarm because it implements the exact "End-to-End" coding loop we want, but with a different stack (Python/Flask/SQLite vs our Agno/SurrealDB).
+Devika offers a "Squad-in-a-Box" architecture that aligns perfectly with the Golden Armada's goals.
 
-### A. The "Monologue" Pattern
-Devika's `InternalMonologue` agent generates a stream of consciousness before taking actions.
-*   **Idea**: We should explicitize this in our agents. Instead of just "Tool Calls", agents should log "Thoughts" to SurrealDB.
-*   **Benefit**: better debugging and "explainability" for the user. "Why did the agent delete that file? Oh, the monologue says it thought it was a duplicate."
+### A. Specialized Agent Classes (The "Persona" Pattern)
+Devika explicitly separates `Coder` from `Planner` from `Researcher`.
+*   **Idea:** Adopt this strict separation for Agno agents.
+*   **Benefit:** Keeps context windows clean. The `Coder` doesn't need to see the `Researcher`'s 50 pages of search results, only the summarized findings.
 
-### B. The "Browser-Research-Code" Loop
-Devika doesn't just "know" things; it looks them up.
-*   **Idea**: Our `Developer` agent shouldn't just guess APIs. It should trigger a `Researcher` squad member if it's unsure about a library version.
-*   **Mechanism**: If the `Planner` detects "Use Library X", it creates a sub-task "Research Library X docs" before the "Write Code" task.
+### B. The "Internal Monologue" UI
+Devika streams the agent's "thoughts" to the UI before acting.
+*   **Idea:** Implement a `ThoughtStream` graph node in SurrealDB.
+*   **Mechanism:** When an agent thinks (using the `<think>` tag or internal logic), it pushes a record to `thought_stream`. The frontend subscribes to this table via Live Queries to show a "Matrix-style" feed of the Armada's cognition.
 
-### C. Project-Based Knowledge Base
-Devika creates a `knowledge_base` per project using `SentenceBERT`.
-*   **Idea**: We have SurrealDB Vectors. We should create a `ProjectKnowledge` table that stores not just code, but *findings* from the Researcher (e.g., "Found that API v2 is deprecated, use v3"). This prevents re-researching the same facts.
-
-### D. The "Patcher" Agent (Self-Healing)
-Devika has a dedicated agent for fixing bugs.
-*   **Idea**: In CodeSwarm, the "Revisor" usually reviews *human* or *agent* code. We should add a `Debugger` agent (or mode) that specifically takes *runtime errors* (from the `Runner`) and patches the code.
+### C. Self-Healing Code Loop (`Patcher` Agent)
+Devika's `Patcher` agent takes code + error -> new code.
+*   **Idea:** Create a `DebugLoop` tool.
+*   **Logic:**
+    1.  `CodingSquad` writes code.
+    2.  `ExecutionSquad` runs it.
+    3.  If exit code != 0, pass `stderr` to `DebugSquad`.
+    4.  `DebugSquad` modifies the file.
+    5.  Repeat (Max 3 retries).
 
 ---
 
-## 3. Integration Plan (Agno + SurrealDB)
+## 3. Integration Plan (Agno + SurrealDB + Gemini 3)
 
-We will adopt Devika's **Architecture of Specialization** but implement it using Agno's `Team` or `Squad` structures.
+We will adopt the **Multi-Agent State Machine** concept.
 
-### Phase 1: The `DevikaSquad` Pattern in Agno
+### Component: `SquadCoordinator`
 
-We will define a reusable "Coding Squad" pattern inspired by Devika.
-
-**File:** `codeswarm/agno-agents/squads/dev_squad.py`
-
-```python
-from agno.agent import Agent
-from agno.models.gemini import Gemini
-from codeswarm.tools.browser import BrowserToolkit
-from codeswarm.tools.fs import FileSystemToolkit
-
-class DevSquad:
-    def __init__(self, db_client):
-        self.planner = Agent(
-            role="Planner",
-            model=Gemini(id="gemini-2.0-flash"),
-            system_prompt="You are a Technical Planner. Break tasks into atomic coding steps.",
-            # ...
-        )
-
-        self.researcher = Agent(
-            role="Researcher",
-            tools=[BrowserToolkit()],
-            system_prompt="You are a Documentation Expert. Find API references and usage examples.",
-            # ...
-        )
-
-        self.coder = Agent(
-            role="Coder",
-            tools=[FileSystemToolkit()],
-            system_prompt="You are a Senior Engineer. Write clean, documented code based on the Plan and Research.",
-            # ...
-        )
-
-        # The Orchestrator
-        self.lead = Agent(
-            role="Tech Lead",
-            team=[self.planner, self.researcher, self.coder],
-            instructions="1. Ask Planner for a plan. 2. Ask Researcher for context. 3. Ask Coder to implement."
-        )
-```
-
-### Phase 2: State Persistence in SurrealDB
-
-Devika uses `state.py` and SQLite. We will map this to SurrealDB to allow real-time UI updates (Live Query).
-
-**Schema:**
+#### 1. State Persistence in SurrealDB
+Devika uses SQLite. We will use SurrealDB to store the *entire* state stack of an ongoing mission.
 ```sql
-DEFINE TABLE agent_state SCHEMAFULL;
-DEFINE FIELD project_id ON TABLE agent_state TYPE record<project>;
-DEFINE FIELD current_step ON TABLE agent_state TYPE string;
-DEFINE FIELD internal_monologue ON TABLE agent_state TYPE string;
-DEFINE FIELD browser_snapshot ON TABLE agent_state TYPE string; -- URL or HTML summary
-DEFINE FIELD status ON TABLE agent_state TYPE string; -- 'thinking', 'coding', 'waiting'
+DEFINE TABLE mission_state SCHEMAFULL;
+DEFINE FIELD project_name ON TABLE mission_state TYPE string;
+DEFINE FIELD current_step ON TABLE mission_state TYPE number;
+DEFINE FIELD agent_monologue ON TABLE mission_state TYPE string;
+DEFINE FIELD browser_snapshot ON TABLE mission_state TYPE string;
 ```
 
-### Phase 3: The `KnowledgeBase` Toolkit
+#### 2. The `ContextSwitch` Pattern
+Devika passes context between agents explicitly.
+*   **Implementation:** When `Planner` finishes, it writes a `Plan` object to the Graph. The `Coder` agent is triggered (via Live Query) only when a `Plan` node is linked to the `Project` node.
+*   **Prompting:** We will port Devika's excellent Jinja2 prompts (especially `coder/prompt.jinja2`) into our `Agno` agent instructions, adapting them for Gemini's large context window.
 
-We will port the concept of Devika's `src/memory/knowledge_base.py` but use SurrealDB Vector Search.
+#### 3. Browser-Augmented Coding
+Devika uses a browser to look up docs *while* coding.
+*   **Workflow:**
+    1.  `CodingSquad` encounters an unknown library error.
+    2.  Instead of guessing, it emits a `ResearchRequest` event.
+    3.  `ReconSquad` (using Bright Data or Browser Use) finds the docs.
+    4.  `ReconSquad` inserts a `Documentation` node into the Knowledge Graph.
+    5.  `CodingSquad` is notified, reads the doc, and fixes the code.
 
-**File:** `codeswarm/agno-agents/toolkits/knowledge_base.py`
+### Implementation Steps
 
-```python
-class KnowledgeBaseToolkit(Toolkit):
-    def __init__(self, db):
-        self.db = db
+1.  **Prompt Porting:** Copy the logic from `src/agents/*/prompt.jinja2` and convert them into Agno system prompts. They are high-quality, task-specific prompts.
+2.  **State Schema:** Define the `Mission` and `State` tables in SurrealDB to mirror Devika's state tracking.
+3.  **UI Feedback:** Ensure the Golden Armada's API exposes the "Internal Monologue" stream so users trust the autonomous process.
 
-    def add_finding(self, query: str, content: str):
-        """Stores research findings."""
-        self.db.create("findings", {
-            "query": query,
-            "content": content,
-            "embedding": self.embed(content)
-        })
-
-    def search_findings(self, query: str):
-        """Retrieves relevant past research."""
-        return self.db.query(
-            "SELECT * FROM findings WHERE vector::similarity(embedding, $vec) > 0.8",
-            {"vec": self.embed(query)}
-        )
-```
-
-### Phase 4: Prompt Engineering Adaptation
-
-Devika's Jinja2 prompts (`src/agents/*/prompt.jinja2`) are excellent. We should:
-1.  **Extract** the core instructions (e.g., "Write code in this Markdown format...").
-2.  **Adapt** them to Agno's system prompt structure.
-3.  **Store** them in our `PromptOptimizer` (SPO) system so they can be refined.
-
-**Example Adaptation (Coder Prompt):**
-*   *Devika*: "File: `main.py`:\n```py..."
-*   *CodeSwarm*: We will enforce this same output format because it's easy to parse deterministically (using `textricator` or regex).
-
-### Summary
-Devika validates that a **modular, multi-agent approach** is the right way to build an AI Engineer. We will port its **Roles** (Planner, Researcher, Coder) and **State Model** to our stack, upgrading the storage to SurrealDB and the orchestration to Agno.
+### Refined Workflow: "The Self-Correction Loop"
+1.  **User:** "Fix the bug in `auth.py`."
+2.  **Orchestrator:** Activates `PatcherSquad`.
+3.  **Patcher:**
+    *   Reads `auth.py`.
+    *   Runs tests -> Fails.
+    *   *Self-Correction:* "I need to see the logs."
+    *   Reads logs.
+    *   Applies patch.
+    *   Runs tests -> Passes.
+4.  **Orchestrator:** Marks task complete.

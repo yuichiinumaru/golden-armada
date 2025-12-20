@@ -1,222 +1,96 @@
-# Reference Analysis: Textricator
+# Textricator: Finite State Machine Document Extraction
 
 ## 1. Synthesis
 
-**Textricator** is an open-source Java/Kotlin library and command-line tool developed by Measures for Justice. Its primary purpose is to extract structured data from PDF documents, specifically targeting complex, non-standard layouts that are difficult to parse with traditional tools. It excels at processing forms and tables where data is organized visually but not necessarily structurally within the PDF file format.
+**Repository:** `measuresforjustice/textricator`
+**Language:** Kotlin
+**Core Purpose:** A deterministic, configuration-driven tool for extracting structured data from PDFs and other document formats using Finite State Machines (FSMs) and spatial analysis.
 
-### Core Value Proposition
-Textricator treats a PDF not as a stream of text, but as a 2D canvas of "text segments" with spatial properties (x, y coordinates, font size, etc.). It uses a **Finite State Machine (FSM)** approach to navigate through these segments, allowing users to define rules like "if the text is 'Name:', the text to the right is the person's name". This allows for highly robust extraction from messy, real-world documents (like government forms or "rap sheets").
+### Key Capabilities
+*   **Spatial Text Extraction:** Extracts text with precise coordinate (x, y), font, and style metadata using PDFBox or iText.
+*   **FSM Parsing Engine:** Uses a YAML-configurable Finite State Machine to traverse the stream of extracted text segments.
+    *   **States & Transitions:** Defines states (e.g., "InvoiceHeader", "LineItem") and transitions based on conditions (regex, coordinates, font properties).
+    *   **Hierarchical Records:** Supports complex parent-child data structures (e.g., an Invoice record containing multiple LineItem records).
+*   **Table Parsing:** specialized logic for grid-based data extraction based on column coordinates.
+*   **Output Formats:** Exports structured data to CSV, JSON, XML, or flat JSON.
+*   **Expression Engine:** Uses `expr` for complex logic in transition conditions (e.g., "if font is bold AND y-coordinate > 500").
 
-### Key Features
-*   **Spatial Extraction**: Parses text based on visual layout (columns, rows, relative positions) rather than stream order.
-*   **Finite State Machine (FSM) Parser**: A configurable engine that transitions between states (e.g., `Header` -> `RecordStart` -> `FieldA` -> `FieldB`) based on conditions like regex matches, font styles, and spatial coordinates.
-*   **Multiple Extraction Engines**: Supports PDFBox, iText 5, and iText 7 as underlying PDF parsing libraries, as well as CSV/JSON input (allowing multi-pass processing).
-*   **YAML Configuration**: The extraction logic is defined in a readable YAML format, separating the parsing rules from the core code.
-*   **Table Parsing**: A specialized mode for extracting data from columnar layouts.
-*   **Record Generation**: Can output hierarchical JSON or flat CSV records from nested data structures found in the document.
-
-### Architectural Components
-*   **`TextExtractor`**: Interface for raw text extraction from PDFs. Implementations exist for PDFBox (`PdfboxTextExtractor`) and iText. It produces a stream of `Text` objects (content + geometry).
-*   **`FsmParser` (Finite State Machine)**: The core logic engine. It reads the YAML config (`FormParseConfig`) and the stream of `Text` objects. It maintains a "current state" and transitions based on defined rules.
-*   **`RecordParser`**: Takes the stream of states/values emitted by the FSM and assembles them into structured `Record` objects (handling parent-child relationships).
-*   **`RowGrouper`**: A utility to group text segments that are visually on the same line, dealing with the common PDF issue where text on the same line is stored as separate objects.
-*   **`FormParseConfig`**: The data model for the YAML configuration, defining states, transitions, conditions (using the `Expr` library for logic), and record structures.
+### Architectural Highlights
+*   **Pipeline Approach:** `Extractor` (PDF -> Text objects) -> `FsmParser` (Text -> StateValues) -> `RecordParser` (StateValues -> Records) -> `Output`.
+*   **Config-Driven:** The extraction logic is entirely defined in declarative YAML files, decoupling code from document templates.
+*   **Debuggability:** Extensive logging of state transitions and text analysis helps users debug why a specific field wasn't captured.
 
 ---
 
-## 2. Strategic & Architectural Ideas for CodeSwarm
+## 2. Strategic Ideas for Golden Armada
 
-The **CodeSwarm** project (migrating to Agno + SurrealDB + Gemini 3) can leverage the *concepts* and *patterns* from Textricator to build a powerful **"Document Understanding Agent"**. While we likely won't use the Java code directly, the FSM approach is incredibly valuable for deterministic extraction tasks where LLMs might hallucinate or be inconsistent.
+The "Golden Armada" needs to ingest vast amounts of "Dark Data" (PDFs, reports, forms) into SurrealDB. While LLMs (Gemini) are great at unstructured text, they are slow and expensive for high-volume, repetitive structure extraction. Textricator offers a deterministic, high-speed alternative for known document types.
 
-### 2.1. The "Spatial FSM" Pattern for Deterministic Extraction
-LLMs are great at unstructured text, but can struggle with precise, repetitive extraction from complex visual layouts (e.g., invoices with multi-page tables).
-*   **Idea**: Implement a "Spatial FSM" agent or tool in Agno.
-*   **Application**: When CodeSwarm needs to ingest legacy documentation or specific structured reports (like the ones generated by `local-deep-research`), an FSM approach ensures 100% accuracy for known formats.
-*   **Hybrid Approach**: Use Gemini to *generate* the YAML config for the FSM based on a few examples, then use the deterministic FSM engine to process thousands of files. This combines LLM flexibility with code reliability.
+### A. The "Schematic Ingestor" Pattern
+Instead of throwing every PDF at Gemini, we define **Schematics** (YAML configs) for common document types.
+*   **Idea:** Create a library of Textricator YAML configs stored in SurrealDB.
+*   **Benefit:** Zero-hallucination extraction for financial documents, government forms, and technical datasheets.
+*   **Hybrid Flow:** Use Textricator to extract the "Skeleton" (tables, headers) and pass specific extracted text blocks to Gemini for "Semantic Enrichment" (summarization, sentiment).
 
-### 2.2. YAML-Based Extraction Rules (DSL)
-Textricator's use of a YAML DSL to define extraction logic is a strong architectural pattern.
-*   **Idea**: Define a "Extraction Schema" format for CodeSwarm agents.
-*   **Application**: Instead of hardcoding parsing logic in Python, agents can read a config file. This allows "Admin" agents to modify extraction rules without changing code.
-*   **SurrealDB Integration**: These schemas can be stored in SurrealDB (`parsing_rules` table), allowing dynamic loading of rules based on document type.
+### B. Spatial-Semantic Indexing
+Textricator extracts *where* text is. We can store this spatial metadata in SurrealDB.
+*   **Idea:** Store document chunks with `(page, ulx, uly, lrx, lry)` coordinates.
+*   **Benefit:** Enables "Visual QA". When an agent answers a question, it can highlight the exact bounding box on the original PDF overlay in the UI.
 
-### 2.3. The "Text Segment" Abstraction
-Textricator standardizes extracted text into a `Text` object: `{content, x, y, width, height, font, page}`.
-*   **Idea**: Standardize document ingestion in CodeSwarm.
-*   **Application**: When ingesting PDFs or images (via OCR), convert them into this standard "Spatial Text" format and store it in SurrealDB.
-*   **Gemini Multimodal**: We can feed this spatial data (or the visual image + bounding boxes) to Gemini 1.5 Pro, which excels at multimodal reasoning. We can ask Gemini: "Find the text at coordinates X,Y" or "What is the label for the value at X,Y?".
-
-### 2.4. Recursive/Hierarchical Record Construction
-The `RecordParser` in Textricator handles nested data (e.g., A "Person" record containing multiple "Case" records, each containing multiple "Charge" records).
-*   **Idea**: Use Agno agents to build hierarchical data structures.
-*   **Application**: When researching a topic, an agent shouldn't just dump a flat summary. It should build a structured tree of knowledge (Topic -> Subtopic -> Fact -> Source). This aligns with the `Record` structure in Textricator.
+### C. FSM as a "Parser Agent" Tool
+The FSM logic is effectively a "deterministic agent" that reads a document linearly.
+*   **Idea:** Wrap Textricator as an MCP Tool. An Agno agent can write a YAML config on-the-fly (or select one) to parse a document it encounters.
 
 ---
 
-## 3. Integration Plan: Agno + SurrealDB + Gemini 3
+## 3. Integration Plan (Agno + SurrealDB + Gemini 3)
 
-We will build a **"Document Ingestion Pipeline"** inspired by Textricator, but leveraging modern AI.
+We will integrate Textricator functionalities not by porting the Kotlin code, but by adopting its **Concepts** into a Python-based MCP server or by wrapping the JAR in a Docker container controlled by an MCP tool. Given the stack (Python/Agno), porting the *logic* or wrapping the CLI is preferred.
 
-### 3.1. Stack Mapping
+### Component: `DocumentIngestSquad`
 
-| Component | Textricator (Java/Kotlin) | CodeSwarm Target (Python) | Notes |
-| :--- | :--- | :--- | :--- |
-| **PDF Parsing** | PDFBox / iText | **PyMuPDF (fitz)** or **Google Document AI** | PyMuPDF is fast and gives coordinates. Document AI / Gemini handles OCR. |
-| **Logic Engine** | Custom FSM | **Agno Agent** + **Pydantic** | Agno agents can act as the FSM, or we can write a lightweight Python FSM. |
-| **Configuration** | YAML + `Expr` | **Pydantic Models** + **Jinja2** / **YAML** | Pydantic provides validation. |
-| **Data Storage** | In-memory / CSV Output | **SurrealDB** | Store raw segments and structured records. |
-| **Querying** | N/A | **SurrealQL** | Spatial queries on text segments! |
-
-### 3.2. Data Model (SurrealDB)
-
-We can store the *spatial* representation of documents in SurrealDB to allow for "querying by layout".
-
-**Table: `documents`**
+#### 1. The `Schematic` Table (SurrealDB)
+Store extraction configurations.
 ```sql
-DEFINE TABLE documents SCHEMAFULL;
-DEFINE FIELD filename ON documents TYPE string;
-DEFINE FIELD ingested_at ON documents TYPE datetime DEFAULT time::now();
-DEFINE FIELD page_count ON documents TYPE int;
+DEFINE TABLE schematic SCHEMAFULL;
+DEFINE FIELD name ON TABLE schematic TYPE string;
+DEFINE FIELD yaml_config ON TABLE schematic TYPE string; -- The Textricator YAML
+DEFINE FIELD target_record_type ON TABLE schematic TYPE string;
 ```
 
-**Table: `doc_segments`** (The "Text" objects)
-```sql
-DEFINE TABLE doc_segments SCHEMAFULL;
-DEFINE FIELD doc_id ON doc_segments TYPE record(documents);
-DEFINE FIELD page ON doc_segments TYPE int;
-DEFINE FIELD content ON doc_segments TYPE string;
-DEFINE FIELD box ON doc_segments TYPE object;
-DEFINE FIELD box.x ON doc_segments TYPE float;
-DEFINE FIELD box.y ON doc_segments TYPE float;
-DEFINE FIELD box.w ON doc_segments TYPE float;
-DEFINE FIELD box.h ON doc_segments TYPE float;
-DEFINE FIELD font_size ON doc_segments TYPE float;
--- Spatial index for efficient "what is near X?" queries
--- (SurrealDB doesn't have 2D box index yet, but we can index x/y)
-DEFINE INDEX idx_page_x_y ON doc_segments COLUMNS doc_id, page, box.x, box.y;
-```
+#### 2. The `TextricatorTool` (MCP)
+Since Textricator is a CLI tool, we can wrap it.
+*   **Function:** `extract_structure(file_path: str, schematic_name: str)`
+*   **Implementation:**
+    1.  Agent requests extraction.
+    2.  Tool fetches YAML from `schematic` table.
+    3.  Tool runs `textricator.jar` (or a Python equivalent port) against the PDF using the config.
+    4.  Output JSON is returned to the Agent.
 
-### 3.3. Agno Agent Implementation: `DocumentParserAgent`
+#### 3. The `Refinery` Flow (Live Queries)
+Use SurrealDB Live Queries to orchestrate the hybrid pipeline.
 
-This agent mimics the Textricator workflow but uses Gemini for the "hard" parts (identifying the document type and layout) and code for the "precise" parts (extracting values at specific locations).
+1.  **Ingest:** A PDF is uploaded. `App` creates a `document` record.
+2.  **Classify (Gemini):** A lightweight agent sees the new `document`. It asks Gemini: "What type of document is this? Does it match any known Schematics?"
+3.  **Route:**
+    *   *If Match:* Update `document.processing_mode = 'textricator'`.
+    *   *If Unknown:* Update `document.processing_mode = 'general_ocr'`.
+4.  **Extract (Textricator):** A worker listening for `textricator` mode runs the CLI tool. It inserts structured data into `document.extracted_data`.
+5.  **Enrich (Gemini):** A final pass where Gemini reads `document.extracted_data` and adds a `summary` or `embedding` for vector search.
 
-#### Step 1: Ingestion Tool
-A tool to convert PDF -> SurrealDB segments.
+### Adaptation: Python "PyTextricator"
+Since the Golden Armada is Python-centric, we might eventually implement a simplified version of the FSM logic in Python (`PyMuPDF` + `Agno` FSM) to avoid the Java dependency, but keeping the *YAML Configuration Schema* is valuable for portability.
 
-```python
-import fitz # PyMuPDF
-from agno.tools import Toolkit
+**Proposed Python Implementation using Agno:**
+Instead of a strict YAML FSM, we use an Agno Agent with a specific "Reading Protocol".
+*   **Input:** List of text blocks with coordinates.
+*   **Prompt:** "You are a parser. Here is the layout of page 1. Extract the Invoice Number found near the top right..."
+*   *Optimization:* For strict formats, we stick to the Java CLI wrapper for speed.
 
-class PDFIngestTool(Toolkit):
-    def ingest_pdf(self, filepath: str, doc_id: str):
-        doc = fitz.open(filepath)
-        segments = []
-        for page_num, page in enumerate(doc):
-            words = page.get_text("words") # (x0, y0, x1, y1, "word", block_no, line_no, word_no)
-            for w in words:
-                segments.append({
-                    "doc_id": doc_id,
-                    "page": page_num + 1,
-                    "content": w[4],
-                    "box": {"x": w[0], "y": w[1], "w": w[2]-w[0], "h": w[3]-w[1]},
-                    "font_size": 0 # PyMuPDF "words" doesn't give font, "dict" does but is slower
-                })
-        # Bulk insert into SurrealDB
-        return f"Ingested {len(segments)} segments."
-```
-
-#### Step 2: The "Spatial Query" Tool
-Unlike Textricator's rigid FSM, we can give the Agent tools to "look" at the document database.
-
-```python
-class DocumentQueryTool(Toolkit):
-    def find_text_near(self, doc_id: str, anchor_text: str, direction: str = "right"):
-        """
-        Finds text segments spatially related to an anchor phrase.
-        e.g. Find text to the 'right' of 'Invoice Number:'.
-        """
-        # 1. Find anchor text location in SurrealDB
-        # SELECT * FROM doc_segments WHERE doc_id=$doc_id AND content CONTAINS $anchor_text
-
-        # 2. Query relative location
-        # If 'right': SELECT * FROM doc_segments WHERE doc_id=$doc AND page=$p
-        # AND box.x > $anchor.box.x AND box.y INSIDE ($anchor.box.y - 5, $anchor.box.y + 5)
-
-        return "Found: '12345'"
-```
-
-#### Step 3: The Agent
-```python
-from agno.agent import Agent
-from agno.models.google import Gemini
-
-doc_agent = Agent(
-    model=Gemini(id="gemini-1.5-pro"),
-    tools=[PDFIngestTool(), DocumentQueryTool()],
-    instructions="""
-    You are a Document Understanding Agent.
-    To extract data:
-    1. Ingest the PDF.
-    2. Use `find_text_near` to locate values relative to known labels.
-    3. Return the structured data.
-    """
-)
-```
-
-### 3.4. Replicating the FSM (Optional but Powerful)
-If we need the strict reliability of Textricator's FSM, we can port the `FsmParser` logic to Python.
-1.  **Define Rules in Python/YAML**: Create a Pydantic model for `State` and `Transition`.
-2.  **Parser Class**: A Python class that iterates over the sorted `doc_segments` from SurrealDB and applies the state transitions.
-3.  **Benefit**: This runs locally and deterministically, saving token costs and reducing latency for high-volume processing.
-
----
-
-## 4. Specific Implementation Steps
-
-### Phase 1: Ingestion Capability
-1.  **Dependencies**: Add `pymupdf` to `requirements.txt`.
-2.  **Schema**: Create `doc_segments` table in SurrealDB.
-3.  **Tool**: Create `codeswarm/tools/pdf_ingest.py` implementing the logic to read PDFs and push to SurrealDB.
-
-### Phase 2: Spatial Querying
-4.  **Tool**: Create `codeswarm/tools/doc_query.py`. Implement logic to find text based on:
-    *   Exact match / Regex.
-    *   Spatial relationship (Right of, Below, Inside Box).
-    *   This effectively gives the LLM "eyes" to scan the document programmatically.
-
-### Phase 3: The Agent
-5.  **Agent**: Create `codeswarm/agno-agents/105_document_processor_agent.py`.
-    *   Equip it with the tools.
-    *   Test it on a sample PDF (e.g., an invoice).
-
-### Phase 4: Hybrid Extraction (The "Textricator" Legacy)
-6.  **Config Generation**: Create a prompt for Gemini to *write* a Textricator-style extraction rule (YAML) given a document image.
-7.  **Execution**: Implement a lightweight Python engine (`SimpleFSM`) that executes these rules against the SurrealDB segments. This allows the Agent to "learn" a format once and then process it cheaply forever.
-
-## 5. Detailed Logic Breakdown (from Source)
-
-### 5.1. `TextExtractor` and Coordinate Systems
-Textricator normalizes coordinates (Points, 1/72 inch). `(0,0)` is usually Top-Left (or Bottom-Left depending on PDF version).
-*   **CodeSwarm Note**: When using PyMuPDF, ensure we normalize coordinates to a consistent system (Top-Left is standard for screen coordinates) before storing in SurrealDB.
-
-### 5.2. `RowGrouper`
-Textricator's `RowGrouper` (`src/main/java/io/mfj/textricator/text/RowGrouper.kt`) is crucial. PDF text is often fragmented. "Hello World" might be two objects: "Hello " and "World".
-*   **Logic**:
-    *   Sort all text on page by Y, then X.
-    *   Iterate. If `current.y` is within `tolerance` (e.g., 2 points) of `previous.y`, they are on the same line.
-*   **CodeSwarm Implementation**: We should implement a `group_rows` function in our ingestion tool or as a database view/query helper.
-
-### 5.3. `FsmParser` (`src/main/java/io/mfj/textricator/form/FsmParser.kt`)
-*   **State Machine**: Maintains `currentState`.
-*   **Transitions**: For every text segment, checks `currentState.transitions`.
-*   **Conditions**: Evaluates `condition` (e.g., `text =~ /Invoice/` or `ulx > 300`).
-*   **Action**: If match, change state, capture value (if `startRecord` or `valueType` is set).
-*   **CodeSwarm Implementation**: This pattern is perfect for a Python generator function: `def parse_document(segments, config): ... yield record`.
-
-## 6. Conclusion
-
-Textricator offers a masterclass in **deterministic, spatial document parsing**. While modern LLMs like Gemini 1.5 can "read" documents visually, the *cost* and *latency* can be high for bulk processing, and *hallucination* is a risk for strict data entry.
-
-By adopting Textricator's **"Spatial Segment"** data model and **"State Machine"** logic into the **Agno + SurrealDB** stack, CodeSwarm can build a best-of-both-worlds system:
-1.  **Gemini** acts as the "Setup Engineer": It looks at a document and writes the extraction rules (YAML/Python config).
-2.  **Python FSM** (powered by SurrealDB data) acts as the "Worker": It processes thousands of files rapidly and deterministically using those rules.
+### Integration Workflow
+1.  **User** uploads `invoice.pdf`.
+2.  **ClassifierAgent** identifies it as "Standard Invoice Type A".
+3.  **ExtractionAgent** calls `TextricatorTool` with `invoice_type_a.yaml`.
+4.  **Textricator** outputs JSON: `{"total": 500.00, "date": "2023-10-01"}`.
+5.  **SurrealDB** stores this in the `knowledge_graph`.
+6.  **User** asks "How much did we spend in October?" -> **GraphRAG** queries the structured data directly, getting a perfect answer (no vector search fuzziness needed).

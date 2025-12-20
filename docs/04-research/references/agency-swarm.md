@@ -1,147 +1,85 @@
-# Reference Analysis: Agency Swarm
+# Agency Swarm: Hierarchical Agent Orchestration
 
-**Source:** `gitingest-vrsen-agency-swarm (1).txt` & `gitingest-vrsen-agency-swarm-lab.txt`
-**Repo:** VRSEN/agency-swarm
-**Date:** 2025-03-31
+## 1. Synthesis
 
----
+**Repository:** `VRSEN/agency-swarm`
+**Language:** Python
+**Core Purpose:** An agent orchestration framework built on top of the OpenAI Assistants API. It allows users to create collaborative swarms of agents (Agencies) with distinct roles, capabilities, and hierarchical communication flows.
 
-## 1. Synthesis: What is Agency Swarm?
+### Key Capabilities
+*   **Agency & Agents:** Defines an `Agency` as a collection of `Agents` (CEO, Developer, Virtual Assistant) with directed communication flows (e.g., CEO -> Developer).
+*   **OpenAI Assistants API Wrapper:** Abstracts the complexity of managing Assistants, Threads, and Runs. It handles tool execution and message history automatically.
+*   **Tooling:** Provides a `BaseTool` class (Pydantic-based) for creating custom tools with automatic schema generation for OpenAI function calling.
+*   **Communication:** Agents communicate via a special `SendMessage` tool, which is dynamically generated based on the agency chart.
+*   **Genesis Agency:** A meta-agency that can create *other* agencies. It includes agents like `GenesisCEO`, `AgentCreator`, and `ToolCreator`.
 
-Agency Swarm is a Python framework built on top of the **OpenAI Assistants API**. It treats agents not just as LLMs with tools, but as role-based entities in an "Agency" (organization) that communicate via a structured hierarchy.
-
-### Core Concepts
-
-1.  **Agency Structure (`Agency` Class)**:
-    *   Defines a DAG (Directed Acyclic Graph) of communication.
-    *   `agency_chart = [ceo, [ceo, dev], [ceo, va], [dev, va]]`
-    *   Agents can only communicate with those they are explicitly connected to. This prevents "context pollution" and infinite loops.
-2.  **Agents (`Agent` Class)**:
-    *   Wraps an OpenAI Assistant.
-    *   Has `instructions` (System Prompt) and `tools`.
-    *   State is managed by OpenAI (Threads), not locally.
-3.  **Genesis Agency**:
-    *   A meta-agency that creates *other* agencies.
-    *   Includes `AgentCreator`, `ToolCreator`, and `OpenAPICreator` agents.
-    *   Validates the concept of "Agents building Agents".
-4.  **Tools**:
-    *   Pydantic-based schemas (similar to Agno).
-    *   `SharedState`: A mechanism for tools to share data (e.g., `ad_campaign_id`) without passing it through the LLM conversation context, saving tokens.
-5.  **Communication**:
-    *   `SendMessage` tool: The primary way agents talk. It transfers the conversation thread to the recipient agent.
-
-### The "Lab" Repository
-The `agency-swarm-lab` contains concrete implementations:
-*   `MetaMarkAgency`: Facebook Ad automation (CEO -> AdCopy -> ImageCreator -> FBManager).
-*   `WebDevCrafters`: Full-stack dev (CEO -> Designer -> Developer -> Copywriter).
-*   `CodeGuardians`: PR review system.
+### Architectural Highlights
+*   **`Agency` Class:** The main entry point. It takes an `agency_chart` (list of agents and communication links) and initializes the thread management.
+*   **Directed Acyclic Graph (DAG) Communication:** Communication is defined directionally. If `[CEO, Developer]` is defined, CEO can message Developer, but Developer cannot initiate new tasks for CEO (only respond).
+*   **State Management:** Uses `shared_state` to pass data between tools and agents without using context window tokens.
+*   **Gradia/Terminal Demo:** Built-in methods to run the agency in a web UI or terminal for testing.
 
 ---
 
-## 2. Strategic Ideas for CodeSwarm (Golden Armada)
+## 2. Strategic Ideas for Golden Armada
 
-Agency Swarm is the closest architectural cousin to the Golden Armada concept.
+Agency Swarm provides a robust model for *structured* multi-agent collaboration, which is essential for the Armada's "Squad" concept.
 
-### A. Hierarchical Communication Charts
-Agno's `Team` is often flat (everyone talks to everyone). Agency Swarm's "Chart" (`[Supervisor, [Supervisor, Worker]]`) is superior for complex tasks.
-*   **Idea**: We should enforce strict communication paths in our Squads. A `Planner` talks to `Developer`, but `Developer` might only talk to `Linter` and `Planner`, not `User` directly.
+### A. The "Squad Chart"
+Agency Swarm's `agency_chart` is the perfect data structure for defining a Squad.
+*   **Idea:** Define `Squad` configurations in SurrealDB using a similar schema.
+*   **Example:** `ContentSquad = [EditorInChief, [EditorInChief, Writer], [Writer, Researcher]]`.
+*   **Benefit:** Strict hierarchy prevents chaos. The `EditorInChief` controls the flow, while `Writer` and `Researcher` focus on execution.
 
-### B. The "Genesis" Pattern
-The idea of an agent that *scaffolds* the project structure is powerful.
-*   **Idea**: A `CodeSwarmGenesis` agent.
-    *   Input: "I need a scraping squad."
-    *   Action: Generates `scrapers/squad.py`, `scrapers/tools.py`, and `AGENTS.md` entry.
-    *   Benefit: Reduces the boilerplate of adding new capabilities to the Armada.
+### B. The `Genesis` Pattern (Meta-Agent)
+The "Genesis Agency" capability (agents creating agents) is the ultimate goal of the Golden Armada.
+*   **Idea:** Implement a `RecruitmentSquad`.
+*   **Function:** When a user says "I need a team to build a mobile app," the `RecruitmentSquad` analyzes the request and instantiates a new `MobileDevSquad` with the correct roles (iOS Dev, Android Dev, UX Designer) and tools, essentially "hiring" the right agents from the database.
 
-### C. Shared State vs. Context
-Agency Swarm uses `self._shared_state.set("key", value)` in tools.
-*   **CodeSwarm Equivalent**: SurrealDB.
-    *   Instead of an ephemeral dict, our agents write to the `context` table in SurrealDB.
-    *   Tool: `ContextSetter(key="feature_flags", value="{...}")`.
-    *   Strategic Value: This creates "Implicit Memory" separate from the "Explicit Memory" (Chat History).
-
-### D. The `SendMessage` Abstraction
-Agency Swarm turns communication into a *Tool*.
-*   **Idea**: In Agno, we usually just call `agent.print_response()`. We should wrap inter-agent delegation as a tool: `DelegateTask(recipient="Reviewer", instruction="Check this PR")`. This allows the LLM to *decide* when to hand off control.
+### C. Type-Safe Tools via Pydantic
+Agency Swarm enforces Pydantic for all tools. This matches our finding from `fastapi-mcp`.
+*   **Idea:** Standardize all Armada tools on the `BaseTool` pattern. Every tool must have a strict schema, which allows us to auto-generate UIs and API docs.
 
 ---
 
-## 3. Integration Plan (Agno + SurrealDB)
+## 3. Integration Plan (Agno + SurrealDB + Gemini 3)
 
-We will implement the **Agency Chart** and **Shared State** patterns using Agno's `Team` and SurrealDB.
+We will adapt the **Communication Hierarchy** and **Genesis** concepts.
 
-### Phase 1: The `Agency` Class for Agno
+### Component: `SquadManager`
 
-We need a wrapper that enforces the communication graph.
+#### 1. Defining Hierarchies in SurrealDB
+We need a graph structure to represent permission to speak.
+```sql
+DEFINE TABLE agent SCHEMAFULL;
+DEFINE TABLE can_message SCHEMAFULL; -- Edge table
 
-**File:** `codeswarm/agno-agents/orchestrator/agency.py`
-
-```python
-class Agency:
-    def __init__(self, chart, shared_instructions):
-        self.chart = chart
-        self.shared_instructions = shared_instructions
-        self.agents = self._parse_chart(chart)
-
-    def run(self, initial_prompt):
-        # Start with the root agent (CEO/Planner)
-        current_agent = self.agents[0]
-        response = current_agent.run(initial_prompt)
-
-        # If response includes a 'Delegate' tool call, switch context
-        while isinstance(response, DelegateCall):
-            next_agent = response.recipient
-            response = next_agent.run(response.instruction)
+-- CEO can message Developer
+RELATE agent:ceo->can_message->agent:developer;
 ```
 
-### Phase 2: SurrealDB Shared State Toolkit
+#### 2. The `SendMessage` Tool (Agno Port)
+We will port the `SendMessage` tool logic to Agno.
+*   **Logic:** When Agent A wants to talk to Agent B, it calls `send_message(recipient="Agent B", content="...")`.
+*   **Enforcement:** The system checks the `can_message` edge in SurrealDB. If valid, the message is routed; otherwise, "Permission Denied".
 
-We will replace Agency Swarm's in-memory `SharedState` with a DB-backed one.
+#### 3. Genesis Implementation
+We will build the `RecruitmentSquad` using Agno agents.
+*   **AgentCreator:** Generates system prompts for new agents based on user requirements.
+*   **ToolCreator:** Searches the tool library (or writes new code via `CodingSquad`) to equip the new agents.
+*   **SquadAssembler:** Writes the new configuration to SurrealDB and spins up the squad.
 
-**File:** `codeswarm/agno-agents/toolkits/shared_state.py`
+### Implementation Steps
 
-```python
-class SharedStateToolkit(Toolkit):
-    def __init__(self, db, session_id):
-        self.db = db
-        self.session_id = session_id
+1.  **Schema Design:** Finalize the SurrealDB schema for Agents, Squads, and Communication permissions.
+2.  **Tool Standardization:** Adopt the `BaseTool` pattern (Pydantic models) for all internal tools.
+3.  **Routing Layer:** Implement the "Switchboard" in the main application loop that routes messages between agents based on the defined hierarchy.
 
-    def set_value(self, key: str, value: str):
-        """Stores a value accessible to all agents in this session."""
-        self.db.query(
-            "UPDATE session SET data[$key] = $value WHERE id = $id",
-            {"key": key, "value": value, "id": self.session_id}
-        )
-
-    def get_value(self, key: str):
-        """Retrieves a value."""
-        return self.db.query("SELECT data[$key] FROM session WHERE id = $id")
-```
-
-### Phase 3: "Genesis" Agent Implementation
-
-We will create a specialized agent that can generate new agent templates.
-
-**System Prompt:**
-"You are the Genesis Agent. Your goal is to generate Python code for new Agno agents based on user requirements. You must follow the `DevSquad` pattern."
-
-**Tool:** `CreateAgentFile(name, role, tools_list)` -> Writes `codeswarm/agents/{name}.py`.
-
-### Detailed Logic Breakdown (Genesis Pattern)
-
-Agency Swarm's `AgentCreator` uses a multi-step process:
-1.  **Read Manifesto**: Understand the agency goal.
-2.  **Create Template**: Make the folder structure.
-3.  **Tool Creation**: Write `tools.py` (we can skip this or use our existing MCP tools).
-4.  **Finalize**: Add to `agency.py`.
-
-We will simplify this:
-1.  **Input**: "Create a Marketing Squad."
-2.  **Action**:
-    *   Generate `marketing/copywriter.py` (Agent).
-    *   Generate `marketing/designer.py` (Agent).
-    *   Generate `marketing/manager.py` (Lead).
-    *   Register in `main.py`.
-
-### Conclusion
-Agency Swarm teaches us that **structure matters**. Random agents chatting is chaos; a defined hierarchy (Agency Chart) is a "Organization". We will adopt this strict hierarchy to tame the complexity of the Golden Armada.
+### Refined Workflow: "The Boardroom"
+1.  **User:** "We need to launch a marketing campaign."
+2.  **CMO (Chief Marketing Officer Agent):** Receives the goal.
+3.  **CMO:** Checks available sub-agents. Sees `Copywriter` and `GraphicDesigner`.
+4.  **CMO:** Calls `send_message(recipient="Copywriter", content="Draft 3 tweet variations.")`.
+5.  **Copywriter:** Executes and replies.
+6.  **CMO:** Reviews. Calls `send_message(recipient="GraphicDesigner", content="Create images for these tweets.")`.
+7.  **CMO:** Compiles final package and reports to User.

@@ -1,165 +1,84 @@
-# Reference Analysis: CrewAI Tools
+# CrewAI Tools: The Agent's Utility Belt
 
 ## 1. Synthesis
 
-**CrewAI Tools** is the comprehensive tooling library for the CrewAI agent framework. It provides a massive collection of "ready-to-use" tools that agents can employ to interact with the external world (web, databases, APIs, files).
+**Repository:** `crewaiinc/crewai-tools`
+**Language:** Python
+**Core Purpose:** A standalone library of production-ready tools for AI agents, featuring strong integration with the CrewAI framework but usable independently. It emphasizes "RAG-as-a-Tool" and robust external integrations.
 
-### Core Value Proposition
-This library solves the **"Agency"** problem. An AI model is just a text processor until it has tools. CrewAI Tools provides a standardized, battle-tested suite of integrations so developers don't have to write their own wrappers for common services like Google Search, GitHub, PostgreSQL, or local file management.
+### Key Capabilities
+*   **RAG Tools:** A suite of tools (`PDFSearchTool`, `TXTSearchTool`, `GithubSearchTool`, `PGSearchTool`) that handle the entire RAG pipeline (Ingest -> Chunk -> Embed -> VectorStore -> Query) internally. This allows an agent to "chat with a file" or "chat with a repo" without a central knowledge base.
+*   **MCP Integration:** Built-in `MCPServerAdapter` allowing CrewAI agents to consume any Model Context Protocol server as a native tool.
+*   **Scraping Suite:** Multiple scraping options ranging from simple (`ScrapeWebsiteTool`) to headless browsers (`SeleniumScrapingTool`) to AI-native extractors (`Firecrawl`, `Spider`, `Scrapfly`).
+*   **Platform Connectors:** Tools for AWS (Bedrock, S3), Databricks, Snowflake, and Zapier.
 
-### Key Features
-*   **Extensive Tool Catalog**: Over 30+ built-in tools ranging from `FileReadTool` to `VisionTool`, covering:
-    *   **File System**: Read/Write files, list directories.
-    *   **Search**: Google (Serper), DuckDuckGo, Tavily, Exa.
-    *   **Scraping**: ScrapeWebsite, Selenium, Firecrawl, Spider.
-    *   **Database**: PostgreSQL, MySQL (RAG-based search over DBs).
-    *   **RAG**: Native support for "Chat with Docs" via Embedchain (PDF, CSV, TXT, MDX, Notion, etc.).
-    *   **Connectors**: GitHub, Zapier, Slack.
-*   **Adapter Pattern**: Uses adapters (`EmbedchainAdapter`, `LancedbAdapter`) to decouple the tool interface from the underlying implementation logic.
-*   **MCP Support**: Recently added support for the Model Context Protocol (MCP), allowing it to consume tools from other MCP servers.
-*   **Base Class Design**: All tools inherit from a common `BaseTool` (Pydantic-based), ensuring consistent schema generation for LLM function calling.
-
-### Architectural Components
-The structure is modular, with each tool in its own subdirectory under `crewai_tools/tools/`.
-*   **`crewai_tools/tools/`**: The implementation of specific tools.
-*   **`crewai_tools/adapters/`**: Bridges to 3rd party libraries (like Embedchain for RAG).
-*   **`BaseTool`**: The parent class that handles argument validation and schema generation.
-*   **`MCPServerAdapter`**: A bridge to connect to MCP servers.
+### Architectural Highlights
+*   **Adapter Pattern:** Uses adapters (`embedchain_adapter`, `lancedb_adapter`) to abstract the underlying vector database mechanics from the tool interface.
+*   **Tool Decorators:** Provides a `@tool` decorator for quickly converting Python functions into agent-compatible tools with schema inference.
+*   **Standardized Interface:** All tools subclass `BaseTool` (pydantic model), ensuring consistent `name`, `description`, and `_run` methods, which simplifies agent orchestration.
 
 ---
 
-## 2. Strategic & Architectural Ideas for CodeSwarm
+## 2. Strategic Ideas for Golden Armada
 
-**CodeSwarm** (Agno + SurrealDB + Gemini 3) currently has a "build it yourself" philosophy. While good for control, it slows down feature expansion. Analyzing `crewai-tools` reveals several patterns we should adopt.
+The "Golden Armada" is building a library of Agno agents. `crewai-tools` offers a masterclass in how to package capabilities for agents.
 
-### 2.1. The "Tool Library" Pattern
-Instead of writing tools inside each agent file, we should have a centralized `codeswarm/tools/` directory (which we partly have, but it needs expansion).
-*   **Idea**: Create a standard interface for CodeSwarm tools that is compatible with Agno.
-*   **Application**: Port the best tools from CrewAI (File, Directory, Code Interpreter) to CodeSwarm. This immediately boosts our agents' capabilities.
+### A. "Ad-Hoc" RAG vs. "System" RAG
+The Armada uses SurrealDB as the "System Memory". However, sometimes an agent just needs to read a specific PDF for one task and then forget it.
+*   **Idea:** Implement "Ephemeral RAG Tools".
+*   **Mechanism:** When an agent uses `pdf_search(file_path)`, the system spins up an in-memory LanceDB instance (or a temporary SurrealDB namespace), ingests the doc, queries it, and destroys it after the session.
+*   **Benefit:** Keeps the main Knowledge Graph clean of transient documents.
 
-### 2.2. RAG-as-a-Tool
-CrewAI's `PDFSearchTool` doesn't just "read text". It chunks, embeds, stores in a vector DB (Chroma/LanceDB), and performs semantic search.
-*   **Idea**: CodeSwarm should have "Smart Read" tools.
-*   **Application**: When a `DevAgent` reads a 5,000-line file, it shouldn't dump the whole thing into the context. It should index it into SurrealDB (ephemeral table) and query relevant chunks. This uses Gemini's context window more efficiently.
+### B. The MCP Adapter
+CrewAI's `MCPServerAdapter` is the bridge we need for Agno.
+*   **Idea:** Port this logic to Agno. Create an `MCPTool` class in Agno that connects to an MCP server (via stdio or SSE), fetches the tool list, and dynamically registers them as Agno tools.
+*   **Benefit:** Instantly unlocks the entire MCP ecosystem (Stripe, Slack, Postgres, etc.) for the Golden Armada.
 
-### 2.3. Database Introspection Tools
-The `PGSearchTool` allows natural language queries over SQL databases.
-*   **CodeSwarm Fit**: Since we use SurrealDB, we should build a `SurrealSearchTool`.
-*   **Usage**: "Find all tasks related to 'frontend' that failed last week." The agent shouldn't write raw SQL; it should use a semantic search tool that maps the question to the DB schema.
-
-### 2.4. Code Interpreter (The Holy Grail)
-CrewAI has a `CodeInterpreterTool` (often Docker-based).
-*   **Strategic Priority**: As identified in the `mcp_code_executor` report, this is critical.
-*   **Integration**: We can either adapt the CrewAI implementation or build our own using the architecture defined in the previous report.
+### C. Tiered Scraping Strategy
+CrewAI supports 5+ scraping backends. We should adopt this "Fallback" strategy.
+*   **Idea:** Create a `UniversalScraper` tool.
+*   **Logic:** Try simple `requests` -> If blocked, try `Selenium` -> If blocked, try `Firecrawl/BrightData` (Paid).
+*   **Benefit:** Balances cost vs. reliability automatically.
 
 ---
 
-## 3. Integration Plan: Agno + SurrealDB + Gemini 3
+## 3. Integration Plan (Agno + SurrealDB + Gemini 3)
 
-We will build a "Standard Library" of tools for CodeSwarm agents.
+We will use `crewai-tools` as a reference implementation for building our own "Armada Toolset".
 
-### 3.1. Stack Mapping
+### Component: `ToolRegistry`
 
-| Component | CrewAI Tools | CodeSwarm Target | Notes |
-| :--- | :--- | :--- | :--- |
-| **Base Class** | `pydantic.BaseModel` | **Agno `Toolkit` / `Function`** | Agno uses Pydantic natively. |
-| **Vector DB** | Chroma / LanceDB | **SurrealDB** | SurrealDB handles vector search natively. |
-| **Embeddings** | OpenAI / Cohere | **Gemini Embeddings** | Stay within the Google ecosystem. |
-| **Scraping** | Selenium / Firecrawl | **Playwright** | As planned in `brightdata-mcp` report. |
-
-### 3.2. Data Model (SurrealDB)
-
-We need to store tool configurations (API keys, preferences) and potentially cached results.
-
-**Table: `tool_configs`**
-```sql
-DEFINE TABLE tool_configs SCHEMAFULL;
-DEFINE FIELD tool_name ON tool_configs TYPE string;
-DEFINE FIELD config ON tool_configs TYPE object; -- JSON blob for flexibility
-DEFINE FIELD created_at ON tool_configs TYPE datetime DEFAULT time::now();
-```
-
-### 3.3. Agno Agent Implementation
-
-We will implement a `ToolManager` that agents can use to request tools dynamically.
-
-#### Step 1: File Tools (The Basics)
-Port `FileReadTool` and `DirectorySearchTool`.
+#### 1. The `AgnoMCPAdapter`
+We will implement a tool that wraps the `mcp` python SDK.
 
 ```python
-from agno.tools import Toolkit
-import os
-import glob
+# Conceptual Implementation
+from agno.tools import Tool
+from mcp import ClientSession, StdioServerParameters
 
-class FileSystemToolkit(Toolkit):
-    def __init__(self, root_dir: str = "."):
-        super().__init__(name="filesystem")
-        self.root = root_dir
-
-    def list_files(self, recursive: bool = False):
-        """Lists files in the workspace."""
-        # ... logic ...
-        return ["src/main.py", "README.md"]
-
-    def read_file(self, file_path: str):
-        """Reads a file securely."""
-        # ... logic ...
-        return "content..."
+class MCPToolkit(Tool):
+    def __init__(self, server_params: StdioServerParameters):
+        self.session = ClientSession(server_params)
+        # Dynamic tool registration logic...
 ```
 
-#### Step 2: The "Ask Docs" Tool (RAG)
-This mimics `PDFSearchTool` but uses SurrealDB.
+#### 2. Porting Key Tools to Agno
+We will reimplement specific high-value tools from CrewAI into our Agno stack, backed by SurrealDB.
 
-```python
-from agno.tools import Toolkit
-# hypothetical import
-from codeswarm.services.surreal import VectorStore
+*   **`SurrealSearchTool`:** Instead of `PGSearchTool`, we build a tool that accepts a natural language query, converts it to SurrealQL (via Gemini), executes it, and returns results.
+*   **`VisionTool`:** We will use Gemini 3.5's native multimodal capabilities. The tool will simply accept an image path, upload it to Gemini, and return the description, rather than using a separate CLIP/DALL-E pipeline.
 
-class DocumentationToolkit(Toolkit):
-    def __init__(self):
-        super().__init__(name="docs_search")
-        self.vector_store = VectorStore(table="doc_vectors")
+#### 3. RAG Standardization
+We will enforce that all RAG tools in the Armada use `SurrealDB` vector indexing.
+*   **CrewAI approach:** Uses local LanceDB/Chroma by default.
+*   **Armada approach:**
+    1.  Tool: `IngestFile(path)`.
+    2.  Process: Parse -> Chunk -> Embed (Gemini) -> Store in `documents` table in SurrealDB with vector index.
+    3.  Tool: `QueryKnowledge(query)`.
+    4.  Process: Embed query -> Vector Search `documents` in SurrealDB -> Rerank -> Return.
 
-    def search_docs(self, query: str):
-        """Semantically searches the project documentation."""
-        results = self.vector_store.search(query, limit=3)
-        return "\n\n".join([r['content'] for r in results])
-```
+### Implementation Steps
 
----
-
-## 4. Specific Implementation Steps
-
-### Phase 1: Core File & Shell Tools
-1.  **Create**: `codeswarm/tools/filesystem.py` (Safe file operations).
-2.  **Create**: `codeswarm/tools/shell.py` (Safe command execution, maybe reusing the Docker logic from `mcp_code_executor`).
-
-### Phase 2: Knowledge Tools (RAG)
-3.  **Schema**: Ensure SurrealDB tables for `doc_vectors` exist.
-4.  **Create**: `codeswarm/tools/rag.py`.
-    *   Function: `ingest_file(path)` (Chunks + Embeds -> DB).
-    *   Function: `query_knowledge(query)` (Embeds -> DB Search).
-
-### Phase 3: The "Toolbox" Agent
-5.  **Update `AdminAgent`**: Give it the ability to *assign* tools to DevAgents.
-    *   *Idea*: The AdminAgent constructs the DevAgent at runtime, passing `tools=[FileSystemToolkit(), RagToolkit()]`.
-
-### Phase 4: Import CrewAI Tools (Optional)
-6.  Since CrewAI tools are Pydantic-based, we can likely write a **Wrapper** to use them directly in Agno if we really need a specific integration (e.g., `SerperDevTool`) without rewriting it.
-    *   *Action*: Investigate writing a `CrewAIToolAdapter` for Agno.
-
-## 5. Detailed Logic Breakdown (from Source)
-
-### 5.1. `base_tool.py` (Assumed pattern based on file list)
-*   **Validation**: Uses Pydantic to validate inputs before the tool logic runs. This prevents the LLM from passing invalid types.
-*   **CodeSwarm Note**: Agno does this too. We must define Pydantic models for all our tool inputs.
-
-### 5.2. `adapters/embedchain_adapter.py`
-*   **Abstraction**: Wraps the `embedchain` library.
-*   **Query**: `query(question: str) -> str`.
-*   **Add**: `add(data_type: str, data_source: str)`.
-*   **CodeSwarm Lesson**: Don't expose the vector DB complexity to the agent. Expose simple `add()` and `query()` functions.
-
-## 6. Conclusion
-
-`crewai-tools` is a goldmine of implementation details for AI tools. We shouldn't blindly copy it, but rather **port the most essential capabilities** (Filesystem, RAG, Web Search) into our Agno + SurrealDB stack. The most valuable insight is the **"RAG as a Tool"** pattern, where the agent doesn't just read a file, but interacts with a semantic index of that file. This enables handling much larger codebases than simple context stuffing.
+1.  **Dependency Analysis:** We don't need to install `crewai-tools` directly (heavy dependencies). We will read their source code (e.g., `scrape_website_tool.py`) and reimplement the logic using `httpx` and `BeautifulSoup` within our lightweight `ArmadaTools` package.
+2.  **MCP First:** Prioritize building the `MCPToolkit` for Agno. This gives us access to the `brightdata` and `code-executor` servers we analyzed earlier without writing custom integration code for each.
+3.  **Refactor `ReconSquad`:** Equip the Recon Squad with the "Tiered Scraper" derived from CrewAI's patterns.
