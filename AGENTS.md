@@ -53,6 +53,27 @@ This document outlines the operational rules, behavior guidelines, and best prac
     *   `Problem Solving Framework`: For breaking down complex issues.
     *   `Agent Synergy`: For understanding role interaction.
 
-## 5. Development Status
-*   This system is currently under active migration to Agno.
-*   Refer to `docs/tasklist.md` for current progress.
+## 5. Agent Architecture & Refactoring (Standard)
+*   **Base Class:** All agents must inherit from `codeswarm.core.base_agent.SwarmAgent`.
+*   **Utilities:** Use `codeswarm.core.agent_utils` for common tasks:
+    *   `load_system_prompt(agent_class)`: Loads inputs from `instructions.md` or similar.
+    *   `setup_logging(name)`: Standardized logging.
+*   **Memory:** `SecurityAboyeur` (Gatekeeper) must ALWAYS be initialized with `use_memory=False` to prevent prompt injection.
+*   **Organization:** Agents are categorized in `codeswarm/agents/armada/{category}/` (e.g., `backend`, `frontend`, `ops`).
+
+## 6. Documentation Standards
+*   **Structure:**
+    *   `docs/01-plans/`: Strategic roadmaps.
+    *   `docs/02-tasks/`: Active task tracking (`tasks-completed.md` for history).
+    *   `docs/03-architecture/`: Technical specs.
+    *   `docs/04-research/`: Research and references.
+    *   `docs/05-reports/`: Generated status reports.
+    *   `docs/06-guides/`: User/Developer manuals.
+    *   `docs/00-archive/`: Deprecated content.
+*   **Maintenance:**
+    *   Keep `docs/02-tasks.md` focused on *open* tasks. Move completed ones to `docs/02-tasks/tasks-completed.md`.
+    *   `AGENTS.md` (this file) stays in the root as the primary directive for AI agents.
+
+## 7. Development Status
+*   This system is migrated to Agno.
+*   Refer to `docs/02-tasks.md` for current progress.

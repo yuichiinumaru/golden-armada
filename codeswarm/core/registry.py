@@ -15,6 +15,7 @@ class AgentRegistry:
     """
     def __init__(self):
         self.agents: Dict[str, Type[SwarmAgent]] = {}
+        self.categories: Dict[str, List[str]] = {} # category_name -> [agent_names]
         # Base directory of the package
         self.base_dir = os.path.dirname(os.path.dirname(__file__)) # codeswarm/
         
@@ -36,10 +37,10 @@ class AgentRegistry:
                 
             logger.info(f"Scanning for agents in {abs_dir}...")
             
-            # Find all python files
-            agent_files = glob.glob(os.path.join(abs_dir, "*_agent.py"))
-            # Also include named files that might not end in _agent if specifically known, 
-            # but for armada they generally follow conventions.
+            # Recursive search for *agent.py files
+            # glob.glob with recursive=True requires ** pattern
+            search_pattern = os.path.join(abs_dir, "**", "*_agent.py")
+            agent_files = glob.glob(search_pattern, recursive=True)
             
             for file_path in agent_files:
                 try:
@@ -49,6 +50,7 @@ class AgentRegistry:
                     logger.error(f"Failed to load agent from {file_path}: {e}")
 
         logger.info(f"Total agents loaded in registry: {len(self.agents)}")
+        logger.info(f"Categories found: {list(self.categories.keys())}")
 
     def _load_agent_from_file(self, file_path: str):
         """Load a single agent module and register the class."""
@@ -59,6 +61,24 @@ class AgentRegistry:
             sys.modules[module_name] = module
             spec.loader.exec_module(module)
             
+            # Determine category from path
+            # Path example: /.../codeswarm/agents/armada/backend/api_agent.py
+            # Rel path: agents/armada/backend/api_agent.py
+            rel_path = os.path.relpath(file_path, self.base_dir)
+            parts = rel_path.split(os.sep)
+            
+            category = "general"
+            if "armada" in parts:
+                try:
+                    # agents/armada/CATEGORY/agent.py
+                    idx = parts.index("armada")
+                    if idx + 1 < len(parts) - 1: # ensuring there is a subdir before the filename
+                        category = parts[idx + 1]
+                except ValueError:
+                    pass
+            elif "specialists" in parts:
+                category = "specialists"
+            
             # Find SwarmAgent subclasses
             for attribute_name in dir(module):
                 attribute = getattr(module, attribute_name)
@@ -66,11 +86,15 @@ class AgentRegistry:
                     issubclass(attribute, SwarmAgent) and 
                     attribute is not SwarmAgent):
                     
-                    # Use a registry key. Ideally the agent has a NAME attribute, 
-                    # but if not we use class name or a convention.
-                    # For now using Class Name as the key.
+                    # Register Agent
                     self.agents[attribute_name] = attribute
-                    logger.debug(f"Registered agent: {attribute_name}")
+                    
+                    # Register Category
+                    if category not in self.categories:
+                        self.categories[category] = []
+                    self.categories[category].append(attribute_name)
+                    
+                    logger.debug(f"Registered agent: {attribute_name} in category: {category}")
 
     def get_agent(self, agent_name: str, user_id: str = "default") -> Optional[SwarmAgent]:
         """Instantiate and get an agent by class name."""
@@ -82,6 +106,14 @@ class AgentRegistry:
     def list_agents(self) -> List[str]:
         """List all registered agent names."""
         return list(self.agents.keys())
+        
+    def get_categories(self) -> List[str]:
+        """List all discovered categories."""
+        return list(self.categories.keys())
+        
+    def get_agents_by_category(self, category: str) -> List[str]:
+        """Get list of agent names in a specific category."""
+        return self.categories.get(category, [])
 
     def get_agents_info(self) -> List[Dict[str, Any]]:
         """Returns detailed info for all agents, useful for UI."""
@@ -100,12 +132,19 @@ class AgentRegistry:
             # If the class has a 'description' attribute (some do), use it.
             if hasattr(agent_cls, "description"):
                 description = getattr(agent_cls, "description")
+                
+            # Find category for this agent
+            agent_category = "Custom"
+            for cat, agents in self.categories.items():
+                if name in agents:
+                    agent_category = cat.title()
+                    break
 
             info = {
                 "id": name,
                 "name": name.replace("_", " ").title(),
                 "description": description,
-                "category": "Custom",
+                "category": agent_category,
                 "icon": "Bot",
                 "animation_profile": "generic-bot"
             }

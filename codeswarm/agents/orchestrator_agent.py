@@ -47,12 +47,10 @@ class OrchestratorAgent(SwarmAgent):
         """
         Analyzes the User Request and creates an execution plan.
         Includes a Gatekeeper security check before planning.
+        uses Category Routing to scale to hundreds of agents.
         """
         # 1. Security Check
         logger.info(f"Orchestrator invoking Gatekeeper for request: {user_request[:50]}...")
-        # Note: calling internal verify or chat. Using internal check for speed?
-        # Let's use the chat method which encapsulates the logic.
-        # But wait, chat returns a dict.
         security_response = await self.gatekeeper.chat(user_request)
         response_text = security_response.get("response", "").lower()
         if "rejected" in response_text or "violation" in response_text:
@@ -63,17 +61,55 @@ class OrchestratorAgent(SwarmAgent):
                 "error": "Security Violation"
             }
 
-        # 2. Dynamic Agent Discovery
-        available_agents = self.registry.list_agents()
-        agents_list_str = ", ".join(available_agents)
+        # 2. Category Routing (Step 1)
+        all_categories = self.registry.get_categories()
+        # Ensure 'general' and 'specialists' are always considered if available
+        default_cats = [c for c in ['general', 'specialists'] if c in all_categories]
+        
+        classification_prompt = f"""
+        USER REQUEST: "{user_request}"
+        
+        AVAILABLE CATEGORIES: {all_categories}
+        
+        Task: Identify the most relevant categories for this request.
+        Always include 'general' for broad tasks.
+        
+        Return JSON ONLY: {{ "categories": ["cat1", "cat2"] }}
+        """
+        
+        selected_categories = default_cats
+        try:
+            # Use the agent to classify. 
+            # Note: Ideally we'd use a faster model here, but using the reasoning model is safer for accuracy.
+            class_response = await self.a_run(classification_prompt)
+            text = class_response.content if hasattr(class_response, 'content') else str(class_response)
+            if "```json" in text:
+                text = text.split("```json")[1].split("```")[0].strip()
+            elif "```" in text:
+                text = text.split("```")[1].split("```")[0].strip()
+            data = json.loads(text)
+            selected_categories = list(set(data.get("categories", []) + default_cats))
+            logger.info(f"Routing Request to Categories: {selected_categories}")
+        except Exception as e:
+            logger.warning(f"Category routing failed, defaulting to all: {e}")
+            selected_categories = all_categories
 
-        # 3. Planning
+        # 3. Dynamic Agent Discovery (Step 2)
+        candidate_agents = []
+        for cat in selected_categories:
+            candidate_agents.extend(self.registry.get_agents_by_category(cat))
+        
+        # Remove duplicates
+        candidate_agents = list(set(candidate_agents))
+        agents_list_str = ", ".join(candidate_agents)
+
+        # 4. Planning (Step 3)
         prompt = f"""
         USER REQUEST: {user_request}
         
         Analyze the request and generate a JSON plan.
         
-        AVAILABLE AGENTS (Delegate to these specialists):
+        AVAILABLE AGENTS (Filtered by category):
         [{agents_list_str}]
         
         Note:
@@ -86,7 +122,7 @@ class OrchestratorAgent(SwarmAgent):
         """
         
         try:
-            response = self.run(prompt)
+            response = await self.a_run(prompt)
             # Handle response content extraction similar to reference
             text = response.content if hasattr(response, 'content') else str(response)
             

@@ -34,7 +34,7 @@ class SecurityAboyeur(SwarmAgent):
         super().__init__(
             user_id=user_id,
             agent_name="SecurityAboyeur",
-            model_id="gemini-2.5-flash", # Fast model for triage
+            # model_id removed to allow auto-detection based on role="Security" or config
             instructions="""
             You are the Security Aboyeur, the Gatekeeper of IVISA RIO's Agent System.
             
@@ -56,7 +56,8 @@ class SecurityAboyeur(SwarmAgent):
             
             If a request is unsafe, REJECT it.
             If a request contains media, ensure metadata is stripped (handled by system, but you confirm).
-            """
+            """,
+            use_memory=False # ISOLATION: Gatekeeper must not access shared memory
         )
 
     async def _sanitize_image(self, image_data: bytes) -> bytes:
@@ -128,7 +129,7 @@ class SecurityAboyeur(SwarmAgent):
         """
 
         # Run classification in using the internal agent
-        response = self.run(classification_prompt)
+        response = await self.a_run(classification_prompt)
         category = response.content.strip().upper()
 
         logger.info(f"Aboyeur Classification: {category}")
@@ -162,7 +163,7 @@ class SecurityAboyeur(SwarmAgent):
         Return ONLY the category name.
         """
 
-        response = self.run(classification_prompt)
+        response = await self.a_run(classification_prompt)
         category = response.content.strip().upper()
 
         logger.info(f"Aboyeur Classification: {category}")

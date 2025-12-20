@@ -5,8 +5,6 @@ surreal.log
 khala_agentmemory/
 venv/
 *.pyc
-docs/articles/
-references/
 docs/arxiv/*.pdf
 *.env
 .env

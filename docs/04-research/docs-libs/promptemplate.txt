@@ -1,0 +1,130 @@
+# Guia Técnico — Template Avançado de Prompt para Geração de Código
+
+## 1. Propósito do Documento
+Este guia consolida o conhecimento derivado da análise de um mega-prompt utilizado para construir uma aplicação semelhante ao Tumblr via agente assíncrono de código (Google Jules). O objetivo é substituir o formato conversacional original por um documento técnico claro, reutilizável e orientado a processos, alinhado às práticas do ecossistema VIVI Agent Chat.
+
+## 2. Escopo e Público-Alvo
+- **Escopo:** Definir diretrizes, estrutura e procedimentos para redigir prompts avançados que instruam agentes de código a entregarem projetos completos com mínima ambiguidade.
+- **Público:** Arquitetos de agentes, engenheiros de prompts, equipes DevOps e squads responsáveis por especificações orientadas a IA.
+
+## 3. Estrutura Recomendada do Mega-Prompt
+
+### 3.1 PROJECT_REQUEST (O quê)
+- **Contexto do projeto:** visão de produto, personas e metas de negócio.
+- **Escopo funcional:** funcionalidades obrigatórias, diferenciais e restrições.
+- **Premissas e limites:** SLA, requisitos regulatórios, dependências externas.
+
+### 3.2 TECHNICAL_SPECIFICATION (Como)
+- **Stack técnica:** linguagens, frameworks, versões, ferramentas de build/testes.
+- **Modelagem de dados:** DDL explícito, mapeamento ORM, políticas de migração.
+- **APIs e contratos:** endpoints, autenticação, cabeçalhos, formatos de payload, convenções de erro.
+- **Estratégias de infraestrutura:** cache, filas, armazenamento, observabilidade, padrões de logging.
+- **Design system:** tokens, tipografia, guidelines de UI/UX.
+- **Regras granulares:** aplique padrões específicos usando globs (ex.: `app/**/*.tsx`, `lib/db/**/*.ts`) para orientar componentes distintos do código.
+
+### 3.3 IMPLEMENTATION_PLAN (Quando)
+- **Passos atômicos:** quebrem o trabalho em unidades pequenas, sequenciais e verificáveis.
+- **Critérios de conclusão por passo:** outputs esperados, testes mínimos e evidências.
+- **Protocolo de iteração:** mantenha o foco no próximo item `- [ ]` e atualize ao validar.
+
+### 3.4 USER_INSTRUCTIONS (Papéis Humanos)
+- **Instalação e setup:** comandos para dependências, inicialização de ambiente (`pnpm`, `conda env 12`, etc.).
+- **Migrações e provisionamento:** execução de scripts, carga de dados seed.
+- **Rotinas de validação:** testes manuais, auditorias, aprovações HITL.
+
+### 3.5 APPENDICES (Contexto e Princípios)
+- **Princípios de design:** performance, acessibilidade, segurança, experiência.
+- **Glossário:** termos do domínio, abreviações, acrônimos.
+- **Referências externas:** links para repositórios de regras, playbooks e normas.
+
+## 4. Protocolos Operacionais Complementares
+
+### 4.1 Loop de Feedback e Correções
+- Defina um mecanismo explícito para refazer passos defeituosos (`REFINE_STEP`, `ROLLBACK_STEP`).
+- Documente critérios de aceitação antes da correção e anexe logs/resultados após a nova execução.
+
+### 4.2 Gestão de Ambiente e Segredos
+- Crie `.env.example` logo no início do plano.
+- Liste variáveis obrigatórias, formato esperado e serviços associados.
+- Estabeleça política de rotação de segredos e fontes (cofre, pipeline GitOps, etc.).
+
+### 4.3 Governança de Qualidade
+- **TDD obrigatório:** testes unitários e integração definidos antes da implementação.
+- **Ferramentas:** `pnpm lint`, `pnpm test`, `black`, `ruff`, `mypy`, relatórios de cobertura.
+- **Observabilidade:** logging estruturado ISO 8601, níveis DEBUG→CRITICAL.
+- **Documentação viva:** sincronize `docs/01-plan.md`, `docs/02-tasks.md`, `docs/04-changelog.md` a cada entrega.
+
+## 5. Integração com Bibliotecas de Regras (Ex.: patrickjs/awesome-cursorrules)
+- Utilize coleções curadas como aceleradores para a seção TECHNICAL_SPECIFICATION.
+- Aplique regras modulares por contexto com globs, replicando padrões já validados.
+- Durante a execução do plano, referencie diretamente conjuntos específicos (ex.: `nextjs-react-tailwind-cursorrules-prompt-file`) para manter consistência e qualidade.
+
+## 6. Procedimento de Preenchimento
+1. **Planejamento:** coletar requisitos de negócio, stack alvo e restrições.
+2. **Configuração inicial:** definir variáveis de ambiente, dependências mínimas e recursos de infraestrutura.
+3. **Redação do PROJECT_REQUEST:** documentar escopo, limites e entregáveis.
+4. **Detalhamento da TECHNICAL_SPECIFICATION:** incluir padrões granulares, diagramas, contratos.
+5. **Elaboração do IMPLEMENTATION_PLAN:** ordenar passos atômicos, prever checkpoints de validação.
+6. **Instruções ao usuário/homem-no-loop:** discriminar responsabilidades humanas.
+7. **Inserção de Apêndices e Referências:** princípios, playbooks, glossário, guidelines de design.
+8. **Validação cruzada:** revisar o documento com stakeholders técnicos e operacionais antes de entregá-lo ao agente.
+
+## 7. Checklist de Qualidade Pré-Entrega
+- [ ] Todos os passos do plano possuem outputs verificáveis.
+- [ ] Existem rotas de correção documentadas para falhas de execução.
+- [ ] Segredos e variáveis sensíveis possuem placeholders definidos.
+- [ ] Há orientação clara sobre testes automatizados e métricas de aprovação.
+- [ ] Princípios de design e UX estão explícitos.
+- [ ] Referências externas relevantes foram catalogadas.
+- [ ] O documento evita linguagem conversacional e mantém tom técnico consistente.
+
+## 8. Template em Branco
+```
+TITLE: <Nome do Projeto>
+VERSION: <vX.Y>
+LAST_UPDATED: <YYYY-MM-DD>
+AUTHOR: <Responsável>
+
+== PROJECT_REQUEST ==
+1. Objetivo do projeto:
+2. Escopo funcional:
+3. Restrições e premissas:
+4. Critérios de sucesso:
+
+== TECHNICAL_SPECIFICATION ==
+1. Stack e ferramentas:
+2. Modelagem de dados:
+3. APIs/contratos:
+4. Regras granulares por glob:
+5. Segurança, logs e monitoramento:
+6. Design system e UX:
+
+== IMPLEMENTATION_PLAN ==
+- [ ] Passo 0 — Preparação do repositório (saída esperada, testes, validação)
+- [ ] Passo 1 — ...
+...
+
+== USER_INSTRUCTIONS ==
+1. Pré-requisitos locais:
+2. Comandos de configuração:
+3. Testes a executar:
+4. Evidências esperadas:
+
+== FEEDBACK_LOOP ==
+1. Protocolo de revisão:
+2. Procedimento de correção:
+3. Rastreamento de decisões:
+
+== APPENDICES ==
+- Princípios de design:
+- Glossário:
+- Referências externas:
+```
+
+## 9. Histórico e Referências
+- Análise crítica do mega-prompt original (set/2025).
+- Repositório `patrickjs/awesome-cursorrules` para bibliotecas de regras e prompts especializados.
+- Documentação interna VIVI Agent Chat (`docs/01-plan.md`, `docs/02-tasks.md`, `docs/03-architecture.md`).
+
+---
+**Nota:** Este guia deve ser versionado e revisado sempre que novos padrões de engenharia de prompts forem adotados no ecossistema VIVI Agent Chat.

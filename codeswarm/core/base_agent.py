@@ -22,7 +22,7 @@ class SwarmAgent:
         user_id: str, 
         agent_name: str,
         role: str = "Assistant",
-        model_id: str = "gemini-2.5-flash",
+        model_id: Optional[str] = None,
         tools: List[Any] = None,
         instructions: str = "You are a helpful assistant.",
         use_memory: bool = True
@@ -32,7 +32,21 @@ class SwarmAgent:
         self._khala = None
         self.use_memory = use_memory
         self.tools = tools or []
-        self.model_id = model_id
+        
+        # Model Selection Logic
+        # Priority: explicit model_id > model_type mapping > environment default
+        env_fast = os.getenv("GEMINI_MODEL_FAST", "gemini-3-flash-preview")
+        env_reasoning = os.getenv("GEMINI_MODEL_REASONING", "gemini-3-pro-preview")
+        
+        if model_id:
+            self.model_id = model_id
+        elif role.lower() in ["orchestrator", "admin", "planner", "gatekeeper", "security", "reasoning", "deepreasoner"]:
+             # Auto-detect reasoning roles if not specified
+            self.model_id = env_reasoning
+        else:
+            # Default to fast model
+            self.model_id = env_fast
+
         self.system_prompt = instructions # Storing for potential lazy init or re-init
         self.instructions = instructions # Storing for potential lazy init or re-init
         self.role = role # Storing for potential lazy init or re-init
@@ -126,6 +140,21 @@ class SwarmAgent:
             "response": response.content,
             "full_object": response
         }
+
+    def run(self, message: str, **kwargs) -> Any:
+        """
+        Direct synchronous execution using the underlying agent.
+        Does NOT store in memory. Use with caution in async contexts.
+        """
+        return self.agent.run(message, **kwargs)
+
+    async def a_run(self, message: str, **kwargs) -> Any:
+        """
+        Async wrapper for agent.run, without memory side effects.
+        Use this for internal reasoning steps.
+        """
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, lambda: self.agent.run(message, **kwargs))
 
     async def run_task(self, task_description: str) -> Dict[str, Any]:
         """Execute a specific task."""

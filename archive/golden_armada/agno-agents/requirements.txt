@@ -1,4 +1,0 @@
-agno
-google-genai
-python-dotenv
-mcp

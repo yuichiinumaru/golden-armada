@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+"""
+Refactored LlmArchitectAgent using SwarmAgent base and shared utilities.
+"""
+
+import argparse
+import asyncio
+import logging
+import os
+import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+# Ensure core packages are in path if run standalone
+_CURRENT_FILE = Path(__file__).resolve()
+for parent in _CURRENT_FILE.parents:
+    if (parent / "codeswarm").exists():
+        if str(parent) not in sys.path:
+            sys.path.insert(0, str(parent))
+        break
+
+from codeswarm.core.base_agent import SwarmAgent
+from codeswarm.core.agent_utils import load_system_prompt, setup_logging
+from codeswarm.core.api_keys import get_api_key
+
+load_dotenv()
+
+SYSTEM_PROMPT_FILE = Path(__file__).with_name("llm_architect_sysp.json")
+logger = logging.getLogger("LlmArchitect")
+
+class LlmArchitectAgent(SwarmAgent):
+    def __init__(self, user_id: str = "cli-user"):
+        self.context = load_system_prompt(SYSTEM_PROMPT_FILE)
+        
+        # Extract instructions and append extras
+        instructions = list(self.context.get("instructions", []))
+        if self.context.get("additional_context"):
+            instructions.append(self.context.get("additional_context"))
+        if self.context.get("supplemental_sections"):
+            instructions.extend(self.context.get("supplemental_sections"))
+
+        description = self.context.get("description", "Expert LLM Architect")
+        
+        # Initialize SwarmAgent
+        super().__init__(
+            user_id=user_id,
+            agent_name="LlmArchitect",
+            role="Architect",
+            model_id=os.environ.get("GEMINI_MODEL", "gemini-2.5-pro"),
+            instructions=instructions,
+            use_memory=True # Enable memory by default
+        )
+        # We can manually set the description on the internal agent if needed, 
+        # but SwarmAgent passes instructions as system prompt which is usually enough.
+        # Agno agent 'description' field is often used for RAG/Tools context, 
+        # duplicating instructions there is fine.
+        self.agent.description = description
+        
+        # Future MCP integration could be done here by modifying self.agent.tools
+
+    async def run_cli_task(self, task: str):
+        """Run a task from CLI with formatted output."""
+        print(f"🚀 Starting task for {self.agent_name}...")
+        print(f"📝 Task: {task}")
+        print("-" * 70 + "\n")
+
+        # Use the chat/run_task method from SwarmAgent
+        # SwarmAgent.chat returns a dict with 'response'
+        result = await self.chat(task)
+        response_content = result["response"]
+
+        print(response_content, end="", flush=True)
+        return response_content
+
+async def main():
+    parser = argparse.ArgumentParser(description="LlmArchitect Agent CLI")
+    parser.add_argument("--task", required=True, help="The task for the agent to perform.")
+    parser.add_argument("--timeout", type=int, default=600, help="Timeout in seconds.")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose logging.")
+    args = parser.parse_args()
+
+    log_file = setup_logging("LlmArchitect", verbose=args.verbose)
+    print(f"🗒️  Log saved to: {log_file}")
+
+    # specific user_id for CLI runs could be param, default to cli-user
+    agent = LlmArchitectAgent(user_id="cli-user")
+    await agent.setup_agent() # Initialize Khala if enabled
+
+    try:
+        await asyncio.wait_for(agent.run_cli_task(args.task), timeout=args.timeout)
+    except asyncio.TimeoutError:
+        print(f"\n\n⏱️  Timeout after {args.timeout}s")
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+    finally:
+        await agent.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())
