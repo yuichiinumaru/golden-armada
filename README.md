@@ -1,3 +1,6 @@
+
+<img width="3168" height="1344" alt="Gemini_Generated_Image_cnk70fcnk70fcnk7" src="https://github.com/user-attachments/assets/612c8eed-6150-44a5-a910-64332bd18b3a" />
+
 # ⚔️ GOLDEN ARMADA
 > *The Ultimate Agentic Swarm Architecture*
 
