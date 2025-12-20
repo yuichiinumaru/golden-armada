@@ -38,11 +38,11 @@ http://arxiv.org/html/2511.15392 ✅
 http://arxiv.org/html/2511.15408 ✅
 http://arxiv.org/html/2511.15456 ✅
 http://arxiv.org/html/2511.15567 ✅
-http://arxiv.org/html/2511.15573
-http://arxiv.org/html/2511.15915
-http://arxiv.org/html/2511.15998
-http://arxiv.org/html/2511.16005
-http://arxiv.org/html/2511.16043
+http://arxiv.org/html/2511.15573 ✅
+http://arxiv.org/html/2511.15915 ✅
+http://arxiv.org/html/2511.15998 ✅
+http://arxiv.org/html/2511.16005 ✅
+http://arxiv.org/html/2511.16043 ✅
 http://arxiv.org/html/2511.16080
 http://arxiv.org/html/2511.16131
 http://arxiv.org/html/2511.16223
