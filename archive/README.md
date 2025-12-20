@@ -1,0 +1,1 @@
+This folder is home to old files, folders and versions of the codeswarm project, to keep the development history. It's temporary and will be erased soon. The content should be disconsidered.
