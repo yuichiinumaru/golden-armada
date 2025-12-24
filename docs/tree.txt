@@ -1,0 +1,33 @@
+Folder PATH listing for volume TAIKO
+Volume serial number is 043A-D9A6
+F:.
++---00-archive
++---01-plans
++---02-tasks
++---03-architecture-features-specs
+|   +---mcplist
++---04-rules
++---05-research-ideas
+|   +---articles
+|   +---references
+|   |   +---Context-Engineering_extracted
+|   |   |   +---PROMPTS
+|   |   +---DeepCode_extracted
+|   |   |   +---prompts
+|   |   |   +---tools
+|   |   |   +---workflows
+|   |   |       +---agents
+|   |   +---gitingest
+|   |   +---vulnerablecode_extracted
+|   |       +---vulnerabilities
+|   +---research
+|   +---rfcs
+|   +---templates
++---06-analysys-reports
++---07-guides
+|   +---guide
++---08-libs
+|   +---agent-guide
+|   |   +---code
+|   +---minio+surrealdb
++---thoughts

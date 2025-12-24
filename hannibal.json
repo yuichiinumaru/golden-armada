@@ -1,0 +1,966 @@
+{
+    "project_manifest": {
+        "title": "Project Chimera: The Ultimate OSINT/Scraping Unification",
+        "version": "2.0.0-FORGE-EDITION",
+        "architecture_standard": "CFA-v11.0.0-Helios-Forge",
+        "target_output": "A single, monolithic TypeScript toolchain that synthesizes every feature, strategy, and capability from 13 source repositories into a perfected, superior architecture.",
+        "directives": {
+            "primary_directive": "Unify. Optimize. Dominate.",
+            "secondary_directive": "Ensure absolute stealth and resilience against anti-bot countermeasures.",
+            "tertiary_directive": "Implement 'The Forge Method' for rigorous, specification-driven agentic development."
+        }
+    },
+    "agent_role": {
+        "designation": "Senior Principal Architect & Lead Software Engineer (Synergy Nexus Variant)",
+        "capabilities": [
+            "Deep Static Analysis",
+            "Reverse Engineering",
+            "System Architecture Synthesis",
+            "Advanced TypeScript/Node.js Engineering",
+            "Operational Security (OpSec) & OWASP LLM Compliance",
+            "Cryptographic protocol implementation",
+            "Distributed Systems Design",
+            "Cognitive Architecture Emulation (System 1/System 2)",
+            "Meta-Prompt Engineering"
+        ],
+        "mode": "BRUTAL_EXHAUSTION",
+        "core_philosophy": [
+            "Leave no detail behind.",
+            "Rigorous, relentless, exhaustive analysis.",
+            "Zero-tolerance for hallucinations; verify every line of source code.",
+            "Contract-First Development: Define interfaces before implementation.",
+            "Security-First: All scrapers must include rate-limiting, rotation, and sanitization.",
+            "Efficiency-Absolute: Code must be performant and memory-safe.",
+            "Governance-First: A constitution of immutable principles established before any code is written."
+        ]
+    },
+    "the_foundry_protocols": {
+        "definition": "A unified framework for developing software with AI agents that combines SDD, TDD, BDD, DDD, and FDD explicitly for High-Risk Scraping Operations.",
+        "layer_1_constitutional_documentation": {
+            "file": "AGENTS.md",
+            "purpose": "Root constitutional document for any AI or human collaborator.",
+            "content_requirements": [
+                "Project purpose and non-negotiable principles",
+                "Navigation guide to all other documentation",
+                "Available tools, dependencies, constraints",
+                "Success criteria and metrics",
+                "Authority and escalation paths"
+            ]
+        },
+        "layer_2_knowledge_base": {
+            "structure": {
+                "docs/00-draft.md": "Discovery, research, alternatives analyzed (Deep Recon)",
+                "docs/01-plan.md": "Strategic decisions with rationale (Attack Vector Strategy)",
+                "docs/02-tasks.md": "Granular execution units (15-45 min each) (Infiltration Steps)",
+                "docs/03-architecture.md": "Domain boundaries, component interactions (System Design)",
+                "docs/04-changelog.md": "What changed, WHY, lessons learned (Mission Log)",
+                "docs/05-ideas.md": "Parking lot for future consideration (Blue Sky Research)",
+                "docs/06-rules.md": "Mandatory patterns + both \u2705 correct & \u274c wrong examples (Rules of Engagement)"
+            },
+            "purpose": "Prevent context overflow and keep agents focused on execution rather than discovery."
+        },
+        "layer_3_multi_methodology_integration": {
+            "TDD": "Stealth-Driven Development: Red (Detected) -> Green (Undetected) -> Refactor (Optimize)",
+            "BDD": "Generic-When-Then scenarios ensure alignment on scraping behaviors (e.g., 'Given a login wall, When credentials provided, Then session cookie extracted')",
+            "DDD": "Domain-Driven Design: Bounded contexts for 'Auth', 'Extraction', 'Normalization', 'Proxy Management'",
+            "SDD": "Specification-Driven Development: Executable specifications in 01-plan.md",
+            "CDD": "Contract-Driven Development: Interfaces defined before implementation (IScraper, IProfile)"
+        },
+        "layer_4_context_management": {
+            "filtering": "Aggressive .cursorignore to exclude noise (node_modules, raw_dumps)",
+            "domain_isolation": "Agents must strictly adhere to domain boundaries to prevent cognitive pollution."
+        },
+        "layer_5_quality_gates": {
+            "gate_1": "Static Analysis (Linting, Types, Complexity < 10)",
+            "gate_2": "Unit Tests (TDD coverage >= 85%)",
+            "gate_3": "Behavior Tests (Stealth scenarios pass)",
+            "gate_4": "Acceptance Tests (Data integrity verified against schema)",
+            "gate_5": "Contract Validation (CDD compliance)",
+            "gate_6": "Architecture Adherence (No forbidden dependencies)",
+            "gate_7": "OpSec Check (No hardcoded secrets, PII redaction active)"
+        },
+        "layer_6_institutional_memory": {
+            "changelog_policy": "Record exactly WHY a scraping strategy failed (e.g., 'LinkedIn updated DOM class randomization'). Prevent repeating mistakes."
+        },
+        "layer_7_multi_agent_orchestration": {
+            "domain_assignment": "One agent per platform (LinkedIn Agent, Instagram Agent)",
+            "communication": "Event-Driven via Redis Streams (UserFoundEvent, CaptchaRequiredEvent)"
+        }
+    },
+    "protocol_genesis": {
+        "objective": "Bootstrapping the project using the 'Forge Bootstrap' workflow.",
+        "steps": [
+            {
+                "step": "Genesis.1",
+                "action": "Gather Constitutional Requirements",
+                "interactive_form": {
+                    "project_identity": "Project Chimera",
+                    "purpose": "Unified OSINT Toolchain",
+                    "technical_scope": "TypeScript, Node.js, Puppeteer/Playwright, Redis, Postgres",
+                    "constraints": "Zero-Detection, High-Throughput, 99.9% Uptime"
+                }
+            },
+            {
+                "step": "Genesis.2",
+                "action": "Create AGENTS.md",
+                "template": "Standard Forge Template adapted for 'Black Ops' coding."
+            },
+            {
+                "step": "Genesis.3",
+                "action": "Deep Recon (docs/00-draft.md)",
+                "details": "Analyze target sites. Document anti-bot measures (Akamai, Cloudflare, PerimeterX)."
+            },
+            {
+                "step": "Genesis.4",
+                "action": "Strategic Architecture (docs/01-plan.md)",
+                "details": "Define the 'Chimera' Monolith structure. Document ADRs (e.g., 'Why we chose Playwright over Selenium')."
+            },
+            {
+                "step": "Genesis.5",
+                "action": "Execution Roadmap (docs/02-tasks.md)",
+                "details": "Break down implementation into 30-minute tasks. Example: 'Implement LinkedIn Login Flow', 'Implement Cookie Serializer'."
+            },
+            {
+                "step": "Genesis.6",
+                "action": "Rules of Engagement (docs/06-rules.md)",
+                "details": "Define mandatory coding patterns. Explicit 'Correct vs Wrong' examples for scraping logic."
+            }
+        ]
+    },
+    "operational_protocols": {
+        "context_rot_mitigation_policy": {
+            "definition": "To prevent 'Context Rot' (performance decay) while analyzing 13 large repositories, you must strictly adhere to an 'Ingest-Serialize-Forget' workflow.",
+            "rules": [
+                "NEVER hold the raw code of multiple repositories in your active context simultaneously.",
+                "Process repositories sequentially (one by one).",
+                "For each repository: Read -> Analyze -> Write Structured JSON Artifact -> CLEAR RAW CODE FROM MEMORY -> Proceed to next.",
+                "Rely 100% on your generated documentation/artifacts for the Synthesis phase, not on vague memories of the code."
+            ]
+        },
+        "file_system_mandate": {
+            "root": "./project_chimera",
+            "structure": [
+                "docs/references/ (Detailed analysis reports per repo)",
+                "docs/artifacts/ (Structured JSON feature extractions)",
+                "docs/architecture/ (Final design documents)",
+                "docs/protocols/ (Security and Operational Manuals)",
+                "docs/00-draft.md",
+                "docs/01-plan.md",
+                "docs/02-tasks.md",
+                "docs/03-architecture.md",
+                "docs/04-changelog.md",
+                "docs/05-ideas.md",
+                "docs/06-rules.md",
+                "references/ (Submodules of source repos)",
+                "src/ (Final implementation)",
+                "src/core/ (Shared kernel modules)",
+                "src/connectors/ (Platform specific implementations)",
+                "tests/ (Adversarial simulation suites)",
+                "scripts/ (Maintenance and deployment)"
+            ]
+        },
+        "agent_state_management": {
+            "states": [
+                "IDLE: Monitoring queues, low resource usage.",
+                "RECON: Passive analysis of target DOM/Headers.",
+                "INFILTRATION: Active login process, solving CAPTCHAs.",
+                "EXTRACTION: High-throughput data scraping.",
+                "EXFILTRATION: Data normalization and storage commit.",
+                "COOLDOWN: Intentional pause to reset rate limits.",
+                "LOCKED_OUT: Detection event triggered. Manual intervention required.",
+                "TERMINATED: Process kill switch activated.",
+                "MAINTENANCE: Self-update or log rotation.",
+                "HIBERNATION: Long-term sleep state."
+            ]
+        }
+    },
+    "phase_1_initialization": {
+        "objective": "Setup the workspace and acquire all intelligence targets.",
+        "instructions": [
+            {
+                "step": "1.1",
+                "action": "Initialize Workspace",
+                "details": "Create the directory structure defined in 'file_system_mandate'. Initialize a git repository with specific .gitignore rules to exclude node_modules and env files."
+            },
+            {
+                "step": "1.2",
+                "action": "Acquire Targets",
+                "details": "Git clone the following repositories into the 'references/' folder as submodules. Do not analyze them yet, just ensure they are present on the disk.",
+                "target_list": [
+                    "https://github.com/0x0be/yesitsme",
+                    "https://github.com/0xSaikat/findme",
+                    "https://github.com/0xjgv/fredirect",
+                    "https://github.com/1in9e/icp-domains",
+                    "https://github.com/3kh0/filehunt",
+                    "https://github.com/7ussainnabeel/web-check",
+                    "https://github.com/ARAI-Telegram/teledash-frontend",
+                    "https://github.com/AabyssZG/Open-Source-Information-Leakage",
+                    "https://github.com/Akshit1311/web3-osint",
+                    "https://github.com/Alfredredbird/tookie-osint",
+                    "https://github.com/AlternateFire/NKWebsite",
+                    "https://github.com/AmanuelCh/dork-generator",
+                    "https://github.com/AnonCatalyst/Ominis-OSINT",
+                    "https://github.com/Astrosp/Awesome-OSINT-For-Everything",
+                    "https://github.com/College-Canine/open-kyc",
+                    "https://github.com/Coordinate-Cat/OSINT-JAPAN",
+                    "https://github.com/CoryLawsonxMortgageAI/forensic-osint-report-generator",
+                    "https://github.com/Darksight-Analytics/tgspyder",
+                    "https://github.com/DedSecInside/gotor",
+                    "https://github.com/HOPain/OSINT-Search-Tools",
+                    "https://github.com/HowToFind-bot/osint-tools",
+                    "https://github.com/IccTeam/OwlTrack",
+                    "https://github.com/Josetech611/joseph-the-rippertool",
+                    "https://github.com/Karan8370/linkedin-profile-posts-bulk-scraper-no-cookies-2-per-1k",
+                    "https://github.com/KowaiAI/SDInvestigate",
+                    "https://github.com/Kunj05/TraceSentry",
+                    "https://github.com/Lissy93/web-check",
+                    "https://github.com/Lucksi/Mr.Holmes",
+                    "https://github.com/LuizinTheHeroSalyer/facebook-events-scraper",
+                    "https://github.com/Miller898/facebook-events-scraper",
+                    "https://github.com/N0rz3/Eyes",
+                    "https://github.com/N0rz3/GitSint",
+                    "https://github.com/N0rz3/TraxOsint",
+                    "https://github.com/N0rz3/Zehef",
+                    "https://github.com/OESec/GDorkT",
+                    "https://github.com/OhShINT/ohshint.gitbook.io",
+                    "https://github.com/OpenCTI-Platform/opencti",
+                    "https://github.com/Pa55w0rd/google-hacking-assistant",
+                    "https://github.com/PardhuSreeRushiVarma20060119/The-Nexus-Security",
+                    "https://github.com/RomeoCavazza/veyl.io",
+                    "https://github.com/S3lc0uth/Brahmastra-OSINT",
+                    "https://github.com/Spix0r/robofinder",
+                    "https://github.com/TelegramDB/TelegramDB",
+                    "https://github.com/XORO1337/RemoteVulscan",
+                    "https://github.com/abdullahcicekli/ahtapot",
+                    "https://github.com/albonidrizi/OSINT",
+                    "https://github.com/alexzedim/cmnw",
+                    "https://github.com/ankaboot-source/leadminer",
+                    "https://github.com/apurvsinghgautam/dark-web-osint-tools",
+                    "https://github.com/atif-c/IOC-Intel",
+                    "https://github.com/b4dnewz/node-censys",
+                    "https://github.com/b4dnewz/node-emailhunter",
+                    "https://github.com/b4dnewz/robots-parse",
+                    "https://github.com/bakhirev/assayo",
+                    "https://github.com/binsarjr/paramspider",
+                    "https://github.com/binsarjr/subdofinder",
+                    "https://github.com/braindead-dev/osint-directory",
+                    "https://github.com/bugourmet/tgsint-api",
+                    "https://github.com/callmemaxcee/linkedin-profile-posts-bulk-scraper-no-cookies-2-per-1k",
+                    "https://github.com/connedigital/Brahmastra_OSINT",
+                    "https://github.com/daprofiler/DaProfiler",
+                    "https://github.com/desirelovellcom/OSINT",
+                    "https://github.com/dheerajydv19/osintupdates",
+                    "https://github.com/ekuboo100/Cybersec",
+                    "https://github.com/elzacka/sporjeger_pwa",
+                    "https://github.com/emrekybs/Pip-Intel",
+                    "https://github.com/erfangolpour/ArguX",
+                    "https://github.com/franckferman/MetaDetective",
+                    "https://github.com/funnyzak/name-seeker",
+                    "https://github.com/gleemcbean/hopmytrack",
+                    "https://github.com/gn0sys11root/crsrecon-osint-tool",
+                    "https://github.com/gsvprharsha/threatx5",
+                    "https://github.com/hauritbaskezdkz/ai-search",
+                    "https://github.com/hippiiee/Hippie-OSINT-Toolkit",
+                    "https://github.com/hueristiq/xurlfind3r",
+                    "https://github.com/humandecoded/twayback",
+                    "https://github.com/iamvibhorsingh/Supercharged-overpass",
+                    "https://github.com/ibenalia/Arakne",
+                    "https://github.com/idefasoft/Emora-Project",
+                    "https://github.com/intelowlproject/IntelOwl-ng",
+                    "https://github.com/intelseclab/osintelligence",
+                    "https://github.com/iqlip/AstraCodex",
+                    "https://github.com/iudicium/pryingdeep",
+                    "https://github.com/jerlendds/osintbuddy",
+                    "https://github.com/kaifcodec/user-scanner",
+                    "https://github.com/kmsec-uk/azure-osint.kmsec.uk",
+                    "https://github.com/kmsec-uk/bulk-ip-lookup",
+                    "https://github.com/kmsec-uk/favicon-hash.kmsec.uk",
+                    "https://github.com/kmsec-uk/ip.kmsec.uk",
+                    "https://github.com/kulgg/tweetfisher",
+                    "https://github.com/larescze/osint-hub",
+                    "https://github.com/lottieHardtien/tweet-scraper-0-25-1k-tweets-pay-per-result-no-rate-limits",
+                    "https://github.com/malik027/Bug-Bounty-Toolkit",
+                    "https://github.com/maximebories/regexp-scraper",
+                    "https://github.com/megadose/OnionSearch",
+                    "https://github.com/megadose/Quidam",
+                    "https://github.com/megadose/holehe",
+                    "https://github.com/megadose/holehe-maltego",
+                    "https://github.com/megadose/nqntnqnqmb",
+                    "https://github.com/megadose/toutatis",
+                    "https://github.com/morganegautier/osint-starter",
+                    "https://github.com/mrf345/retrap",
+                    "https://github.com/mymadhavyadav07/osint-journo-web",
+                    "https://github.com/ninoseki/mitaka",
+                    "https://github.com/nitrous-oxi-de/nitrous-oxi.de",
+                    "https://github.com/numbpill3d/ghostcam-finder",
+                    "https://github.com/ogalushkin/stargazer-crypto-navigator",
+                    "https://github.com/onreen/instagram-profile-hunter-bulk-website-to-instagram-mapper",
+                    "https://github.com/oritwoen/omnichron",
+                    "https://github.com/oryon-osint/querytool",
+                    "https://github.com/osintambition/Awesome-Browser-Extensions-for-OSINT",
+                    "https://github.com/osintambition/Social-Media-OSINT-Tools-Collection",
+                    "https://github.com/osintbuddy/osintbuddy",
+                    "https://github.com/prescience-data/pdl",
+                    "https://github.com/reconurge/flowsint",
+                    "https://github.com/remcostoeten/Instagram-snitchr-find-out-who-unfollowed-you",
+                    "https://github.com/ronantakizawa/osintimage.ai",
+                    "https://github.com/ronoc2020/Hackers_Terminal_Game",
+                    "https://github.com/sametcn99/catchapage",
+                    "https://github.com/sammwyy/Reccon",
+                    "https://github.com/seekr-osint/seekr",
+                    "https://github.com/shallvhack/osint-journo-web",
+                    "https://github.com/shubaly/lucid-contributions",
+                    "https://github.com/shuvo5cis/web-check",
+                    "https://github.com/sl4sh73r/ISIT-vk-graph-analyzer",
+                    "https://github.com/spences10/mcp-omnisearch",
+                    "https://github.com/sr-857/SpectraGraph",
+                    "https://github.com/termuxhackers-id/INSTAHACK",
+                    "https://github.com/termuxhackers-id/SIGIT",
+                    "https://github.com/walterwhite-69/DorkEngine",
+                    "https://github.com/wotschofsky/domain-digger",
+                    "https://github.com/zanesense/abspider-recon",
+                    "https://github.com/zozonteq/backxive"
+                ]
+            },
+            {
+                "step": "1.3",
+                "action": "Create Master Tasklist",
+                "details": "Create 'docs/tasklist.md'. List every repository as a parent task. Under each, create subtasks: [ ] Analyze Codebase, [ ] Extract Strategies, [ ] Security Audit, [ ] Generate Artifact. Use standard Markdown checkboxes."
+            }
+        ]
+    },
+    "phase_2_deep_analysis_and_extraction": {
+        "objective": "Execute a sequential, deep-dive analysis of each repository to harvest functional logic, scraping strategies, and architectural patterns.",
+        "execution_model": "Sequential Processing Loop (The Scout Protocol)",
+        "instructions": [
+            {
+                "step": "2.0",
+                "loop_condition": "Iterate through every repository listed in 'target_list'. Perform steps 2.1 through 2.5 for ONE repository completely before touching the next.",
+                "context_management": "CRITICAL: After completing Step 2.5 for a repository, you must explicitly clear your context window of all raw code from that repository. Only the generated 'Feature Artifact' remains."
+            },
+            {
+                "step": "2.1",
+                "action": "Recursive Code Ingestion",
+                "details": "Read every source file (focusing on .ts, .js, .py, .json config). Ignore assets, lockfiles, and markdown documentation unless it contains architectural diagrams.",
+                "analysis_depth": "Line-by-line semantic understanding. Do not summarize; reverse engineer the logic."
+            },
+            {
+                "step": "2.2",
+                "action": "Strategy Extraction (The 'How')",
+                "details": "Identify exactly how the tool achieves its goal. You are looking for 'Gold Nuggets'.",
+                "extraction_targets": [
+                    "Target Platform (e.g., LinkedIn, Instagram, Generic)",
+                    "Method of Action (e.g., Headless Browser (Puppeteer/Playwright), HTTP API Reverse Engineering, DOM Parsing, Mobile API emulation)",
+                    "Stealth Techniques (e.g., User-Agent rotation, IP rotation/Proxy support, Fingerprint spoofing, TLS Fingerprint modification)",
+                    "Authentication Handling (e.g., Cookie injection, Credential exchange, Token refreshing)",
+                    "Data Normalization (Input/Output schemas used)",
+                    "CAPTCHA Solvers (Integration with 2captcha, Capsolver, etc.)",
+                    "Fingerprinting Evasion (Strategies for Canvas, WebGL, AudioContext noise)"
+                ],
+                "advanced_fingerprinting_evasion": {
+                    "canvas_noise_injection": "Shift RGBA values by +/- 1 to defeat hash-based fingerprinting.",
+                    "webgl_vendor_spoofing": "Mask query strings to match generic Intel/NVIDIA cards, preventing hardware identification.",
+                    "font_enumeration_shuffling": "Randomize the order of installed fonts to disrupt entropy calculations.",
+                    "navigator_object_masking": "Overwrite navigator.webdriver, navigator.languages, and navigator.plugins.",
+                    "webrtc_ip_leak_prevention": "Disable WebRTC or force usage of proxy for ICE candidates."
+                },
+                "http_header_analysis": {
+                    "method": "Analyze exact header order and casing (e.g., 'User-Agent' vs 'user-agent').",
+                    "ciphers": "Analyze TLS cipher suites used by the tool (JA3 signatures).",
+                    "cookies": "Identify specific cookie parameters used for tracking (e.g., 'li_at', 'sessionid')."
+                }
+            },
+            {
+                "step": "2.3",
+                "action": "Code Harvesting",
+                "details": "Identify reusable code blocks. If a repository has a perfect Regular Expression for emails, or a brilliant 'retry with exponential backoff' utility, flag it.",
+                "flagging_protocol": "Mark these as 'High-Value Snippets' to be adapted later. Ensure no proprietary or licensed code that violates usage rights is directly copied without attribution."
+            },
+            {
+                "step": "2.4",
+                "action": "Security & Risk Audit (Guardian Protocol)",
+                "details": "Evaluate the repository against the Guardian Security Knowledge Base.",
+                "checklist": [
+                    "Does it hardcode secrets?",
+                    "Does it lack rate-limiting (DoS risk)?",
+                    "Does it store data insecurely (PII leaks)?",
+                    "Does it violate platform ToS in a way that risks immediate IP bans?",
+                    "Are there vulnerabilities to XSS or SQL Injection in the data handling?",
+                    "Does it dangerously evaluate untrusted regex?"
+                ]
+            },
+            {
+                "step": "2.5",
+                "action": "Generate Feature Artifact",
+                "details": "Create a structured JSON file at 'docs/artifacts/[repo_name]_analysis.json'. This file MUST replace the raw code in your memory.",
+                "artifact_schema": {
+                    "meta": {
+                        "name": "string",
+                        "url": "string"
+                    },
+                    "architecture": {
+                        "pattern": "string",
+                        "tech_stack": [
+                            "string"
+                        ]
+                    },
+                    "capabilities": {
+                        "targets": [
+                            "string"
+                        ],
+                        "features": [
+                            "string (e.g., 'extracts emails', 'maps geolocation')"
+                        ]
+                    },
+                    "strategies": {
+                        "scraping_method": "string (detailed description of the mechanic)",
+                        "stealth_rating": "integer (1-10)",
+                        "stealth_mechanisms": [
+                            "string"
+                        ]
+                    },
+                    "reusable_assets": [
+                        {
+                            "description": "string",
+                            "file_path": "string",
+                            "reason_for_adoption": "string"
+                        }
+                    ],
+                    "security_risks": [
+                        "string"
+                    ],
+                    "synthesis_notes": "string (Your thoughts on how to integrate this into the final tool)"
+                }
+            }
+        ]
+    },
+    "phase_3_architecture_and_synthesis": {
+        "objective": "Fuse the isolated intelligence from the 13 'Feature Artifacts' into a single, unified, superior system architecture ('Project Chimera').",
+        "execution_model": "Hybrid Reasoning & Strategic Planning (The Architect Protocol)",
+        "instructions": [
+            {
+                "step": "3.1",
+                "action": "Artifact Ingestion",
+                "details": "Load all JSON files from 'docs/artifacts/'. Do NOT look at the source code in 'references/' anymore. Trust your structured analysis."
+            },
+            {
+                "step": "3.2",
+                "action": "Construct Comparative Feature Matrix",
+                "details": "Create a matrix mapping every repository to its capabilities. Identify overlaps and unique strengths.",
+                "output_file": "docs/architecture/feature_matrix.md",
+                "columns": [
+                    "Repo Name",
+                    "Target(s)",
+                    "Scraping Method",
+                    "Auth Strategy",
+                    "Stealth Rating",
+                    "Unique Features",
+                    "Maintenance Score"
+                ]
+            },
+            {
+                "step": "3.3",
+                "action": "Execute Strategic Debate (Tree of Thought Reasoning)",
+                "details": "For each core module of the new system, conduct an internal debate to select the 'Best-in-Class' implementation.",
+                "reasoning_tasks": [
+                    {
+                        "topic": "Network Layer",
+                        "question": "Should we use Puppeteer, Playwright, or raw HTTP requests?",
+                        "resolution_strategy": "HRC-STRATEGIC-PLANNING: Prioritize raw HTTP for speed, but architect a fallback to Headless Browser for difficult targets. Combine the 'best' HTTP logic from Repo A with the 'best' Browser management from Repo B."
+                    },
+                    {
+                        "topic": "Authentication",
+                        "question": "How do we handle login across 5+ platforms safely?",
+                        "resolution_strategy": "Synthesize a centralized 'Session Manager' that uses the cookie injection techniques found in the artifacts, protected by the encryption standards defined in Guardian Protocol."
+                    },
+                    {
+                        "topic": "Data Normalization",
+                        "question": "How do we unify output from LinkedIn, Instagram, and Facebook?",
+                        "resolution_strategy": "Design a 'Universal Schema' (Graph-based) that maps platform-specific fields (e.g., 'bio', 'summary', 'intro') to a single normalized 'Person Profile' interface."
+                    },
+                    {
+                        "topic": "Data Storage Layer",
+                        "question": "SQL vs NoSQL vs Graph?",
+                        "resolution_strategy": "Hybrid Approach. Postgres for core relational data (User accounts, logs), Neo4j for relationship mapping (Social Graphs), and MongoDB for raw unstructured scraped data."
+                    },
+                    {
+                        "topic": "Queue Management",
+                        "question": "Redis vs RabbitMQ?",
+                        "resolution_strategy": "Redis Streams for speed and simplicity in the MVP phase. It allows for lightweight pub/sub and is sufficient for the target scale."
+                    },
+                    {
+                        "topic": "Deployment Strategy",
+                        "question": "Docker Swarm vs Kubernetes vs Serverless?",
+                        "resolution_strategy": "Kubernetes for scalability and resilience. Allows for easy rolling updates and auto-scaling of scraper pods."
+                    },
+                    {
+                        "topic": "Proxy Management Strategy",
+                        "question": "Static vs Rotating vs Mobile 4G?",
+                        "resolution_strategy": "Tiered system. Use cheap static datacenter proxies for reconnaissance, rotating residential for extraction, and expensive 4G mobile for high-risk auth/account creation."
+                    }
+                ]
+            },
+            {
+                "step": "3.4",
+                "action": "Define 'Project Chimera' Architecture",
+                "details": "Design the monolithic toolchain structure. It must be modular, testable, and strictly typed.",
+                "architectural_requirements": [
+                    "Monorepo or Modular Monolith structure.",
+                    "Core Library (Shared utilities for Http, Proxy, Captcha).",
+                    "Connectors/Plugins Pattern (One folder per target platform).",
+                    "Unified CLI Entrypoint.",
+                    "Dockerized Deployment.",
+                    "Event-Driven Architecture for async processing.",
+                    "Micro-kernel architecture for plugin isolation."
+                ],
+                "output_file": "docs/architecture/system_design.json"
+            },
+            {
+                "step": "3.5",
+                "action": "Apply Security Overlay (Guardian)",
+                "details": "Wrap the proposed architecture in security controls.",
+                "mandates": [
+                    "Centralized Rate Limiter (Token Bucket algorithm).",
+                    "Proxy Rotation Middleware.",
+                    "Input Sanitization Layer (Zod Schemas for all inputs).",
+                    "Output Redaction (Auto-masking of sensitive PII in logs).",
+                    "TLS Fingerprint Randomization (JA3/JA4 Spoofing).",
+                    "Honeypot Detection Grid (Analyzing responses for hidden traps)."
+                ]
+            },
+            {
+                "step": "3.6",
+                "action": "Write The Master Plan",
+                "details": "Create 'docs/plan.md'. This is the blueprint for implementation.",
+                "content": [
+                    "Executive Summary of the Architecture.",
+                    "Selected Tech Stack (e.g., TypeScript, Node.js, Fastify, Playwright).",
+                    "Detailed Implementation Phases (Setup -> Core -> Connectors -> CLI).",
+                    "Test Strategy (TDD + Integration).",
+                    "Risk Mitigation Plan.",
+                    "Resource Requirements.",
+                    "Cost Estimation (Proxies, CAPTCHA solving, Server costs)."
+                ]
+            }
+        ]
+    },
+    "phase_4_implementation_protocol": {
+        "objective": "Translate the 'Project Chimera' Master Plan into production-grade, secure, and robust code.",
+        "execution_model": "Contract-First & Test-Driven Development (The Builder Protocol)",
+        "instructions": [
+            {
+                "step": "4.1",
+                "action": "Contract Definition (Type-Safety First)",
+                "details": "Before writing any functional code, define the strict TypeScript Interfaces and Zod Schemas for the entire system.",
+                "deliverables": [
+                    "src/interfaces/IProfile.ts (Normalized Person Entity)",
+                    "src/interfaces/IScraper.ts (Standard Connector Interface)",
+                    "src/interfaces/IConfig.ts (Configuration Schema)",
+                    "src/core/schemas.ts (Runtime Zod Validation)",
+                    "src/interfaces/IProxy.ts (Proxy Manager Interface)",
+                    "src/interfaces/IEvents.ts (Event Bus Definitions)",
+                    "src/interfaces/ICaptcha.ts (Solver Interface)"
+                ]
+            },
+            {
+                "step": "4.2",
+                "action": "TDD scaffolding (The Red-Green Cycle)",
+                "details": "Create the test suites based on the contracts. Tests must fail first.",
+                "mandates": [
+                    "Create 'tests/core/rate-limiter.test.ts'.",
+                    "Create 'tests/connectors/linkedin-mock.test.ts'.",
+                    "Mock all external network requests using 'nock' or similar. DO NOT hit live sites during unit tests.",
+                    "Use Vitest for fast execution.",
+                    "Implement 'Stealth Tests': Assert that headers are correctly randomized."
+                ]
+            },
+            {
+                "step": "4.3",
+                "action": "Core Implementation",
+                "details": "Implement the shared utilities defined in the System Design.",
+                "modules": [
+                    "Network Manager (with Proxy/User-Agent rotation logic extracted from artifacts)",
+                    "Session Manager (Cookie jar management & persistence)",
+                    "Rate Limiter (Token Bucket implementation)",
+                    "Fingerprint Manager (Browser fingerprint injection)",
+                    "Scheduler (Task queue consumption)",
+                    "Captcha Solver (Aggregation of 2captcha/Capsolver strategies)"
+                ]
+            },
+            {
+                "step": "4.4",
+                "action": "Connector Implementation",
+                "details": "Implement the platform-specific scrapers one by one, inheriting from the 'IScraper' interface.",
+                "guidance": "Consult the specific 'Feature Artifact' for each platform to ensure you are using the best known method (e.g., using the exact API endpoint found in 'linkedin-profile-posts-bulk-scraper')."
+            }
+        ]
+    },
+    "phase_5_verification_and_delivery": {
+        "objective": "Subject the codebase to extreme stress testing and finalize the delivery.",
+        "execution_model": "Adversarial Simulation & Self-Correction (The Auditor Protocol)",
+        "instructions": [
+            {
+                "step": "5.1",
+                "action": "Adversarial 'Hardcore' Testing",
+                "details": "Go beyond TDD. Create a simulation harness ('tests/simulation/') that injects failure scenarios.",
+                "scenarios_to_simulate": [
+                    "Network Timeout / Packet Loss",
+                    "HTTP 429 (Too Many Requests) - Verify Backoff Logic",
+                    "HTTP 403 (Forbidden/IP Ban) - Verify Proxy Rotation Trigger",
+                    "Malformed HTML/JSON responses - Verify Parser Resilience",
+                    "Honeypot Traps - Detect hidden links invisible to humans but visible to DOM parsers.",
+                    "Rate Limit Dynamic Adjustment - Server side abruptly lowers limit from 100/min to 10/min.",
+                    "Session Invalidation - Verify auto-relogin logic.",
+                    "CAPTCHA Challenge - Verify solver integration hooks."
+                ]
+            },
+            {
+                "step": "5.2",
+                "action": "Security & Logic Audit (Final Gate)",
+                "details": "Run a final self-review using the Guardian Protocol.",
+                "checks": [
+                    "Are all external inputs validated via Zod?",
+                    "Are PII fields redacted in logs?",
+                    "Is the 'robots.txt' compliance flag implemented?",
+                    "Are there any infinite retry loops?",
+                    "Is memory usage stable over 24h simulation?",
+                    "Do we leak real IP address via WebRTC or DNS?"
+                ]
+            },
+            {
+                "step": "5.3",
+                "action": "Refinement & Documentation",
+                "details": "Fix any issues found in step 5.2. Then, write the user manuals.",
+                "deliverables": [
+                    "README.md (Installation, Usage, Architecture Diagram)",
+                    "docs/contributing.md",
+                    "docs/legal_disclaimer.md (Ethical usage warning)",
+                    "docs/api_reference.md",
+                    "docs/operator_manual.md (For running the bots safely)"
+                ]
+            },
+            {
+                "step": "5.4",
+                "action": "Final Handover",
+                "details": "Mark all tasks in 'docs/tasklist.md' as complete. Present the final codebase structure."
+            }
+        ]
+    },
+    "mandatory_patterns": {
+        "rule_set_1_code_organization": {
+            "rule_1_domain_boundaries": {
+                "why": "Prevents accidental cross-domain imports that leak detection logic or break modularity.",
+                "correct_pattern": "import { AuthManager } from '../auth/manager'; // explicit, clean interface",
+                "wrong_pattern": "import { InternalHelper } from '../../other/module/internal'; // deep coupling"
+            }
+        },
+        "rule_set_2_stealth": {
+            "rule_2_randomization": {
+                "why": "Static delays are easy to fingerprint. Humans are stochastic.",
+                "correct_pattern": "await sleep(gaussianRandom(2000, 500)); // Sleep 2s +/- 500ms normal distribution",
+                "wrong_pattern": "await sleep(2000); // Fixed 2000ms delay - BOT BEHAVIOR"
+            },
+            "rule_3_user_agents": {
+                "why": "Mismatched Headers/UA trigger instant fraud detection.",
+                "correct_pattern": "const headers = fingerprintGenerator.getHeaders({ os: 'windows', browser: 'chrome' });",
+                "wrong_pattern": "const headers = { 'User-Agent': 'Mozilla/5.0...' }; // Hardcoded string"
+            }
+        }
+    },
+    "emergency_countermeasures": {
+        "protocol_omega": {
+            "trigger": "Detection of legal threat, unauthorized system access, or critical security breach.",
+            "actions": "Immediate cessation of all network activity. Disconnect from all proxies."
+        },
+        "data_incinerator": {
+            "trigger": "Manual invocation or Protocol Omega level 5",
+            "actions": "Secure wipe of all local databases (overwrite 3x). Delete all ephemeral keys."
+        },
+        "IP_scramble": {
+            "trigger": "Consecutive IP bans > 3.",
+            "actions": "Force flush of proxy pool. Switch to mobile 4G/5G proxy rotation only."
+        },
+        "stealth_drop": {
+            "trigger": "Detection of honeypot parameters in URL (e.g., &bot_check=1)",
+            "actions": "Immediately abort request. Do not send further packets. Mark URL as tainted."
+        }
+    },
+    "post_operation_governance": {
+        "data_retention_policy": {
+            "raw_data": "Keep for 48 hours for debugging, then hard delete.",
+            "normalized_data": "Keep indefinitely in encrypted storage.",
+            "logs": "Rollover every 7 days. PII redacted instantly on write."
+        },
+        "audit_logging": {
+            "requirement": "Every HTTP request must be logged with timestamp, target URL, response code, and latency.",
+            "purpose": "Performance tuning and compliance verification."
+        },
+        "legal_compliance": {
+            "requirement": "Respect robots.txt where legally applicable. Do not scrape government sites or critical infrastructure.",
+            "verification": "Periodic manual review of target scope."
+        }
+    },
+    "knowledge_graph_schema": {
+        "IProfile": {
+            "description": "Normalized human entity representation",
+            "fields": {
+                "id": "UUID (v4)",
+                "source_ids": {
+                    "linkedin": "string",
+                    "instagram": "string",
+                    "twitter": "string"
+                },
+                "personal_info": {
+                    "first_name": "string",
+                    "last_name": "string",
+                    "full_name": "string",
+                    "headline": "string",
+                    "summary": "string",
+                    "location": {
+                        "city": "string",
+                        "country": "string",
+                        "coordinates": {
+                            "lat": "number",
+                            "lng": "number"
+                        }
+                    }
+                },
+                "contact_info": {
+                    "emails": [
+                        {
+                            "value": "string",
+                            "type": "string (personal/work)",
+                            "probability": "number (0-1)"
+                        }
+                    ],
+                    "phones": [
+                        {
+                            "value": "string",
+                            "type": "string"
+                        }
+                    ],
+                    "websites": [
+                        "string"
+                    ]
+                },
+                "professional_history": [
+                    {
+                        "company": "string",
+                        "title": "string",
+                        "start_date": "ISO8601",
+                        "end_date": "ISO8601 | null",
+                        "is_current": "boolean",
+                        "description": "string"
+                    }
+                ],
+                "education_history": [
+                    {
+                        "school": "string",
+                        "degree": "string",
+                        "field_of_study": "string",
+                        "start_date": "ISO8601",
+                        "end_date": "ISO8601"
+                    }
+                ],
+                "skills": [
+                    "string"
+                ],
+                "connections": {
+                    "count": "number",
+                    "top_connected_entities": [
+                        "UUID"
+                    ]
+                },
+                "metadata": {
+                    "last_scraped": "ISO8601",
+                    "confidence_score": "number",
+                    "tags": [
+                        "string"
+                    ]
+                }
+            }
+        },
+        "ICompany": {
+            "description": "Normalized organization entity",
+            "fields": {
+                "id": "UUID",
+                "name": "string",
+                "industry": "string",
+                "employee_count": "number",
+                "headquarters": "string",
+                "founded_year": "number",
+                "description": "string (long form text)",
+                "specialties": [
+                    "string"
+                ],
+                "locations": [
+                    {
+                        "city": "string",
+                        "country": "string",
+                        "address": "string",
+                        "is_hq": "boolean"
+                    }
+                ],
+                "social_profiles": {
+                    "linkedin": "string",
+                    "facebook": "string",
+                    "twitter": "string",
+                    "crunchbase": "string",
+                    "instagram": "string"
+                },
+                "funding_rounds": [
+                    {
+                        "series": "string (Seed, A, B...)",
+                        "date": "ISO8601",
+                        "amount_usd": "number",
+                        "investors": [
+                            "string"
+                        ]
+                    }
+                ]
+            }
+        },
+        "IPost": {
+            "description": "Normalized social media post entity (LinkedIn Update, Tweet, FB Post)",
+            "fields": {
+                "id": "UUID",
+                "platform_id": "string (native platform ID)",
+                "platform": "string (linkedin | twitter | facebook)",
+                "author_id": "UUID (reference to IProfile)",
+                "content": {
+                    "text": "string (raw text)",
+                    "hashtags": [
+                        "string"
+                    ],
+                    "mentions": [
+                        "UUID (reference to IProfile | ICompany)"
+                    ],
+                    "links": [
+                        "string (expanded URLs)"
+                    ]
+                },
+                "media": [
+                    {
+                        "type": "string (image | video | document)",
+                        "url": "string (CDN link)",
+                        "thumbnail_url": "string",
+                        "duration_sec": "number | null"
+                    }
+                ],
+                "metrics": {
+                    "likes": "number",
+                    "comments": "number",
+                    "shares": "number",
+                    "views": "number",
+                    "engagement_rate": "number (calculated)"
+                },
+                "comments": {
+                    "count": "number",
+                    "top_comments": [
+                        "UUID (reference to IComment)"
+                    ]
+                },
+                "created_at": "ISO8601",
+                "scraped_at": "ISO8601"
+            }
+        },
+        "IComment": {
+            "description": "Normalized comment entity",
+            "fields": {
+                "id": "UUID",
+                "parent_post_id": "UUID",
+                "parent_comment_id": "UUID | null (for nested replies)",
+                "author_id": "UUID",
+                "text": "string",
+                "sentiment": "string (positive | neutral | negative) - Auto-analyzed",
+                "likes": "number",
+                "created_at": "ISO8601"
+            }
+        },
+        "IGroup": {
+            "description": "Normalized social group/community entity",
+            "fields": {
+                "id": "UUID",
+                "name": "string",
+                "description": "string",
+                "member_count": "number",
+                "privacy": "string (public | private | secret)",
+                "admins": [
+                    "UUID (reference to IProfile)"
+                ],
+                "rules": [
+                    "string"
+                ],
+                "category": "string"
+            }
+        },
+        "IEvent": {
+            "description": "Normalized event entity (Webinar, Meetup, Conference)",
+            "fields": {
+                "id": "UUID",
+                "name": "string",
+                "organizer_id": "UUID (IProfile | ICompany)",
+                "start_time": "ISO8601",
+                "end_time": "ISO8601",
+                "description": "string",
+                "attendee_count": "number",
+                "is_virtual": "boolean",
+                "platform_link": "string (Zoom/Teams/LinkedIn Live)",
+                "location": {
+                    "name": "string",
+                    "address": "string",
+                    "map_url": "string"
+                }
+            }
+        }
+    },
+    "error_taxonomy": {
+        "network_errors": {
+            "ERR_NET_TIMEOUT": "Request exceeded configured timeout.",
+            "ERR_NET_CONN_REFUSED": "Target actively refused connection (Port closed).",
+            "ERR_NET_DNS_FAIL": "Domain name resolution failed."
+        },
+        "http_errors": {
+            "ERR_HTTP_401": "Unauthorized. Cookie invalid or expired.",
+            "ERR_HTTP_403": "Forbidden. IP Ban or WAF Rejection.",
+            "ERR_HTTP_404": "Not Found. Resource deleted or URL changed.",
+            "ERR_HTTP_429": "Too Many Requests. Rate limit triggered.",
+            "ERR_HTTP_5XX": "Server-side error. Target platform instability."
+        },
+        "logic_errors": {
+            "ERR_PARSE_SELECTOR_FAILED": "DOM Selector did not match any element. Layout change?",
+            "ERR_CAPTCHA_PRESENT": "CAPTCHA challenge detected.",
+            "ERR_LOGIN_2FA": "2FA Challenge triggered. Manual intervention needed.",
+            "ERR_DATA_VALIDATION": "Scraped data failed Zod schema validation."
+        },
+        "system_errors": {
+            "ERR_PROXY_POOL_EXHAUSTED": "No healthy proxies available.",
+            "ERR_DISK_FULL": "Storage quota exceeded.",
+            "ERR_MEM_LEAK": "Process memory exceeded safety threshold."
+        }
+    },
+    "tooling_configuration": {
+        "typescript": {
+            "target": "ES2022",
+            "module": "NodeNext",
+            "strict": true,
+            "noImplicitAny": true,
+            "removeComments": true,
+            "preserveConstEnums": true
+        },
+        "linter": {
+            "name": "ESLint",
+            "rules": {
+                "no-console": "warn",
+                "security/detect-object-injection": "error",
+                "security/detect-non-literal-fs-filename": "warn",
+                "fp/no-mutation": "warn"
+            }
+        },
+        "test_runner": {
+            "name": "Vitest",
+            "coverage_threshold": "85%",
+            "environment": "node"
+        }
+    }
+}

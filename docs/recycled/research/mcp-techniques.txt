@@ -1,0 +1,24 @@
+# MCP Techniques Use Cases
+
+## 1. Contextual Retrieval & Knowledge Grafting
+- **Concept**: Instead of providing the entire codebase, use MCP tools to "graft" only relevant snippets or architectural patterns into the current session.
+- **Tool**: `read_multiple_files`, `grep_search`.
+- **Use Case**: When migrating legacy logic, use MCP to fetch specific tool definitions from `old-codeswarm` without loading the entire directory.
+
+## 2. Dynamic Tool Discovery
+- **Concept**: AI agents can "list" available MCP tools to decide which one fits the current task, mimicking a human developer exploring a library.
+- **Tool**: `list_tools`, `get_config`.
+- **Use Case**: Agent checks if a `surrealdb` tool is available before attempting database operations.
+
+## 3. Sandboxed Execution Loops
+- **Concept**: Running scripts in a terminal via MCP and piping the output back to the agent for "Observation".
+- **Tool**: `run_command`, `read_process_output`.
+- **Use Case**: The "Micro-Test" phase of AI-PBSM. Execute a 10-line script to validate a regex before putting it in the main app.
+
+## 4. Multi-Transport Orchestration
+- **Concept**: Supporting both `stdio` for local CLI tools and `sse` for web-based tools/UIs.
+- **Use Case**: `ollama-mem0` implementation (harvested architectural strategy). Allows the same memory backend to serve both local agents and a dashboard.
+
+## 5. Semantic Deletion/Management
+- **Concept**: Managing data (like memories or logs) via semantic queries rather than IDs.
+- **Use Case**: "Delete the memory about the dashboard color bug" vs "Delete memory ID 123".

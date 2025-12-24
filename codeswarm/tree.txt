@@ -1,0 +1,50 @@
+Folder PATH listing for volume TAIKO
+Volume serial number is 043A-D9A6
+F:.
++---agent-ui
+|   +---.next
+|       +---cache
+|       |   +---eslint
+|       |   +---webpack
+|       |       +---client-development
+|       |       +---server-development
+|       +---server
+|       |   +---app
+|       |   |   +---favicon.ico
+|       |   +---vendor-chunks
+|       +---static
+|       |   +---chunks
+|       |   |   +---app
+|       |   +---css
+|       |   |   +---app
+|       |   +---development
+|       |   +---media
+|       |   +---webpack
+|       |       +---app
+|       +---types
+|           +---app
++---agents
+|   +---armada
+|   |   +---backend
+|   |   +---data
+|   |   +---docs
+|   |   +---frontend
+|   |   +---general
+|   |   +---ops
+|   |   +---product
+|   |   +---qa
+|   |   +---security
+|   +---specialists
++---agno-agents
++---core
++---docs
+|   +---reference
++---logs
++---prompts
+|   +---kb
++---routes
++---services
++---tests
+|   +---manual_verification
++---tools
++---utils

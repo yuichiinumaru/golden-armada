@@ -1,0 +1,40 @@
+Me ajude a melhorar meu método, descrito a seguir, fazendo uma analise critica dele e um brainstorm de ideias para melhorias. Primeiro foque na análise e no brainstorm, não reescreva o plano ainda (faremos isso depois).
+
+Na verdade o que estou desenvolvendo é uma metodologia de criação de codigo / programas com IA assistente de codigo (por exemplo Cursor AI, powered by openai o3 mini e anthropic claude 3.5 sonnet), voltado para pessoas que não sabem escrever código. O objetivo é chegar uma especie de algoritmo geral, para qualquer problema que pode ser resolvido com codigo. Estou chamando por enquanto de "método científico de construção de programas com IA", ou AI-PBSM
+
+O método resumidamente consiste em gastar mais tempo primeiro com vários micro testes, validando hipóteses, documentando e consolidando um planejamento inicial, e cautelosamente montando o quebra cabeça das soluções ideais antes de partir de fato para a versão final 1.0 do programa. O resultado final deve ser um prompt grande, mas bem estruturado, somado a uma documentação rica mas enxuta (pra nao sobrecarregar a ia com informações) e um roadmap completo de implementação que a IA vai seguir como se fosse um "manual de instruções" para construir exatamente o que foi planejado.
+
+---
+
+### METODOLOGIA AI-PBSM (AI-Powered Building System Method)
+
+**Objetivo:** Reduzir bugs, inconsistências e alucinações da IA, garantindo que o software final siga exatamente a visão do usuário, mesmo que ele não saiba programar.
+
+#### FASE 1: Observação e Hipótese (O "Rascunho Inteligente")
+1. **User Goal:** O usuário descreve em linguagem natural o que deseja (ex: "Quero um dashboard de vendas que leia de um CSV").
+2. **Exploração de Ferramentas:** A IA sugere as tecnologias mais simples e robustas (ex: Python + Streamlit + Pandas).
+3. **Formulação de Hipóteses Mentais:** O usuário e a IA discutem as funcionalidades principais. "Será que esse gráfico X atende ao objetivo Y?".
+
+#### FASE 2: Experimentação Controlada (Os "Micro-Testes de Validação")
+*Esta é a fase crucial onde a maioria das pessoas falha (elas pulam direto para a codificação do projeto real).*
+1. **Isolamento de Problemas:** Em vez de construir o sistema todo, a IA cria scripts minúsculos (10-20 linhas) apenas para testar funções específicas (ex: um script só para ler o CSV, outro só para gerar um gráfico).
+2. **Identificação de "Gaps":** Se o script isolado falhar, descobrimos o erro cedo, sem o "ruído" do resto do programa.
+3. **Validação de Viabilidade:** O usuário testa cada micro-script. "O gráfico gerado é bonito? A leitura do dado está correta?".
+
+#### FASE 3: Análise e Coleta de Dados (O "Diário de Bordo" ou Doc Index)
+1. **Documentação Incremental:** Toda vez que um micro-teste funciona, a lógica é documentada num arquivo markdown (`doc_index.md`).
+2. **Captura de "Aha! Moments":** Se a IA encontrou uma solução criativa para um bug, isso é anotado.
+3. **Construção do Esquema Mental:** A estrutura do projeto final começa a ser desenhada com base no que *já foi provado que funciona* nos micro-testes.
+
+#### FASE 4: Síntese e Teoria Final (O "Prompt Mestre" e o Roadmap)
+1. **Engenharia do Prompt Final:** O usuário (com ajuda da IA) consolida tudo:
+   - O que foi validado nos testes.
+   - A estrutura de arquivos decidida.
+   - As regras de estilo e UX.
+   - Os documentos de referência gerados nas fases anteriores.
+2. **O Roadmap de Implementação:** Cria-se um arquivo `todo.md` ou `roadmap.md` com passos minúsculos e sequenciais (ex: "Passo 1: Criar base.html; Passo 2: Adicionar sidebar...").
+
+#### FASE 5: Verificação e Publicação (A "Grande Construção")
+1. **Implementação Guiada:** O usuário usa o "Prompt Mestre" para iniciar um novo projeto (ou manter o atual) e pede para a IA seguir o Roadmap passo a passo.
+2. **Verificação Constante:** A cada passo do roadmap concluído, o usuário verifica se ele condiz com o que foi planejado.
+3. **Entrega da Versão 1.0:** O software está pronto, documentado e, o mais importante, foi construído sob uma base sólida de evidências (os testes da Fase 2).

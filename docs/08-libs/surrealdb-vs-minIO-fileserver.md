@@ -354,7 +354,7 @@ This avoids GlusterFS entirely (unnecessary complexity) and leverages Agno's nat
 [13] [Agno agent now has persistent memory with MemoriTools()](https://www.linkedin.com/posts/arindam2004_your-agno-agent-can-now-maintain-persistent-activity-7372297382354399233-dkjC)  
 [14] [MinIO: Overview for developers. Why you need it, pros, cons ...](https://bigmike.help/en/posts/121-minio-overview-for-developers-why-you-need-it-pros-cons-and-alternatives/)  
 [15] [Understanding Agno: A Fast, Scalable Multi-Agent ...](https://www.digitalocean.com/community/conceptual-articles/agno-fast-scalable-multi-agent-framework)  
-[16] [Agno (Phidata) reading PDF as knowledge base failed](https://stackoverflow.com/questions/79482125/agno-phidata-reading-pdf-as-knowledge-base-failed)  
+[16] [Agno  reading PDF as knowledge base failed](https://stackoverflow.com/questions/79482125/agno-phidata-reading-pdf-as-knowledge-base-failed)  
 [17] [Connect to Amazon S3 for your knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/s3-data-source-connector.html)  
 [18] [Agno Integration Guide](https://apipie.ai/docs/Integrations/Agent-Frameworks/Agno)  
 [19] [GCS Content](https://docs.agno.com/basics/knowledge/getting-started/usage/gcs-content)  

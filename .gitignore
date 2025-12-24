@@ -10,3 +10,5 @@ docs/arxiv/*.pdf
 .env
 .env*
 .pytest_cache/
+node_modules/
+pytest_cache/
