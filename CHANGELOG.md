@@ -24,6 +24,7 @@ This file will be updated to reflect major changes, progress, and decisions thro
     - Migrated DevOps and utility functions to `codeswarm/recycled/devops.py`.
     - Extracted core agent orchestration patterns to `codeswarm/recycled/patterns.py`.
     - Cleaned logic of ADK-specific dependencies for seamless Agno integration.
+    - Updated `AGENTS.md` with new "Continuity Ledger" (compaction-safe) protocol to improve long-term context management.
 
 ## 2025-06-03 - DevAgent & Security Updates
 *   **DevAgent Prompt**: Updated `codeswarm/prompts/dev_prompt.json` with the `PURE_CODE_IMPLEMENTATION_SYSTEM_PROMPT` strategy from DeepCode.
